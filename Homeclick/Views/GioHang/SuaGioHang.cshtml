@@ -1,0 +1,55 @@
+﻿@using Homeclick.Models
+@model List<Giohang>
+@{
+    ViewBag.Title = "SuaGioHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="view-cart">
+    <div class="container">
+        <div class="row">
+            @if (@ViewBag.noproduct == 1)
+            {
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Product</td>
+                            <td>Name</td>
+                            <td>Prince</td>
+                            <td>Quantity</td>
+                            <td>Total</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            String url = "http://demo.vinabits.com.vn/homeclick2";
+
+                            <tr>
+                                <td><img src="@url/@item.iImage" style="width:60px;" /></td>
+                                <td>@item.iTenProduct</td>
+                                <td>@item.iPrince</td>
+                                @using (@Html.BeginForm("Capnhatgiohang", "GioHang", new { @iProduct_id = item.iProduct_id }))
+                                {
+                                    <td>@Html.TextBox("txtSoLuong", item.iNumberProduct, "", new { type = "number", @class = "Edit" })</td>
+                                    <td>@item.iTotal</td>
+                                    <td><input type="submit" value="Update" /></td>
+                                    <td>@Html.ActionLink("Delete", "XoaGioHang", new { @iProduct_id = item.iProduct_id })</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="no-cart">
+                    <p>Your cart is currently empty.</p>
+                    @Html.ActionLink("Go to Home", "Index", "Home")
+                </div>
+            }
+        </div>
+    </div>
+</main>

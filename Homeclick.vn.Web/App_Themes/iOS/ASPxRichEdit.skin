@@ -1,0 +1,7 @@
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Data" Assembly="DevExpress.Data.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Web.ASPxRichEdit" Assembly="DevExpress.Web.ASPxRichEdit.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+
+<dx:ASPxRichEdit runat="server" CssPostfix="iOS" CssFilePath="~/App_Themes/iOS/{0}/styles.css">
+    <Images SpriteCssFilePath="~/App_Themes/iOS/{0}/sprite.css" MenuIconSet="Colored"></Images>
+</dx:ASPxRichEdit>
+

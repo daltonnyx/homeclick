@@ -1,0 +1,199 @@
+/* Common */
+body {
+    color: black;
+
+    font-size: 12px;
+	padding: 0px; 
+	margin: 0px;
+}
+.BodyBackColor {
+	background-color:#BFDBFF;
+}
+a {
+    color: #5689C5; 
+    text-decoration: underline;   
+}
+a:hover {
+	color: #F39128;
+	text-decoration: underline;
+}
+a:visited {
+    color: #A1A1A1;
+    text-decoration: underline;   
+}
+div.PageContent 
+{
+    padding: 0px 0px 0px 0px;
+}
+/* Action Container Panel */
+.ACPanel 
+{
+	background: url('opacity50.png') repeat;
+    border-collapse: separate;
+    padding: 2px 20px 1px 5px;
+	height: 25px;
+}	
+/* Main table */
+.Main {
+	background: white;
+}
+h1 {
+	color: Black;
+	
+	font-size: 200%;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-weight: normal;
+	margin: 0px 0px 0px 0px;
+	padding: 0px;
+}
+/* Footer */
+.FooterCopyright {
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	text-align: right;
+	
+	color: #788CA5;
+}
+/* Dialog */
+body.Dialog {
+	background-color: White !important;
+}
+div.DialogPageContent {
+	margin: 0px;
+}
+div.Header {
+	width: 100%;
+	height: 80px;
+	margin: 0px;
+}
+.PopupWindow .dxpc-footer {
+    background: white;
+    border-top: none;
+}
+/* Error */
+.Error {
+	color: Black;
+}
+/* Controls customization */
+.dxgvControl_Aqua {
+	width: 100%;
+}
+.dxtcControl_Aqua,
+.dxtcLite_Aqua {
+    width: 100% !important;
+}
+.dxtcPageContent_Aqua 
+{
+	color: black !important;
+}
+.NavigationTabsActionContainer .dxtcControl_Aqua,
+.NavigationTabsActionContainer .dxtcLite_Aqua {
+background-image: url('opacity50.png'); 
+background-repeat: repeat-x;
+}
+.NavigationTabsActionContainer .dxtcPageContent_Aqua,
+.NavigationTabsActionContainer .dxtcLite_Aqua .dxtc-content {
+	padding-left: 18px;
+    border: none !important;
+}
+.NavigationTabsActionContainer .dxtcLeftIndentCell_Aqua div,
+.NavigationTabsActionContainer .dxtcLite_Aqua .dxtc-leftIndent {
+	width: 15px !important;
+}
+.NavigationTabsActionContainer .dxtcLite_Aqua .dxtc-tab,
+.NavigationTabsActionContainer .dxtcLite_Aqua .dxtc-activeTab
+{
+    margin-top: 3px !important;
+}
+.NavigationTabsActionContainer .dxtc-content .dxmLite_Aqua .menuLinks_Aqua
+{
+    padding-left: 14px !important;
+}
+.NavigationTabsActionContainer .dxtcLite_Aqua .dxtc-leftIndent,
+.NavigationTabsActionContainer .dxtcLite_Aqua .dxtc-spacer,
+.NavigationTabsActionContainer .dxtcLite_Aqua .dxtc-rightIndent,
+.NavigationTabsActionContainer .dxtcLite_Aqua .dxtc-sbWrapper,
+.NavigationTabsActionContainer .dxtcLite_Aqua .dxtc-sbIndent,
+.NavigationTabsActionContainer .dxtcLite_Aqua .dxtc-sbSpacer
+{
+	height: 26px;
+    border-top: none;
+    padding-top: 0px;
+    padding-bottom: 3px;
+}
+.ACV .dxmVerticalMenuItemWithImage_Aqua
+{
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+.ACV .dxmLite_Aqua .dxm-main .TemplatedItem
+{
+    padding-left: 37px !important;
+}
+/* NavigationHistory (NavigationHistoryActionContainer) */
+.NavigationHistoryLinks {
+	color: #86888D;
+	padding: 0px 0px 0px 2px;
+}
+.NavigationHistoryLinks a:hover {
+	text-decoration: underline;
+    color: #F39128;
+}
+.NavigationHistoryLinks a, .NavigationHistoryLinks a:visited {
+	text-decoration: underline;
+    color: #5689C5;
+}
+.NavigationHistoryLinks a.Current, .NavigationHistoryLinks a.Current:hover, .NavigationHistoryLinks a.Current:visited {
+	text-decoration: none;
+	color: #86888D;
+}
+.Security .dxmMenuSeparator_Aqua,
+.Security .dxmLite_Aqua .dxm-separator {
+	padding: 0px 11px 0px 11px!important;
+}
+.TabsContainer .dxmMenuSeparator_Aqua,
+.TabsContainer .dxmLite_Aqua .dxm-separator {
+	padding: 0px 10px 0px 16px!important;
+}
+.TabsContainer .menuLinks_Aqua .TemplatedItem
+{
+    padding-top: 4px;
+}
+.LayoutTabContainerWithNestedFrame > .Item:first-child > .NestedFrame > .ToolBarUpdatePanel > .ToolBar .dxmMenu_Aqua,
+.LayoutTabContainerWithNestedFrame > .Item:first-child > .NestedFrame > .ToolBarUpdatePanel > .ToolBar .dxmLite_Aqua .dxm-main {
+	border-top: 0px;
+}
+.LayoutTabContainerWithNestedFrame > .Item > .NestedFrame > .ToolBarUpdatePanel > .ToolBar .dxmMenu_Aqua,
+.LayoutTabContainerWithNestedFrame > .Item > .NestedFrame > .ToolBarUpdatePanel > .ToolBar .dxmLite_Aqua .dxm-main {
+	border-left: 0px;
+	border-right: 0px;
+}
+.HorizontalTemplateHeader,
+.VerticalTemplateHeader,
+.Header {
+    background-image: url('background.jpg'); 
+    background-position: left top; 
+	background-repeat: no-repeat;
+	background-color: #BFDBFF;
+}
+.RecordsNavigationContainer .menuLinks_Aqua {
+	padding-left: 8px;
+}
+.RecordsNavigationContainer .menuLinks_Aqua .dxmMenuItemWithImage_Aqua {
+	padding-left: 3px;
+}
+.RecordsNavigationContainer .dxmLite_Aqua .dxm-content,
+.RecordsNavigationContainer .dxmLite_Aqua .dxm-disabled.dxm-content
+{
+    padding-left: 3px !important;
+    padding-right: 3px !important;
+}
+.EditModeActions .dxmLite_Aqua .menuLinks_Aqua,
+.Content .EditModeActions .dxmLite_Aqua .menuLinks_Aqua
+{
+	padding-left: 1px !important;
+}
+.RecordsNavigationContainer .dxmLite_Aqua
+{
+    margin-right: 4px !important;
+}

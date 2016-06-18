@@ -1,0 +1,45 @@
+﻿@using Homeclick.Models;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("~/Views/Home/SliderPartial.cshtml")
+<main id="main" class="site-main">
+    <div class="container category">
+        <div class="row">
+            <div class="col-md-6 tuthietke">
+                <div class="inside">
+                    <div class="content-block">
+                        <div class="content-hover">
+                            <div class="description">Ai cũng có thể tự thiết kế nhà cho mình đơn giản & rất dễ sử dụng</div>
+                            @{
+
+                                string link = Url.Action("Detail", "Page", new { @alias = "tuthietke" });
+                            }
+                            <a href="@link" class="plus-button"><img src="~/Upload/Images/assets/icon_mouse.png" /></a>
+                        </div>
+                     </div>
+                </div>
+            </div>
+            <div class="col-md-6 bosuutap">
+                <div class="inside">
+                    <div class="content-block">
+                        <div class="content-hover">
+                            <div class="description">Bạn có thể tiết kiệm gần 30% khi mua trọn bộ sưu tập</div>
+                            @{
+                                link = Url.Action("Index", "BoSuuTap");
+                            }
+                            <a href="@link" class="plus-button"><img src="~/Upload/Images/assets/icon_loop.png" /></a>
+                        </div>
+                       </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container featured-item">
+        <div class="row">
+                 @Html.Action("Feature_Product", "Home")
+        </div>
+    </div>
+</main>

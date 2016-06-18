@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewBag.Title = "Thiết kế 1";
+    Layout = "~/Views/Shared/Layout_html.cshtml";
+    string url = "http://demo.vinabits.com.vn/homeclick2";
+}
+
+
+<main id="main" class="">
+    <div class="container thietke thietke01">
+        <div class="row">
+            <h3 class="title-thietke">Có 2 cách rất dễ dàng để bạn có thể bắt đầu:</h3>
+            <div class="col-sm-6 left-thietke1">
+                <h4 class="title-tuthietke-item">Chọn layout của bạn theo dự án bên dưới</h4>
+                <div class="form-thietke-left">
+                    <form id="canvas-picker" method="GET" action="@Url.Action("Floor", "Design")">
+                        <label>Chọn địa điểm</label>
+                        <select class="department" name="department_city" id="department-city">
+                            @Html.Action("getDepartments", "Design")
+                        </select>
+                        <label>Chọn quận</label>
+                        <select class="department" name="department_district" id="department-district">
+                            
+                        </select>
+                        <label>Chọn tháp</label>
+                        <select class="floor" name="department_tower" id="department-tower">
+                               
+                        </select>
+                        <label>Chọn tầng</label>
+                        <select class="floor-end" name="floor" id="floor">
+                            
+                        </select>
+                        <input class="button-create left" type="submit" value="Mở mặt bằng này" />
+                    </form>
+                </div>
+            </div>
+            <script type="text/javascript">
+                jQuery(document).ready(function ($) {
+
+                    $("select.department").mouseup(function (e) {
+                        var open = $(this).data("isopen");
+
+                        if (open) {
+                            var parent_id = $(this).val();
+                            var Id = this.id;
+                            jQuery.ajax({
+                                url: "@Url.Action("getDepartments", "Design")" + "/" + parent_id,
+                                method: "GET",
+                                dataType: "text",
+                                success: function (response) {
+                                    if (Id == "department-city") {
+                                        $("#department-district").html(response);
+                                    }
+                                    else if (Id == "department-district") {
+                                        $("#department-tower").html(response);
+                                    }
+                                },
+                                beforeSend: function () {
+
+                                }
+                            });
+                        }
+                        $(this).data("isopen", !open);
+                    });
+
+                    $("select.floor").mouseup(function (e) {
+                        var open = $(this).data("isopen");
+
+                        if (open) {
+                            var Id = $(this).val();
+                            jQuery.ajax({
+                                url: "@Url.Action("getFloors", "Design")" + "/" + Id,
+                                method: "GET",
+                                dataType: "text",
+                                success: function (response) {
+                                    $("#floor").html(response);
+                                },
+                                beforeSend: function () {
+
+                                }
+                            });
+                        }
+
+                        $(this).data("isopen", !open);
+                    });
+
+                });
+            </script>
+            <div class="col-sm-6 right-thietke1">
+                <h4 class="title-tuthietke-item">Tự thiết kế layout của chính bạn:</h4>
+                <div class="form-thietke-right">
+                    Coming soon
+                    @*<form action="@Url.Action("duphong1", "Html")">
+                        <input type="radio" name="gender" value="male">Start with a blank paln<br>
+                        <input type="radio" name="gender" value="female"> Start with a basic shaped room, enter dimensions below<br>
+                        <input type="radio" name="gender" value="other"> Start an elevantion plan, enter dimensions below
+                        <div class="select-size">
+                            <div class="length-size"><span>Length</span><input type="number" /><span>mtr</span></div>
+                            <div class="depth-size"><span>Depth</span><input type="number" /><span>mtr</span></div>
+                        </div>
+
+                        <input class="button-create" type="submit" value="Create a new plan" />
+
+                        <div class="select-layout-built">
+                            <ul class="layout-built-item">
+                                <li><img src="~/Upload/Images/thietke01.png" alt="" /></li>
+                                <li><img src="~/Upload/Images/thietke04.png" alt="" /></li>
+                                <li><img src="~/Upload/Images/thietke31.png" alt="" /></li>
+                                <li><img src="~/Upload/Images/thietke04.png" alt="" /></li>
+                                <li><img src="~/Upload/Images/thietke05.png" alt="" /></li>
+                                <li><img src="~/Upload/Images/thietke06.png" alt="" /></li>
+                                <li><img src="~/Upload/Images/thietke07.png" alt="" /></li>
+                                <li><img src="~/Upload/Images/thietke08.png" alt="" /></li>
+                                <li><img src="~/Upload/Images/thietke09.png" alt="" /></li>
+                            </ul>
+                        </div>
+                    </form>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

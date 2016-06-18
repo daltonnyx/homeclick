@@ -1,0 +1,428 @@
+.dxscControl_Aqua
+{
+    background: #a3c0e8;
+    border: solid 1px #a3c0e8;
+    font: 12px Tahoma, Geneva, sans-serif;
+}
+.dxscLoadingPanel_Aqua,
+.dxscLoadingPanelWithContent_Aqua 
+{
+	font: 12px Tahoma, Geneva, sans-serif;
+	color: #2C4D79;
+	background-color: White;
+	border: 1px solid #67A2C6;
+}
+.dxscLoadingPanel_Aqua  td.dx,
+.dxscLoadingPanelWithContent_Aqua td.dx
+{
+	white-space: nowrap;
+	text-align: center;
+	padding: 10px 20px 8px;
+}
+.dxscLoadingPanel_Aqua .dxlp-loadingImage,
+.dxscLoadingPanelWithContent_Aqua .dxlp-loadingImage
+{
+	background-image: url('../Web/Loading.gif');
+	height:18px;
+	width:18px;
+}
+
+/* Headers */
+.dxscDateHeader_Aqua, 
+.dxscAlternateDateHeader_Aqua,
+.dxscDayHeader_Aqua,
+.dxscDateCellHeader_Aqua,
+.dxscTodayCellHeader_Aqua,
+.dxscTimelineDateHeader_Aqua,
+.dxscHorizontalResourceHeader_Aqua,
+.dxscVerticalResourceHeader_Aqua
+{    
+    color: #283b56;
+    background: #dcebfe;
+    border: solid 1px #a3c0e8;
+    border-width: 0 1px 1px 0;
+    padding: 4px;
+    text-align: center;
+    vertical-align: top;
+    
+    cursor: default;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.dxscAlternateTimelineDateHeader_Aqua,
+.dxscAlternateDateHeader_Aqua
+{
+    background: #ffbd69;    
+}
+.dxscDayHeader_Aqua
+{
+    border-width: 1px 1px 0 0;
+}
+.dxscDateCellHeader_Aqua
+{
+    border-width: 1px;
+}
+.dxscTodayCellHeader_Aqua
+{    
+    border-top-width: 1px;
+    background: #ffbd69;
+}
+.dxscTimelineDateHeader_Aqua
+{
+    border-width: 1px 1px 1px 0;
+}
+.dxscHorizontalResourceHeader_Aqua
+{
+    border-width: 1px 1px 1px 0;
+    background: url('CssImages/resHeader.gif') repeat-x top #e2f0ff;
+    padding-bottom: 5px;
+}
+.dxscVerticalResourceHeader_Aqua
+{
+    border-width: 1px 1px 0 0;
+    background: #e2f0ff;
+    white-space: normal;
+}
+.dxscSelectionBar_Aqua 
+{	
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    height: 30px;
+}
+
+/* Corners */
+.dxscLeftTopCorner_Aqua, 
+.dxscRightTopCorner_Aqua
+{
+    background: url('CssImages/ltcorner.gif') repeat-x bottom #eef5fe;
+    width: 1px;
+    border-style: solid;
+    border-color: #a3c0e8;	
+    border-width: 0 0 1px;
+}
+.dxscLeftTopCorner_Aqua
+{    
+    border-width: 1px 1px 1px 0;
+    font-size: 0.91em;
+    text-align: center;
+    padding: 2px;
+    overflow: hidden;
+}
+
+/* Separators */
+.dxscGroupSeparatorVertical_Aqua, 
+.dxscGroupSeparatorHorizontal_Aqua
+{
+    background: white;
+    border: solid 1px #a3c0e8;
+}
+
+.dxscGroupSeparatorVertical_Aqua
+{
+    width: 1px; 
+    border-width: 0 1px;
+}
+.dxscGroupSeparatorHorizontal_Aqua
+{
+    height: 1px;
+    border-width: 1px 0 0;
+    font-size: 0;
+}
+
+/* Apts Area */
+.dxscAllDayArea_Aqua
+{
+    background: #eef5fe;
+    border: solid 1px #a3c0e8;
+    border-width: 0 1px 1px 0;
+}
+.dxscDateCellBody_Aqua 
+{
+    height: 100px;
+    border: solid 1px;
+    border-width: 0 1px 0 0;
+}
+.dxscTimeCellBody_Aqua
+{
+    border: solid 1px;
+}
+.dxscTimelineCellBody_Aqua
+{
+    height: 300px;
+    border-style: solid;
+    border-width: 1px 1px 0 0;
+}
+
+.dxscAppointment_Aqua
+{
+    color: black;
+    font-size: 0.91em;
+    border: solid 1px #398bb1;
+    padding: 0;
+    margin: 0;
+    cursor: default;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    -moz-box-sizing: content-box; 
+    box-sizing: content-box;    
+}
+.dxscAppointmentInnerBorders_Aqua
+{	
+    border: solid 1px #398bb1;
+    padding: 0px;
+}
+.dxscAppointmentHorizontalSeparator_Aqua
+{
+    height: 1px;
+    width: 100%;
+    overflow: hidden;
+    border-bottom-style: none;
+    border-left-style: none;
+    border-right-style: none;
+}
+.dxscMoreButton_Aqua
+{
+    font-size: 0.91em;
+    color: black;
+    text-decoration: underline;
+    padding: 0;
+}
+
+/* Rulers */
+.dxscTimeRulerHoursItem_Aqua, .dxscTimeRulerMinuteItem_Aqua
+{
+    color: #283b56;
+    background: #f3f8ff;
+    border: solid 1px #dbe7f8;
+    border-width: 0px 1px 1px 0;
+    vertical-align: top;
+    white-space: nowrap;
+} 
+.dxscTimeRulerHoursItem_Aqua
+{
+    border-right-width: 0;
+    border-left-color: #cbcbcb;
+    font-size: 1.42em;
+    text-align: right;
+    width: 45px;
+    padding: 2px 4px 0px;
+}
+.dxscTimeRulerMinuteItem_Aqua
+{
+    border-left-width: 0px;
+    text-align: center;
+    width: 18px;
+    font-size: 0.91em;
+    padding: 4px 1px 4px 1px;
+}
+
+.dxscTimeRulerHeaderHourItem_Aqua
+{
+    width: 55px;
+}	
+.dxscTimeRulerHeaderMinuteItem_Aqua
+{
+    width: 16px;
+}
+.dxscScrollHeaderItem_Aqua
+{
+    width: 16px;
+}
+
+
+/* Control elements */
+.dxscToolbarContainer_Aqua
+{
+    background: url('CssImages/ToolbarBack.gif') repeat-x #d0e4ff;
+}
+.dxscToolbar_Aqua
+{
+    border: none;
+    padding: 0px 7px;    
+    height: 42px;
+}
+.dxscViewSelector_Aqua
+{    
+    border: none;
+    padding: 0px 7px;   
+    background: url('CssImages/ToolbarBack.gif') repeat-x #d0e4ff;
+    height: 42px;
+}
+.dxscResourceNavigator_Aqua 
+{    
+    background: #ddebfe;
+    padding: 7px;
+    border: solid 1px #a3c0e8;
+}
+.dxscViewVisibleInterval_Aqua
+{    
+    color: #283b56;
+    white-space: nowrap;
+}
+.dxscInplaceEditor_Aqua
+{
+    background: #c6dfff;
+    border: solid 2px black;
+    padding: 0;
+    color: #303030;
+}
+.dxscControlAreaForm_Aqua
+{
+    font-size: 1.33em;
+    color: black;
+    background-color: #f5ecf1;
+    border: none;
+    white-space: normal;
+    padding: 9px 12px;
+}
+.dxscErrorInfo_Aqua
+{
+    background: #f1abab;
+    color: #853a3a;
+    padding: 10px;
+    border: solid 1px #8a0a37;
+    border-width: 1px 0;
+}
+
+/* Buttons */
+.dxscViewSelectorButton_Aqua,
+.dxscViewNavigatorButton_Aqua,
+.dxscViewNavigatorGotoDateButton_Aqua
+{    
+    border: solid 1px #a3c0e8;
+    color: #2c4d79;
+    background: url('CssImages/vnBtnBack.gif') repeat-x left top #dfefff;
+    line-height: 100%;
+    padding: 4px 7px;    
+
+    min-height: 1em;
+    display: block!important;
+}
+.dxscViewNavigatorGotoDateButton_Aqua 
+{
+    padding: 4px 6px;
+}
+.dxscViewNavigatorButton_Aqua.dxscViewNavigatorGotoTodayButton
+{    
+    padding: 2px 7px;
+}
+
+.dxscViewSelectorButtonHover_Aqua,
+.dxscViewNavigatorButtonHover_Aqua,
+.dxscViewNavigatorGotoDateButtonHover_Aqua
+{
+    border-color: #c3ab7a;
+    background: url('CssImages/vnBtnBackH.gif') repeat-x left top #ffe48b;
+}
+.dxscViewSelectorButtonPressed_Aqua,
+.dxscViewNavigatorButtonPressed_Aqua,
+.dxscViewNavigatorGotoDateButtonPressed_Aqua,
+.dxscViewSelectorButtonChecked_Aqua
+{
+    border-color: #c3977a;
+    background: url('CssImages/vnBtnBackP.gif') repeat-x left top #fed570;
+}
+
+.dxscResourceNavigatorButton_Aqua,
+.dxscNavigationButton_Aqua,
+.dxscDVTopMoreButton_Aqua,
+.dxscDVBottomMoreButton_Aqua
+{
+    cursor: pointer;
+}
+
+.dxscSmartTagButton_Aqua 
+{
+    border: solid 1px black;
+    background: #ffffee;
+    padding: 4px 5px;
+    cursor: pointer;
+}
+.dxscNoBorderButton_Aqua
+{
+    background: none;
+    cursor: pointer;
+    border: solid 1px #c6dfff;
+}
+.dxscNoBorderButtonPressed_Aqua,
+.dxscNoBorderButtonHover_Aqua
+{
+    border-color: #ffbd69;
+}
+.dxscToolTipRoundedCornersTopBottomRow_Aqua 
+{
+    font-size: 0;		
+}
+.dxscToolTipRoundedCornersTopSide_Aqua
+{
+    border-top: 1px black solid; 
+    vertical-align:bottom; 
+    height:1px;	
+    background-color:#fafad2;
+}
+.dxscToolTipRoundedCornersLeftSide_Aqua
+{
+    border-left: 1px black solid; 
+    vertical-align:bottom; 
+    background-color:#fafad2;
+}
+.dxscToolTipRoundedCornersRightSide_Aqua
+{
+    border-right: 1px black solid; 
+    vertical-align:bottom; 
+    background-color:#fafad2;
+}
+.dxscToolTipRoundedCornersBottomSide_Aqua
+{
+    border-bottom: 1px black solid; 
+    vertical-align:bottom; 
+    height:1px;	
+    background-color:#fafad2;
+}
+.dxscToolTipRoundedCornersContent_Aqua
+{
+    background-color:#fafad2;
+    padding:0;
+}
+.dxscToolTipSquaredCorners_Aqua
+{
+    background: #f9f9cd;
+    padding: 1px 1px;
+    font-size: 0;
+    color: #303030;
+    white-space: nowrap;
+    border: solid 1px black;
+}
+.dxscTimeMarker_Aqua 
+{
+    top:-7px;
+}
+.dxscTimeMarkerLine_Aqua 
+{
+    top:-2px;
+    height:13px;
+    font-size: 0;
+}
+.dxscTimeMarkerLineV_Aqua 
+{
+    position:absolute;
+    background-color:#FFAD43;
+    width:1px;
+    font-size: 0;
+    border:solid 1px white;
+    border-top-width:0;
+    border-bottom-width:0;
+}
+.dxscTimeMarkerLineH_Aqua
+{
+    position:absolute;
+    top:-2px;
+    background-color:#FFAD43;
+    height:1px;
+    font-size: 0;
+    border:solid 1px white;
+    border-left-width:0;
+    border-right-width:0;
+}

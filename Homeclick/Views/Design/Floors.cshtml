@@ -1,0 +1,12 @@
+﻿@using Homeclick.Models
+@model IList<Floor>
+
+
+
+
+@foreach (Floor floor in Model)
+{
+    <option value="@floor.Id">@floor.name</option>
+}
+
+

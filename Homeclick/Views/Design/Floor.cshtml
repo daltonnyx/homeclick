@@ -1,0 +1,111 @@
+﻿@using Homeclick.Models
+@model Floor
+@{
+    ViewBag.Title = Model.Department.name + " " + Model.name;
+    Layout = "~/Views/Shared/Layout_html.cshtml";
+    var url = "/admin";
+}
+<main id="main" class="">
+    <div class="container thietke thietke02">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-thietke-left left-thietke2">
+                    <form id="canvas-picker" method="GET" action="@Url.Action("Floor", "Design")">
+                        <label>Chọn địa điểm</label>
+                        <select class="department" name="department_city" id="department-city">
+                            @Html.Action("getDepartments", "Design")
+                        </select>
+                        <label>Chọn quận</label>
+                        <select class="department" name="department_district" id="department-district"></select>
+                        <label>Chọn tháp</label>
+                        <select class="floor" name="department_tower" id="department-tower"></select>
+                        <label>Chọn tầng</label>
+                        <select class="floor-end" name="floor" id="floor"></select>
+                        <input class="button-create left" type="submit" value="Mở mặt bằng này" />
+                    </form>
+                </div>
+                <script type="text/javascript">
+                jQuery(document).ready(function ($) {
+
+                    $("select.department").mouseup(function (e) {
+                        var open = $(this).data("isopen");
+
+                        if (open) {
+                            var parent_id = $(this).val();
+                            var Id = this.id;
+                            jQuery.ajax({
+                                url: "@Url.Action("getDepartments", "Design")" + "/" + parent_id,
+                                method: "GET",
+                                dataType: "text",
+                                success: function (response) {
+                                    if (Id == "department-city") {
+                                        $("#department-district").html(response);
+                                    }
+                                    else if (Id == "department-district") {
+                                        $("#department-tower").html(response);
+                                    }
+                                },
+                                beforeSend: function () {
+
+                                }
+                            });
+                        }
+                        $(this).data("isopen", !open);
+                    });
+
+                    $("select.floor").mouseup(function (e) {
+                        var open = $(this).data("isopen");
+
+                        if (open) {
+                            var Id = $(this).val();
+                            jQuery.ajax({
+                                url: "@Url.Action("getFloors", "Design")" + "/" + Id,
+                                method: "GET",
+                                dataType: "text",
+                                success: function (response) {
+                                    $("#floor").html(response);
+                                },
+                                beforeSend: function () {
+
+                                }
+                            });
+                        }
+
+                        $(this).data("isopen", !open);
+                    });
+
+                });
+                </script>
+            </div>
+            <div class="col-sm-9">
+                <div class="right-thietke2">
+                    <h3 class="title-name-thietke">@ViewBag.Title</h3>
+                    @{
+                        var canvasCoords = Model.getRooms();
+                    }
+                    <div class="show-room-tuthietke">
+                        <img src="@url/@Model.structure_link" id="floor-map" usemap="#floor-map" alt="@ViewBag.Title" />
+                        <map name="floor-map">
+                            @foreach(Room room in canvasCoords)
+                            { 
+                                <area data-key="@room.Id" shape="poly" href="@Url.Action("Canvas","Design",new { @id = room.Id })" coords="@room.coordinates" />
+                            }
+                        </map>
+                        <script>
+                            jQuery(document).ready(function () {
+                                $('#floor-map')
+                                .mapster({
+                                    mapKey: 'data-key',
+                                    onClick: function (e) {
+                                        window.open(e.e.currentTarget.href,"_self");
+                                    }
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+

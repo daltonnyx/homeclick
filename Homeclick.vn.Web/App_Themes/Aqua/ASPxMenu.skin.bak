@@ -1,0 +1,30 @@
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Data" Assembly="DevExpress.Data.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Web" Assembly="DevExpress.Web.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+
+<dx:ASPxMenu runat="server"
+    CssFilePath="{0}/styles.css" SpriteCssFilePath="{0}/sprite.css" CssPostfix="Aqua"
+    GutterImageSpacing="7px" ShowPopOutImages="True" AutoSeparators="RootOnly">
+    <ItemStyle VerticalAlign="Middle" PopOutImageSpacing="18px" DropDownButtonSpacing="12px" ToolbarPopOutImageSpacing="5px" ToolbarDropDownButtonSpacing="5px"></ItemStyle>
+    <RootItemSubMenuOffset FirstItemX="-1" X="-1" FirstItemY="-1" Y="-1"/>
+</dx:ASPxMenu>
+
+<dx:ASPxMenu runat="server" SkinID="MenuToolBar" CssFilePath="{0}/styles.css" ItemSpacing="0px" GutterImageSpacing="7px" ShowPopOutImages="True" 
+    CssPostfix="Aqua" SpriteCssFilePath="{0}/sprite.css" SeparatorWidth="1px" SeparatorColor="#AECAF0" 
+    AutoSeparators="None" Width="100%" ItemAutoWidth="False">
+    <Border BorderStyle="Solid" BorderWidth="1px" BorderColor="#AECAF0" />
+    <SubMenuStyle BackColor="#F9F9F9" SeparatorColor="#AECAF0" ></SubMenuStyle>
+    <RootItemSubMenuOffset FirstItemX="-1" X="-1" FirstItemY="-1" Y="-1"/>
+    <ItemStyle VerticalAlign="Middle" ImageSpacing="5px" PopOutImageSpacing="18px" DropDownButtonSpacing="12px"></ItemStyle>
+    <SubMenuItemStyle ImageSpacing="7px"></SubMenuItemStyle>
+</dx:ASPxMenu>
+<dx:ASPxMenu runat="server" SkinID="MenuButtons" SpriteCssFilePath="{0}/sprite.css" CssFilePath="{0}/styles.css"
+		 AutoSeparators="None" ItemSpacing="5px" ShowPopOutImages="True" CssPostfix="Aqua" CssClass="menuButtons menuButtons_Aqua" SeparatorHeight="0px">
+    <Border BorderWidth="0px" />
+    <ItemStyle DropDownButtonSpacing="11px"></ItemStyle>
+    <RootItemSubMenuOffset X="-1" LastItemX="-1" FirstItemX="-1"></RootItemSubMenuOffset>
+    <SubMenuItemStyle Wrap="False"></SubMenuItemStyle>
+</dx:ASPxMenu>
+<dx:ASPxMenu runat="server" SkinID="MenuLinks" CssFilePath="{0}/styles.css" ItemSpacing="0px" GutterImageSpacing="7px" ShowPopOutImages="True" 
+    CssPostfix="Aqua" SpriteCssFilePath="{0}/sprite.css" SeparatorColor="#AECAF0" 
+    CssClass="menuLinks_Aqua">
+</dx:ASPxMenu>

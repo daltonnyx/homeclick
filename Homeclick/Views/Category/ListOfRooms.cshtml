@@ -1,0 +1,43 @@
+﻿@using Homeclick.Models;
+@model IList<Category>
+
+
+<div class="list-category models sidebar">
+    <h3 class="title-sidebar title-cate-sidebar">Models</h3>
+    <ul class="nav">
+        @foreach (Category item in Model)
+        {
+            <li>
+               <a href="#model-@item.Id">@item.name</a>
+               @{ IList<Category> descendants = item.getDescendantCategories(); }
+                
+                    <ul class="descendant-cat">
+                            <li>
+                                @Html.ActionLink("All", "Model", "Category", new { @id = item.Id },null)
+                            </li>
+                    @if (descendants.Count > 0)
+                    {
+                        foreach(Category des in descendants)
+                        {
+                            <li>
+                                @Html.ActionLink(@des.name, "Filter", "Category", new { @model_id = item.Id, @typo_id = des.Id }, null)
+                            </li>
+                        }
+                    }
+                    </ul>
+                
+            </li>
+        }
+    </ul>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $(".list-category").affix({
+            offset: {
+                top: $("#header").height(),
+                bottom: $("#footer").height() + 40
+            }
+        });
+    });
+</script>

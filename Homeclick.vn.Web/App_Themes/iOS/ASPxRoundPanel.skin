@@ -1,0 +1,7 @@
+<%@ Register assembly="DevExpress.Data.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data" TagPrefix="dx" %>
+<%@ Register assembly="DevExpress.Web.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web" tagprefix="dx" %>
+
+<dx:ASPxRoundPanel runat="server" CssFilePath="~/App_Themes/iOS/{0}/styles.css" 
+    SpriteCssFilePath="~/App_Themes/iOS/{0}/sprite.css" CssPostfix="iOS">
+</dx:ASPxRoundPanel>
+

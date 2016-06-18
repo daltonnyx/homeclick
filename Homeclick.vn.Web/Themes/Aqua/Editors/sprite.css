@@ -1,0 +1,876 @@
+.dxeButtonEditButtonHover_Aqua .dxEditors_edtClear_Aqua,
+.dxeButtonEditButtonHover_Aqua .dxEditors_edtDropDown_Aqua,
+.dxeButtonEditButtonHover_Aqua .dxEditors_edtEllipsis_Aqua,
+.dxeButtonEditButtonPressed_Aqua .dxEditors_edtDropDown_Aqua,
+.dxeButtonEditButtonPressed_Aqua .dxEditors_edtEllipsis_Aqua,
+.dxEditors_caRefresh_Aqua,
+.dxEditors_edtBinaryImageDelete_Aqua,
+.dxEditors_edtBinaryImageOpenDialog_Aqua,
+.dxEditors_edtCalendarFNNextYear_Aqua,
+.dxEditors_edtCalendarFNPrevYear_Aqua,
+.dxEditors_edtCalendarNextMonth_Aqua,
+.dxEditors_edtCalendarNextMonthDisabled_Aqua,
+.dxEditors_edtCalendarNextYear_Aqua,
+.dxEditors_edtCalendarNextYearDisabled_Aqua,
+.dxEditors_edtCalendarPrevMonth_Aqua,
+.dxEditors_edtCalendarPrevMonthDisabled_Aqua,
+.dxEditors_edtCalendarPrevYear_Aqua,
+.dxEditors_edtCalendarPrevYearDisabled_Aqua,
+.dxEditors_edtClear_Aqua,
+.dxEditors_edtDETSClockFace_Aqua,
+.dxEditors_edtDETSHourHand_Aqua,
+.dxEditors_edtDETSMinuteHand_Aqua,
+.dxEditors_edtDETSSecondHand_Aqua,
+.dxEditors_edtDropDown_Aqua,
+.dxEditors_edtDropDownDisabled_Aqua,
+.dxEditors_edtEllipsis_Aqua,
+.dxEditors_edtEllipsisDisabled_Aqua,
+.dxEditors_edtError_Aqua,
+.dxEditors_edtRadioButtonChecked_Aqua,
+.dxEditors_edtRadioButtonCheckedDisabled_Aqua,
+.dxEditors_edtRadioButtonUnchecked_Aqua,
+.dxEditors_edtRadioButtonUncheckedDisabled_Aqua,
+.dxEditors_edtSpinEditDecrementImage_Aqua,
+.dxEditors_edtSpinEditDecrementImageDisabled_Aqua,
+.dxEditors_edtSpinEditIncrementImage_Aqua,
+.dxEditors_edtSpinEditIncrementImageDisabled_Aqua,
+.dxEditors_edtSpinEditLargeDecImage_Aqua,
+.dxEditors_edtSpinEditLargeDecImageDisabled_Aqua,
+.dxEditors_edtSpinEditLargeIncImage_Aqua,
+.dxEditors_edtSpinEditLargeIncImageDisabled_Aqua,
+.dxEditors_edtTBDecBtn_Aqua,
+.dxEditors_edtTBDecBtnDisabled_Aqua,
+.dxEditors_edtTBDecBtnHover_Aqua,
+.dxEditors_edtTBDecBtnPressed_Aqua,
+.dxEditors_edtTBIncBtn_Aqua,
+.dxEditors_edtTBIncBtnDisabled_Aqua,
+.dxEditors_edtTBIncBtnHover_Aqua,
+.dxEditors_edtTBIncBtnPressed_Aqua,
+.dxEditors_edtTokenBoxTokenRemoveButton_Aqua,
+.dxEditors_edtTokenBoxTokenRemoveButtonDisabled_Aqua,
+.dxEditors_fcadd_Aqua,
+.dxEditors_fcaddhot_Aqua,
+.dxEditors_fcgroupaddcondition_Aqua,
+.dxEditors_fcgroupaddgroup_Aqua,
+.dxEditors_fcgroupand_Aqua,
+.dxEditors_fcgroupnotand_Aqua,
+.dxEditors_fcgroupnotor_Aqua,
+.dxEditors_fcgroupor_Aqua,
+.dxEditors_fcgroupremove_Aqua,
+.dxEditors_fcopany_Aqua,
+.dxEditors_fcopbegin_Aqua,
+.dxEditors_fcopbetween_Aqua,
+.dxEditors_fcopblank_Aqua,
+.dxEditors_fcopcontain_Aqua,
+.dxEditors_fcopend_Aqua,
+.dxEditors_fcopequal_Aqua,
+.dxEditors_fcopgreater_Aqua,
+.dxEditors_fcopgreaterorequal_Aqua,
+.dxEditors_fcopless_Aqua,
+.dxEditors_fcoplessorequal_Aqua,
+.dxEditors_fcoplike_Aqua,
+.dxEditors_fcopnotany_Aqua,
+.dxEditors_fcopnotbetween_Aqua,
+.dxEditors_fcopnotblank_Aqua,
+.dxEditors_fcopnotcontain_Aqua,
+.dxEditors_fcopnotequal_Aqua,
+.dxEditors_fcopnotlike_Aqua,
+.dxEditors_fcremove_Aqua,
+.dxEditors_fcremovehot_Aqua,
+.dxeFocused_Aqua .dxeTBHSys .dxeFocusedMDHSys .dxEditors_edtTBMainDH_Aqua,
+.dxeFocused_Aqua .dxeTBHSys .dxeFocusedMDHSys .dxEditors_edtTBMainDHHover_Aqua,
+.dxeFocused_Aqua .dxeTBHSys .dxeFocusedMDHSys .dxEditors_edtTBMainDHPressed_Aqua,
+.dxeFocused_Aqua .dxeTBHSys .dxeFocusedSDHSys .dxEditors_edtTBSecondaryDH_Aqua,
+.dxeFocused_Aqua .dxeTBHSys .dxeFocusedSDHSys .dxEditors_edtTBSecondaryDHHover_Aqua,
+.dxeFocused_Aqua .dxeTBHSys .dxeFocusedSDHSys .dxEditors_edtTBSecondaryDHPressed_Aqua,
+.dxeFocused_Aqua .dxeTBVSys .dxeFocusedMDHSys .dxEditors_edtTBMainDH_Aqua,
+.dxeFocused_Aqua .dxeTBVSys .dxeFocusedMDHSys .dxEditors_edtTBMainDHHover_Aqua,
+.dxeFocused_Aqua .dxeTBVSys .dxeFocusedMDHSys .dxEditors_edtTBMainDHPressed_Aqua,
+.dxeFocused_Aqua .dxeTBVSys .dxeFocusedSDHSys .dxEditors_edtTBSecondaryDH_Aqua,
+.dxeFocused_Aqua .dxeTBVSys .dxeFocusedSDHSys .dxEditors_edtTBSecondaryDHHover_Aqua,
+.dxeFocused_Aqua .dxeTBVSys .dxeFocusedSDHSys .dxEditors_edtTBSecondaryDHPressed_Aqua,
+.dxeSpinDecButtonHover_Aqua .dxEditors_edtSpinEditDecrementImage_Aqua,
+.dxeSpinDecButtonPressed_Aqua .dxEditors_edtSpinEditDecrementImage_Aqua,
+.dxeSpinIncButtonHover_Aqua .dxEditors_edtSpinEditIncrementImage_Aqua,
+.dxeSpinIncButtonPressed_Aqua .dxEditors_edtSpinEditIncrementImage_Aqua,
+.dxeSpinLargeDecButtonHover_Aqua .dxEditors_edtSpinEditLargeDecImage_Aqua,
+.dxeSpinLargeDecButtonPressed_Aqua .dxEditors_edtSpinEditLargeDecImage_Aqua,
+.dxeSpinLargeIncButtonHover_Aqua .dxEditors_edtSpinEditLargeIncImage_Aqua,
+.dxeSpinLargeIncButtonPressed_Aqua .dxEditors_edtSpinEditLargeIncImage_Aqua,
+.dxeTBHSys .dxEditors_edtTBMainDH_Aqua,
+.dxeTBHSys .dxEditors_edtTBMainDHDisabled_Aqua,
+.dxeTBHSys .dxEditors_edtTBMainDHHover_Aqua,
+.dxeTBHSys .dxEditors_edtTBMainDHPressed_Aqua,
+.dxeTBHSys .dxEditors_edtTBSecondaryDH_Aqua,
+.dxeTBHSys .dxEditors_edtTBSecondaryDHDisabled_Aqua,
+.dxeTBHSys .dxEditors_edtTBSecondaryDHHover_Aqua,
+.dxeTBHSys .dxEditors_edtTBSecondaryDHPressed_Aqua,
+.dxeTBVSys .dxEditors_edtTBMainDH_Aqua,
+.dxeTBVSys .dxEditors_edtTBMainDHDisabled_Aqua,
+.dxeTBVSys .dxEditors_edtTBMainDHHover_Aqua,
+.dxeTBVSys .dxEditors_edtTBMainDHPressed_Aqua,
+.dxeTBVSys .dxEditors_edtTBSecondaryDH_Aqua,
+.dxeTBVSys .dxEditors_edtTBSecondaryDHDisabled_Aqua,
+.dxeTBVSys .dxEditors_edtTBSecondaryDHHover_Aqua,
+.dxeTBVSys .dxEditors_edtTBSecondaryDHPressed_Aqua
+{
+    background-image: url('sprite.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+.dxeButtonEditButtonHover_Aqua .dxEditors_edtClear_Aqua
+{
+    background-position: -154px -236px;
+    width: 13px;
+    height: 13px;
+}
+.dxeButtonEditButtonHover_Aqua .dxEditors_edtDropDown_Aqua
+{
+    background-position: -126px -250px;
+    width: 11px;
+    height: 7px;
+}
+.dxeButtonEditButtonHover_Aqua .dxEditors_edtEllipsis_Aqua
+{
+    background-position: -164px -188px;
+    width: 12px;
+    height: 3px;
+}
+.dxeButtonEditButtonPressed_Aqua .dxEditors_edtDropDown_Aqua
+{
+    background-position: -148px -59px;
+    width: 11px;
+    height: 7px;
+}
+.dxeButtonEditButtonPressed_Aqua .dxEditors_edtEllipsis_Aqua
+{
+    background-position: -151px -188px;
+    width: 12px;
+    height: 3px;
+}
+.dxEditors_caRefresh_Aqua
+{
+    background-position: -136px -67px;
+    width: 21px;
+    height: 23px;
+}
+.dxEditors_edtBinaryImageDelete_Aqua
+{
+    background-position: -124px -91px;
+    width: 32px;
+    height: 32px;
+}
+.dxEditors_edtBinaryImageOpenDialog_Aqua
+{
+    background-position: -157px -91px;
+    width: 32px;
+    height: 32px;
+}
+.dxEditors_edtCalendarFNNextYear_Aqua
+{
+    background-position: -105px -171px;
+    width: 19px;
+    height: 19px;
+}
+.dxEditors_edtCalendarFNPrevYear_Aqua
+{
+    background-position: -96px -151px;
+    width: 19px;
+    height: 19px;
+}
+.dxEditors_edtCalendarNextMonth_Aqua
+{
+    background-position: -136px -151px;
+    width: 19px;
+    height: 19px;
+}
+.dxEditors_edtCalendarNextMonthDisabled_Aqua
+{
+    background-position: -156px -151px;
+    width: 19px;
+    height: 19px;
+}
+.dxEditors_edtCalendarNextYear_Aqua
+{
+    background-position: -24px -151px;
+    width: 23px;
+    height: 19px;
+}
+.dxEditors_edtCalendarNextYearDisabled_Aqua
+{
+    background-position: -48px -151px;
+    width: 23px;
+    height: 19px;
+}
+.dxEditors_edtCalendarPrevMonth_Aqua
+{
+    background-position: -125px -171px;
+    width: 19px;
+    height: 19px;
+}
+.dxEditors_edtCalendarPrevMonthDisabled_Aqua
+{
+    background-position: -116px -151px;
+    width: 19px;
+    height: 19px;
+}
+.dxEditors_edtCalendarPrevYear_Aqua
+{
+    background-position: 0px -151px;
+    width: 23px;
+    height: 19px;
+}
+.dxEditors_edtCalendarPrevYearDisabled_Aqua
+{
+    background-position: -72px -151px;
+    width: 23px;
+    height: 19px;
+}
+.dxEditors_edtClear_Aqua
+{
+    background-position: -112px -250px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_edtDETSClockFace_Aqua
+{
+    background-position: 0px 0px;
+    width: 123px;
+    height: 123px;
+}
+.dxEditors_edtDETSHourHand_Aqua
+{
+    background-position: -136px 0px;
+    width: 7px;
+    height: 57px;
+}
+.dxEditors_edtDETSHourHand_Aqua
+{
+    background-position: -152px 0px \9;
+    width: 7px \9;
+    height: 57px \9;
+}
+.dxEditors_edtDETSMinuteHand_Aqua
+{
+    background-position: -160px 0px;
+    width: 7px;
+    height: 57px;
+}
+.dxEditors_edtDETSMinuteHand_Aqua
+{
+    background-position: -144px 0px \9;
+    width: 7px \9;
+    height: 57px \9;
+}
+.dxEditors_edtDETSSecondHand_Aqua
+{
+    background-position: -124px 0px;
+    width: 5px;
+    height: 77px;
+}
+.dxEditors_edtDETSSecondHand_Aqua
+{
+    background-position: -130px 0px \9;
+    width: 5px \9;
+    height: 77px \9;
+}
+.dxEditors_edtDropDown_Aqua
+{
+    background-position: -124px -83px;
+    width: 11px;
+    height: 7px;
+}
+.dxEditors_edtDropDownDisabled_Aqua
+{
+    background-position: -136px -59px;
+    width: 11px;
+    height: 7px;
+}
+.dxEditors_edtEllipsis_Aqua
+{
+    background-position: -177px -167px;
+    width: 12px;
+    height: 3px;
+}
+.dxEditors_edtEllipsisDisabled_Aqua
+{
+    background-position: -177px -188px;
+    width: 12px;
+    height: 3px;
+}
+.dxEditors_edtError_Aqua
+{
+    background-position: -80px -206px;
+    width: 14px;
+    height: 14px;
+}
+.dxEditors_edtRadioButtonChecked_Aqua
+{
+    background-position: -48px -206px;
+    width: 15px;
+    height: 15px;
+}
+.dxEditors_edtRadioButtonCheckedDisabled_Aqua
+{
+    background-position: -16px -206px;
+    width: 15px;
+    height: 15px;
+}
+.dxEditors_edtRadioButtonUnchecked_Aqua
+{
+    background-position: -64px -206px;
+    width: 15px;
+    height: 15px;
+}
+.dxEditors_edtRadioButtonUncheckedDisabled_Aqua
+{
+    background-position: -32px -206px;
+    width: 15px;
+    height: 15px;
+}
+.dxEditors_edtSpinEditDecrementImage_Aqua
+{
+    background-position: -146px -250px;
+    width: 7px;
+    height: 7px;
+}
+.dxEditors_edtSpinEditDecrementImageDisabled_Aqua
+{
+    background-position: -160px -59px;
+    width: 7px;
+    height: 7px;
+}
+.dxEditors_edtSpinEditIncrementImage_Aqua
+{
+    background-position: -178px -250px;
+    width: 7px;
+    height: 7px;
+}
+.dxEditors_edtSpinEditIncrementImageDisabled_Aqua
+{
+    background-position: -138px -250px;
+    width: 7px;
+    height: 7px;
+}
+.dxEditors_edtSpinEditLargeDecImage_Aqua
+{
+    background-position: -182px 0px;
+    width: 7px;
+    height: 9px;
+}
+.dxEditors_edtSpinEditLargeDecImageDisabled_Aqua
+{
+    background-position: -158px -68px;
+    width: 7px;
+    height: 9px;
+}
+.dxEditors_edtSpinEditLargeIncImage_Aqua
+{
+    background-position: -182px -18px;
+    width: 7px;
+    height: 9px;
+}
+.dxEditors_edtSpinEditLargeIncImageDisabled_Aqua
+{
+    background-position: -179px -222px;
+    width: 7px;
+    height: 9px;
+}
+.dxEditors_edtTBDecBtn_Aqua
+{
+    background-position: -63px -171px;
+    width: 20px;
+    height: 20px;
+}
+.dxEditors_edtTBDecBtnDisabled_Aqua
+{
+    background-position: -168px -49px;
+    width: 20px;
+    height: 20px;
+}
+.dxEditors_edtTBDecBtnHover_Aqua
+{
+    background-position: 0px -171px;
+    width: 20px;
+    height: 20px;
+}
+.dxEditors_edtTBDecBtnPressed_Aqua
+{
+    background-position: -168px -70px;
+    width: 20px;
+    height: 20px;
+}
+.dxEditors_edtTBIncBtn_Aqua
+{
+    background-position: -42px -171px;
+    width: 20px;
+    height: 20px;
+}
+.dxEditors_edtTBIncBtnDisabled_Aqua
+{
+    background-position: -21px -171px;
+    width: 20px;
+    height: 20px;
+}
+.dxEditors_edtTBIncBtnHover_Aqua
+{
+    background-position: -168px -28px;
+    width: 20px;
+    height: 20px;
+}
+.dxEditors_edtTBIncBtnPressed_Aqua
+{
+    background-position: -84px -171px;
+    width: 20px;
+    height: 20px;
+}
+.dxEditors_edtTokenBoxTokenRemoveButton_Aqua
+{
+    background-position: -172px -171px;
+    width: 15px;
+    height: 15px;
+}
+.dxEditors_edtTokenBoxTokenRemoveButtonDisabled_Aqua
+{
+    background-position: 0px -206px;
+    width: 15px;
+    height: 15px;
+}
+.dxEditors_fcadd_Aqua
+{
+    background-position: -14px -250px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcaddhot_Aqua
+{
+    background-position: -109px -222px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcgroupaddcondition_Aqua
+{
+    background-position: -98px -236px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcgroupaddgroup_Aqua
+{
+    background-position: -84px -236px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcgroupand_Aqua
+{
+    background-position: 0px -236px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcgroupnotand_Aqua
+{
+    background-position: -56px -250px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcgroupnotor_Aqua
+{
+    background-position: -28px -250px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcgroupor_Aqua
+{
+    background-position: -70px -250px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcgroupremove_Aqua
+{
+    background-position: 0px -250px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopany_Aqua
+{
+    background-position: -42px -236px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopbegin_Aqua
+{
+    background-position: -28px -236px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopbetween_Aqua
+{
+    background-position: -42px -250px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopblank_Aqua
+{
+    background-position: -126px -236px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopcontain_Aqua
+{
+    background-position: -14px -236px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopend_Aqua
+{
+    background-position: -176px -206px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopequal_Aqua
+{
+    background-position: -84px -250px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopgreater_Aqua
+{
+    background-position: -165px -222px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopgreaterorequal_Aqua
+{
+    background-position: -140px -236px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopless_Aqua
+{
+    background-position: -168px -236px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcoplessorequal_Aqua
+{
+    background-position: -112px -236px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcoplike_Aqua
+{
+    background-position: -98px -250px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopnotany_Aqua
+{
+    background-position: -151px -222px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopnotbetween_Aqua
+{
+    background-position: -137px -222px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopnotblank_Aqua
+{
+    background-position: -81px -222px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopnotcontain_Aqua
+{
+    background-position: -95px -222px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopnotequal_Aqua
+{
+    background-position: -70px -236px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcopnotlike_Aqua
+{
+    background-position: -123px -222px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcremove_Aqua
+{
+    background-position: -56px -236px;
+    width: 13px;
+    height: 13px;
+}
+.dxEditors_fcremovehot_Aqua
+{
+    background-position: -176px -151px;
+    width: 13px;
+    height: 13px;
+}
+.dxeFocused_Aqua .dxeTBHSys .dxeFocusedMDHSys .dxEditors_edtTBMainDH_Aqua
+{
+    background-position: -140px -124px;
+    width: 13px;
+    height: 26px;
+}
+.dxeFocused_Aqua .dxeTBHSys .dxeFocusedMDHSys .dxEditors_edtTBMainDHHover_Aqua
+{
+    background-position: -154px -124px;
+    width: 13px;
+    height: 26px;
+}
+.dxeFocused_Aqua .dxeTBHSys .dxeFocusedMDHSys .dxEditors_edtTBMainDHPressed_Aqua
+{
+    background-position: -98px -124px;
+    width: 13px;
+    height: 26px;
+}
+.dxeFocused_Aqua .dxeTBHSys .dxeFocusedSDHSys .dxEditors_edtTBSecondaryDH_Aqua
+{
+    background-position: -56px -124px;
+    width: 13px;
+    height: 26px;
+}
+.dxeFocused_Aqua .dxeTBHSys .dxeFocusedSDHSys .dxEditors_edtTBSecondaryDHHover_Aqua
+{
+    background-position: -112px -124px;
+    width: 13px;
+    height: 26px;
+}
+.dxeFocused_Aqua .dxeTBHSys .dxeFocusedSDHSys .dxEditors_edtTBSecondaryDHPressed_Aqua
+{
+    background-position: -168px 0px;
+    width: 13px;
+    height: 26px;
+}
+.dxeFocused_Aqua .dxeTBVSys .dxeFocusedMDHSys .dxEditors_edtTBMainDH_Aqua
+{
+    background-position: -122px -206px;
+    width: 26px;
+    height: 13px;
+}
+.dxeFocused_Aqua .dxeTBVSys .dxeFocusedMDHSys .dxEditors_edtTBMainDHHover_Aqua
+{
+    background-position: 0px -192px;
+    width: 26px;
+    height: 13px;
+}
+.dxeFocused_Aqua .dxeTBVSys .dxeFocusedMDHSys .dxEditors_edtTBMainDHPressed_Aqua
+{
+    background-position: -108px -192px;
+    width: 26px;
+    height: 13px;
+}
+.dxeFocused_Aqua .dxeTBVSys .dxeFocusedSDHSys .dxEditors_edtTBSecondaryDH_Aqua
+{
+    background-position: -81px -192px;
+    width: 26px;
+    height: 13px;
+}
+.dxeFocused_Aqua .dxeTBVSys .dxeFocusedSDHSys .dxEditors_edtTBSecondaryDHHover_Aqua
+{
+    background-position: -135px -192px;
+    width: 26px;
+    height: 13px;
+}
+.dxeFocused_Aqua .dxeTBVSys .dxeFocusedSDHSys .dxEditors_edtTBSecondaryDHPressed_Aqua
+{
+    background-position: -145px -171px;
+    width: 26px;
+    height: 13px;
+}
+.dxeSpinDecButtonHover_Aqua .dxEditors_edtSpinEditDecrementImage_Aqua
+{
+    background-position: -182px -10px;
+    width: 7px;
+    height: 7px;
+}
+.dxeSpinDecButtonPressed_Aqua .dxEditors_edtSpinEditDecrementImage_Aqua
+{
+    background-position: -170px -250px;
+    width: 7px;
+    height: 7px;
+}
+.dxeSpinIncButtonHover_Aqua .dxEditors_edtSpinEditIncrementImage_Aqua
+{
+    background-position: -162px -250px;
+    width: 7px;
+    height: 7px;
+}
+.dxeSpinIncButtonPressed_Aqua .dxEditors_edtSpinEditIncrementImage_Aqua
+{
+    background-position: -154px -250px;
+    width: 7px;
+    height: 7px;
+}
+.dxeSpinLargeDecButtonHover_Aqua .dxEditors_edtSpinEditLargeDecImage_Aqua
+{
+    background-position: -182px -141px;
+    width: 7px;
+    height: 9px;
+}
+.dxeSpinLargeDecButtonPressed_Aqua .dxEditors_edtSpinEditLargeDecImage_Aqua
+{
+    background-position: -182px -236px;
+    width: 7px;
+    height: 9px;
+}
+.dxeSpinLargeIncButtonHover_Aqua .dxEditors_edtSpinEditLargeIncImage_Aqua
+{
+    background-position: -182px -124px;
+    width: 7px;
+    height: 9px;
+}
+.dxeSpinLargeIncButtonPressed_Aqua .dxEditors_edtSpinEditLargeIncImage_Aqua
+{
+    background-position: -158px -81px;
+    width: 7px;
+    height: 9px;
+}
+.dxeTBHSys .dxEditors_edtTBMainDH_Aqua
+{
+    background-position: -28px -124px;
+    width: 13px;
+    height: 26px;
+}
+.dxeTBHSys .dxEditors_edtTBMainDHDisabled_Aqua
+{
+    background-position: -42px -124px;
+    width: 13px;
+    height: 26px;
+}
+.dxeTBHSys .dxEditors_edtTBMainDHHover_Aqua
+{
+    background-position: -126px -124px;
+    width: 13px;
+    height: 26px;
+}
+.dxeTBHSys .dxEditors_edtTBMainDHPressed_Aqua
+{
+    background-position: -84px -124px;
+    width: 13px;
+    height: 26px;
+}
+.dxeTBHSys .dxEditors_edtTBSecondaryDH_Aqua
+{
+    background-position: 0px -124px;
+    width: 13px;
+    height: 26px;
+}
+.dxeTBHSys .dxEditors_edtTBSecondaryDHDisabled_Aqua
+{
+    background-position: -14px -124px;
+    width: 13px;
+    height: 26px;
+}
+.dxeTBHSys .dxEditors_edtTBSecondaryDHHover_Aqua
+{
+    background-position: -70px -124px;
+    width: 13px;
+    height: 26px;
+}
+.dxeTBHSys .dxEditors_edtTBSecondaryDHPressed_Aqua
+{
+    background-position: -168px -124px;
+    width: 13px;
+    height: 26px;
+}
+.dxeTBVSys .dxEditors_edtTBMainDH_Aqua
+{
+    background-position: -162px -192px;
+    width: 26px;
+    height: 13px;
+}
+.dxeTBVSys .dxEditors_edtTBMainDHDisabled_Aqua
+{
+    background-position: -95px -206px;
+    width: 26px;
+    height: 13px;
+}
+.dxeTBVSys .dxEditors_edtTBMainDHHover_Aqua
+{
+    background-position: 0px -222px;
+    width: 26px;
+    height: 13px;
+}
+.dxeTBVSys .dxEditors_edtTBMainDHPressed_Aqua
+{
+    background-position: -27px -222px;
+    width: 26px;
+    height: 13px;
+}
+.dxeTBVSys .dxEditors_edtTBSecondaryDH_Aqua
+{
+    background-position: -54px -222px;
+    width: 26px;
+    height: 13px;
+}
+.dxeTBVSys .dxEditors_edtTBSecondaryDHDisabled_Aqua
+{
+    background-position: -149px -206px;
+    width: 26px;
+    height: 13px;
+}
+.dxeTBVSys .dxEditors_edtTBSecondaryDHHover_Aqua
+{
+    background-position: -27px -192px;
+    width: 26px;
+    height: 13px;
+}
+.dxeTBVSys .dxEditors_edtTBSecondaryDHPressed_Aqua
+{
+    background-position: -54px -192px;
+    width: 26px;
+    height: 13px;
+}
+.dxeTBHSys .dxEditors_edtTBMainDHPressed_Aqua,
+.dxeTBHSys .dxEditors_edtTBSecondaryDHPressed_Aqua
+{
+	z-index: 7;
+}
+.dxeTBVSys .dxEditors_edtTBMainDHPressed_Aqua,
+.dxeTBVSys .dxEditors_edtTBSecondaryDHPressed_Aqua
+{
+	z-index: 7;
+}
+.dxEditors_edtError_Aqua,
+.dxEditors_edtCalendarPrevYear_Aqua,
+.dxEditors_edtCalendarPrevYearDisabled_Aqua,
+.dxEditors_edtCalendarPrevMonth_Aqua,
+.dxEditors_edtCalendarPrevMonthDisabled_Aqua,
+.dxEditors_edtCalendarNextMonth_Aqua,
+.dxEditors_edtCalendarNextMonthDisabled_Aqua,
+.dxEditors_edtCalendarNextYear_Aqua,
+.dxEditors_edtCalendarNextYearDisabled_Aqua,
+.dxEditors_edtCalendarFNPrevYear_Aqua,
+.dxEditors_edtCalendarFNNextYear_Aqua,
+.dxEditors_edtEllipsis_Aqua,
+.dxEditors_edtEllipsisDisabled_Aqua,
+.dxEditors_edtEllipsisHover_Aqua,
+.dxEditors_edtEllipsisPressed_Aqua,
+.dxEditors_edtDropDown_Aqua,
+.dxEditors_edtDropDownDisabled_Aqua,
+.dxEditors_edtSpinEditIncrementImage_Aqua,
+.dxEditors_edtSpinEditIncrementImageDisabled_Aqua,
+.dxEditors_edtSpinEditDecrementImage_Aqua,
+.dxEditors_edtSpinEditDecrementImageDisabled_Aqua,
+.dxEditors_edtSpinEditLargeIncImage_Aqua,
+.dxEditors_edtSpinEditLargeIncImageDisabled_Aqua,
+.dxEditors_edtSpinEditLargeDecImage_Aqua,
+.dxEditors_edtSpinEditLargeDecImageDisabled_Aqua
+{
+	display:block;
+	margin:auto;
+}
+.dxEditors_edtCalendarFNPrevYear_Aqua
+{
+    margin-right: 8px;
+}
+.dxEditors_edtCalendarFNNextYear_Aqua
+{
+    margin-left: 8px;
+}
+

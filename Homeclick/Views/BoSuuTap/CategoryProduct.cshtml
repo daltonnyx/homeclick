@@ -1,0 +1,33 @@
+﻿@using Homeclick.Models;
+@using System.Collections;
+@using PagedList.Mvc;
+@*@model PagedList.PagedList<Product>*@
+@model List<Product>
+@{
+    Layout = null;
+}
+
+@foreach (Product item in Model)
+{
+    string url = "http://demo.vinabits.com.vn/homeclick2";
+    Dictionary<string, object> arrayItem = item.ToArray(item);
+    Dictionary<string, object> details = arrayItem["Product_detail"] as Dictionary<string, object>;
+    <div class="product-item">
+        <div class="image-item">
+            <a href="#"><img src="@url/@item.image" alt="" /></a>
+        </div>
+        <div class="title-item-product">
+            <h3><a href="@Url.Action("Product_Detail","Home", new {@Id=@item.Id})">@item.name;</a></h3>
+            <p class="item-prinnce">$@details["gia"].ToString()</p>
+        </div>
+    </div>
+}
+@*<div class="product-item">
+    <div class="image-item">
+        <a href=""><img src="~/Upload/Images/product_bosutap.jpg" alt="" /></a>
+    </div>
+    <div class="title-item-product">
+        <h3><a href="#">set bright lights - 1</a></h3>
+        <p class="item-prinnce">12.000.000 Đ</p>
+    </div>
+</div>*@

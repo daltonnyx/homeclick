@@ -1,0 +1,20 @@
+﻿@using Homeclick.Models
+@model Post
+@{
+    ViewBag.Title = Model.title;
+    Layout = "~/Views/Shared/Layout_postList.cshtml";
+}
+
+<div class="part-post post-feature" id="post_detail">
+    <div class="title-page title-feature">
+        <h1 class=" ">@ViewBag.Title</h1>
+    </div>
+    <div class="content col-md-12">
+       @{var escaped = new HtmlString(Model.content);}
+        @escaped
+    </div>
+</div>
+
+
+
+    

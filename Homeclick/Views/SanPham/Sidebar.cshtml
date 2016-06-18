@@ -1,0 +1,19 @@
+﻿@using Homeclick.Models;
+@model IList<Category>
+@{
+    Layout = null;
+}
+
+<div class="list-category sidebar">
+    <h3 class="title-sidebar title-cate-sidebar">@ViewBag.SideTitle</h3>
+    @if(ViewBag.type == "all") { 
+        <ul>
+            @foreach (Category item in Model)
+            {
+                <li><a href="@Url.Action("")">@item.name</a></li>
+            }
+        </ul>
+    }
+</div>
+
+

@@ -1,0 +1,7 @@
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Data" Assembly="DevExpress.Data.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Web" Assembly="DevExpress.Web.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+
+<dx:ASPxPopupControl runat="server" CssFilePath="{0}/styles.css" CssPostfix="Aqua" SpriteCssFilePath="{0}/sprite.css">
+    <SettingsLoadingPanel ImagePosition="Top" />
+</dx:ASPxPopupControl>
+

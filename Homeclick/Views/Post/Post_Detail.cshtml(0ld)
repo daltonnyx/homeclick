@@ -1,0 +1,24 @@
+﻿@using Homeclick.Models;
+@model Post
+    @{
+        ViewBag.Title = "Post_Detail";
+        Layout = "~/Views/Shared/_Layout_Blog.cshtml";
+    }
+
+    <div class="content-page ">
+        <div class="content-blog single-blog">
+
+           @{
+               String url = "http://demo.vinabits.com.vn/homeclick2";
+               Dictionary<string, object> arrayItem = Model.ToArray(Model);
+               Dictionary<string, object> details = arrayItem["Post_detail"] as Dictionary<string, object>;
+               <img src="@url/@Model.image" alt="" />
+              <div class="blog-single-content">
+                  <h3 class="blog-item-title">@Model.title</h3>
+                  @{var escaped = new HtmlString(@Model.content);}
+                  @escaped
+
+               </div>
+           }
+        </div>
+    </div>

@@ -1,0 +1,39 @@
+﻿@media (min-width: 1201px) {
+    .container .row{
+        overflow:hidden;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container .row{
+        overflow:hidden;
+    }
+    .main-menu ul li a{
+        padding:0 20px;
+        font-size:14px;
+    }
+    .menu-footer ul li a{
+        padding:0 6px;
+        font-size:12px;
+    }
+    .container .row{
+        padding:0 15px;
+    }
+}
+@media (max-width: 1170px) {
+  
+    .container{
+        width:100%!important;
+    }
+    .container .row{
+        padding:0 15px;
+         overflow:hidden;
+    }
+    .content-product-feature .feature-item{
+        margin:0;
+    }
+}
+@media (max-width: 991px) {
+
+}
+

@@ -1,0 +1,14 @@
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Data" Assembly="DevExpress.Data.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Web" Assembly="DevExpress.Web.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+
+<dx:ASPxDataView runat="server" CssFilePath="~/App_Themes/iOS/{0}/styles.css" CssPostfix="iOS" PagerPanelSpacing="1" ItemSpacing="1"
+    SpriteCssFilePath="~/App_Themes/iOS/{0}/sprite.css" PagerAlign="Justify">
+    <PagerSettings ShowNumericButtons="true" CurrentPageNumberFormat="{0}">
+        <FirstPageButton Visible="false" />
+        <LastPageButton Visible="false" />
+        <AllButton Visible="false" />
+        <Summary Visible="false" Position="Inside" />
+    </PagerSettings>
+	<LoadingPanelStyle ImageSpacing="5" />
+</dx:ASPxDataView>
+

@@ -1,0 +1,121 @@
+﻿<header id="header" class="site-header">
+    <div class="toolbar">
+        <div class="container">
+            <div class="row">
+                <div class="left-toolbar">
+                    <ul>
+                        <li class="toolbar-phone">+565975 658</li>
+                        <li class="toolbar-email">infodoowood.vn</li>
+                    </ul>
+                </div>
+                <div class="right-toolbar">
+                    <ul>
+                        <li><a href="#">My account</a></li>
+                        <li><a href="#">login</a></li>
+                        <li><a href="#">my wishlist</a></li>
+                        <li><a href="#">compare</a></li>
+                        <li><a href="#">logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mid-header">
+        <div class="container">
+            <div class="row">
+                <div class="logo">
+                    <div class="item-logo">
+                        <a href="@Url.Action("Index","Home")"><img src="~/Upload/Images/assets/logo.png" alt="" /></a>
+                        <p>Online furniture store project</p>
+                    </div>
+                </div>
+                <div class="header-form">
+                    <div class="shoppingcart">
+                        @Html.Action("ShoppingCartPartial", "GioHang")
+                    </div>
+                    <div class="search-form">
+                        @using (Html.BeginForm("Search_form", "Home", FormMethod.Get))
+                        {
+
+                            @Html.TextBox("search_name", "", new { @class = "search input-form" });
+                            <input class="button button-search" type="submit" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu">
+        <div class="container">
+            <div class="row">
+                <div class="mobimenu"><a href="#"><i class="fa fa-align-justify"></i></a></div>
+                <nav class="main-menu">
+                    <ul>
+                        <li class="menu-item">
+                            @Html.ActionLink("Sản Phẩm", "Index", "SanPham")
+                            <ul class="sub-menu">
+                                <li class="menu-item child-item">@Html.ActionLink("All space", "Models", "Category")</li>
+                                <li class="menu-item child-item">@Html.ActionLink("All Typologies", "AllTypologies", "Html")</li>
+                                <li class="menu-item child-item">@Html.ActionLink("Phòng khách", "Phong", "Html")</li>
+                                <li class="menu-item child-item">@Html.ActionLink("Phòng ăn", "Phong", "Html")</li>
+                                <li class="menu-item child-item">@Html.ActionLink("Phòng ngủ", "Phong", "Html")</li>
+                                <li class="menu-item child-item">@Html.ActionLink("Phòng em bé", "Phong", "Html")</li>
+                                <li class="menu-item child-item">@Html.ActionLink("Sản phẩm khác", "Chair", "Html")</li>
+
+                            </ul>
+                        </li>
+                        <li class="menu-item">
+                            @Html.ActionLink("Bộ sưu tập", "Index", "BoSuuTap")
+                        <ul class="sub-menu">
+                            <li class="menu-item child-item"><a href="http://demo.vinabits.com.vn/homeclick/BoSuuTap/Detail/8">Best collection</a></li>
+                            <li class="menu-item child-item"><a href="http://demo.vinabits.com.vn/homeclick/BoSuuTap/Detail/14">Bộ sưu tập tháng</a></li>
+                            <li class="menu-item child-item"><a href="http://demo.vinabits.com.vn/homeclick/BoSuuTap/Detail/8">Best choiced</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        @*@Html.ActionLink("Tự thiết kế ", "Detail", "Page", new { @alias = "tuthietke" },null)*@
+                        @Html.ActionLink("Tự thiết kế", "Index", "Design")
+                        <ul class="sub-menu">
+                            @*<li class="menu-item child-item">@Html.ActionLink("Hướng dẫn tự thiết kế", "Detail", "Page",new { @alias = "huongdantuthietke" }, null)</li>*@
+                            <li class="menu-item child-item">@Html.ActionLink("Hướng dẫn thiết kế", "Index", "Design")</li>
+                            <li class="menu-item child-item">@Html.ActionLink("Thiết kế mẫu", "Thietkemau", "Html")</li>
+                            <li class="menu-item child-item">@Html.ActionLink("Tự thiết kế", "Thietke1", "Html")</li>
+                        </ul>
+                    </li>
+                    @*<li class="menu-item">@Html.ActionLink("Cần thiết kế", "Detail", "Page", new { @alias = "canthietke" }, null)*@
+                    <li class="menu-item child-item">
+                        @Html.ActionLink("Cần thiết kế", "Canthietke", "Html")
+                    <ul class="sub-menu">
+                        <li class="menu-item child-item">@Html.ActionLink("Thiết kế nội thất", "Thietkenoithat", "Html", new { @alias = "huongdantuthietke" }, null)</li>
+                        <li class="menu-item child-item">@Html.ActionLink("Thiết kế kiến trúc", "Thietkekientruc", "Html")</li>
+                    </ul>
+                </li>
+
+                @*<li class="menu-item">@Html.ActionLink("Thư viện", "PostCategory", "Category", new { @id = 23 }, null)</li>*@
+                <li class="menu-item child-item">
+                    @Html.ActionLink("Thư viện", "Blog", "Html")
+                <ul class="sub-menu">
+                    <li class="menu-item child-item">@Html.ActionLink("Không gian mẫu", "Blog", "Html")</li>
+                    <li class="menu-item child-item">@Html.ActionLink("Bài viết", "Blog", "Html")</li>
+                    <li class="menu-item child-item">@Html.ActionLink("Phong thủy", "Blog", "Html")</li>
+                    <li class="menu-item child-item">@Html.ActionLink("Vật liệu", "Blog", "Html")</li>
+                    <li class="menu-item child-item">@Html.ActionLink("Phỏng vấn", "Blog", "Html")</li>
+                </ul>
+            </li>
+            <li class="menu-item child-item">
+                @Html.ActionLink("Thi công", "Blog", "Html")
+            <ul class="sub-menu">
+                <li class="menu-item child-item">@Html.ActionLink("Thiết kế nội thất", "Thietkenoithat", "Html", new { @alias = "huongdantuthietke" }, null)</li>
+                <li class="menu-item child-item">@Html.ActionLink("Thiết kế kiến trúc", "Thietkekientruc", "Html")</li>
+            </ul>
+        </li>
+        <li class="menu-item">@Html.ActionLink("Hướng dẫn", "Detail", "Page", new { @alias = "huongdan" }, null)</li>
+        @*<li class="menu-item">@Html.ActionLink("Hỏi đáp", "Detail", "Page", new { @alias = "hoidap" }, null)</li>*@
+        <li class="menu-item child-item">@Html.ActionLink("Hỏi đáp", "Faqs", "Html")</li>
+        <li class="menu-item">@Html.ActionLink("Liên hệ", "Lienhe", "Html")</li>
+    </ul>
+</nav><!--.main-menu -->
+</div>
+</div> <!--Container-->
+</div><!-- menu-->
+</header><!-- .site-header -->

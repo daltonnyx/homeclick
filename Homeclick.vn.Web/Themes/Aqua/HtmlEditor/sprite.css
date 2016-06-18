@@ -1,0 +1,218 @@
+.dxHtmlEditor_heConstrainProportionsBottom_Aqua,
+.dxHtmlEditor_heConstrainProportionsBottomRtl_Aqua,
+.dxHtmlEditor_heConstrainProportionsMiddleOff_Aqua,
+.dxHtmlEditor_heConstrainProportionsMiddleOffRtl_Aqua,
+.dxHtmlEditor_heConstrainProportionsMiddleOn_Aqua,
+.dxHtmlEditor_heConstrainProportionsMiddleOnRtl_Aqua,
+.dxHtmlEditor_heConstrainProportionsTop_Aqua,
+.dxHtmlEditor_heConstrainProportionsTopRtl_Aqua,
+.dxHtmlEditor_heErrorFrameCloseButton_Aqua,
+.dxHtmlEditor_heReset_Aqua,
+.dxHtmlEditor_heSizeGrip_Aqua,
+.dxHtmlEditor_heSizeGripRtl_Aqua,
+.dxHtmlEditor_heTagInspectorChangeButton_Aqua,
+.dxHtmlEditor_heTagInspectorRemoveButton_Aqua,
+.dxHtmlEditor_heTagInspectorSeparator_Aqua,
+.dxHtmlEditor_heToolbarPopOut_Aqua,
+.dxHtmlEditor_heToolbarPopOutDisabled_Aqua,
+.dxHtmlEditor_heToolbarPopOutHover_Aqua,
+.dxHtmlEditor_RoundPanel_herpBottomLeftCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpBottomRightCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpGroupBoxBottomLeftCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpGroupBoxBottomRightCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpGroupBoxTopLeftCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpGroupBoxTopRightCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpHeaderTopLeftCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpHeaderTopRightCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpTopLeftCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpTopRightCorner_Aqua
+{
+    background-image: url('sprite.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+.dxHtmlEditor_heConstrainProportionsBottom_Aqua
+{
+    background-position: -12px -40px;
+    width: 11px;
+    height: 6px;
+}
+.dxHtmlEditor_heConstrainProportionsBottomRtl_Aqua
+{
+    background-position: 0px -40px;
+    width: 11px;
+    height: 6px;
+}
+.dxHtmlEditor_heConstrainProportionsMiddleOff_Aqua
+{
+    background-position: 0px -21px;
+    width: 11px;
+    height: 18px;
+}
+.dxHtmlEditor_heConstrainProportionsMiddleOffRtl_Aqua
+{
+    background-position: -12px -21px;
+    width: 11px;
+    height: 18px;
+}
+.dxHtmlEditor_heConstrainProportionsMiddleOn_Aqua
+{
+    background-position: -61px 0px;
+    width: 11px;
+    height: 18px;
+}
+.dxHtmlEditor_heConstrainProportionsMiddleOnRtl_Aqua
+{
+    background-position: -24px -21px;
+    width: 11px;
+    height: 18px;
+}
+.dxHtmlEditor_heConstrainProportionsTop_Aqua
+{
+    background-position: -49px -34px;
+    width: 11px;
+    height: 5px;
+}
+.dxHtmlEditor_heConstrainProportionsTopRtl_Aqua
+{
+    background-position: -61px -34px;
+    width: 11px;
+    height: 5px;
+}
+.dxHtmlEditor_heErrorFrameCloseButton_Aqua
+{
+    background-position: -62px -21px;
+    width: 13px;
+    height: 9px;
+}
+.dxHtmlEditor_heReset_Aqua
+{
+    background-position: 0px 0px;
+    width: 20px;
+    height: 20px;
+}
+.dxHtmlEditor_heSizeGrip_Aqua
+{
+    background-position: -36px -21px;
+    width: 12px;
+    height: 12px;
+}
+.dxHtmlEditor_heSizeGripRtl_Aqua
+{
+    background-position: -49px -21px;
+    width: 12px;
+    height: 12px;
+}
+.dxHtmlEditor_heTagInspectorChangeButton_Aqua
+{
+    background-position: -41px 0px;
+    width: 19px;
+    height: 19px;
+}
+.dxHtmlEditor_heTagInspectorRemoveButton_Aqua
+{
+    background-position: -21px 0px;
+    width: 19px;
+    height: 19px;
+}
+.dxHtmlEditor_heTagInspectorSeparator_Aqua
+{
+    background-position: -76px -21px;
+    width: 4px;
+    height: 7px;
+}
+.dxHtmlEditor_heToolbarPopOut_Aqua
+{
+    background-position: -73px -13px;
+    width: 7px;
+    height: 7px;
+}
+.dxHtmlEditor_heToolbarPopOutDisabled_Aqua
+{
+    background-position: -73px 0px;
+    width: 7px;
+    height: 7px;
+}
+.dxHtmlEditor_heToolbarPopOutHover_Aqua
+{
+    background-position: -73px -32px;
+    width: 7px;
+    height: 7px;
+}
+.dxHtmlEditor_RoundPanel_herpBottomLeftCorner_Aqua
+{
+    background-position: -42px -40px;
+    width: 5px;
+    height: 5px;
+}
+.dxHtmlEditor_RoundPanel_herpBottomRightCorner_Aqua
+{
+    background-position: -66px -40px;
+    width: 5px;
+    height: 5px;
+}
+.dxHtmlEditor_RoundPanel_herpGroupBoxBottomLeftCorner_Aqua
+{
+    background-position: -60px -40px;
+    width: 5px;
+    height: 5px;
+}
+.dxHtmlEditor_RoundPanel_herpGroupBoxBottomRightCorner_Aqua
+{
+    background-position: -24px -40px;
+    width: 5px;
+    height: 5px;
+}
+.dxHtmlEditor_RoundPanel_herpGroupBoxTopLeftCorner_Aqua
+{
+    background-position: -36px -40px;
+    width: 5px;
+    height: 5px;
+}
+.dxHtmlEditor_RoundPanel_herpGroupBoxTopRightCorner_Aqua
+{
+    background-position: -30px -40px;
+    width: 5px;
+    height: 5px;
+}
+.dxHtmlEditor_RoundPanel_herpHeaderTopLeftCorner_Aqua
+{
+    background-position: -43px -34px;
+    width: 5px;
+    height: 5px;
+}
+.dxHtmlEditor_RoundPanel_herpHeaderTopRightCorner_Aqua
+{
+    background-position: -48px -40px;
+    width: 5px;
+    height: 5px;
+}
+.dxHtmlEditor_RoundPanel_herpTopLeftCorner_Aqua
+{
+    background-position: -37px -34px;
+    width: 5px;
+    height: 5px;
+}
+.dxHtmlEditor_RoundPanel_herpTopRightCorner_Aqua
+{
+    background-position: -54px -40px;
+    width: 5px;
+    height: 5px;
+}
+.dxHtmlEditor_heConstrainProportionsMiddleOn_Aqua,
+.dxHtmlEditor_heConstrainProportionsMiddleOff_Aqua,
+.dxHtmlEditor_heConstrainProportionsBottom_Aqua,
+.dxHtmlEditor_heConstrainProportionsTop_Aqua,
+.dxHtmlEditor_RoundPanel_herpHeaderTopLeftCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpHeaderTopRightCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpBottomLeftCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpBottomRightCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpTopLeftCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpTopRightCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpGroupBoxBottomLeftCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpGroupBoxBottomRightCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpGroupBoxTopLeftCorner_Aqua,
+.dxHtmlEditor_RoundPanel_herpGroupBoxTopRightCorner_Aqua
+{
+	display:block;
+}

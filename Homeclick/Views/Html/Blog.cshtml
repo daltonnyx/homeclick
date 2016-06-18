@@ -1,0 +1,226 @@
+﻿
+@{
+    ViewBag.Title = "Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main id="main" class="site-main">
+    <div class="container page-blog">
+        <div class="row breadcrumb">
+            <ul>
+                <li><a href="http://demo.vinabits.com.vn/homeclick/">Home</a></li>
+                <li>Bộ sưu tập</li>
+            </ul>
+        </div>
+        <div class="row">
+            <article id="sidebar">
+                <div class="list-category sidebar">
+                    <h3 class="title-sidebar title-cate-sidebar">Blog</h3>
+                    <ul>
+                        <li>
+                            <a href="#">Không gian mẫu</a>
+                            <ul>
+                                <li><a href="#">Living room</a></li>
+                                <li><a href="">Dining room</a></li>
+                                <li><a href="">Kitchen</a></li>
+                                <li><a href="">Kid room</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Bài viết</a>
+                            <ul>
+                                <li><a href="#">Style thiết kế</a></li>
+                                <li><a href="#">Design nổi tiếng</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Phong thủy</a></li>
+                        <li>
+                            <a href="#">Vật liệu</a>
+                            <ul>
+                                <li><a href="#">Gỗ</a></li>
+                                <li><a href="#">Ván</a></li>
+                                <li><a href="#">Sàn</a></li>
+                                <li><a href="#">Thảm</a></li>
+                                <li><a href="#">Đèn</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">Phỏng vấn</a>
+                            <ul>
+                                <li><a href="#">Designer</a></li>
+                                <li><a href="#">Developer</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+            <div class="content-page ">
+                <div class="slider-home">
+                    <div id="slider-home" class="owl-carousel owl-theme">
+                        <div class="item"><a href="#"><img src="~/Upload/Images/slider_01.jpg" alt="Slider_01"></a></div>
+                        <div class="item"><a href="#"><img src="~/Upload/Images/slider_02.jpg" alt="GTA V"></a></div>
+                        <div class="item"><a href="#"><img src="~/Upload/Images/slider_03.jpg" alt="Mirror Edge"></a></div>
+                        <div class="item"><a href="#"><img src="~/Upload/Images/slider_04.jpg" alt="Mirror Edge"></a></div>
+                    </div>
+                </div>
+                <div class="oderby-blog">
+                    <div class=" display-num"><span>Showing 1-18 of 20 Space</span></div>
+                    <div class="pagiblog">
+                        <span>Page:</span>
+                        <a href="#">1</a>
+                        <a href="#">2</a>
+                        <a href="#">View All</a>
+                    </div>
+                    <div class="sorblog">
+                        <span>Sort by:</span>
+                        <select>
+                            <option value="1">Living room</option>
+                            <option value="1">Living room</option>
+                            <option value="1">Living room</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="content-blog">
+                    <div class="blog">
+                        <div class="blog-item">
+                            <img src="~/Upload/Images/blog1.jpg" alt="" />
+                            <div class="blog-item-conent">
+                                <h3 class="blog-item-title"><a href="@Url.Action("SingleBlog","Html")">Overland Network </a></h3>
+                                
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste commodi ...
+                                </p>
+                                <p class="date-blog">April 24,2016</p>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <img src="~/Upload/Images/blog1.jpg" alt="" />
+                            <div class="blog-item-conent">
+                                <h3 class="blog-item-title"><a href="@Url.Action("SingleBlog","Html")">Overland Network </a></h3>
+                                
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste commodi ...
+                                </p>
+                                <p class="date-blog">April 24,2016</p>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <img src="~/Upload/Images/blog1.jpg" alt="" />
+                            <div class="blog-item-conent">
+                                <h3 class="blog-item-title"><a href="@Url.Action("SingleBlog","Html")">Overland Network</a></h3>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste commodi ...
+                                </p>
+                                <p class="date-blog">April 24,2016</p>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <img src="~/Upload/Images/blog1.jpg" alt="" />
+                            <div class="blog-item-conent">
+                                <h3 class="blog-item-title"><a href="@Url.Action("SingleBlog","Html")">Overland Network </a></h3>
+                                
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste commodi ...
+                                </p>
+                                <p class="date-blog">April 24,2016</p>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <img src="~/Upload/Images/blog1.jpg" alt="" />
+                            <div class="blog-item-conent">
+                                <h3 class="blog-item-title"><a href="@Url.Action("SingleBlog","Html")">Overland Network </a></h3>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste commodi ...
+                                </p>
+                                <p class="date-blog">April 24,2016</p>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <img src="~/Upload/Images/blog1.jpg" alt="" />
+                            <div class="blog-item-conent">
+                                <h3 class="blog-item-title"><a href="@Url.Action("SingleBlog","Html")">Overland Network </a></h3>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste commodi ...
+                                </p>
+                                <p class="date-blog">April 24,2016</p>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <img src="~/Upload/Images/blog1.jpg" alt="" />
+                            <div class="blog-item-conent">
+                                <h3 class="blog-item-title"><a href="@Url.Action("SingleBlog","Html")">Overland Network </a></h3>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste commodi ...
+                                </p>
+                                <p class="date-blog">April 24,2016</p>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <img src="~/Upload/Images/blog1.jpg" alt="" />
+                            <div class="blog-item-conent">
+                                <h3 class="blog-item-title"><a href="@Url.Action("SingleBlog","Html")">Overland Network </a></h3>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste commodi ...
+                                </p>
+                                <p class="date-blog">April 24,2016</p>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <img src="~/Upload/Images/blog1.jpg" alt="" />
+                            <div class="blog-item-conent">
+                                <h3 class="blog-item-title"><a href="@Url.Action("SingleBlog","Html")">Overland Network </a></h3>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste commodi ...
+                                </p>
+                                <p class="date-blog">April 24,2016</p>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <img src="~/Upload/Images/blog1.jpg" alt="" />
+                            <div class="blog-item-conent">
+                                <h3 class="blog-item-title"><a href="@Url.Action("SingleBlog","Html")">Overland Network </a></h3>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste commodi ...
+                                </p>
+                                <p class="date-blog">April 24,2016</p>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <img src="~/Upload/Images/blog1.jpg" alt="" />
+                            <div class="blog-item-conent">
+                                <h3 class="blog-item-title"><a href="@Url.Action("SingleBlog","Html")">Overland Network </a></h3>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste commodi ...
+                                </p>
+                                <p class="date-blog">April 24,2016</p>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <img src="~/Upload/Images/blog1.jpg" alt="" />
+                            <div class="blog-item-conent">
+                                <h3 class="blog-item-title"><a href="@Url.Action("SingleBlog","Html")">Overland Network </a></h3>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste commodi ...
+                                </p>
+                                <p class="date-blog">April 24,2016</p>
+                            </div>
+                        </div>
+                        <div class="blog-item">
+                            <img src="~/Upload/Images/blog1.jpg" alt="" />
+                            <div class="blog-item-conent">
+                                <h3 class="blog-item-title"><a href="@Url.Action("SingleBlog","Html")">Overland Network </a></h3>
+
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste commodi ...
+                                </p>
+                                <p class="date-blog">April 24,2016</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+

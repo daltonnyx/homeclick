@@ -1,0 +1,109 @@
+﻿@using Homeclick.Models;
+@model Product
+
+@{
+    //ViewBag.Title = "Product_Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main>
+    <div class="container single-product">
+        <div class="row">
+
+            @{
+
+                Dictionary<string, object> arrayItem = Model.ToArray(Model);
+                Dictionary<string, object> details = arrayItem["Product_detail"] as Dictionary<string, object>;
+
+                var gallery = details["hinh_anh"].ToString().Split(';');
+
+                <div class="image">
+                    @{var image = @Model.image.Replace("\\",@"/");}
+                    <div class="imge-thumnail"><img class="zoom_03" src="@ViewBag.url/@image" data-zoom-image="@ViewBag.url/@image" /></div>
+                    <div id="gallery_01">
+                        @foreach (var img in gallery)
+                        {
+                            image = @img.Replace("\\", @"/");
+                            <a href="#" class="item" data-image="@ViewBag.url/@image" data-zoom-image="@ViewBag.url/@image">
+                                <img class="" src="@ViewBag.url/@image" />
+                            </a>
+                        }
+                    </div>
+                </div>            <div class="sumary">
+                    <h3 class="single-product-title">@Model.name</h3>
+                    <div class="sg-prince">
+                        
+                        <div class="number-prince">@details["gia"]  VNĐ</div>
+                    </div>
+                    <div class="form-add-to-cart">
+                        @using (Html.BeginForm("ThemSanPham", "GioHang", new { @Id = @Model.Id, @strUrl = Request.Url.ToString() }))
+                        {
+                            <div id="color">
+                                <span>Màu</span>
+                                <button class="color hong" onclick=""></button>
+                                <button class="color xanh-lam" onclick=""></button>
+                                <button class="color xanh-nhat" onclick=""></button>
+                            </div>
+                            <div id="quality">
+                                <label>Số lượng</label>
+                                <div class="quantity">
+                                    <span class="minus">-</span>
+                                    <input type="text" step="1" min="0" value="1" title="Qty" class="qty" size="4" name="txtqty">
+                                    <span class="plus">+</span>
+                                   
+                                </div>
+                            </div>
+
+                            <div class="add-shop">
+                                <input class="input add-to-cart" type="submit" value="Đặt hàng" />
+                            </div>
+                        }
+                    </div>
+                    <div class="detail-product">
+                        <h3 class="detail-product-title">Chi tiết</h3>
+                        <div class="detail-product-content">
+                            <h3>Ghế Mata</h3>
+                            @{var escaped = new HtmlString(Model.content);}
+                            <p>@escaped</p>
+                            <p><span>Chất liệu:</span>@*@details["chat_lieu"]*@</p>
+                            <p><span>Kích thước:</span>@details["kich_thuoc"]</p>
+                            <p><span>Bảo hành:</span>@details["bao_hanh"]</p>
+                            <p><span>Xuất xứ:</span>@details["xuat_xu"]</p>
+                            <p><span>Đặt hàng:</span>@details["dat_hang"]</p>
+                        </div>
+                    </div>
+                    <div class="detail-product">
+                        <h3 class="detail-product-title">Designer</h3>
+                        <div class="detail-product-content">
+                           
+                        </div>
+                    </div>
+                    <div class="detail-product">
+                        <h3 class="detail-product-title">Brand</h3>
+                        <div class="detail-product-content">
+
+                        </div>
+                    </div>
+                    <div class="detail-product">
+                        <h3 class="detail-product-title">Returns & Echanges</h3>
+                        <div class="detail-product-content">
+
+                        </div>
+                    </div>
+                    <div class="Share-product">
+                        <h3 class="social-detail">Chia sẻ</h3>
+                        <span class='st_facebook_large'></span>
+                        <span class='st_twitter_large'></span>
+                        <span class='st_googleplus_large'></span>
+                        <span class='st_pinterest_large'></span>
+                    </div>
+                    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+                    <script type="text/javascript">stLight.options({ publisher: "fe9119ac-4400-41f7-90df-64d76f41b1ac", doNotHash: false, doNotCopy: false, hashAddressBar: false });</script>
+                </div>
+
+            }
+
+
+        </div>
+    </div>
+    
+</main><!-- Main-->

@@ -1,0 +1,36 @@
+﻿@using Homeclick.Models;
+@using System.Collections;
+@using PagedList.Mvc;
+@model PagedList.PagedList<Post>
+@{
+    Layout = null;
+}
+<div class="content-blog" id="content-blog">
+    <div class="blog">
+        @foreach (Post item in Model)
+        {
+            String url = "http://demo.vinabits.com.vn/homeclick2";
+            Dictionary<string, object> arrayItem = item.ToArray(item);
+            Dictionary<string, object> details = arrayItem["Post_detail"] as Dictionary<string, object>;
+            <div class="blog-item">
+                <img src="@url/@item.image" alt="" />
+                <div class="blog-item-conent">
+                    <h3 class="blog-item-title"><a href="@Url.Action("Post_Detail","Post", new {@Id=@item.Id})">@item.title</a></h3>
+                    <p class="post-author">Post by:<strong>Admin</strong></p>
+                    <p>
+                       @item.content;
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@if (Model.PageCount > 1)
+{
+    <div class="pavination col-md-12" data-off-target="roleList">
+        @Html.PagedListPager(@Model, page => Url.Action("FilterProduct", "P", new { page = page }),
+                                             PagedList.Mvc.PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "content-blog" }));
+    </div>
+}
+

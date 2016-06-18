@@ -1,0 +1,13 @@
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Data" Assembly="DevExpress.Data.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Web" Assembly="DevExpress.Web.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+
+<dx:ASPxFileManager runat="server">
+    <Styles CssFilePath="{0}/styles.css" CssPostfix="Aqua"></Styles>
+    <Images SpriteCssFilePath="{0}/sprite.css" 
+            FolderContainerNodeLoadingPanel-Url="Web/tvNodeLoading.gif"></Images>    
+    <ImagesDetailsView>
+        <HeaderActiveFilter SpriteProperties-CssClass="dxWeb_fmGvHeaderFilterActive_Aqua"></HeaderActiveFilter>
+        <HeaderFilter SpriteProperties-CssClass="dxWeb_fmGvHeaderFilter_Aqua"></HeaderFilter>
+    </ImagesDetailsView>
+    <SettingsLoadingPanel ImagePosition="Top" />
+</dx:ASPxFileManager>

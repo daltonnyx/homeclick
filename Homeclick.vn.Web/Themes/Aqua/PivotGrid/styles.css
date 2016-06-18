@@ -1,0 +1,570 @@
+.dxpgControl_Aqua, .dxpgCustForm_Aqua
+{
+	color: #4F4F4F;
+	font: 12px Tahoma, Geneva, sans-serif;
+	border: Solid 1px #A3C0E8;
+	background-color: #F7FAFF;
+}
+.dxpgContainerCell_Aqua
+{
+	vertical-align: top;
+}
+.dxpgMainTable_Aqua
+{
+	border: 0px;
+	border-collapse: separate;
+	width: 100%;
+	text-align: left;
+}
+div.dxpgMainTable_Aqua
+{
+	-ms-touch-action: pinch-zoom;
+}
+.dxpgMainTable_Aqua caption
+{
+    background: #F7FAFF;
+    color: #283B56;
+    border-bottom: Solid 1px #A3C0E8;
+    padding: 5px 5px 6px;
+	font-weight: normal;		
+	text-align: center;	
+}    
+.dxpgHeader_Aqua
+{
+	border-width: 0px;
+	color: #283B56;
+	background-color: #DDECFF;
+	cursor: pointer;
+	white-space: nowrap;
+	text-align: left;
+
+	background-image: url('pgHeaderBack.gif');
+	background-repeat: repeat-x;
+	background-position: left top;
+}
+.dxpgHeaderTable_Aqua
+{
+	border: Solid 1px #A3C0E8;
+	width: 100%;
+}
+.dxpgMSDraggable .dxpgHeaderTable_Aqua,
+.dxpgCustFieldsDiv_Aqua .dxpgHeaderTable_Aqua
+{
+	-ms-touch-action: pinch-zoom;
+}
+.dxpgHeaderGroupButton_Aqua
+{
+	padding-left: 4px;
+	vertical-align: middle;
+}
+.dxpgHeaderText_Aqua
+{
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-top: 4px;
+	padding-bottom: 5px;
+}
+.dxpgHeaderSort_Aqua
+{
+	padding-left: 0px;
+	padding-right: 4px;
+	padding-top: 0px;
+	vertical-align: middle;
+}
+.dxpgHeaderFilter_Aqua
+{
+	padding-left: 0px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	vertical-align: middle;	
+}
+.dxpgHeaderHover_Aqua
+{
+	background-color: #FFD770;
+	background-image: url('pgHeaderHoverBack.gif');
+	background-repeat: repeat-x;
+	background-position: left top;
+}
+.dxpgArea_Aqua, .dxpgArea_Aqua table
+{
+	color: #283B56;
+}
+.dxpgArea_Aqua
+{
+	border: Solid 1px #A3C0E8;
+	background-color: #F7FAFF;
+	border-left-style: none;
+	border-top-style: none;
+	border-bottom-style: none;
+	border-right-style: none;
+}
+.dxpgColumnArea_Aqua
+{
+	border-bottom-style: solid;
+}
+.dxpgRowArea_Aqua
+{
+}
+.dxpgDataArea_Aqua
+{
+}
+.dxpgFilterArea_Aqua
+{
+	background-color: #D7E9FD;
+	color: #4F4F4F;
+	border-bottom-style: Solid;
+}
+.dxpgEmptyArea_Aqua 
+{
+	cursor: default;
+	padding-top: 6px;
+	padding-left: 6px;
+	padding-bottom: 7px;
+	padding-right: 6px;
+}
+.dxpgColumnFieldValue_Aqua
+{
+    color: #4F4F4F;
+	background-color: #E2F0FF;
+	border: Solid 1px #A3C0E8;
+	border-left-style: Solid;
+	border-bottom-style: Solid;
+	border-right-style: none;
+	border-top-style: none;
+	padding: 4px 6px;
+	padding-bottom: 5px;
+    font-weight: normal;
+    text-align: left;    
+}
+.dxpgColumnTotalFieldValue_Aqua
+{
+	background-color: #C3DCFF;
+	background-image: none;
+	border-left-style: Solid;
+	border-bottom-style: Solid;
+	border-right-style: none;
+	border-top-style: none;
+}
+.dxpgColumnGrandTotalFieldValue_Aqua
+{
+	background-color: #C3DCFF;
+	border-left-style: Solid;
+	border-bottom-style: Solid;
+	border-right-style: none;
+	border-top-style: none;
+}
+.dxpgRowFieldValue_Aqua
+{
+    color: #4F4F4F;
+	background-color: #D7E9FD;
+	border: Solid 1px #A3C0E8;
+	border-left-style: none;
+	border-bottom-style: none;
+	border-right-style: Solid;
+	border-top-style: Solid;
+	padding: 4px 6px 5px 6px;
+    font-weight: normal;
+    text-align: left;    
+}
+.dxpgRowTotalFieldValue_Aqua
+{
+	background-color: #C3DCFF;
+	border-left-style: none;
+	border-bottom-style: none;
+	border-right-style: Solid;
+	border-top-style: Solid;
+}
+.dxpgRowTreeFieldValue_Aqua
+{
+	padding: 0;
+	font-size: 0;
+}
+.dxpgRowGrandTotalFieldValue_Aqua
+{
+	background-color: #AFCDF8;
+	border-left-style: none;
+	border-bottom-style: none;
+	border-right-style: Solid;
+	border-top-style: Solid;
+	padding: 6px 6px 7px 6px;
+}
+.dxpgCollapsedButton_Aqua
+{
+	vertical-align: -3px;
+	border: 0px;
+	margin-right: 5px;
+}
+.dxpgSortByColumnImage_Aqua
+{
+	vertical-align: -3px;
+	border: 0px;
+	margin-left: 5px;
+}
+.dxpgCell_Aqua
+{
+	text-align: right;
+	background-color: #FFFFFF;	
+	border-color: #C9D6E9;
+	border-width: 1px;
+	border-top-style: Solid;
+	border-left-style: Solid;
+	border-bottom-style: none;
+	border-right-style: none;
+	padding: 4px;
+	padding-bottom: 5px;
+	white-space: nowrap;
+}
+.dxpgKPICell_Aqua
+{
+	text-align: center;
+	vertical-align: middle;
+}
+.dxpgTotalCell_Aqua
+{
+	background-color: #F7FAFF;
+}
+.dxpgGrandTotalCell_Aqua
+{
+	background-color: #EEF3FF;
+}
+.dxpgFilterItem_Aqua
+{
+    white-space: nowrap;
+}
+.dxpgFilterButton_Aqua
+{
+	padding: 2px 6px;
+}
+.dxpgTopPager_Aqua
+{
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	border-bottom: Solid 1px #A3C0E8;
+	background: #C7DFFF url('pgPagerBack.gif') top;
+	padding:6px 0px;
+}
+.dxpgBottomPager_Aqua
+{
+	border-top: Solid 1px #A3C0E8;
+	border-bottom: none;
+	border-right: none;
+	border-left: none;
+	background: #C7DFFF url('pgPagerBack.gif') top;
+	padding:6px 0px;
+}
+.dxpgTopPager_Aqua,
+.dxpgBottomPager_Aqua
+{
+	box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+}
+.dxpgCustomizationFieldsHeader_Aqua
+{
+	color: #000000;
+}
+.dxpgCustomizationFieldsContent_Aqua
+{
+	padding: 0px!important;
+}
+.dxpgMenuItem_Aqua 
+{
+}
+.dxpgDataHeadersImage_Aqua
+{
+	margin-right: 5px;
+	vertical-align: -2px;
+}
+.dxpgPrefilterPanelContainer_Aqua
+{
+	border-bottom-style: none;
+	border-left-style: none;
+	border-right-style: none;
+}
+.dxpgPrefilterPanelLink_Aqua
+{
+	color: #283B56;
+	text-decoration: underline;	
+}
+.dxpgPrefilterPanel_Aqua
+{
+	border: none;
+	background: #B7D7FF;
+}
+.dxpgPrefilterPanelCheckBoxCell_Aqua
+{
+	padding: 0 3px;
+	padding-right: 7px;
+}
+.dxpgPrefilterPanelImageCell_Aqua
+{
+	padding: 0 3px;
+	padding-right: 1px;
+	cursor: pointer;
+}
+.dxpgPrefilterPanelClearButtonCell_Aqua
+{
+	padding: 5px 6px 8px;
+}
+.dxpgPrefilterPanelExpressionCell_Aqua
+{
+	padding: 5px 5px 8px 0;	
+	white-space: nowrap;
+}
+.dxpgFilterBuilderMainArea_Aqua
+{
+	background: white;
+	padding: 6px 2px;
+} 
+.dxpgFilterBuilderButtonArea_Aqua
+{
+	background-color: #EEF3FF;
+	border-top: solid 1px #A3C0E8;
+	padding: 6px;
+	white-space: nowrap;
+}
+.dxpgGroupSeparator_Aqua
+{
+	vertical-align: middle;
+}
+.dxpgCustFieldsFilterAreaHeaders_Aqua,
+.dxpgCustFieldsRowAreaHeaders_Aqua,
+.dxpgCustFieldsColumnAreaHeaders_Aqua,
+.dxpgCustFieldsDataAreaHeaders_Aqua,
+.BottomPanelOnly1by4 .dxpgFLFRDiv_Aqua,
+.BottomPanelOnly1by4 .dxpgFLCDDiv_Aqua
+{
+width:100%;
+height:50%;
+}
+.StackedDefault .dxpgCustFieldsFieldList_Aqua
+{
+height:34%;
+}
+.StackedDefault .dxpgFLFRDiv_Aqua
+{
+width:50%;
+height:66%;
+float:left;
+}
+.StackedDefault .dxpgFLCDDiv_Aqua
+{
+width:50%;
+height:66%;
+float:right;
+}
+.StackedDefault .dxpgCustFieldsFilterAreaHeaders_Aqua .dxpgFLTextDiv_Aqua,
+.StackedDefault .dxpgCustFieldsColumnAreaHeaders_Aqua .dxpgFLTextDiv_Aqua
+{
+height:47px;
+}
+.TopPanelOnly .dxpgCustFieldsFieldList_Aqua
+{
+width:100%;
+height:100%;
+}
+.TopPanelOnly .dxpgFLDefereDiv_Aqua .dxeBase_Aqua,
+.TopPanelOnly .dxpgFLDefereDiv_Aqua .dxpgFLDefereDB_Aqua,
+.TopPanelOnly .dxpgFLFRDiv_Aqua,
+.TopPanelOnly .dxpgFLCDDiv_Aqua,
+.BottomPanelOnly1by4 .dxpgCustFieldsFieldList_Aqua,
+.BottomPanelOnly2by2 .dxpgCustFieldsFieldList_Aqua,
+.TopPanelOnly .dxpgFLTextDiv_Aqua div
+{
+display:none;
+}
+.TopPanelOnly .dxpgFLTextDiv_Aqua
+{
+ height:19px;   
+}
+.TopPanelOnly .dxpgFLDefereDiv_Aqua
+{
+ height:16px;   
+}
+.BottomPanelOnly2by2 .dxpgFLFRDiv_Aqua,
+.StackedSideBySide .dxpgCustFieldsFieldList_Aqua
+{
+width:50%;
+height:100%;
+float:left;
+}
+.BottomPanelOnly2by2 .dxpgFLCDDiv_Aqua
+{
+width:50%;
+height:100%;
+float:right;
+}
+.StackedSideBySide .dxpgFLFRDiv_Aqua,
+.StackedSideBySide .dxpgFLCDDiv_Aqua
+{
+width:50%;
+height:50%;
+float:right;
+}
+.dxpgCustFields_Aqua
+{
+    display:block;
+    position:relative;
+}
+.dxpgFLListDiv_Aqua > div
+{
+    border:1px solid #A3C0E8;
+    position:relative;
+    display:block;
+    height:100%;
+    padding:1px;
+    background:#FFFFFF;
+    overflow:hidden;
+}
+.dxpgFLListDiv_Aqua > div > div
+{
+    position:relative;
+    display:block;
+    height:100%;
+    padding:0px;
+    background:#FFFFFF;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+.DragOver .dxpgFLListDiv_Aqua > div
+{
+    background:#FFD324;
+}
+.dxpgFLListDiv_Aqua
+{
+    padding:0px 3px 0px 3px;
+}
+.dxpgFLButtonDiv_Aqua .dxbButton_Aqua div.dxb
+{
+	border: dotted 1px transparent;	
+	padding:1px 7px 0px;
+}
+.dxpgFLButtonDiv_Aqua .dxbButton_Aqua div.dxbf
+{
+	border: dotted 1px black;	
+}
+.dxpgFLTextDiv_Aqua
+{
+ height:28px;
+}
+.dxpgFLTextDiv_Aqua div
+{
+   display:block;
+   float:left;
+   margin:-17px 0px 3px 0px;
+   left:6px;
+   top:100%;
+   position:relative;
+}
+div.dxpgFLTextImgDiv_Aqua
+{
+    display:block;
+    height:16px;
+    width:16px;
+    margin:-18px 0px 3px 0px;
+    left:3px;
+}
+.dxpgFLButtonDiv_Aqua
+{
+    float:right;
+    height:28px;
+    position:relative;
+    z-index:1;
+}
+.dxpgFLDefereDiv_Aqua
+{
+    height:52px;
+}
+.dxpgFLDefereDiv_Aqua
+{
+    height:50px;
+}
+.dxpgCustFieldsDiv_Aqua
+{
+ clear:both;   
+ padding:0px 9px;
+}
+.dxpgFLButton_Aqua
+{
+ margin:12px 12px 0px 0px;
+ width:40px;
+ height:23px;
+}
+.dxpgFLDefereDiv_Aqua .dxeBase_Aqua
+{
+ float:left;
+ display:block;
+ border-collapse:separate;
+ padding:18px 0px 0px 0px; 
+ margin-left:8px;  
+}
+.dxpgCustForm_Aqua .dxpgFLDefereDiv_Aqua .dxeBase_Aqua
+{
+ padding:18px 0px 0px;
+}
+.dxpgFLDefereDB_Aqua
+{
+float:right;
+display:block;
+margin: 16px 12px 0 0;
+}
+.dxpgFLDefereDiv_Aqua .dxbButton_Aqua div.dxb
+{
+    padding:1px 13px 1px 13px;
+    border: dotted 1px transparent;	
+}
+.dxpgFLDefereDiv_Aqua .dxbButton_Aqua div.dxbf
+{
+    border: dotted 1px black;	
+}
+.dxpgFLListDiv_Aqua table 
+{
+ width:100%;
+ table-layout:fixed;  
+ overflow:visible;
+}
+.dxpgFLListDiv_Aqua table table td
+{
+     overflow:hidden; 
+}
+/*Loading Panel*/
+.dxpgLoadingPanel_Aqua,
+.dxpgLoadingPanelWithContent_Aqua 
+{
+	font: 12px Tahoma, Geneva, sans-serif;
+	color: #2C4D79;
+	background-color: White;
+	border: 1px solid #67A2C6;
+}
+.dxpgLoadingPanel_Aqua  td.dx,
+.dxpgLoadingPanelWithContent_Aqua td.dx
+{
+	white-space: nowrap;
+	text-align: center;
+	padding: 10px 20px 8px;
+}
+.dxpgLoadingPanel_Aqua .dxlp-loadingImage,
+.dxpgLoadingPanelWithContent_Aqua .dxlp-loadingImage
+{
+	background-image: url('../Web/Loading.gif');
+	height:18px;
+	width:18px;
+}
+
+.dxpgVScrollBarAreaCell_Aqua {
+    background-color: #DDECFF;
+    border-left: 1px solid #A3C0E8;
+    border-bottom: 1px solid #A3C0E8;
+}
+.dxpgHScrollBarAreaCell_Aqua {
+    background-color: #DDECFF;
+    border-top: 1px solid #A3C0E8;
+    border-right: 1px solid #A3C0E8;
+}
+.dxpgScrollBarEdgeCell_Aqua {
+    background-color: #F7FAFF;
+    border-left: 1px solid #A3C0E8;
+    border-top: 1px solid #A3C0E8;
+}

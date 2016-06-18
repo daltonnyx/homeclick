@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <BOModel Id="BOModel">
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Category">
+      <OwnMembers Id="OwnMembers">
+        <Member Name="DanhSachProducts" Caption="Danh sách sản phẩm" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Product">
+      <OwnMembers Id="OwnMembers">
+        <Member Name="DanhSachCategories" PropertyEditorType="Homeclick.vn.Module.Web.Editors.CheckBoxCollectionEditor" Caption="Danh mục" />
+      </OwnMembers>
+    </Class>
+  </BOModel>
+  <Views Id="Views">
+    <ListView Id="Category_DanhSachProducts_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="author_id" Removed="True" />
+        <ColumnInfo Id="content" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="Product_type_id" Removed="True" />
+        <ColumnInfo Id="status" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Product_DanhSachCategories_ListView">
+      <Columns Id="Columns">
+        <ColumnInfo Id="Category_type_id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="parent_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Category_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="DanhSachProducts" RelativeSize="100">
+              <LayoutItem Id="DanhSachProducts" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="Product_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="DanhSachCategories" RelativeSize="100">
+              <LayoutItem Id="DanhSachCategories" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

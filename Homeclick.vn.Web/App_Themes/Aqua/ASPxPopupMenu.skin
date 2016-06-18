@@ -1,0 +1,8 @@
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Data" Assembly="DevExpress.Data.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Web" Assembly="DevExpress.Web.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+
+<dx:ASPxPopupMenu runat="server" CssFilePath="{0}/styles.css" SpriteCssFilePath="{0}/sprite.css" CssPostfix="Aqua">
+    <RootItemSubMenuOffset FirstItemY="-2" LastItemY="-2" Y="-2" FirstItemX="2" LastItemX="2" X="2" />
+    <ItemSubMenuOffset FirstItemX="2" FirstItemY="-2" LastItemX="2" LastItemY="-2" X="2" Y="-2" />
+    <SettingsLoadingPanel ImagePosition="Top" />
+</dx:ASPxPopupMenu>

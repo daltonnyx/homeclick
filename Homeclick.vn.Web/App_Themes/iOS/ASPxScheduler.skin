@@ -1,0 +1,98 @@
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Data" Assembly="DevExpress.Data.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Web.ASPxScheduler" Assembly="DevExpress.Web.ASPxScheduler.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register Assembly="DevExpress.Web.ASPxScheduler.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxScheduler" TagPrefix="temp" %>
+<dx:ASPxScheduler runat="server">
+  <Styles CssFilePath="~/App_Themes/iOS/{0}/styles.css" CssPostfix="iOS">
+		<ResourceNavigator ButtonSpacing="28px" />
+	</Styles>
+	<Images SpriteCssFilePath="~/App_Themes/iOS/{0}/sprite.css">
+	</Images>
+
+    <ResourceColorSchemas>               
+        <temp:SchedulerColorSchema
+            Cell="247,247,247"
+            CellBorder="234,234,234"
+            CellBorderDark="224,224,224"
+            CellLight="255,255,255"
+            CellLightBorder="242,242,242"
+            CellLightBorderDark="232,232,232" />
+        <temp:SchedulerColorSchema
+            Cell="232,241,222"
+            CellBorder="220,229,210"
+            CellBorderDark="211,219,201"
+            CellLight="240,249,229"
+            CellLightBorder="227,236,217"
+            CellLightBorderDark="218,226,208" />
+        <temp:SchedulerColorSchema
+            Cell="229,239,241"
+            CellBorder="218,227,229"
+            CellBorderDark="208,217,219"
+            CellLight="237,247,249"
+            CellLightBorder="225,234,236"
+            CellLightBorderDark="215,224,226" />
+        <temp:SchedulerColorSchema
+            Cell="246,233,223"
+            CellBorder="233,221,211"
+            CellBorderDark="223,212,202"
+            CellLight="254,241,230"
+            CellLightBorder="241,228,218"
+            CellLightBorderDark="231,219,209" />
+        <temp:SchedulerColorSchema
+            Cell="239,233,247"
+            CellBorder="227,221,234"
+            CellBorderDark="217,212,224"
+            CellLight="247,241,255"
+            CellLightBorder="234,228,242"
+            CellLightBorderDark="224,219,232" />
+        <temp:SchedulerColorSchema
+            Cell="221,246,226"
+            CellBorder="209,233,215"
+            CellBorderDark="200,223,205"
+            CellLight="228,254,234"
+            CellLightBorder="216,241,222"
+            CellLightBorderDark="207,231,212" />
+        <temp:SchedulerColorSchema
+            Cell="247,231,239"
+            CellBorder="234,219,227"
+            CellBorderDark="224,210,217"
+            CellLight="255,239,247"
+            CellLightBorder="242,227,234"
+            CellLightBorderDark="232,217,224" />
+        <temp:SchedulerColorSchema
+            Cell="239,236,227"
+            CellBorder="227,224,216"
+            CellBorderDark="217,214,206"
+            CellLight="247,244,235"
+            CellLightBorder="234,231,223"
+            CellLightBorderDark="224,222,213" />
+        <temp:SchedulerColorSchema
+            Cell="247,233,231"
+            CellBorder="234,221,219"
+            CellBorderDark="224,212,210"
+            CellLight="255,241,239"
+            CellLightBorder="242,228,227"
+            CellLightBorderDark="232,219,217" />
+        <temp:SchedulerColorSchema
+            Cell="223,242,244"
+            CellBorder="211,230,231"
+            CellBorderDark="202,219,221"
+            CellLight="230,250,252"
+            CellLightBorder="218,237,239"
+            CellLightBorderDark="209,227,229" />
+        <temp:SchedulerColorSchema
+            Cell="228,244,219"
+            CellBorder="217,231,207"
+            CellBorderDark="207,221,198"
+            CellLight="236,252,226"
+            CellLightBorder="224,239,214"
+            CellLightBorderDark="214,229,205" />
+        <temp:SchedulerColorSchema
+            Cell="237,239,214"
+            CellBorder="225,227,203"
+            CellBorderDark="215,217,194"
+            CellLight="245,247,221"
+            CellLightBorder="232,234,209"
+            CellLightBorderDark="222,224,201" />
+        </ResourceColorSchemas>        
+</dx:ASPxScheduler>
+

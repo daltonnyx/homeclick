@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout_Blog.cshtml";
+}
+
+<div class="content-page ">
+    <div class="content-blog">
+        @Html.Action("ListPost", "Post")
+        
+    </div>
+</div>

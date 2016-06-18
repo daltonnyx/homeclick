@@ -1,0 +1,10 @@
+﻿@using Homeclick.Models
+@model IList<Department>
+
+
+
+
+@foreach(Department department in Model) { 
+    <option value="@department.Id">@department.name</option>
+}
+

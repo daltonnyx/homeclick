@@ -1,0 +1,610 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{38467F7A-9881-4DFD-AB19-4A8DD097EA55}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Homeclick</RootNamespace>
+    <AssemblyName>Homeclick</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.0.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.1\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <Private>True</Private>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.1.0.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.1.0.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.1.0.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.2.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.0.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.2.0.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.0.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.2.0.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.2.0.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.2.0.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BoSuuTapController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\DesignController.cs" />
+    <Compile Include="Controllers\GioHangController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HtmlController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\SanPhamController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Canva.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cart.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Category.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CategoryModel.cs" />
+    <Compile Include="Models\Category_detail.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Category_type.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\City.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Customer_type.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomSecurityRole.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Department.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Detail_Product.cs" />
+    <Compile Include="Models\Floor.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FloorModel.cs" />
+    <Compile Include="Models\Giohang.cs" />
+    <Compile Include="Models\Homeclick.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Homeclick.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Homeclick.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Homeclick.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Homeclick.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IdentifyUser.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Post.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Post_detail.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Post_Model.cs" />
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product_detail.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product_Model.cs" />
+    <Compile Include="Models\Product_type.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Room.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tag.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserStore.cs" />
+    <Compile Include="Models\Wishlist.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\front-to-back.css" />
+    <Content Include="Content\Nivo-slider.css" />
+    <Content Include="Content\notify.min.css" />
+    <Content Include="Content\Owl.carousel.css" />
+    <Content Include="Content\Owl.theme.css" />
+    <Content Include="Content\owl.transitions.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Responsive.css" />
+    <Content Include="Content\spectrum.css" />
+    <Content Include="Content\Style.css" />
+    <Content Include="Content\taggd.css" />
+    <Content Include="Content\theme.css" />
+    <Content Include="Content\uikit.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Content\libs\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\libs\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\Stylesheet.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\libs\font-awesome\fonts\FontAwesome.otf" />
+    <EntityDeploy Include="Models\Homeclick.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Homeclick.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Homeclick.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Homeclick.edmx</DependentUpon>
+      <LastGenOutput>Homeclick.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Homeclick.edmx.diagram">
+      <DependentUpon>Homeclick.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Homeclick.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Homeclick.edmx</DependentUpon>
+      <LastGenOutput>Homeclick.cs</LastGenOutput>
+    </Content>
+    <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\canvas.nocache.js" />
+    <Content Include="Scripts\fabric.min.js" />
+    <Content Include="Scripts\groupLiPolygon.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.elevatezoom.js" />
+    <Content Include="Scripts\jquery.imagemapster.min.js" />
+    <Content Include="Scripts\jquery.nivo.slider.js" />
+    <Content Include="Scripts\jquery.smooth-scroll.min.js" />
+    <Content Include="Scripts\jquery.taggd.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\lipolygon.class.js" />
+    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\masonry.pkgd.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\notify.min.js" />
+    <Content Include="Scripts\owl.carousel.min.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\spectrum.js" />
+    <Content Include="Scripts\uikit.min.js" />
+    <Content Include="Scripts\wall.draw.js" />
+    <Content Include="Scripts\zoom_product.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Upload\Images\accessories.png" />
+    <Content Include="Upload\Images\assets\bosuutap.png" />
+    <Content Include="Upload\Images\assets\en.gif" />
+    <Content Include="Upload\Images\assets\icon-email.png" />
+    <Content Include="Upload\Images\assets\icon-location.png" />
+    <Content Include="Upload\Images\assets\icon-phone.png" />
+    <Content Include="Upload\Images\assets\icon-search.png" />
+    <Content Include="Upload\Images\assets\icon-shoppingcart.png" />
+    <Content Include="Upload\Images\assets\icon-slider-content.png" />
+    <Content Include="Upload\Images\assets\logo-footer.png" />
+    <Content Include="Upload\Images\assets\logo.png" />
+    <Content Include="Upload\Images\assets\slider-logo.png" />
+    <Content Include="Upload\Images\assets\tuthietke.png" />
+    <Content Include="Upload\Images\assets\vi_vn.gif" />
+    <Content Include="Upload\Images\bancs.png" />
+    <Content Include="Upload\Images\beforekeotha.png" />
+    <Content Include="Upload\Images\bench.png" />
+    <Content Include="Upload\Images\bg_blog_detail.jpg" />
+    <Content Include="Upload\Images\bg_contact.jpg" />
+    <Content Include="Upload\Images\bg_sidebar.jpg" />
+    <Content Include="Upload\Images\bistro-tables.png" />
+    <Content Include="Upload\Images\blog1.jpg" />
+    <Content Include="Upload\Images\blog2.jpg" />
+    <Content Include="Upload\Images\blog3.jpg" />
+    <Content Include="Upload\Images\blog4.jpg" />
+    <Content Include="Upload\Images\bosutap.png" />
+    <Content Include="Upload\Images\cabinet.png" />
+    <Content Include="Upload\Images\canthietke01.jpg" />
+    <Content Include="Upload\Images\canthietke02.jpg" />
+    <Content Include="Upload\Images\chair01.png" />
+    <Content Include="Upload\Images\chairs.png" />
+    <Content Include="Upload\Images\chiphi_item01.png" />
+    <Content Include="Upload\Images\bg_tuthietkeyou.png" />
+    <Content Include="Upload\Images\clone.png" />
+    <Content Include="Upload\Images\coffe-tables.png" />
+    <Content Include="Upload\Images\delete.png" />
+    <Content Include="Upload\Images\desk-chairs.png" />
+    <Content Include="Upload\Images\desks.png" />
+    <Content Include="Upload\Images\footer-background %282%29.png" />
+    <Content Include="Upload\Images\footer-background.png" />
+    <Content Include="Upload\Images\goTop_arrow.png" />
+    <Content Include="Upload\Images\group.png" />
+    <Content Include="Upload\Images\hight-tables.png" />
+    <Content Include="Upload\Images\icon %282%29.png" />
+    <Content Include="Upload\Images\icon-contact.png" />
+    <Content Include="Upload\Images\icon-contact1.png" />
+    <Content Include="Upload\Images\icon.png" />
+    <Content Include="Upload\Images\keotha.png" />
+    <Content Include="Upload\Images\lamp.png" />
+    <Content Include="Upload\Images\lock.png" />
+    <Content Include="Upload\Images\logo %282%29.png" />
+    <Content Include="Upload\Images\logo.png" />
+    <Content Include="Upload\Images\lounghe.png" />
+    <Content Include="Upload\Images\pans %282%29.png" />
+    <Content Include="Upload\Images\pans.png" />
+    <Content Include="Upload\Images\planning.png" />
+    <Content Include="Upload\Images\pointer %282%29.png" />
+    <Content Include="Upload\Images\pointer.png" />
+    <Content Include="Upload\Images\power_2.png" />
+    <Content Include="Upload\Images\product_01_lager.png" />
+    <Content Include="Upload\Images\product_01_medium.png" />
+    <Content Include="Upload\Images\product_01_small.png" />
+    <Content Include="Upload\Images\product_02_lager.png" />
+    <Content Include="Upload\Images\product_02_medium.png" />
+    <Content Include="Upload\Images\product_02_small.png" />
+    <Content Include="Upload\Images\product_03_lager.png" />
+    <Content Include="Upload\Images\product_03_medium.png" />
+    <Content Include="Upload\Images\product_03_small.png" />
+    <Content Include="Upload\Images\product_04_lager.png" />
+    <Content Include="Upload\Images\product_04_medium.png" />
+    <Content Include="Upload\Images\product_04_small.png" />
+    <Content Include="Upload\Images\product_05_lager.png" />
+    <Content Include="Upload\Images\product_05_medium.png" />
+    <Content Include="Upload\Images\product_05_small.png" />
+    <Content Include="Upload\Images\product_06_lager.png" />
+    <Content Include="Upload\Images\product_06_medium.png" />
+    <Content Include="Upload\Images\product_06_small.png" />
+    <Content Include="Upload\Images\product_07_lager.png" />
+    <Content Include="Upload\Images\product_07_medium.png" />
+    <Content Include="Upload\Images\product_07_small.png" />
+    <Content Include="Upload\Images\product_08_lager.png" />
+    <Content Include="Upload\Images\product_08_medium.png" />
+    <Content Include="Upload\Images\product_08_small.png" />
+    <Content Include="Upload\Images\product_09_lager.png" />
+    <Content Include="Upload\Images\product_09_medium.png" />
+    <Content Include="Upload\Images\product_09_small.png" />
+    <Content Include="Upload\Images\remove.png" />
+    <Content Include="Upload\Images\rotate.png" />
+    <Content Include="Upload\Images\rotateleft.png" />
+    <Content Include="Upload\Images\rotateright.png" />
+    <Content Include="Upload\Images\ruler %282%29.png" />
+    <Content Include="Upload\Images\ruler.png" />
+    <Content Include="Upload\Images\seperator1 %282%29.png" />
+    <Content Include="Upload\Images\seperator1.png" />
+    <Content Include="Upload\Images\slider_01.jpg" />
+    <Content Include="Upload\Images\slider_02.jpg" />
+    <Content Include="Upload\Images\slider_03.jpg" />
+    <Content Include="Upload\Images\slider_04.jpg" />
+    <Content Include="Upload\Images\slider_design_01.jpg" />
+    <Content Include="Upload\Images\Snap3.jpg" />
+    <Content Include="Upload\Images\sofa.png" />
+    <Content Include="Upload\Images\stool.png" />
+    <Content Include="Upload\Images\stools.png" />
+    <Content Include="Upload\Images\storage.png" />
+    <Content Include="Upload\Images\table.png" />
+    <Content Include="Upload\Images\tables.png" />
+    <Content Include="Upload\Images\thietke01.png" />
+    <Content Include="Upload\Images\thietke02.png" />
+    <Content Include="Upload\Images\thietke04.png" />
+    <Content Include="Upload\Images\thietke05.png" />
+    <Content Include="Upload\Images\thietke06.png" />
+    <Content Include="Upload\Images\thietke07.png" />
+    <Content Include="Upload\Images\thietke08.png" />
+    <Content Include="Upload\Images\thietke09.png" />
+    <Content Include="Upload\Images\thietke31.png" />
+    <Content Include="Upload\Images\thietkemau.png" />
+    <Content Include="Upload\Images\ungroup.png" />
+    <Content Include="Upload\Images\unlock.png" />
+    <Content Include="Upload\Images\zoom %282%29.png" />
+    <Content Include="Upload\Images\zoom.png" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
+    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\SliderPartial.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Newletter.cshtml" />
+    <Content Include="Views\Home\Feature_Product.cshtml" />
+    <Content Include="Views\SanPham\Product_Detail.cshtml" />
+    <Content Include="Views\Home\Search_form.cshtml" />
+    <Content Include="Views\GioHang\ShoppingCartPartial.cshtml" />
+    <Content Include="Views\GioHang\GioHang.cshtml" />
+    <Content Include="Views\GioHang\SuaGioHang.cshtml" />
+    <Content Include="Views\BoSuuTap\Index.cshtml" />
+    <Content Include="Views\BoSuuTap\CategoryProduct.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\SanPham\Index.cshtml" />
+    <Content Include="Views\SanPham\ListProduct.cshtml" />
+    <Content Include="Views\SanPham\ListCategory.cshtml" />
+    <Content Include="Views\SanPham\SliderSanPham.cshtml" />
+    <Content Include="Views\Category\Models.cshtml" />
+    <Content Include="Views\Category\ListOfRooms.cshtml" />
+    <Content Include="Views\Shared\Layout_CatModel.cshtml" />
+    <Content Include="Views\Category\Typologies.cshtml" />
+    <Content Include="Views\Category\Typology.cshtml" />
+    <Content Include="Views\SanPham\FilterProduct.cshtml" />
+    <Content Include="Views\BoSuuTap\Detail.cshtml" />
+    <Content Include="Views\SanPham\Detail.cshtml" />
+    <Content Include="Views\Design\DesignSliderPartial.cshtml" />
+    <Content Include="Views\Design\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout_Blog.cshtml" />
+    <Content Include="Views\Category\Model.cshtml" />
+    <Content Include="Views\Category\Filter.cshtml" />
+    <Content Include="Views\Category\Sidebar.cshtml" />
+    <Content Include="Views\Design\Design.cshtml" />
+    <Content Include="Views\Design\Departments.cshtml" />
+    <Content Include="Views\Design\Floors.cshtml" />
+    <Content Include="Views\Design\Floor.cshtml" />
+    <Content Include="Views\Design\Canvas.cshtml" />
+    <None Include="Views\Post\Sidebar.cshtml" />
+    <Content Include="Views\Html\Phong.cshtml" />
+    <Content Include="Views\Html\Thietke1.cshtml" />
+    <Content Include="Views\Shared\Layout_html.cshtml" />
+    <Content Include="Views\Html\Thietke2.cshtml" />
+    <Content Include="Views\Html\Keotha.cshtml" />
+    <Content Include="Views\Html\AllTypologies.cshtml" />
+    <Content Include="Views\Html\Lienhe.cshtml" />
+    <Content Include="Views\Html\Thietkemau.cshtml" />
+    <Content Include="Views\Html\Faqs.cshtml" />
+    <Content Include="Views\Html\thietkenoithat.cshtml" />
+    <Content Include="Views\Html\Thietkekientruc.cshtml" />
+    <Content Include="Views\Html\Sanphamkhac.cshtml" />
+    <Content Include="Views\Html\Chair.cshtml" />
+    <Content Include="Views\Html\Power_2.cshtml" />
+    <Content Include="Views\Html\SingleBlog.cshtml" />
+    <Content Include="Views\Html\Canthietke.cshtml" />
+    <Content Include="Views\Html\Tuthietke.cshtml" />
+    <Content Include="Views\Html\duphong1.cshtml" />
+    <Content Include="Views\Html\duphong2.cshtml" />
+    <Content Include="Views\Html\Blog.cshtml" />
+    <Content Include="Views\Html\Hoidap.cshtml" />
+    <Content Include="Views\Shared\_Layout_Cat.cshtml" />
+    <Content Include="Views\SanPham\Sidebar.cshtml" />
+    <Content Include="Views\Shared\_Layout_Project.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Project\ProjectIndex.cshtml" />
+    <Content Include="Views\Project\Sidebar.cshtml" />
+    <Content Include="Views\Project\Detail.cshtml" />
+    <Content Include="Views\SanPham\CanvasList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>8224</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:1867/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

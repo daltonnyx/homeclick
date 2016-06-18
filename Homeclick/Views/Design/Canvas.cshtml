@@ -1,0 +1,273 @@
+﻿<!DOCTYPE HTML>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Canvas</title>
+    @Styles.Render("~/Content/uikit.min.css")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/components/notify.min.css")
+    @Styles.Render("~/Content/theme.css")
+    @Styles.Render("~/Content/spectrum.css")
+    @Styles.Render("~/Content/font-awesome.min.css")
+    @Styles.Render("~/Content/front-to-back.css")
+</head>
+<body>
+    @Html.Partial("_Header")
+
+    <main class="uk-grid main-page uk-container uk-container-center">
+        <div id="productbar" class="uk-width-2-5">
+            <div class="logo uk-width-1-1">
+                <img src="img/icon.png" class="uk-width-1-5" />
+                <span class="uk-width-4-5 slogan"><span class="aqua">Tự</span> thiết kế</span>
+            </div>
+            <div id="sidebar-container">
+                <ul class="uk-tab" data-uk-tab="{connect:'#furnitures'}">
+                    <li><a href="">Sản phẩm</a></li>
+                    <li><a href="">Ký hiệu</a></li>
+                    <li><a href="">Tìm kiếm</a></li>
+                    <li><a href="">Wishlist</a></li>
+                </ul>
+                <ul class="uk-switcher svg-container" id="furnitures">
+                    <li class="tab-list product-fur">
+                        <div class="product-list">
+                            <div class="product-select">
+                                <select id="productSelect">
+                                    <option value="furniture">Nội thất</option>
+                                    <option value="door">Cửa</option>
+                                    <option value="floor">Sàn</option>
+                                    <option value="other">...</option>
+                                </select>
+                                <select id="roomSelect">
+                                    <option value="living">Phòng khách</option>
+                                    <option value="bed">Phòng ngủ</option>
+                                    <option value="kitchen">Phòng bếp</option>
+                                    <option value="bath">Phòng tắm</option>
+                                    <option value="bar">Bar</option>
+                                </select>
+                            </div>
+                            <div class="funiture-list">
+                                @Html.Action("CanvasList","SanPham")
+                            </div>
+                    </li>
+                    <li class="tab-list sign-fur">
+
+                    </li>
+                    <li class="tab-list search">
+
+                    </li>
+                    <li class="tab-list wishlist">
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="uk-width-3-5 main-canvas">
+            <div class="seperator-big"></div>
+            <div class="control-container main-menu">
+                <button class="uk-button" id="new">new</button>
+                <button class="uk-button" id="saveJSON">save</button>
+                <button class="uk-button" id="print">print</button>
+                <button class="uk-button" id="search">search</button>
+                <button class="uk-button" id="undo">undo</button>
+            </div>
+            <div class="control-container toolbar">
+                <div class="pointer active">
+                    <span class="pointer icon"></span>
+                </div>
+                <div class="pans">
+                    <span class="pans icon"></span>
+                </div>
+                <div class="ruler">
+                    <span class="ruler icon"></span>
+                </div>
+                <div class="pen">
+                    <span class="pen icon"><i class="fa fa-pencil"></i></span>
+                </div>
+                <div class="zoom-pointer">
+                    <span class="zoom-pointer icon"></span>
+                </div>
+                <div class="zoom uk-vertical-align">
+                    <span class="uk-vertical-align-middle">Zoom </span>
+                    <input type="range" min="10" max="500" step="10" class="zoom-slider uk-form-width-small uk-vertical-align-middle" value="100" name="zoom_slider" oninput="zoom_change(event)" />
+                    <input type="text" name="zoom_value" class="zoom-value uk-form-width-mini uk-vertical-align-middle" value="100" />
+                </div>
+                <!-- 	<div class="control-container">
+                        <a id="saveJSON" href="#">Save</a>
+                        <a id="loadJSON" href="#">Load</a>
+                    </div> -->
+
+                <div class="control-container uk-hidden">
+                    <textarea id="loadArea" style="display:none;"></textarea>
+                    <div id="loadJSONdiv"></div>
+                </div>
+                <div class="control-container uk-hidden">
+                </div>
+                <div class="control-container uk-hidden">
+                </div>
+            </div>
+
+            <div class="canvas-holder" id="canvas-holder">
+                <canvas id="tutorial" width="718" height="600" draggable="true"></canvas>
+                <div class="delete-button object-button"></div>
+                <div class="rotate-button object-button"></div>
+                <span class="dimession width-dimession"></span>
+                <span class="dimession height-dimession"></span>
+                <div class="control-container wall-control uk-border-rounded" style="display:none;">
+                    <input name="_i" id="_i" type="hidden" step="1" min="0" />
+                    <!-- <div class="uk-display-block form-control uk-margin"> -->
+                    <!-- <span>x:</span> --><input name="_x" id="_x" class="uk-form-width-mini" type="hidden" />
+                    <!-- </div> -->
+                    <!-- <div class="uk-display-block form-control uk-margin"> -->
+                    <!-- <span>y:</span> --><input name="_y" id="_y" class="uk-form-width-mini" type="hidden" />
+                    <!-- </div> -->
+                    <div class="uk-display-block form-control uk-margin">
+                        <span>diện tích: </span> <span id="floorArea"></span>
+                    </div>
+                    <a id="add-cor" class="hidden uk-button uk-button-primary" href="#">add</a>
+                    <a id="delete-cor" class="hidden uk-button uk-button-danger" href="#">delete</a>
+                </div>
+                <div class="control-container object-control uk-border-rounded uk-grid-collapse" style="display:none;">
+                    <div class="product-image uk-width-1-3">
+
+                    </div>
+                    <div class="product-container uk-width-2-3">
+                        <div class="product-detail uk-width-1-1">
+                            <h4 class="product-name">Product Name</h4>
+                            <div class="product-dimession">
+                                <ul>
+                                    <li class="x"><span class="value"></span></li>
+                                    <li class="y"><span class="label">x </span><span class="value"></span></li>
+                                    <li class="z"><span class="label">x </span><span class="value"></span></li>
+                                </ul>
+                            </div>
+                            <div class="product-area"><span class="label">Diện tích: </span><span class="value"></span></div>
+                            <div class="product-price"><span class="label">Giá (VND): </span><span class="value"></span></div>
+                        </div>
+                        <div class="product-link uk-width-1-1">
+                            <a href="" class="add-to-wishlist uk-button-small"><i class="fa fa-star"></i> Add to wishlist</a>
+                            <a href="" class="view-detail uk-button-small"><i class="fa fa-list-alt "></i> View detail</a>
+                        </div>
+                        <div class="control-button uk-width-1-1">
+                            <a href="#" id="button-clone"><i class="fa fa-clone"></i></a>
+                            <a href="#" id="button-remove"><i class="fa fa-trash-o"></i></a>
+                            <a href="#" id="button-group"><i class="fa fa-object-group"></i></a>
+                            <a href="#" id="button-rotate-right"><i class="fa fa-rotate-right"></i></a>
+                            <a href="#" id="button-rotate-left"><i class="fa fa-rotate-left"></i></a>
+                            <a href="#" id="button-bring-to-front"><i class="fa icon-bring-front"></i></a>
+                            <a href="#" id="button-send-to-back"><i class="fa icon-send-back"></i></a>
+                            <div class="uk-button button-color" id="button-color">
+                                <input type="color" id="object-color" name="object_color" value="#ffffff" />
+                            </div>
+                            <a href="#" id="button-lock"><i class="fa fa-lock"></i></a>
+
+                        </div>
+
+
+                    </div>
+                    <div class="floor-controller uk-width-1-3">
+                        <div class="color" id="button-color">
+                            <span data-color="FF0000" class="color-hex" style="background-color:#FF0000;"></span>
+                            <span data-color="00A1FF" class="color-hex" style="background-color:#00A1FF;"></span>
+                            <span data-color="E900FF" class="color-hex" style="background-color:#E900FF;"></span>
+                        </div>
+                    </div>
+                    <div class="close-button"><i class="fa fa-times"></i></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer id="main-footer" class="main-footer">
+        <h3 class="footer-title">Nhận thông tin</h3>
+        <div class="footer-seperator"></div>
+        <div class="subscribe">
+            <q>đăng ký để thường xuyên nhận thông tin từ HOMECLICK.VN: các mẫu nội thất và chương trình ưu đãi...</q>
+            <form id="subscribe" method="post" action="#">
+                <input required="required" type="text" value="" placeholder="Name" name="name" id="name" class="name" />
+                <input required="required" type="text" value="" placeholder="Email" name="email" id="email" class="email" />
+                <input type="submit" value="Đăng ký" id="submit" class="submit" />
+            </form>
+            <div class="info">
+                <p>Địa chỉ: 504 Trưng Nữ Vương, Thanh Khê, Đà Nẵng</p>
+                <p>Điện thoại: 05113 777 779 - Fax: 05113 777 779</p>
+                <p>Email: info@homeclick.vn - Facebook: http://facebook.com/homeclick/ - Website: http://homeclick.vn</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>Copyright &copy; 2015 Homeclick.vn - Design by: websiteplaza</p>
+        </div>
+    </footer>
+    <script type="text/javascript">
+
+        jQuery(document).ready(function ($) {
+            $('#productSelect').on('change', function (event) {
+                var type = $(event.target).val(), url;
+                switch (type) {
+                    case 'door':
+                        url = '/path/door.html';
+                        break;
+                    case 'floor':
+                        url = '/path/floor.html';
+                        break;
+                    case 'furniture':
+                        url = '/path/furniture.html';
+                        break;
+                    default:
+                        url = '/path/furniture.html';
+                        break;
+                }
+                $.ajax({
+                    url: '/canvas' + url,
+                    type: 'GET',
+                    dataType: 'html',
+                    data: {},
+                })
+                .done(function (data) {
+                    console.log("success");
+                    $('.funiture-list').html(data);
+                })
+                .fail(function () {
+                    console.log("error");
+                })
+                .always(function () {
+                    console.log("complete");
+                });
+
+
+                /* Act on the event */
+            });
+
+            $('input[type="color"]').spectrum({
+                showInput: true,
+                allowEmpty: true,
+            });
+
+        });
+    </script>
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/fabric.min.js")
+
+    @Scripts.Render("~/Scripts/canvas.nocache.js")
+
+    @Scripts.Render("~/Scripts/wall.draw.js")
+
+    @Scripts.Render("~/Scripts/jquery-ui.js")
+
+    @Scripts.Render("~/Scripts/lipolygon.class.js")
+
+    @Scripts.Render("~/Scripts/groupLiPolygon.js")
+
+    @Scripts.Render("~/Scripts/uikit.min.js")
+
+    @Scripts.Render("~/Scripts/notify.min.js")
+
+    @Scripts.Render("~/Scripts/main.js")
+
+    @Scripts.Render("~/Scripts/spectrum.js")
+
+</body>
+
+</html>

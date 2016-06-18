@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Homeclick.Models.Product>
+
+@{
+    ViewBag.Title = "Search_form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="page page_search">
+    <div class="container">
+        <div class="row">
+            <div class="result-search">
+                <h2>Result Search......</h2>
+                @foreach (var item in Model) {
+                
+                    <div class="result-search-item">
+                           <div class="image"><img src="/@item.image" /></div>
+                            <div class="content-result-item">
+                                <h3 class="title-item"><a href="#">@item.name</a></h3>
+                            <p>@item.content</p>
+                        </div>
+                    </div>
+                    
+                    }
+            </div>
+        </div>
+    </div>
+</main>

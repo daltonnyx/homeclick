@@ -1,0 +1,68 @@
+.dxwscCheckedTextContainer_Aqua
+{
+	background-color: white;
+	border: solid 1px #AECAF0;
+	vertical-align:top;
+	overflow:auto;
+	width: 340px;	
+	height: 110px;
+	padding: 5px;	
+}
+.dxwscErrorWord_Aqua
+{
+	background: url('scErrorUnderline.gif') bottom;
+	background-repeat:repeat-x;
+	padding-bottom: 3px;
+	font-weight: bold;
+}
+/* -- Loading panel -- */
+.dxwscLoadingPanel_Aqua,
+.dxwscLoadingPanelWithContent_Aqua 
+{
+	font: 12px Tahoma, Geneva, sans-serif;
+	color: #2C4D79;
+	background-color: White;
+	border: 1px solid #67A2C6;
+}
+.dxwscLoadingPanel_Aqua  td.dx,
+.dxwscLoadingPanelWithContent_Aqua td.dx
+{
+	white-space: nowrap;
+	text-align: center;
+	padding: 10px 20px 8px;
+}
+.dxwscLoadingPanel_Aqua .dxlp-loadingImage,
+.dxwscLoadingPanelWithContent_Aqua .dxlp-loadingImage
+{
+	background-image: url('../Web/Loading.gif');
+	height:18px;
+	width:18px;
+}
+/* -- Forms -- */
+.dxwsc-main .dxpcLite_Aqua .dxwscDlgFooter
+{
+	background-color: #ECF4FE;
+	border-top: 1px #C1DBFA solid;
+	padding: 10px 15px;
+	text-align: right;
+}
+.dxwsc-main.dxwsc-rtl .dxpcLite_Aqua .dxwscDlgFooter
+{
+    text-align: left;
+}
+.dxwsc-main .dxpcLite_Aqua .dxwscDlgFooterBtn
+{
+    width: 80px;
+    margin-left: 8px;
+}
+.dxwsc-main.dxwsc-rtl .dxpcLite_Aqua .dxwscDlgFooterBtn
+{
+    margin-right: 8px;
+    margin-left: 0;
+}
+.dxwsc-main .dxpcLite_Aqua .dxwscDlgSpellCheckBtn
+{
+    width: 120px;
+}
+
+

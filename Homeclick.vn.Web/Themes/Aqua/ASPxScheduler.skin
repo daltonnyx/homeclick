@@ -1,0 +1,17 @@
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Data" Assembly="DevExpress.Data.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Web.ASPxScheduler" Assembly="DevExpress.Web.ASPxScheduler.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register Assembly="DevExpress.Web.ASPxScheduler.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxScheduler" TagPrefix="temp" %>
+<dx:ASPxScheduler runat="server">
+	<Styles CssFilePath="{0}/styles.css" CssPostfix="Aqua" SelectionColor="#ffd765">
+		<Menu>
+			<SubMenuItem ImageSpacing="4px" />
+		</Menu>
+		<ViewNavigator ButtonSpacing="2px" />
+		<ViewSelector ButtonSpacing="2px" />
+	</Styles>
+	<Images SpriteCssFilePath="{0}/sprite.css">
+	</Images>
+    <OptionsLoadingPanel ImagePosition="Top" />
+</dx:ASPxScheduler>
+
+

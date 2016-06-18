@@ -1,0 +1,1024 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <BOModel>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Canva" Caption="Tự thiết kế">
+      <OwnMembers>
+        <Member Name="cart_id" Index="-1" />
+        <Member Name="Id" Index="-1" />
+        <Member Name="json_data" Caption="JSON" Index="-1" />
+        <Member Name="room_id" Caption="Room" Index="-1" />
+        <Member Name="user_id" Index="-1" />
+        <Member Name="DisplayName" Index="0" Caption="Tiêu đề" />
+        <Member Name="CartId" Caption="Giỏ hàng" />
+        <Member Name="RoomId" Caption="Phòng" />
+        <Member Name="UserId" Caption="Người dùng" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Cart" Caption="Giỏ hàng">
+      <OwnMembers>
+        <Member Name="Id" Index="-8" />
+        <Member Name="user_id" Index="-1" />
+        <Member Name="created_date" Caption="Ngày tạo" AllowEdit="False" />
+        <Member Name="DanhSachCanvas" Caption="Danh sách tự thiết kế" />
+        <Member Name="DisplayName" Caption="Tên" />
+        <Member Name="status" Caption="Tình trạng" />
+        <Member Name="UserId" Caption="Người dùng" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Category">
+      <OwnMembers>
+        <Member Name="parent_id" Index="-4" />
+        <Member Name="Category_type_id" Index="-1" />
+        <Member Name="Id" Index="-1" />
+        <Member Name="Category_typeId" Caption="Kiểu danh mục" />
+        <Member Name="DanhSachCategory_details" Caption="Chi tiết danh mục" />
+        <Member Name="DanhSachChildCategories" Caption="Danh sách danh mục con" />
+        <Member Name="DanhSachPosts" Caption="Danh sách bài viết" />
+        <Member Name="description" Caption="Chú thích" PropertyEditorType="DevExpress.ExpressApp.HtmlPropertyEditor.Web.ASPxHtmlPropertyEditor" />
+        <Member Name="name" Caption="Tiêu đề" />
+        <Member Name="ParentCategoryId" Caption="Danh mục cha" />
+        <Member Name="Products" PropertyEditorType="Homeclick.vn.Module.Web.Editors.ImmediateGriđEditor" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Category_detail">
+      <OwnMembers>
+        <Member Name="Id" Index="-4" />
+        <Member Name="type" Caption="Kiểu" Index="-1" />
+        <Member Name="caption" Caption="Tiêu đề" />
+        <Member Name="Category_Id" Caption="-2" />
+        <Member Name="CategoryId" Caption="Danh mục" />
+        <Member Name="name" Caption="Tên" />
+        <Member Name="typeEnum" Caption="Kiểu" />
+        <Member Name="value" Caption="Giá trị" PropertyEditorType="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxStringPropertyEditor" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Category_type">
+      <OwnMembers>
+        <Member Name="Id" Index="-2" />
+        <Member Name="type_for" Index="-2" />
+        <Member Name="caption" Caption="Tiêu đề" />
+        <Member Name="DanhSachCategories" Caption="Danh Sách danh mục" />
+        <Member Name="name" Caption="Tên" />
+        <Member Name="typeFor" Caption="Kiểu cho" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.City">
+      <OwnMembers>
+        <Member Name="DanhSachCustomer" Caption="Khách hàng" />
+        <Member Name="description" Caption="Mô tả" />
+        <Member Name="name" Caption="Tên" />
+        <Member Name="postal_code" Caption="Mã bưu chính" />
+        <Member Name="ship_price" Caption="Giá ship" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Customer" Caption="Khách hàng">
+      <OwnMembers>
+        <Member Name="city_id" Index="-2" />
+        <Member Name="customer_type_id" Index="-2" />
+        <Member Name="Id" Index="-2" />
+        <Member Name="address" Caption="Địa chỉ" />
+        <Member Name="CityId" Caption="Thành phố" />
+        <Member Name="Customer_typeId" Caption="Kiểu khách hàng" />
+        <Member Name="first_name" Caption="Họ" />
+        <Member Name="last_name" Caption="Tên" />
+        <Member Name="middle_name" Caption="Tên lót" />
+        <Member Name="phone" Caption="SĐT" />
+        <Member Name="UserId" Caption="Tài khoản" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Customer_type" Caption="Kiểu khách hàng">
+      <OwnMembers>
+        <Member Name="Id" Index="-9" />
+        <Member Name="DanhSachCustomer" Caption="Danh Sách khách hàng" />
+        <Member Name="description" Caption="Chú thích" />
+        <Member Name="name" Caption="Tên" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.CustomSecurityRole" Caption="Quyền truy cập">
+      <OwnMembers>
+        <Member Name="Users" Caption="Tài khoản" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Department">
+      <OwnMembers>
+        <Member Name="Id" Index="-9" />
+        <Member Name="parent_id" Index="-9" />
+        <Member Name="address" Caption="Địa chỉ" />
+        <Member Name="DanhSachChildrenDepartment" Caption="Danh Sách chung cư con" />
+        <Member Name="DanhSachFloors" Caption="Danh Sách tầng" />
+        <Member Name="desciption" Caption="Mô tả" />
+        <Member Name="name" Caption="Tên" />
+        <Member Name="ParentDepartmentId" Caption="Chung cư cha" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Floor">
+      <OwnMembers>
+        <Member Name="Id" Index="-9" />
+        <Member Name="block_id" Index="-8" />
+        <Member Name="DanhSachRooms" Caption="Danh Sách phòng" />
+        <Member Name="DepartmentId" Caption="Chung cư" />
+        <Member Name="description" Caption="Mô tả" />
+        <Member Name="name" Caption="Tên" />
+        <Member Name="structure_link" Caption="Bản thiết kế" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Post">
+      <OwnMembers>
+        <Member Name="author_id" Index="-9" />
+        <Member Name="parent_id" Index="-2" />
+        <Member Name="status" Index="-2" />
+        <Member Name="Id" Index="-1" />
+        <Member Name="content" PropertyEditorType="DevExpress.ExpressApp.HtmlPropertyEditor.Web.ASPxHtmlPropertyEditor" Caption="Nội dung" />
+        <Member Name="created_date" Caption="Ngày tạo" AllowEdit="False" />
+        <Member Name="DanhSachCategories" Caption="Danh mục" PropertyEditorType="Homeclick.vn.Module.Web.Editors.CheckBoxCollectionEditor" />
+        <Member Name="DanhSachPost_details" Caption="Chi tiết bài viết" />
+        <Member Name="DanhSachPostChildren" Caption="Bài viết con" />
+        <Member Name="featured" Caption="Nổi bật" />
+        <Member Name="image" Caption="Hình ảnh" PropertyEditorType="Homeclick.vn.Module.Web.Editors.UploadPropertyEditor" />
+        <Member Name="PostParentId" Caption="Bài viết cha" />
+        <Member Name="title" Caption="Tiêu đề" />
+        <Member Name="updated_date" Caption="Ngày cập nhật" AllowEdit="False" />
+        <Member Name="UserId" Caption="Tác giả" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Post_detail">
+      <OwnMembers>
+        <Member Name="post_id" Index="-22" />
+        <Member Name="Id" Index="-5" />
+        <Member Name="caption" Caption="Tiêu đề" />
+        <Member Name="name" Caption="Tên" />
+        <Member Name="PostId" Caption="Bài viết" />
+        <Member Name="type" Caption="Kiểu" />
+        <Member Name="value" Caption="Giá trị" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Product">
+      <OwnMembers>
+        <Member Name="Product_type_id" AllowEdit="False" Index="-99" />
+        <Member Name="DanhSachWishlists" Caption="Wishlists" Index="-9" />
+        <Member Name="status" AllowEdit="False" Index="-8" />
+        <Member Name="author_id" AllowEdit="False" Index="-2" />
+        <Member Name="Categories" PropertyEditorType="Homeclick.vn.Module.Web.Editors.CheckBoxCollectionEditor" />
+        <Member Name="content" Caption="Nội dung" PropertyEditorType="DevExpress.ExpressApp.Web.Editors.ASPx.ASPxStringPropertyEditor" />
+        <Member Name="created_date" AllowEdit="False" Caption="Ngày tạo" />
+        <Member Name="DanhSachProduct_details" Caption="Chi tiết sản phẩm" />
+        <Member Name="DanhSachTags" PropertyEditorType="Homeclick.vn.Module.Web.Editors.CheckBoxCollectionEditor" Caption="Thẻ" />
+        <Member Name="featured" Caption="Nổi bật" />
+        <Member Name="Id" Caption="ID" AllowEdit="False" />
+        <Member Name="image" Caption="Hình ảnh" PropertyEditorType="Homeclick.vn.Module.Web.Editors.UploadPropertyEditor" />
+        <Member Name="name" Caption="Tiêu đề" />
+        <Member Name="Product_typeId" Caption="Kiểu sản phẩm" />
+        <Member Name="StatusEnum" Caption="Trạng thái" />
+        <Member Name="updated_date" AllowEdit="False" Caption="ngày cập nhật" />
+        <Member Name="UserId" Caption="Tài khoản" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Product_detail">
+      <OwnMembers>
+        <Member Name="type" Index="-8" />
+        <Member Name="Id" Index="-3" />
+        <Member Name="ProductsId" Index="-1" />
+        <Member Name="caption" Caption="Tiêu đề" />
+        <Member Name="name" Caption="Tên" />
+        <Member Name="ProductId" Caption="Sản phẩm" />
+        <Member Name="typeEnum" Caption="Kiểu giá trị" />
+        <Member Name="value" Caption="Giá trị" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Product_type">
+      <OwnMembers>
+        <Member Name="Id" Index="-1" />
+        <Member Name="caption" Caption="Tiêu đề" />
+        <Member Name="DanhSachProducts" Caption="Danh sách sản phẩm" />
+        <Member Name="name" Caption="Tên" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Room">
+      <OwnMembers>
+        <Member Name="floor_id" Index="-1" />
+        <Member Name="Id" Index="-1" />
+        <Member Name="canvas_data" Caption="Dữ liệu phòng" />
+        <Member Name="coordinates" Caption="Tọa độ" Size="1200000000" RowCount="10" />
+        <Member Name="DanhSachCanvas" Caption="Danh sách thiết kế" />
+        <Member Name="description" Caption="Mô tả" />
+        <Member Name="FloorId" Caption="Tầng căn hộ" />
+        <Member Name="name" Caption="Tên" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Tag">
+      <OwnMembers>
+        <Member Name="Id" Index="-1" />
+        <Member Name="DanhSachProducts" Caption="Danh sách sản phẩm" />
+        <Member Name="description" Caption="Mô tả" />
+        <Member Name="name" Caption="Tên" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.User" Caption="Tài khoản">
+      <OwnMembers>
+        <Member Name="ID" Index="-1" />
+        <Member Name="ChangePasswordOnFirstLogon" Caption="Thay đổi mật khẩu lần đầu đăng nhập" />
+        <Member Name="CustomerId" Caption="Khách hàng" />
+        <Member Name="DanhSachCanvas" Caption="Danh sách thiết kể" />
+        <Member Name="DanhSachCarts" Caption="Danh sách giỏ hàng" />
+        <Member Name="DanhSachPosts" Caption="Danh sách bài viết" />
+        <Member Name="DanhSachProducts" Caption="Danh sách sản phẩm" />
+        <Member Name="DanhSachWishlists" Caption="Danh sách wishlist" />
+        <Member Name="IsActive" Caption="Đang hoạt động" />
+        <Member Name="StoredPassword" Caption="Mật khẩu" />
+        <Member Name="UserName" Caption="Tên đăng nhập" />
+      </OwnMembers>
+    </Class>
+    <Class Name="Homeclick.vn.Module.BusinessObjects.Wishlist">
+      <OwnMembers>
+        <Member Name="Id" Index="-1" />
+        <Member Name="user_id" Index="-1" />
+        <Member Name="created_date" Caption="Ngày tạo" />
+        <Member Name="DanhSachProducts" Caption="Danh sách sản phẩm" />
+        <Member Name="description" Caption="Mô tả" />
+        <Member Name="DisplayName" Caption="Tên hiển thị" />
+        <Member Name="title" Caption="Tiêu đề" />
+        <Member Name="UserId" Caption="Tài khoản" />
+      </OwnMembers>
+    </Class>
+  </BOModel>
+  <SchemaModules>
+    <SchemaModule Name="SystemAspNetModule" Version="15.2.4.0" IsNewNode="True" />
+    <SchemaModule Name="SystemModule" Version="15.2.4.0" IsNewNode="True" />
+  </SchemaModules>
+  <Views>
+    <DetailView Id="Canva_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="Canva" RelativeSize="100">
+              <LayoutGroup Id="Canva_col1" RelativeSize="50">
+                <LayoutItem Id="DisplayName" SizeConstraintsType="Default" RelativeSize="6.866952789699571" />
+                <LayoutItem Id="room_id" SizeConstraintsType="Default" Index="1" RelativeSize="3.380281690140845" Removed="True" />
+                <LayoutItem Id="UserId" ViewItem="UserId" SizeConstraintsType="Default" Index="1" RelativeSize="5.1502145922746783" IsNewNode="True" />
+                <LayoutItem Id="json_data" SizeConstraintsType="Default" Index="2" RelativeSize="87.982832618025753" />
+                <LayoutItem Id="user_id" SizeConstraintsType="Default" Index="2" RelativeSize="3.380281690140845" Removed="True" />
+                <LayoutItem Id="Id" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Canva_col2" RelativeSize="50">
+                <LayoutItem Id="RoomId" SizeConstraintsType="Default" RelativeSize="6.866952789699571" Index="0" />
+                <LayoutItem Id="CartId" SizeConstraintsType="Default" RelativeSize="93.133047210300433" Index="1" />
+                <LayoutItem Id="UserId" SizeConstraintsType="Default" RelativeSize="92.112676056338032" Index="2" Removed="True" />
+                <LayoutItem Id="cart_id" SizeConstraintsType="Default" RelativeSize="4.507042253521127" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Canva_ListView">
+      <Columns>
+        <ColumnInfo Id="cart_id" Index="-7" Removed="True" />
+        <ColumnInfo Id="json_data" Index="-4" Removed="True" />
+        <ColumnInfo Id="user_id" Index="-3" Removed="True" />
+        <ColumnInfo Id="room_id" Index="-2" Removed="True" />
+        <ColumnInfo Id="Id" Index="-1" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Cart_DanhSachCanvas_ListView">
+      <Columns>
+        <ColumnInfo Id="room_id" Index="-9" Removed="True" />
+        <ColumnInfo Id="cart_id" Index="-8" Removed="True" />
+        <ColumnInfo Id="Id" Index="-8" Removed="True" />
+        <ColumnInfo Id="json_data" Index="-8" Removed="True" />
+        <ColumnInfo Id="user_id" Index="-8" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Cart_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="20.158102766798418">
+            <LayoutGroup Id="Cart" RelativeSize="100">
+              <LayoutGroup Id="Cart_col1" RelativeSize="50" Caption="Cart_col1">
+                <LayoutItem Id="DisplayName" SizeConstraintsType="Default" RelativeSize="50" />
+                <LayoutItem Id="created_date" ViewItem="created_date" SizeConstraintsType="Default" Index="1" RelativeSize="50" IsNewNode="True" />
+                <LayoutItem Id="user_id" SizeConstraintsType="Default" Index="1" RelativeSize="63.636363636363633" Removed="True" />
+                <LayoutItem Id="Id" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Cart_col2" RelativeSize="50">
+                <LayoutItem Id="status" SizeConstraintsType="Default" RelativeSize="50" Index="0" />
+                <LayoutItem Id="UserId" SizeConstraintsType="Default" RelativeSize="50" Index="1" />
+                <LayoutItem Id="created_date" SizeConstraintsType="Default" RelativeSize="36.363636363636367" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" RelativeSize="79.841897233201578">
+            <LayoutGroup Id="DanhSachCanvas" RelativeSize="100">
+              <LayoutItem Id="DanhSachCanvas" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Cart_ListView">
+      <Columns>
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="user_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Category_DanhSachCategory_details_ListView">
+      <Columns>
+        <ColumnInfo Id="Category_Id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Category_DanhSachChildCategories_ListView">
+      <Columns>
+        <ColumnInfo Id="Category_type_id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="parent_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Category_DanhSachPosts_ListView">
+      <Columns>
+        <ColumnInfo Id="author_id" Removed="True" />
+        <ColumnInfo Id="content" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="parent_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Category_detail_DetailView" DefaultFocusedItem="name">
+      <Items>
+        <PropertyEditor Id="value" PropertyEditorType="Homeclick.vn.Module.Web.Editors.MultiTypeEditor" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="Category_detail" RelativeSize="100">
+              <LayoutGroup Id="Category_detail_col1" RelativeSize="50">
+                <LayoutItem Id="typeEnum" RelativeSize="4.507042253521127" />
+                <LayoutItem Id="name" SizeConstraintsType="Default" Index="1" RelativeSize="3.380281690140845" />
+                <LayoutItem Id="value" SizeConstraintsType="Default" Index="2" RelativeSize="92.112676056338032" />
+                <LayoutItem Id="Id" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Category_detail_col2" RelativeSize="50">
+                <LayoutItem Id="caption" RelativeSize="4.507042253521127" />
+                <LayoutItem Id="type" SizeConstraintsType="Default" RelativeSize="6.866952789699571" Index="0" Removed="True" />
+                <LayoutItem Id="CategoryId" SizeConstraintsType="Default" RelativeSize="95.492957746478879" Index="1" />
+                <LayoutItem Id="Category_Id" SizeConstraintsType="Default" RelativeSize="4.507042253521127" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Category_detail_ListView">
+      <Columns>
+        <ColumnInfo Id="Category_Id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Category_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="19.215686274509803">
+            <LayoutItem Id="name" ViewItem="name" Index="0" RelativeSize="32.6530612244898" IsNewNode="True" />
+            <LayoutGroup Id="Category" RelativeSize="36.734693877551024" Index="1" ShowCaption="False" Direction="Vertical">
+              <LayoutGroup Id="Category_col1" RelativeSize="100" Caption="Category_col1" Direction="Horizontal">
+                <LayoutItem Id="name" SizeConstraintsType="Default" Index="0" RelativeSize="50" Removed="True" />
+                <LayoutItem Id="ParentCategoryId" ViewItem="ParentCategoryId" Index="0" RelativeSize="48.165869218500795" IsNewNode="True" />
+                <LayoutItem Id="Category_typeId" ViewItem="Category_typeId" Index="1" RelativeSize="51.834130781499205" IsNewNode="True" />
+                <LayoutItem Id="description" SizeConstraintsType="Default" Index="1" RelativeSize="50" Removed="True" />
+                <LayoutItem Id="parent_id" SizeConstraintsType="Default" Index="2" RelativeSize="36.363636363636367" Removed="True" />
+                <LayoutItem Id="Id" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Category_col2" RelativeSize="53.907496012759168" Direction="Horizontal" Caption="Category_col2" Removed="True">
+                <LayoutItem Id="Category_typeId" SizeConstraintsType="Default" RelativeSize="100" Index="0" Removed="True" />
+                <LayoutItem Id="ParentCategoryId" SizeConstraintsType="Default" RelativeSize="37.939698492462313" Index="0" Removed="True" />
+                <LayoutItem Id="Category_type_id" SizeConstraintsType="Default" RelativeSize="36.363636363636367" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutItem Id="description" ViewItem="description" Index="2" RelativeSize="30.612244897959183" IsNewNode="True" />
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" RelativeSize="80.7843137254902">
+            <LayoutGroup Id="DanhSachChildCategories" RelativeSize="100">
+              <LayoutItem Id="DanhSachChildCategories" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="DanhSachCategory_details" RelativeSize="100">
+              <LayoutItem Id="DanhSachCategory_details" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="DanhSachPosts" RelativeSize="100">
+              <LayoutItem Id="DanhSachPosts" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Category_ListView" AutoExpandAllGroups="True">
+      <Columns>
+        <ColumnInfo Id="ParentCategoryId" GroupIndex="1" />
+        <ColumnInfo Id="Category_typeId" GroupIndex="0" />
+        <ColumnInfo Id="Category_type_id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="parent_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Category_type_DanhSachCategories_ListView">
+      <Columns>
+        <ColumnInfo Id="Category_type_id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="parent_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Category_type_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="24.901185770750988">
+            <LayoutGroup Id="Category_type" RelativeSize="100" Direction="Vertical">
+              <LayoutGroup Id="Category_type_col1" RelativeSize="100">
+                <LayoutItem Id="caption" ViewItem="caption" SizeConstraintsType="Default" Index="0" RelativeSize="36.363636363636367" IsNewNode="True" />
+                <LayoutItem Id="typeFor" SizeConstraintsType="Default" RelativeSize="27.272727272727273" Index="1" />
+                <LayoutItem Id="name" SizeConstraintsType="Default" Index="2" RelativeSize="36.363636363636367" />
+                <LayoutItem Id="Id" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Category_type_col2" RelativeSize="50" Caption="Category_type_col2" Direction="Horizontal" Removed="True">
+                <LayoutItem Id="caption" Removed="True" />
+                <LayoutItem Id="type_for" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="DanhSachCategories_Group" Direction="Vertical" RelativeSize="75.098814229249015">
+            <LayoutItem Id="DanhSachCategories" SizeConstraintsType="Default" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Category_type_ListView">
+      <Columns>
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="type_for" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="City_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="13.6">
+            <LayoutGroup Id="City" RelativeSize="100">
+              <LayoutGroup Id="City_col1" RelativeSize="50">
+                <LayoutItem Id="name" SizeConstraintsType="Default" Index="0" RelativeSize="50" />
+                <LayoutItem Id="description" SizeConstraintsType="Default" Index="1" RelativeSize="50" />
+                <LayoutItem Id="Id" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="City_col2" RelativeSize="50">
+                <LayoutItem Id="ship_price" SizeConstraintsType="Default" RelativeSize="50" />
+                <LayoutItem Id="postal_code" SizeConstraintsType="Default" RelativeSize="50" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="DanhSachCustomer_Group" Direction="Vertical" RelativeSize="86.4">
+            <LayoutItem Id="DanhSachCustomer" SizeConstraintsType="Default" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="City_ListView">
+      <Columns>
+        <ColumnInfo Id="description" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Customer_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="Customer" RelativeSize="100">
+              <LayoutGroup Id="Customer_col1" RelativeSize="50">
+                <LayoutItem Id="first_name" SizeConstraintsType="Default" Index="0" RelativeSize="4.507042253521127" />
+                <LayoutItem Id="middle_name" SizeConstraintsType="Default" Index="1" RelativeSize="3.380281690140845" />
+                <LayoutItem Id="last_name" SizeConstraintsType="Default" Index="2" RelativeSize="3.380281690140845" />
+                <LayoutItem Id="address" SizeConstraintsType="Default" Index="3" RelativeSize="88.732394366197184" />
+                <LayoutItem Id="Id" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Customer_col2" RelativeSize="50">
+                <LayoutItem Id="phone" SizeConstraintsType="Default" RelativeSize="4.507042253521127" Index="0" />
+                <LayoutItem Id="UserId" SizeConstraintsType="Default" RelativeSize="3.380281690140845" Index="1" />
+                <LayoutItem Id="Customer_typeId" SizeConstraintsType="Default" RelativeSize="92.112676056338032" Index="2" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Customer_ListView">
+      <Columns>
+        <ColumnInfo Id="customer_type_id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Customer_LookupListView">
+      <Columns>
+        <ColumnInfo Id="customer_type_id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Customer_type_DanhSachCustomer_ListView">
+      <Columns>
+        <ColumnInfo Id="customer_type_id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Customer_type_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="8.2666666666666675">
+            <LayoutGroup Id="Customer_type" RelativeSize="100">
+              <LayoutItem Id="name" SizeConstraintsType="Default" Index="0" RelativeSize="51.612903225806448" />
+              <LayoutItem Id="description" SizeConstraintsType="Default" Index="1" RelativeSize="48.387096774193552" />
+              <LayoutItem Id="Id" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="DanhSachCustomer_Group" Direction="Vertical" RelativeSize="91.733333333333334">
+            <LayoutItem Id="DanhSachCustomer" SizeConstraintsType="Default" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Customer_type_ListView">
+      <Columns>
+        <ColumnInfo Id="Id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Customer_type_LookupListView">
+      <Columns>
+        <ColumnInfo Id="Id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Department_DanhSachChildrenDepartment_ListView">
+      <Columns>
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="parent_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Department_DanhSachFloors_ListView">
+      <Columns>
+        <ColumnInfo Id="block_id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="structure_link" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Department_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="13.6">
+            <LayoutGroup Id="Department" RelativeSize="100">
+              <LayoutGroup Id="Department_col1" RelativeSize="50">
+                <LayoutItem Id="name" SizeConstraintsType="Default" Index="0" RelativeSize="50" />
+                <LayoutItem Id="address" SizeConstraintsType="Default" Index="1" RelativeSize="50" />
+                <LayoutItem Id="Id" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Department_col2" RelativeSize="50">
+                <LayoutItem Id="desciption" SizeConstraintsType="Default" RelativeSize="50" />
+                <LayoutItem Id="ParentDepartmentId" SizeConstraintsType="Default" RelativeSize="50" Index="1" />
+                <LayoutItem Id="parent_id" SizeConstraintsType="Default" RelativeSize="27.272727272727273" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" RelativeSize="86.4">
+            <LayoutGroup Id="DanhSachChildrenDepartment" RelativeSize="100">
+              <LayoutItem Id="DanhSachChildrenDepartment" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="DanhSachFloors" RelativeSize="100">
+              <LayoutItem Id="DanhSachFloors" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Department_ListView">
+      <Columns>
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="parent_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Floor_DanhSachRooms_ListView">
+      <Columns>
+        <ColumnInfo Id="canvas_data" Removed="True" />
+        <ColumnInfo Id="coordinates" Removed="True" />
+        <ColumnInfo Id="floor_id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Floor_DetailView">
+      <Items>
+        <PropertyEditor Id="structure_link" PropertyEditorType="Homeclick.vn.Module.Web.Editors.UploadPropertyEditor" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="42.8">
+            <LayoutGroup Id="Floor" RelativeSize="29.906542056074766">
+              <LayoutGroup Id="Floor_col1" RelativeSize="48.9010989010989">
+                <LayoutItem Id="name" SizeConstraintsType="Default" RelativeSize="50" Index="0" />
+                <LayoutItem Id="description" SizeConstraintsType="Default" RelativeSize="50" Index="1" />
+                <LayoutItem Id="Id" SizeConstraintsType="Default" RelativeSize="36.363636363636367" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Floor_col2" RelativeSize="51.0989010989011" Caption="Floor_col2">
+                <LayoutItem Id="DepartmentId" SizeConstraintsType="Default" Index="0" RelativeSize="100" />
+                <LayoutItem Id="block_id" SizeConstraintsType="Default" RelativeSize="50" Removed="True" />
+                <LayoutItem Id="structure_link" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="Item1" ShowCaption="True" CaptionLocation="Top" Index="1" RelativeSize="70.09345794392523" Caption="Item1" Direction="Horizontal" IsNewNode="True">
+              <LayoutItem Id="structure_link" ViewItem="structure_link" SizeConstraintsType="Custom" Index="0" RelativeSize="49.450549450549452" MinSize="138, 40" MaxSize="0, 0" IsNewNode="True" />
+              <LayoutItem Id="Item2" ShowCaption="False" SizeConstraintsType="Default" Index="1" RelativeSize="50.549450549450548" ViewItem="" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="DanhSachRooms_Group" Direction="Vertical" RelativeSize="57.2">
+            <LayoutItem Id="DanhSachRooms" SizeConstraintsType="Default" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Floor_ListView">
+      <Columns>
+        <ColumnInfo Id="block_id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="structure_link" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Post_DanhSachCategories_ListView">
+      <Columns>
+        <ColumnInfo Id="Category_type_id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="parent_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Post_DanhSachPost_details_ListView">
+      <Columns>
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="post_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Post_DanhSachPostChildren_ListView">
+      <Columns>
+        <ColumnInfo Id="author_id" Removed="True" />
+        <ColumnInfo Id="content" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="parent_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Post_detail_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="Post_detail" RelativeSize="100">
+              <LayoutGroup Id="Post_detail_col1" RelativeSize="50">
+                <LayoutItem Id="caption" ViewItem="caption" SizeConstraintsType="Default" Index="0" RelativeSize="6.866952789699571" IsNewNode="True" />
+                <LayoutItem Id="post_id" SizeConstraintsType="Default" Index="0" RelativeSize="4.507042253521127" Removed="True" />
+                <LayoutItem Id="name" SizeConstraintsType="Default" Index="1" RelativeSize="5.1502145922746783" />
+                <LayoutItem Id="Id" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Post_detail_col2" RelativeSize="50">
+                <LayoutItem Id="type" SizeConstraintsType="Default" RelativeSize="6.866952789699571" Index="0" />
+                <LayoutItem Id="PostId" SizeConstraintsType="Default" RelativeSize="93.133047210300433" Index="1" />
+                <LayoutItem Id="caption" SizeConstraintsType="Default" RelativeSize="4.507042253521127" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Post_detail_ListView">
+      <Columns>
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="post_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Post_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="38.8235294117647">
+            <LayoutGroup Id="Post" RelativeSize="84.848484848484844">
+              <LayoutGroup Id="Post_col1" RelativeSize="50">
+                <LayoutItem Id="title" SizeConstraintsType="Default" Index="0" RelativeSize="23.529411764705884" />
+                <LayoutItem Id="alias" SizeConstraintsType="Default" Index="1" RelativeSize="17.647058823529413" />
+                <LayoutItem Id="content" SizeConstraintsType="Default" Index="2" RelativeSize="21.428571428571427" Removed="True" />
+                <LayoutItem Id="PostParentId" ViewItem="PostParentId" SizeConstraintsType="Default" Index="2" RelativeSize="17.647058823529413" IsNewNode="True" />
+                <LayoutItem Id="author_id" SizeConstraintsType="Default" Index="3" RelativeSize="17.647058823529413" Removed="True" />
+                <LayoutItem Id="created_date" SizeConstraintsType="Default" Index="3" RelativeSize="28.571428571428573" Removed="True" />
+                <LayoutItem Id="UserId" ViewItem="UserId" SizeConstraintsType="Default" Index="3" RelativeSize="17.647058823529413" IsNewNode="True" />
+                <LayoutItem Id="updated_date" Index="4" RelativeSize="23.529411764705884" />
+                <LayoutItem Id="Id" Removed="True" />
+                <LayoutItem Id="StatusEnum" RelativeSize="20" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Post_col2" RelativeSize="50">
+                <LayoutItem Id="created_date" ViewItem="created_date" SizeConstraintsType="Default" Index="0" RelativeSize="23.529411764705884" IsNewNode="True" />
+                <LayoutItem Id="StatusEnum" ViewItem="StatusEnum" Index="1" RelativeSize="17.647058823529413" IsNewNode="True" />
+                <LayoutItem Id="featured" Index="2" RelativeSize="17.647058823529413" />
+                <LayoutItem Id="status" SizeConstraintsType="Default" RelativeSize="17.647058823529413" Index="2" Removed="True" />
+                <LayoutItem Id="image" Index="3" RelativeSize="41.1764705882353" />
+                <LayoutItem Id="PostParentId" SizeConstraintsType="Default" RelativeSize="28.571428571428573" Index="3" Removed="True" />
+                <LayoutItem Id="UserId" SizeConstraintsType="Default" RelativeSize="28.571428571428573" Index="3" Removed="True" />
+                <LayoutItem Id="excerpt" Removed="True" />
+                <LayoutItem Id="parent_id" SizeConstraintsType="Default" RelativeSize="17.647058823529413" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutItem Id="content" ViewItem="content" SizeConstraintsType="Default" Index="1" RelativeSize="15.151515151515152" IsNewNode="True" />
+          </LayoutGroup>
+          <LayoutItem Id="excerpt" ViewItem="excerpt" Index="1" RelativeSize="4.7058823529411766" IsNewNode="True" />
+          <TabbedGroup Id="Tabs" RelativeSize="56.470588235294116" Index="2">
+            <LayoutGroup Id="DanhSachPost_details" RelativeSize="100">
+              <LayoutItem Id="DanhSachPost_details" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="DanhSachCategories" RelativeSize="100">
+              <LayoutItem Id="DanhSachCategories" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="DanhSachPostChildren" RelativeSize="100">
+              <LayoutItem Id="DanhSachPostChildren" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Post_ListView">
+      <Columns>
+        <ColumnInfo Id="author_id" Removed="True" />
+        <ColumnInfo Id="content" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="parent_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Product_DanhSachProduct_details_ListView">
+      <Columns>
+        <ColumnInfo Id="type" Index="-778" />
+        <ColumnInfo Id="value" Index="-88" />
+        <ColumnInfo Id="Id" Index="-1" Removed="True" />
+        <ColumnInfo Id="ProductId" Index="-1" />
+        <ColumnInfo Id="ProductsId" Index="-1" Removed="True" />
+        <ColumnInfo Id="caption" Index="0" />
+        <ColumnInfo Id="name" Index="1" />
+        <ColumnInfo Id="typeEnum" Index="2" />
+      </Columns>
+    </ListView>
+    <ListView Id="Product_DanhSachTags_ListView">
+      <Columns>
+        <ColumnInfo Id="Id" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Product_detail_DetailView">
+      <Items>
+        <PropertyEditor Id="value" PropertyEditorType="Homeclick.vn.Module.Web.Editors.MultiTypeEditor" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="100">
+            <LayoutGroup Id="Product_detail" RelativeSize="18.972332015810277">
+              <LayoutGroup Id="Product_detail_col1" RelativeSize="57.06713780918728" Index="0">
+                <LayoutItem Id="typeEnum" ViewItem="typeEnum" SizeConstraintsType="Default" Index="0" RelativeSize="50" IsNewNode="True" Removed="True" />
+                <LayoutGroup Id="Auto91fb1032-9bbf-4e6a-b3c1-622a109b0e02" ShowCaption="False" Caption="" Direction="Horizontal" Index="1" RelativeSize="50" IsNewNode="True">
+                  <LayoutItem Id="name" ViewItem="name" SizeConstraintsType="Default" Index="0" RelativeSize="51.083591331269346" IsNewNode="True" />
+                  <LayoutItem Id="caption" ViewItem="caption" SizeConstraintsType="Default" Index="1" RelativeSize="48.916408668730654" IsNewNode="True" />
+                </LayoutGroup>
+                <LayoutItem Id="name" ViewItem="name" SizeConstraintsType="Default" Index="1" RelativeSize="5.1502145922746783" Removed="True" />
+                <LayoutItem Id="Id" SizeConstraintsType="Default" RelativeSize="3.380281690140845" Removed="True" />
+                <LayoutItem Id="ProductsId" SizeConstraintsType="Default" RelativeSize="3.380281690140845" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Product_detail_col2" RelativeSize="42.93286219081272" Caption="Product_detail_col2" Index="1">
+                <LayoutItem Id="ProductId" SizeConstraintsType="Default" Index="0" RelativeSize="100" />
+                <LayoutItem Id="caption" SizeConstraintsType="Default" RelativeSize="3.380281690140845" Removed="True" />
+                <LayoutItem Id="type" Removed="True" />
+                <LayoutItem Id="value" SizeConstraintsType="Default" RelativeSize="6.866952789699571" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutItem Id="value" ViewItem="value" SizeConstraintsType="Default" Index="1" RelativeSize="81.027667984189719" IsNewNode="True" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Product_detail_ListView">
+      <Columns>
+        <ColumnInfo Id="ProductsId" Width="95" Index="-78" Removed="True" />
+        <ColumnInfo Id="Id" Index="-1" Removed="True" />
+        <ColumnInfo Id="type" Index="-1" Removed="True" />
+        <ColumnInfo Id="value" Index="-1" Removed="True" />
+        <ColumnInfo Id="caption" Index="0" />
+        <ColumnInfo Id="name" Index="1" />
+        <ColumnInfo Id="typeEnum" Index="2" />
+        <ColumnInfo Id="ProductId" Index="3" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Product_DetailView" CollectionsEditMode="View">
+      <Items>
+        <PropertyEditor Id="content" PropertyEditorType="DevExpress.ExpressApp.HtmlPropertyEditor.Web.ASPxHtmlPropertyEditor" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="32.015810276679844">
+            <LayoutGroup Id="Product" RelativeSize="81.481481481481481">
+              <LayoutGroup Id="Product_col1" RelativeSize="45.663716814159294">
+                <LayoutItem Id="name" SizeConstraintsType="Default" RelativeSize="32" Index="0" />
+                <LayoutItem Id="Product_typeId" ViewItem="Product_typeId" SizeConstraintsType="Default" Index="1" RelativeSize="24" IsNewNode="True" />
+                <LayoutItem Id="content" SizeConstraintsType="Default" RelativeSize="17.647058823529413" Index="2" Removed="True" />
+                <LayoutItem Id="UserId" ViewItem="UserId" SizeConstraintsType="Default" Index="2" RelativeSize="44" IsNewNode="True" />
+                <LayoutItem Id="created_date" SizeConstraintsType="Default" RelativeSize="17.647058823529413" Index="3" Removed="True" />
+                <LayoutItem Id="updated_date" SizeConstraintsType="Default" RelativeSize="28.571428571428573" Index="3" Removed="True" />
+                <LayoutItem Id="Id" SizeConstraintsType="Default" RelativeSize="15" Removed="True" />
+                <LayoutItem Id="StatusEnum" SizeConstraintsType="Default" RelativeSize="28.571428571428573" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Product_col2" ShowCaption="False" Index="1" RelativeSize="54.336283185840706" IsNewNode="True" Removed="True">
+                <LayoutItem Id="StatusEnum" ViewItem="StatusEnum" SizeConstraintsType="Default" Index="0" RelativeSize="32" IsNewNode="True" />
+                <LayoutItem Id="created_date" ViewItem="created_date" SizeConstraintsType="Default" Index="1" RelativeSize="24" IsNewNode="True" />
+                <LayoutItem Id="updated_date" ViewItem="updated_date" SizeConstraintsType="Default" Index="2" RelativeSize="24" IsNewNode="True" />
+                <LayoutItem Id="Product_type" SizeConstraintsType="Default" Index="3" RelativeSize="10" ShowCaption="False" ViewItem="" IsNewNode="True" />
+                <LayoutItem Id="User" SizeConstraintsType="Default" Index="4" RelativeSize="10" ShowCaption="False" ViewItem="" IsNewNode="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutItem Id="content" ViewItem="content" SizeConstraintsType="Default" Index="1" RelativeSize="18.518518518518519" IsNewNode="True" />
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" RelativeSize="67.984189723320156" Index="1">
+            <LayoutGroup Id="DanhSachProduct_details" RelativeSize="100">
+              <LayoutItem Id="DanhSachProduct_details" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="DanhSachTags" RelativeSize="100">
+              <LayoutItem Id="DanhSachTags" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="DanhSachWishlists" RelativeSize="100" Index="3" Removed="True">
+              <LayoutItem Id="DanhSachWishlists" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Product_ListView">
+      <Columns>
+        <ColumnInfo Id="author_id" Removed="True" />
+        <ColumnInfo Id="content" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="Product_type_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Product_type_DanhSachProducts_ListView">
+      <Columns>
+        <ColumnInfo Id="author_id" Removed="True" />
+        <ColumnInfo Id="content" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="Product_type_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Product_type_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="8.2666666666666675">
+            <LayoutGroup Id="Product_type" RelativeSize="100">
+              <LayoutItem Id="name" SizeConstraintsType="Default" Index="0" RelativeSize="51.612903225806448" />
+              <LayoutItem Id="caption" SizeConstraintsType="Default" Index="1" RelativeSize="48.387096774193552" />
+              <LayoutItem Id="Id" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="DanhSachProducts_Group" Direction="Vertical" RelativeSize="91.733333333333334">
+            <LayoutItem Id="DanhSachProducts" SizeConstraintsType="Default" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Product_type_ListView">
+      <Columns>
+        <ColumnInfo Id="Id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Room_DanhSachCanvas_ListView">
+      <Columns>
+        <ColumnInfo Id="cart_id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="json_data" Removed="True" />
+        <ColumnInfo Id="room_id" Removed="True" />
+        <ColumnInfo Id="user_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Room_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="24.901185770750988">
+            <LayoutGroup Id="Room" RelativeSize="100">
+              <LayoutGroup Id="Room_col1" RelativeSize="50">
+                <LayoutItem Id="name" SizeConstraintsType="Default" Index="0" RelativeSize="36.363636363636367" />
+                <LayoutItem Id="description" SizeConstraintsType="Default" Index="1" RelativeSize="27.272727272727273" />
+                <LayoutItem Id="floor_id" SizeConstraintsType="Default" Index="2" RelativeSize="36.363636363636367" Removed="True" />
+                <LayoutItem Id="FloorId" ViewItem="FloorId" SizeConstraintsType="Default" Index="2" RelativeSize="36.363636363636367" IsNewNode="True" />
+                <LayoutItem Id="Id" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Room_col2" RelativeSize="50">
+                <LayoutItem Id="coordinates" SizeConstraintsType="Default" RelativeSize="36.363636363636367" />
+                <LayoutItem Id="canvas_data" SizeConstraintsType="Default" RelativeSize="63.636363636363633" />
+                <LayoutItem Id="FloorId" SizeConstraintsType="Default" RelativeSize="36.363636363636367" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="DanhSachCanvas_Group" Direction="Vertical" RelativeSize="75.098814229249015">
+            <LayoutItem Id="DanhSachCanvas" SizeConstraintsType="Default" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Room_ListView">
+      <Columns>
+        <ColumnInfo Id="canvas_data" Removed="True" />
+        <ColumnInfo Id="coordinates" Removed="True" />
+        <ColumnInfo Id="floor_id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="Tag_DanhSachProducts_ListView">
+      <Columns>
+        <ColumnInfo Id="author_id" Removed="True" />
+        <ColumnInfo Id="content" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="Product_type_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Tag_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="8.2666666666666675">
+            <LayoutGroup Id="Tag" RelativeSize="100">
+              <LayoutItem Id="name" SizeConstraintsType="Default" Index="0" RelativeSize="51.612903225806448" />
+              <LayoutItem Id="description" SizeConstraintsType="Default" Index="1" RelativeSize="48.387096774193552" />
+              <LayoutItem Id="Id" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="DanhSachProducts_Group" Direction="Vertical" RelativeSize="91.733333333333334">
+            <LayoutItem Id="DanhSachProducts" SizeConstraintsType="Default" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Tag_ListView">
+      <Columns>
+        <ColumnInfo Id="Id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="User_DanhSachCanvas_ListView">
+      <Columns>
+        <ColumnInfo Id="cart_id" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="json_data" Removed="True" />
+        <ColumnInfo Id="room_id" Removed="True" />
+        <ColumnInfo Id="user_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="User_DanhSachCarts_ListView">
+      <Columns>
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="user_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="User_DanhSachPosts_ListView">
+      <Columns>
+        <ColumnInfo Id="author_id" Removed="True" />
+        <ColumnInfo Id="content" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="parent_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="User_DanhSachProducts_ListView">
+      <Columns>
+        <ColumnInfo Id="author_id" Removed="True" />
+        <ColumnInfo Id="content" Removed="True" />
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="Product_type_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="User_DanhSachWishlists_ListView">
+      <Columns>
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="title" Removed="True" />
+        <ColumnInfo Id="user_id" Removed="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="Wishlist_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="24.901185770750988">
+            <LayoutGroup Id="Wishlist" RelativeSize="100">
+              <LayoutGroup Id="Wishlist_col1" RelativeSize="50">
+                <LayoutItem Id="DisplayName" SizeConstraintsType="Default" RelativeSize="36.363636363636367" />
+                <LayoutItem Id="title" SizeConstraintsType="Default" Index="1" RelativeSize="27.272727272727273" />
+                <LayoutItem Id="user_id" SizeConstraintsType="Default" Index="1" RelativeSize="27.272727272727273" Removed="True" />
+                <LayoutItem Id="UserId" ViewItem="UserId" SizeConstraintsType="Default" Index="2" RelativeSize="36.363636363636367" IsNewNode="True" />
+                <LayoutItem Id="Id" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Wishlist_col2" RelativeSize="50">
+                <LayoutItem Id="created_date" SizeConstraintsType="Default" RelativeSize="36.363636363636367" />
+                <LayoutItem Id="description" SizeConstraintsType="Default" RelativeSize="63.636363636363633" />
+                <LayoutItem Id="UserId" SizeConstraintsType="Default" RelativeSize="36.363636363636367" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="DanhSachProducts_Group" Direction="Vertical" RelativeSize="75.098814229249015">
+            <LayoutItem Id="DanhSachProducts" SizeConstraintsType="Default" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="Wishlist_ListView">
+      <Columns>
+        <ColumnInfo Id="Id" Removed="True" />
+        <ColumnInfo Id="title" Removed="True" />
+        <ColumnInfo Id="user_id" Removed="True" />
+      </Columns>
+    </ListView>
+  </Views>
+</Application>

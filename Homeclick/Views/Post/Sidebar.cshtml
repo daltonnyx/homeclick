@@ -1,0 +1,12 @@
+﻿@using Homeclick.Models;
+@model IList<Category>
+
+<div class="list-category sidebar">
+    <h3 class="title-sidebar title-cate-sidebar">Categories</h3>
+    <ul>
+        @foreach (Category item in Model)
+        {
+            <li><a href="@Url.Action("Detail", "Post", new { @id = @item.Id })">@item.name</a></li>
+        }
+    </ul>
+</div>

@@ -1,0 +1,55 @@
+.dxRichEdit_CenterTabDragHandle_Aqua,
+.dxRichEdit_DecimalTabDragHandle_Aqua,
+.dxRichEdit_FirstLineIdentDragHandle_Aqua,
+.dxRichEdit_LeftIdentDragHandle_Aqua,
+.dxRichEdit_LeftTabDragHandle_Aqua,
+.dxRichEdit_RightIdentDragHandle_Aqua,
+.dxRichEdit_RightTabDragHandle_Aqua
+{
+    background-image: url('sprite.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+.dxRichEdit_CenterTabDragHandle_Aqua
+{
+    background-position: 0px -34px;
+    width: 8px;
+    height: 6px;
+}
+.dxRichEdit_DecimalTabDragHandle_Aqua
+{
+    background-position: 0px -27px;
+    width: 8px;
+    height: 6px;
+}
+.dxRichEdit_FirstLineIdentDragHandle_Aqua
+{
+    background-position: 0px -9px;
+    width: 9px;
+    height: 8px;
+}
+.dxRichEdit_LeftIdentDragHandle_Aqua
+{
+    background-position: 0px -18px;
+    width: 9px;
+    height: 8px;
+}
+.dxRichEdit_LeftTabDragHandle_Aqua
+{
+    background-position: 0px -48px;
+    width: 6px;
+    height: 6px;
+}
+.dxRichEdit_RightIdentDragHandle_Aqua
+{
+    background-position: 0px 0px;
+    width: 9px;
+    height: 8px;
+}
+.dxRichEdit_RightTabDragHandle_Aqua
+{
+    background-position: 0px -41px;
+    width: 6px;
+    height: 6px;
+}
+

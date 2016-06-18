@@ -1,0 +1,161 @@
+/* -- WebChartControl -- */
+.dxchartsuiLoadingDiv_Aqua
+{
+	background-color:Gray;	
+	opacity: 0.01;
+	filter:progid:DXImageTransform.Microsoft.Alpha(Style=0, Opacity=1);
+}
+.dxchartsuiLoadingPanel_Aqua
+{
+	font: 12px Tahoma, Geneva, sans-serif;
+	color: #2C4D79;
+    background-color: White;
+	border: solid 1px #67A2C6;
+}
+.dxchartsuiLoadingPanel_Aqua td.dx
+{
+	white-space: nowrap;
+	text-align: center;
+	padding: 10px 20px 8px;
+}
+
+/* -- Crosshair -- */
+.dxchartsuiCrosshairHLine_Aqua,
+.dxchartsuiCrosshairVLine_Aqua
+{
+    background-color: transparent;
+    border-color: #de39cd;
+}
+
+.dxchartsuiCrosshairLabel_Aqua,
+.dxchartsuiCrosshairHLine_Aqua,
+.dxchartsuiCrosshairVLine_Aqua
+{
+    position: absolute;
+    z-index: 41998;
+}
+
+.dxchartsuiCrosshairLabel_Aqua
+{
+    background-color: #de39cd;
+    color: White;
+	font: 12px Tahoma, Geneva, sans-serif;
+	padding: 1px 4px 1px 4px;
+    white-space: nowrap;    
+}
+
+.dxchartsuiCrosshairHLine_Aqua
+{
+    height: 0px;
+}
+
+.dxchartsuiCrosshairVLine_Aqua
+{
+    width: 0px;
+}
+
+/* -- Tooltip -- */
+.dxchartsuiTooltip_Aqua,
+.dxchartsuiTooltip_TopLeft_Aqua,
+.dxchartsuiTooltip_TopRight_Aqua,
+.dxchartsuiTooltip_BottomLeft_Aqua,
+.dxchartsuiTooltip_BottomRight_Aqua
+{
+	font: 12px Tahoma, Geneva, sans-serif;
+    color: #201f35;
+	color: #000000\9;
+    background-color: #ECF4FE;
+	border: 1px Solid rgb(139, 182, 239);
+	border: 1px solid rgba(0, 0, 0, 0.35);
+	padding: 6px 10px 6px 10px;
+    position: absolute;
+    cursor: default;
+    white-space: nowrap;
+    -moz-box-shadow:    0px 2px 10px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.35);
+    box-shadow:         0px 2px 10px rgba(0, 0, 0, 0.35);
+    -moz-background-clip: padding-box;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    z-index: 41999;
+}
+.dxchartsuiTooltip_TopLeft_Aqua:before,
+.dxchartsuiTooltip_TopRight_Aqua:before,
+.dxchartsuiTooltip_BottomLeft_Aqua:before,
+.dxchartsuiTooltip_BottomRight_Aqua:before,
+.dxchartsuiTooltip_TopLeft_Aqua:after,
+.dxchartsuiTooltip_TopRight_Aqua:after,
+.dxchartsuiTooltip_BottomLeft_Aqua:after,
+.dxchartsuiTooltip_BottomRight_Aqua:after
+{
+    border-style: solid;
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0;
+}
+.dxchartsuiTooltip_TopLeft_Aqua:before,
+.dxchartsuiTooltip_TopRight_Aqua:before,
+.dxchartsuiTooltip_BottomLeft_Aqua:before,
+.dxchartsuiTooltip_BottomRight_Aqua:before
+{
+    border-width: 10px 5px;
+    -moz-background-clip: padding-box;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+.dxchartsuiTooltip_TopLeft_Aqua:after,
+.dxchartsuiTooltip_TopRight_Aqua:after,
+.dxchartsuiTooltip_BottomLeft_Aqua:after,
+.dxchartsuiTooltip_BottomRight_Aqua:after
+{
+    border-width: 8px 4px;
+}
+.dxchartsuiTooltip_TopLeft_Aqua:before
+{
+    border-color: transparent transparent rgba(139, 139, 139, 0.35) rgba(139, 139, 139, 0.35);
+    top: -20px;
+    left: 10px;
+}
+.dxchartsuiTooltip_TopLeft_Aqua:after
+{
+    border-color: transparent transparent White White;
+    top: -16px;
+    left: 11px;
+}
+.dxchartsuiTooltip_TopRight_Aqua:before
+{
+    border-color: transparent rgba(139, 139, 139, 0.35) rgba(139, 139, 139, 0.35) transparent;
+    top: -20px;
+    right: 10px;
+}
+.dxchartsuiTooltip_TopRight_Aqua:after
+{
+    border-color: transparent White White transparent;
+    top: -16px;
+    right: 11px;
+}
+.dxchartsuiTooltip_BottomRight_Aqua:before
+{
+    border-color: rgba(139, 139, 139, 0.35) rgba(139, 139, 139, 0.35) transparent transparent;
+    bottom: -20px;
+    right: 10px;
+}
+.dxchartsuiTooltip_BottomRight_Aqua:after
+{
+    border-color: White White transparent transparent;
+    bottom: -16px;
+    right: 11px;
+}
+.dxchartsuiTooltip_BottomLeft_Aqua:before
+{
+    border-color: rgba(139, 139, 139, 0.35) transparent transparent rgba(139, 139, 139, 0.35);
+    bottom: -20px;
+    left: 10px;
+}
+.dxchartsuiTooltip_BottomLeft_Aqua:after
+{
+    border-color: White transparent transparent White;
+    bottom: -16px;
+    left: 11px;
+}

@@ -1,0 +1,34 @@
+.dxCardView_gvHeaderFilter_Aqua,
+.dxCardView_gvHeaderFilterActive_Aqua,
+.dxCardView_gvHeaderSortDown_Aqua,
+.dxCardView_gvHeaderSortUp_Aqua
+{
+    background-image: url('sprite.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+.dxCardView_gvHeaderFilter_Aqua
+{
+    background-position: 0px -20px;
+    width: 19px;
+    height: 19px;
+}
+.dxCardView_gvHeaderFilterActive_Aqua
+{
+    background-position: 0px 0px;
+    width: 19px;
+    height: 19px;
+}
+.dxCardView_gvHeaderSortDown_Aqua
+{
+    background-position: -8px -40px;
+    width: 7px;
+    height: 5px;
+}
+.dxCardView_gvHeaderSortUp_Aqua
+{
+    background-position: 0px -40px;
+    width: 7px;
+    height: 5px;
+}
+

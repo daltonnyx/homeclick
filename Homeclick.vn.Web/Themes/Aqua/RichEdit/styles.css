@@ -1,0 +1,249 @@
+.dxreControl_Aqua
+{
+	border-style: solid;
+	border-width: 1px;
+	border-color: #AECAF0;
+	font: 12px Tahoma, Geneva, sans-serif;
+}
+.dxreControl_Aqua .dxre-rulerWrapper {
+	padding-top: 2px;
+    background-color: #dbebff;
+}
+.dxreControl_Aqua .dxre-ruler .dxre-columnHandleLeftPart,
+.dxreControl_Aqua .dxre-ruler .dxre-columnHandleRightPart {
+    width: 5px;
+    background-color: #bcb8b8;
+}
+.dxreControl_Aqua .dxre-ruler .dxre-rulerDivisions,
+.dxreControl_Aqua .dxre-ruler .dxre-rulerDivisions div,
+.dxreControl_Aqua .dxre-ruler .dxre-rulerMarginLeftPanel,
+.dxreControl_Aqua .dxre-ruler .dxre-rulerMarginRightPanel,
+.dxreControl_Aqua .dxre-ruler .dxre-rulerMarginLeftHandlePanel,
+.dxreControl_Aqua .dxre-ruler .dxre-rulerMarginRightHandlePanel,
+.dxreControl_Aqua .dxre-ruler .dxre-columnHandle,
+.dxreControl_Aqua .dxre-ruler .dxre-columnHandle > div {
+	height: 12px;
+}
+.dxreControl_Aqua .dxre-ruler .dxre-rulerDivisions,
+.dxreControl_Aqua .dxre-rulerWrapper .dxre-rulertabAlignBox > div {
+    background-color: #fff;
+}
+.dxreControl_Aqua .dxre-ruler .dxre-rulerMarginLeftPanel,
+.dxreControl_Aqua .dxre-ruler .dxre-rulerMarginRightPanel,
+.dxreControl_Aqua .dxre-ruler .dxre-rulerMarginLeftHandlePanel,
+.dxreControl_Aqua .dxre-ruler .dxre-rulerMarginRightHandlePanel,
+.dxreControl_Aqua .dxre-ruler .dxre-columnHandle,
+.dxreControl_Aqua .dxre-rulerWrapper .dxre-rulertabAlignBox {
+    background-color: #d3d3d3;
+}
+.dxreControl_Aqua .dxre-ruler .dxre-rulerDivisions .dxre-rulerMinorDivision,
+.dxreControl_Aqua .dxre-ruler .dxre-rulerDivisions .dxre-rulerMajorDivision {
+	border-left: 1px solid #a3a3a3;
+}
+.dxreControl_Aqua .dxre-ruler .dxre-rulerDivisions .dxre-rulerNumberDivision {
+	color: #4e4e4e;
+}
+.dxreControl_Aqua .dxre-rulerLine {
+	border-left: 1px dashed #717171;
+}
+.dxreControl_Aqua .dxre-leftIdentDragHandleBody {
+    background-color: white;
+    border: 1px solid #929292;
+    border-top: none;
+    height: 6px;
+    box-sizing: border-box;
+}
+.dxreControl_Aqua .dxrControl_Aqua .dxr-minBtn 
+{
+	padding-right: 7px;
+}
+.dxreControl_Aqua .dxrControl_Aqua .dxtcLite_Aqua
+{
+	background-color: #BEDAFF;
+}
+.dxreControl_Aqua .dxrControl_Aqua .dxr-tabContent 
+{
+	border-left-style: none;
+	border-right-style: none;
+}
+.dxreControl_Aqua .dxrControl_Aqua .dxtcLite_Aqua.dxtc-top .dxtc-leftIndent
+{
+	width: 3px;
+}
+.dxreControl_Aqua .dxre-page 
+{
+    border: 1px solid #808080;
+}
+.dxreControl_Aqua .dxre-view 
+{
+	background: #DBEBFF;
+}
+.dxreControl_Aqua .dxre-bar 
+{
+	background-color: #EEF3FF;
+	border-top: 1px solid #AECAF0;
+    height: 22px;
+}
+.dxreControl_Aqua .dxre-bar .dxre-loadingPanel {
+    float: right;
+    margin: 2px 2px 0 0;
+    color: #749bca;
+}
+.dxreControl_Aqua .dxre-bar .dxre-loadingPanel .dx {
+    line-height: 0;
+}
+.dxreControl_Aqua .dxre-bar .dxre-loadingPanel .dxlp-loadingImage {
+    width: 18px;
+    height: 18px;
+    background: url('../Web/Loading.gif');
+}
+
+/*Dialogs Style*/
+.dxreControl_Aqua .dxreDlgParagraphForm .dxtc-content {
+    width: 430px;
+    height: 290px;
+}
+.dxreControl_Aqua .dxreDlgPageSetupForm .dxtc-content {
+    width: 350px;
+    height: 230px;
+}
+.dxreControl_Aqua .dxreDlgColumnsForm {
+    width: 400px;
+}
+.dxreControl_Aqua .dxreDlgColumnsForm .dxreDlgColumnsEditorMainTable > tbody > tr > td {
+    padding: 2px 4px;
+}
+.dxreControl_Aqua .dxreDlgColumnsForm .dxreDlgColumnsEditor {
+    height: 100px;
+}
+.dxreControl_Aqua .dxreDlgColumnsForm .dxreDlgColumnsEditor .dxreDlgTextBox {
+    width: 40px;
+}
+.dxreControl_Aqua .dxreDlgColumnsForm .dxreDlgColumnsEditor .dxreDlgSpinEdit {
+    width: 90px;
+}
+.dxreControl_Aqua .dxreDlgErrorForm {
+    width: 350px;
+}
+.dxreControl_Aqua .dxreDlgCaptionCell {
+	padding-left: 5px;
+    padding-right: 7px;
+    padding-top: 3px;
+}
+.dxreControl_Aqua .dxreDlgContentCell {
+	padding: 11px;
+}
+.dxreControl_Aqua .dxreDlgHeaderCell {
+	padding-bottom: 7px;
+}
+.dxreControl_Aqua .dxreDlgEmptyLine {
+	height: 8px;
+}
+.dxreControl_Aqua .dxreDlgEditor {
+    width: 110px;
+	margin-right: 7px;
+	margin-left: 5px;
+}
+.dxreControl_Aqua .dxreDlgEditorShort {
+    width: 70px;
+	margin-right: 7px;
+	margin-left: 5px;
+}
+.dxreControl_Aqua .dxreDlgEditorLong {
+    width: 170px;
+	margin-right: 7px;
+	margin-left: 5px;
+}
+.dxreControl_Aqua .dxreDlgFooterBtn {
+    width: 80px;
+    margin-left: 8px;
+}
+.dxreControl_Aqua .dxreDlgPageSetupApplyTo {
+	bottom: 70px;
+	left: 23px;
+}
+.dxreControl_Aqua .dxreDlgTypeRadionButtonListCell {
+	padding-bottom: 10px;
+}
+.dxreControl_Aqua .dxreDlgFooter {
+	height: 27px;
+	padding: 10px 11px 11px 10px;
+    background-color: #DBEBFF;
+    border-top: Solid 1px #C1DBFA;
+}
+.dxreControl_Aqua .dxreDlgInsertImageForm .dxreDlgImagePreview {
+    padding-top: 10px;
+}
+.dxreControl_Aqua .dxreDlgInsertImageForm .dxreDlgImagePreviewCell {
+    height: 170px;
+    color: #878787;
+    border: dashed 1px #cac8c8;
+}
+.dxreControl_Aqua .dxreDlgInsertImageForm .dxreDlgImagePreviewCell img {
+    width: 180px;
+    height: 100px;
+}
+.dxreControl_Aqua .dxreDlgInsertImageForm .dxreDlgInsertImagePanel {
+    width: 315px;
+}
+.dxreControl_Aqua .dxre-dialog .dxrpControl_Aqua.dxrp-noCollapsing > tbody > tr.dxrpCR > .dxrpcontent {
+    padding: 15px;
+}
+.dxreControl_Aqua .dxre-dialog .dxrpControlGB_Aqua > tbody > tr.dxrpCR > .dxrpcontent {
+    padding: 6px 10px 10px 10px;
+}
+.dxreControl_Aqua .dxreDlgNumberingListForm .dxreDlgMainContainer {
+    width: 520px;
+    height: 220px;
+}
+.dxreControl_Aqua .dxreDlgHyperlinkForm {
+    width: 380px;
+}
+.dxreControl_Aqua .dxreDlgTabsForm {
+    width: 380px;
+}
+.dxreControl_Aqua .dxreDlgTabsForm .dxreDlgTabsList {
+    height: 70px;
+}
+.dxreControl_Aqua .dxreMultiLevelNumberingListBox {
+    width: 30px;
+    height: 195px;
+}
+.dxreControl_Aqua .dxreDlgBulletedListForm .dxreDlgBulletPresetBtn {
+    width: 45px;
+    margin: 8px 0px 12px 5px;
+}
+.dxreControl_Aqua .dxreDlgListBox {
+    padding: 1px;
+}
+.dxreControl_Aqua .dxreDlgSymbolsForm .dxreDlgSymbolsList {
+    width: 500px;
+    height: 250px;
+    border: 1px solid #AECAF0;
+}
+.dxreControl_Aqua .dxreDlgListBox > div {
+    border: 1px solid #AECAF0;
+    margin: 1px;
+}
+.dxreControl_Aqua .dxreDlgSymbolsForm .dxreDlgListBox > div {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: large;
+}
+.dxreControl_Aqua .dxreDlgNumberingListForm .dxreDlgListBox > div {
+    width: 120px;
+    height: 120px;
+    line-height: 120px;
+}
+.dxreControl_Aqua .dxreDlgNumberingListForm .dxreDlgNumberingListPreview {
+    padding: 10px;
+    width: 90px;
+    height: 90px;
+}
+.dxreControl_Aqua .dxreDlgListBox .dxreDlgListHover {
+    background-color: #FFE7A2;
+}
+.dxreControl_Aqua .dxreDlgListBox .dxreDlgListSelected {
+    background-color: #FFBD69;
+}
