@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Homeclick.vn.Module.BusinessObjects
 {
     [DefaultClassOptions]
-    [XafDisplayName("Thành phố"),DefaultProperty("name")]
+    [XafDisplayName("Thành phố"),DefaultProperty("name")] //Testing phase1
     public partial class City
     {
         public City(Session session) : base(session) { }
