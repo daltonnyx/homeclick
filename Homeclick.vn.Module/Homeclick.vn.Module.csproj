@@ -63,6 +63,7 @@
     <Reference Include="DevExpress.ExpressApp.Xpo.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
+    <Reference Include="DevExpress.Persistent.BaseImpl.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v15.2.Core">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
@@ -181,6 +182,7 @@
     <Compile Include="BusinessObjects\Product.Designer.cs">
       <DependentUpon>vnModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="BusinessObjects\ProductsLayoutsLinkTable.cs" />
     <Compile Include="BusinessObjects\Product_detail.cs" />
     <Compile Include="BusinessObjects\Product_detail.Designer.cs">
       <DependentUpon>vnModel.tt</DependentUpon>
@@ -189,6 +191,9 @@
     <Compile Include="BusinessObjects\Product_type.Designer.cs">
       <DependentUpon>vnModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="BusinessObjects\Project.cs" />
+    <Compile Include="BusinessObjects\ProjectItem.cs" />
+    <Compile Include="BusinessObjects\ProjectLayout.cs" />
     <Compile Include="BusinessObjects\Room.cs" />
     <Compile Include="BusinessObjects\Room.Designer.cs">
       <DependentUpon>vnModel.tt</DependentUpon>

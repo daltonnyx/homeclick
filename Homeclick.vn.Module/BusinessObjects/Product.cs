@@ -63,6 +63,22 @@ namespace Homeclick.vn.Module.BusinessObjects
             }
         }
 
+
+        [Browsable(false), DevExpress.Xpo.Association]
+        public IList<ProductsLayoutsLinkTable> ProductLayoutLink
+        {
+            get { return GetList<ProductsLayoutsLinkTable>("ProductLayoutLink"); }
+
+        }
+
+
+        [ManyToManyAlias("ProductLayoutLink", "Layout")]
+        public IList<ProjectLayout> Layouts
+        {
+            get { return GetList<ProjectLayout>("Layouts"); }
+        }
+
+
         [NonPersistent]
         public ProductEnum StatusEnum
         {
@@ -82,6 +98,8 @@ namespace Homeclick.vn.Module.BusinessObjects
             base.OnSaving();
             
         }
+
+
 
         protected override void OnSaved()
         {
