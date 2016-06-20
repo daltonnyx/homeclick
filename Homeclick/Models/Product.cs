@@ -21,6 +21,7 @@ namespace Homeclick.Models
             this.Tags = new HashSet<Tag>();
             this.Carts = new HashSet<Cart>();
             this.Wishlists = new HashSet<Wishlist>();
+            this.Layouts = new HashSet<ProjectLayout_Collection>();
         }
     
         public int Id { get; set; }
@@ -44,5 +45,6 @@ namespace Homeclick.Models
         public virtual ICollection<Tag> Tags { get; set; }
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<Wishlist> Wishlists { get; set; }
+        public virtual ICollection<ProjectLayout_Collection> Layouts { get; set; }
     }
 }

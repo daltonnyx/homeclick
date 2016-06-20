@@ -12,19 +12,19 @@ namespace Homeclick.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+
     public partial class vinabits_homeclickEntities : DbContext
     {
         public vinabits_homeclickEntities()
             : base("name=vinabits_homeclickEntities")
         {
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<Canva> Canvas { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
@@ -45,5 +45,8 @@ namespace Homeclick.Models
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Wishlist> Wishlists { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<ProjectItem> ProjectItems { get; set; }
+        public virtual DbSet<ProjectLayout_Collection> ProjectLayout_Collections { get; set; }
     }
 }
