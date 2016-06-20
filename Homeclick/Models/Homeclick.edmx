@@ -5,7 +5,81 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="vinabits_homeclickModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Canva">
+      <EntityType Name="Project">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        <Property Name="Name" Type="nvarchar" MaxLength="255" />
+        <Property Name="City" Type="nvarchar" MaxLength="128" />
+        <Property Name="State" Type="nvarchar" MaxLength="128" />
+        <Property Name="Address" Type="nvarchar" MaxLength="255" />
+        <Property Name="Size" Type="nvarchar" MaxLength="100" />
+        <Property Name="Investor" Type="nvarchar" MaxLength="255" />
+        <Property Name="Apartments" Type="numeric" />
+        <Property Name="StartYear" Type="nvarchar" MaxLength="4" />
+        <Property Name="CompletedYear" Type="nvarchar" MaxLength="4" />
+        <Property Name="ArchitetualDesignAgency" Type="nvarchar" MaxLength="255" />
+        <Property Name="FurnitureDesignAgency" Type="nvarchar" MaxLength="255" />
+        <Property Name="ViewDesignAgency" Type="nvarchar" MaxLength="255" />
+        <Property Name="Manager" Type="nvarchar" MaxLength="255" />
+        <Property Name="DistributionAgency" Type="nvarchar" MaxLength="255" />
+        <Property Name="HtmlContent" Type="nvarchar" MaxLength="Max" />
+        <Property Name="ConstructionAgency" Type="nvarchar" MaxLength="255" />
+        <Property Name="MetaKeyword" Type="nvarchar" MaxLength="255" />
+        <Property Name="MetaDescription" Type="nvarchar" MaxLength="255" />
+        <Property Name="LockedOut" Type="bit" />
+        <Property Name="CreatedDate" Type="datetime" />
+        <Property Name="CreatedBy" Type="int" />
+        <Property Name="UpdatedDate" Type="datetime" />
+        <Property Name="UpdatedBy" Type="int" />
+      </EntityType>
+
+      <EntityType Name="ProjectItem">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        <Property Name="Name" Type="nvarchar" MaxLength="255" />
+        <Property Name="Description" Type="nvarchar" MaxLength="255" />
+        <Property Name="Image" Type="nvarchar" MaxLength="Max" />
+        <Property Name="Order" Type="int"/>
+        <Property Name="ProjectId" Type="int"/>
+        <Property Name="LockedOut" Type="bit" />
+        <Property Name="CreatedDate" Type="datetime" />
+        <Property Name="CreatedBy" Type="int" />
+        <Property Name="UpdatedDate" Type="datetime" />
+        <Property Name="UpdatedBy" Type="int" />
+      </EntityType>
+
+      <EntityType Name="ProjectLayout_Collection">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        <Property Name="Name" Type="nvarchar" MaxLength="255" />
+        <Property Name="Description" Type="nvarchar" MaxLength="255" />
+        <Property Name="Image" Type="nvarchar" MaxLength="Max" />
+        <Property Name="HtmlContent" Type="nvarchar" MaxLength="Max" />
+        <Property Name="LayoutId" Type="int" />
+        <Property Name="LockedOut" Type="bit" />
+        <Property Name="CreatedDate" Type="datetime" />
+        <Property Name="CreatedBy" Type="int" />
+        <Property Name="UpdatedDate" Type="datetime" />
+        <Property Name="UpdatedBy" Type="int" />
+      </EntityType>
+
+      <EntityType Name="ProductsLayoutsLink">
+        <Key>
+          <PropertyRef Name="Product" />
+          <PropertyRef Name="Layout" />
+        </Key>
+        <Property Name="Product" Type="int" />
+        <Property Name="Layout" Type="int" />
+        <Property Name="ID" Type="int" />
+      </EntityType>
+      
+      <EntityType Name="Canva">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -707,7 +781,144 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Project_CreatedBy">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Project_UpdatedBy">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectItem_ProjectId">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="ProjectItem" Type="Self.ProjectItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectItem">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      <Association Name="FK_ProjectItem_CreatedBy">
+        <End Role="User" Type="Self.User" Multiplicity="0..1" />
+        <End Role="ProjectItem" Type="Self.ProjectItem" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="User">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ProjectItem">
+            <PropertyRef Name="CreatedBy" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_ProjectItem_UpdatedBy">
+        <End Role="User" Type="Self.User" Multiplicity="0..1" />
+        <End Role="ProjectItem" Type="Self.ProjectItem" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="User">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ProjectItem">
+            <PropertyRef Name="UpdatedBy" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+
+      <Association Name="FK_ProjectLayout_Collection_LayoutId">
+        <End Role="ProjectItem" Type="Self.ProjectItem" Multiplicity="0..1" />
+        <End Role="ProjectLayout_Collection" Type="Self.ProjectLayout_Collection" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="ProjectItem">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ProjectLayout_Collection">
+            <PropertyRef Name="LayoutId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+
+      <Association Name="FK_ProjectLayout_Collection_CreatedBy">
+        <End Role="User" Type="Self.User" Multiplicity="0..1" />
+        <End Role="ProjectLayout_Collection" Type="Self.ProjectLayout_Collection" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="User">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ProjectLayout_Collection">
+            <PropertyRef Name="CreatedBy" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_ProjectLayout_Collection_UpdatedBy">
+        <End Role="User" Type="Self.User" Multiplicity="0..1" />
+        <End Role="ProjectLayout_Collection" Type="Self.ProjectLayout_Collection" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="User">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ProjectLayout_Collection">
+            <PropertyRef Name="UpdatedBy" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+
+      <Association Name="FK_ProductsLayoutsLink_Product">
+        <End Role="Product" Type="Self.Product" Multiplicity="1" />
+        <End Role="ProductsLayoutsLink" Type="Self.ProductsLayoutsLink" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Product">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ProductsLayoutsLink">
+            <PropertyRef Name="Product" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+
+      <Association Name="FK_ProductsLayoutsLink_Layout">
+        <End Role="ProjectLayout_Collection" Type="Self.ProjectLayout_Collection" Multiplicity="1" />
+        <End Role="ProductsLayoutsLink" Type="Self.ProductsLayoutsLink" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="ProjectLayout_Collection">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="ProductsLayoutsLink">
+            <PropertyRef Name="Layout" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      
         <EntityContainer Name="vinabits_homeclickModelStoreContainer">
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectItem" EntityType="Self.ProjectItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectLayout_Collection" EntityType="Self.ProjectLayout_Collection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductsLayoutsLink" EntityType="Self.ProductsLayoutsLink" Schema="dbo" store:Type="Tables">
+            <DefiningQuery>
+              SELECT
+              [ProductsLayoutsLink].[Product] AS [Product],
+              [ProductsLayoutsLink].[Layout] AS [Layout],
+              [ProductsLayoutsLink].[Id] AS [Id]
+              FROM [dbo].[ProductsLayoutsLink] AS [ProductsLayoutsLink]
+            </DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Canva" EntityType="Self.Canva" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
@@ -894,12 +1105,20 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             <End Role="Wishlist" EntitySet="Wishlist" />
             <End Role="WishlistDanhSachWishlists_ProductDanhSachProducts" EntitySet="WishlistDanhSachWishlists_ProductDanhSachProducts" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProductsLayoutsLink_Product" Association="Self.FK_ProductsLayoutsLink_Product">
+            <End Role="ProjectLayout_Collection" EntitySet="ProjectLayout_Collection" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="vinabits_homeclickModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="vinabits_homeclickEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Projects" EntityType="vinabits_homeclickModel.Project" />
+          <EntitySet Name="ProjectItems" EntityType="vinabits_homeclickModel.ProjectItem" />
+          <EntitySet Name="ProjectLayout_Collections" EntityType="vinabits_homeclickModel.ProjectLayout_Collection" />
           <EntitySet Name="Canvas" EntityType="vinabits_homeclickModel.Canva" />
           <EntitySet Name="Carts" EntityType="vinabits_homeclickModel.Cart" />
           <EntitySet Name="Categories" EntityType="vinabits_homeclickModel.Category" />
@@ -920,6 +1139,42 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <EntitySet Name="Tags" EntityType="vinabits_homeclickModel.Tag" />
           <EntitySet Name="Users" EntityType="vinabits_homeclickModel.User" />
           <EntitySet Name="Wishlists" EntityType="vinabits_homeclickModel.Wishlist" />
+
+          <AssociationSet Name="FK_Project_CreatedBy" Association="vinabits_homeclickModel.FK_Project_CreatedBy">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Project_UpdatedBy" Association="vinabits_homeclickModel.FK_Project_UpdatedBy">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+
+          <AssociationSet Name="FK_ProjectItem_ProjectId" Association="vinabits_homeclickModel.FK_ProjectItem_ProjectId">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="ProjectItem" EntitySet="ProjectItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectItem_UpdatedBy" Association="vinabits_homeclickModel.FK_ProjectItem_UpdatedBy">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ProjectItem" EntitySet="ProjectItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectItem_CreatedBy" Association="vinabits_homeclickModel.FK_ProjectItem_CreatedBy">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ProjectItem" EntitySet="ProjectItems" />
+          </AssociationSet>
+
+          <AssociationSet Name="FK_ProjectLayout_Collection_LayoutId" Association="vinabits_homeclickModel.FK_ProjectLayout_Collection_LayoutId">
+            <End Role="ProjectItem" EntitySet="ProjectItems" />
+            <End Role="ProjectLayout_Collection" EntitySet="ProjectLayout_Collections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectLayout_Collection_UpdatedBy" Association="vinabits_homeclickModel.FK_ProjectLayout_Collection_UpdatedBy">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ProjectLayout_Collection" EntitySet="ProjectLayout_Collections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectLayout_Collection_CreatedBy" Association="vinabits_homeclickModel.FK_ProjectLayout_Collection_CreatedBy">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ProjectLayout_Collection" EntitySet="ProjectLayout_Collections" />
+          </AssociationSet>
+          
           <AssociationSet Name="FK_Canva_CartId" Association="vinabits_homeclickModel.FK_Canva_CartId">
             <End Role="Cart" EntitySet="Carts" />
             <End Role="Canva" EntitySet="Canvas" />
@@ -1028,7 +1283,86 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             <End Role="User" EntitySet="Users" />
             <End Role="CustomSecurityRole" EntitySet="CustomSecurityRoles" />
           </AssociationSet>
+
+          <AssociationSet Name="ProductLayout" Association="vinabits_homeclickModel.ProductLayout">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProjectLayout_Collection" EntitySet="ProjectLayout_Collections" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" />
+          <Property Name="City" Type="String" MaxLength="128" />
+          <Property Name="State" Type="String" MaxLength="128" />
+          <Property Name="Address" Type="String" MaxLength="255" />
+          <Property Name="Size" Type="String" MaxLength="100" />
+          <Property Name="Investor" Type="String" MaxLength="255" />
+          <Property Name="Apartments" Type="Int32" />
+          <Property Name="StartYear" Type="String" MaxLength="4" />
+          <Property Name="CompletedYear" Type="String" MaxLength="4" />
+          <Property Name="ArchitetualDesignAgency" Type="String" MaxLength="255" />
+          <Property Name="FurnitureDesignAgency" Type="String" MaxLength="255" />
+          <Property Name="ViewDesignAgency" Type="String" MaxLength="255" />
+          <Property Name="Manager" Type="String" MaxLength="255" />
+          <Property Name="DistributionAgency" Type="String" MaxLength="255" />
+          <Property Name="HtmlContent" Type="String" MaxLength="Max" />
+          <Property Name="ConstructionAgency" Type="String" MaxLength="255" />
+          <Property Name="MetaKeyword" Type="String" MaxLength="255" />
+          <Property Name="MetaDescription" Type="String" MaxLength="255" />
+          <Property Name="LockedOut" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <NavigationProperty Name="CreatedByUser" Relationship="vinabits_homeclickModel.FK_Project_CreatedBy" ToRole="User" FromRole="Project" />
+          <NavigationProperty Name="UpdatedByUser" Relationship="vinabits_homeclickModel.FK_Project_UpdatedBy" ToRole="User" FromRole="Project" />
+          <!--Thêm relation sau-->
+        </EntityType>
+        <EntityType Name="ProjectItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" />
+          <Property Name="Description" Type="String" MaxLength="255" />
+          <Property Name="Image" Type="String" MaxLength="Max" />
+          <Property Name="Order" Type="Int32"/>
+          <Property Name="ProjectId" Type="Int32"/>
+          <Property Name="LockedOut" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Project" Relationship="vinabits_homeclickModel.FK_ProjectItem_ProjectId" ToRole="Project" FromRole="ProjectItem" />
+          <NavigationProperty Name="CreatedByUser" Relationship="vinabits_homeclickModel.FK_ProjectItem_CreatedBy" ToRole="User" FromRole="ProjectItem" />
+          <NavigationProperty Name="UpdatedByUser" Relationship="vinabits_homeclickModel.FK_ProjectItem_UpdatedBy" ToRole="User" FromRole="ProjectItem" /> <!--Thêm relation sau-->
+        </EntityType>
+
+        <EntityType Name="ProjectLayout_Collection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" />
+          <Property Name="Description" Type="String" MaxLength="255" />
+          <Property Name="Image" Type="String" MaxLength="Max" />
+          <Property Name="HtmlContent" Type="String" MaxLength="Max" />
+          <Property Name="LayoutId" Type="Int32"/>
+          <Property Name="LockedOut" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Products" Relationship="vinabits_homeclickModel.ProductLayout" FromRole="ProjectLayout_Collection" ToRole="Product" />
+          <NavigationProperty Name="Layout" Relationship="vinabits_homeclickModel.FK_ProjectLayout_Collection_LayoutId" ToRole="ProjectItem" FromRole="ProjectLayout_Collection" />
+          <NavigationProperty Name="CreatedByUser" Relationship="vinabits_homeclickModel.FK_ProjectLayout_Collection_CreatedBy" ToRole="User" FromRole="ProjectLayout_Collection" />
+          <NavigationProperty Name="UpdatedByUser" Relationship="vinabits_homeclickModel.FK_ProjectLayout_Collection_UpdatedBy" ToRole="User" FromRole="ProjectLayout_Collection" />
+          <!--Thêm relation sau-->
+        </EntityType>
+        
         <EntityType Name="Canva">
           <Key>
             <PropertyRef Name="Id" />
@@ -1315,6 +1649,110 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <NavigationProperty Name="User" Relationship="vinabits_homeclickModel.FK_Wishlist_UserId" FromRole="Wishlist" ToRole="User" />
           <NavigationProperty Name="Products" Relationship="vinabits_homeclickModel.ProductWishlist" FromRole="Wishlist" ToRole="Product" />
         </EntityType>
+        <Association Name="FK_Project_CreatedBy">
+          <End Role="User" Type="vinabits_homeclickModel.User" Multiplicity="0..1" />
+          <End Role="Project" Type="vinabits_homeclickModel.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Project_UpdatedBy">
+          <End Role="User" Type="vinabits_homeclickModel.User" Multiplicity="0..1" />
+          <End Role="Project" Type="vinabits_homeclickModel.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectItem_ProjectId">
+          <End Role="Project" Type="vinabits_homeclickModel.Project" Multiplicity="0..1" />
+          <End Role="ProjectItem" Type="vinabits_homeclickModel.ProjectItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectItem">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectItem_CreatedBy">
+          <End Role="User" Type="vinabits_homeclickModel.User" Multiplicity="0..1" />
+          <End Role="ProjectItem" Type="vinabits_homeclickModel.ProjectItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProjectItem">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectItem_UpdatedBy">
+          <End Role="User" Type="vinabits_homeclickModel.User" Multiplicity="0..1" />
+          <End Role="ProjectItem" Type="vinabits_homeclickModel.ProjectItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProjectItem">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+
+        <Association Name="ProductLayout">
+          <End Type="vinabits_homeclickModel.Product" Role="Product" Multiplicity="*" />
+          <End Type="vinabits_homeclickModel.ProjectLayout_Collection" Role="ProjectLayout_Collection" Multiplicity="*" />
+        </Association>
+
+        <Association Name="FK_ProjectLayout_Collection_LayoutId">
+          <End Role="ProjectItem" Type="vinabits_homeclickModel.ProjectItem" Multiplicity="0..1" />
+          <End Role="ProjectLayout_Collection" Type="vinabits_homeclickModel.ProjectLayout_Collection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectItem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectLayout_Collection">
+              <PropertyRef Name="LayoutId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectLayout_Collection_CreatedBy">
+          <End Role="User" Type="vinabits_homeclickModel.User" Multiplicity="0..1" />
+          <End Role="ProjectLayout_Collection" Type="vinabits_homeclickModel.ProjectLayout_Collection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProjectLayout_Collection">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectLayout_Collection_UpdatedBy">
+          <End Role="User" Type="vinabits_homeclickModel.User" Multiplicity="0..1" />
+          <End Role="ProjectLayout_Collection" Type="vinabits_homeclickModel.ProjectLayout_Collection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProjectLayout_Collection">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        
+        
         <Association Name="FK_Canva_CartId">
           <End Type="vinabits_homeclickModel.Cart" Role="Cart" Multiplicity="0..1" />
           <End Type="vinabits_homeclickModel.Canva" Role="Canva" Multiplicity="*" />
@@ -1603,6 +2041,74 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="vinabits_homeclickModelStoreContainer" CdmEntityContainer="vinabits_homeclickEntities">
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="vinabits_homeclickModel.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy"/>
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate"/>
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy"/>
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate"/>
+                <ScalarProperty Name="LockedOut" ColumnName="LockedOut"/>
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription"/>
+                <ScalarProperty Name="MetaKeyword" ColumnName="MetaKeyword"/>
+                <ScalarProperty Name="HtmlContent" ColumnName="HtmlContent"/>
+                <ScalarProperty Name="DistributionAgency" ColumnName="DistributionAgency"/>
+                <ScalarProperty Name="Manager" ColumnName="Manager"/>
+                <ScalarProperty Name="ConstructionAgency" ColumnName="ConstructionAgency"/>
+                <ScalarProperty Name="ViewDesignAgency" ColumnName="ViewDesignAgency"/>
+                <ScalarProperty Name="FurnitureDesignAgency" ColumnName="FurnitureDesignAgency"/>
+                <ScalarProperty Name="ArchitetualDesignAgency" ColumnName="ArchitetualDesignAgency"/>
+                <ScalarProperty Name="CompletedYear" ColumnName="CompletedYear"/>
+                <ScalarProperty Name="StartYear" ColumnName="StartYear"/>
+                <ScalarProperty Name="Apartments" ColumnName="Apartments"/>
+                <ScalarProperty Name="Investor" ColumnName="Investor"/>
+                <ScalarProperty Name="Size" ColumnName="Size"/>
+                <ScalarProperty Name="Address" ColumnName="Address"/>
+                <ScalarProperty Name="State" ColumnName="State"/>
+                <ScalarProperty Name="City" ColumnName="City"/>
+                <ScalarProperty Name="Name" ColumnName="Name"/>
+                <ScalarProperty Name="Id" ColumnName="Id"/>
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectItem">
+            <EntityTypeMapping TypeName="vinabits_homeclickModel.ProjectItem">
+              <MappingFragment StoreEntitySet="ProjectItem">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy"/>
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate"/>
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy"/>
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate"/>
+                <ScalarProperty Name="LockedOut" ColumnName="LockedOut"/>
+                <ScalarProperty Name="Project" ColumnName="Project"/>
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+              
+            
+          </EntitySetMapping>
+
+          <EntitySetMapping Name="ProjectLayout_Collection">
+            <EntityTypeMapping TypeName="vinabits_homeclickModel.ProjectLayout_Collection">
+              <MappingFragment StoreEntitySet="ProjectLayout_Collection">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy"/>
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate"/>
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy"/>
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate"/>
+                <ScalarProperty Name="LockedOut" ColumnName="LockedOut"/>
+                <ScalarProperty Name="Layout" ColumnName="Layout"/>
+                <ScalarProperty Name="HtmlContent" ColumnName="HtmlContent" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          
           <EntitySetMapping Name="Canvas">
             <EntityTypeMapping TypeName="vinabits_homeclickModel.Canva">
               <MappingFragment StoreEntitySet="Canva">
@@ -1903,6 +2409,16 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
               <ScalarProperty Name="Oid" ColumnName="SecurityRoles" />
             </EndProperty>
           </AssociationSetMapping>
+
+          <AssociationSetMapping Name="ProductCategory" TypeName="vinabits_homeclickModel.ProductCategory" StoreEntitySet="ProductsLayoutsLink">
+            <EndProperty Name="ProjectLayout_Collection">
+              <ScalarProperty Name="Id" ColumnName="Layout" />
+            </EndProperty>
+            <EndProperty Name="Product">
+              <ScalarProperty Name="Id" ColumnName="Product" />
+            </EndProperty>
+          </AssociationSetMapping>
+          
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
