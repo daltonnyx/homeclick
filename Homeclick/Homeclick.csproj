@@ -267,6 +267,9 @@
     <Compile Include="Models\Product_type.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\ProjectItem.cs" />
+    <Compile Include="Models\ProjectLayout.cs" />
     <Compile Include="Models\Room.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
