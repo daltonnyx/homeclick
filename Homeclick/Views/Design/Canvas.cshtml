@@ -1,4 +1,9 @@
-﻿<!DOCTYPE HTML>
+﻿@using Homeclick.Models
+@{
+    var CategoryTypes = ViewBag.CategoryTypes as IEnumerable<Category_type>;
+}
+
+<!DOCTYPE HTML>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -33,23 +38,16 @@
                     <li class="tab-list product-fur">
                         <div class="product-list">
                             <div class="product-select">
-                                <select id="productSelect">
-                                    <option value="furniture">Nội thất</option>
-                                    <option value="door">Cửa</option>
-                                    <option value="floor">Sàn</option>
-                                    <option value="other">...</option>
-                                </select>
-                                <select id="roomSelect">
-                                    <option value="living">Phòng khách</option>
-                                    <option value="bed">Phòng ngủ</option>
-                                    <option value="kitchen">Phòng bếp</option>
-                                    <option value="bath">Phòng tắm</option>
-                                    <option value="bar">Bar</option>
+                                @Html.DropDownList("CategoryTypeSelect", new SelectList(CategoryTypes, "Id", "name"), new { @id = "CategoryTypeSelect" })
+                                <select id="CategorySelect">
+                                    @{Html.RenderAction("_CategoryOptions",new { categoryTypeId = CategoryTypes.FirstOrDefault().Id });}
                                 </select>
                             </div>
-                            <div class="funiture-list">
-                                @Html.Action("CanvasList","SanPham")
+
+                            <div id="Funiture-list">
+                                @Html.Action("CanvasList", "SanPham")
                             </div>
+                        </div>
                     </li>
                     <li class="tab-list sign-fur">
 
@@ -67,7 +65,7 @@
             <div class="seperator-big"></div>
             <div class="control-container main-menu">
                 <button class="uk-button" id="new">new</button>
-                <button class="uk-button" id="saveJSON">save</button>
+                <button class="uk-button" id="saveJSON"">save</button>
                 <button class="uk-button" id="print">print</button>
                 <button class="uk-button" id="search">search</button>
                 <button class="uk-button" id="undo">undo</button>
@@ -199,34 +197,24 @@
             <p>Copyright &copy; 2015 Homeclick.vn - Design by: websiteplaza</p>
         </div>
     </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
     <script type="text/javascript">
 
         jQuery(document).ready(function ($) {
-            $('#productSelect').on('change', function (event) {
-                var type = $(event.target).val(), url;
-                switch (type) {
-                    case 'door':
-                        url = '/path/door.html';
-                        break;
-                    case 'floor':
-                        url = '/path/floor.html';
-                        break;
-                    case 'furniture':
-                        url = '/path/furniture.html';
-                        break;
-                    default:
-                        url = '/path/furniture.html';
-                        break;
-                }
+            function GetHtmlView(urlAction ,targetId) {
                 $.ajax({
-                    url: '/canvas' + url,
+                    url: urlAction,
                     type: 'GET',
                     dataType: 'html',
                     data: {},
                 })
                 .done(function (data) {
                     console.log("success");
-                    $('.funiture-list').html(data);
+                    var e = document.getElementById(targetId);
+                    $(e).html(data);
                 })
                 .fail(function () {
                     console.log("error");
@@ -234,10 +222,30 @@
                 .always(function () {
                     console.log("complete");
                 });
+            }
 
-
-                /* Act on the event */
+            $('#CategoryTypeSelect').on('change', function (event) {
+                var v = this.options[this.selectedIndex].value;
+                GetHtmlView('/Design/_CategoryOptions?categoryTypeId=' + v, 'CategorySelect');
             });
+
+            $('#CategorySelect').on('change', function (event) {
+                var v = this.options[this.selectedIndex].value;
+                GetHtmlView('/Sanpham/canvasList?cat_id=' + v, 'Funiture-list');
+            });
+
+            $('#CategorySelect').bind("DOMSubtreeModified", function () {
+                var v = this.options;
+                if (v.selectedIndex != -1) {
+                    var v = this.options[this.selectedIndex].value;
+                    GetHtmlView('/Sanpham/canvasList?cat_id=' + v, 'Funiture-list');
+                }
+            });
+            
+            $('#saveJSON').click(function () {
+
+            });
+
 
             $('input[type="color"]').spectrum({
                 showInput: true,

@@ -47,8 +47,21 @@ namespace Homeclick.Controllers
 
         public ActionResult Canvas(int? id)
         {
+            var categoryTypes = db.Category_type.ToList();
+
+            ViewBag.SelectedTypeId = categoryTypes.FirstOrDefault().Id;
+            ViewBag.CategoryTypes = categoryTypes;
+
             var model = db.Canvas.Find(id);
+
             return PartialView(model);
         }
+
+        public ActionResult _CategoryOptions(int? CategoryTypeId)
+        {
+            var categories = db.Categories.Where(o => o.Category_typeId == CategoryTypeId).ToList();
+            return PartialView(categories);
+        }
+
 	}
 }
