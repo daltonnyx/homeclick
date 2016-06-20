@@ -8,13 +8,12 @@
     Dictionary<string, object> detail = productArr["Product_detail"] as Dictionary<string, object>;
         <div class="product">
             <div class="product-image">
-                <a href="#" class="product-link svg-item" data-svg="@detail["data"]" data-can-scale="@detail["scale"]">
-                    <img src="@detail["image"]" data-image="@detail["image"]" class="svg-item"
-                         data-name="@product.name" data-svg="@detail["data"]" data-can-scale="@detail["scale"]" data-zData="@detail["zdata"]" data-price="@detail["gia"]" />
+                <a href="#" class="product-link svg-item">
+                    <img src="" data-price="@detail["gia"]" />
                 </a>
             </div>
             <div class="product-title">
-                <a href="#" class="product-link svg-item" data-image="@detail["image"]" data-svg="@detail["scale"]" data-can-scale="@detail["scale"]">
+                <a href="#" class="product-link svg-item">
                     <h5>@product.name</h5>
                 </a>
             </div>

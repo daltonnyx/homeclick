@@ -89,15 +89,15 @@ position: absolute; width:16px;height:16px;left: 0;top: 0;z-index: 999;display: 
 span.slogan {padding-left:15px;font-family: Soraya;font-size: 35px;vertical-align: bottom;position: relative;	top: -20px;}
 span.aqua {color:#12a9a4;}
 .product-select {padding:15px 10px;}
-#productSelect,#roomSelect {padding: 5px;font-family: Avo;min-width: 150px;text-align: center;font-size: 14px;color:#666;}
+#CategoryTypeSelect,#CategorySelect {padding: 5px;font-family: Avo;min-width: 150px;text-align: center;font-size: 14px;color:#666;}
 .uk-tab .uk-active a {color:#fff !important;border-top-right-radius: 10px !important;border-top-left-radius: 10px !important;background-color: #12a9a4 !important;}
 .uk-tab > li > a:hover {color:#fff;background-color: #12a9a4;}
 .product-list {padding-bottom: 30px;padding-left: 5px;padding-right: 5px;}
 #funiture .product .product-image img {width:100%;height:auto;}
-.funiture-list .product .product-image {width:130px;height:105px;overflow: hidden;border:1px solid #ccc;}
-.funiture-list .product .product-title a h5 {width:100%;text-align: center;font-family: Avo;text-transform: uppercase;font-size: 13px;color:#666;}
-.funiture-list {max-height: 560px;overflow-y: scroll;display:flex;flex-flow: row wrap;justify-content: space-around;}
-.control-container.main-menu {
+#Funiture-list .product .product-image {width:130px;height:105px;overflow: hidden;border:1px solid #ccc;}
+#Funiture-list .product .product-title a h5 {width:100%;text-align: center;font-family: Avo;text-transform: uppercase;font-size: 13px;color:#666;}
+#Funiture-list {max-height: 560px;overflow-y: scroll;display:flex;flex-flow: row wrap;justify-content: space-around;}
+#control-container.main-menu {
     padding: 10px 15px;
     background-color: #e3e6e6;
 }
