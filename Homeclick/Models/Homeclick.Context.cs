@@ -22,7 +22,9 @@ namespace Homeclick.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            throw new UnintentionalCodeFirstException();
+            modelBuilder.Entity<Project>().ToTable("Projects");
+            modelBuilder.Entity<ProjectItem>().ToTable("ProjectItems");
+            modelBuilder.Entity<ProjectLayout_Collection>().ToTable("ProjectLayout_Collections");
         }
 
         public virtual DbSet<Canva> Canvas { get; set; }
