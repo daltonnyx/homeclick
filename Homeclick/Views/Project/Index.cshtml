@@ -1,73 +1,73 @@
-﻿@using Homeclick.Models
-@model IList<Category>
+﻿
 @{
-    ViewBag.Title = "Bộ sưu tập";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout_Project.cshtml";
-    string url = "http://demo.vinabits.com.vn/homeclick2";
 }
-<div class="row">
-    <div class="page-bosuutap col-md-12">
-        <div class="row">
-            <div class="col-md-12 bosuutap-slide">
-                <section class="slider-home">
-                    <div class="container">
-                        <div class="row">
-                            <div id="slider-home" class="owl-carousel owl-theme">
-                                <div class="item"><a href="#"><img src="~/Upload/Images/slider_01.jpg" alt="Slider_01"></a></div>
-                                <div class="item"><a href="#"><img src="~/Upload/Images/slider_02.jpg" alt="GTA V"></a></div>
-                                <div class="item"><a href="#"><img src="~/Upload/Images/slider_03.jpg" alt="Mirror Edge"></a></div>
-                                <div class="item"><a href="#"><img src="~/Upload/Images/slider_04.jpg" alt="Mirror Edge"></a></div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
 
 
+
+<div class="main-body">
+    <div class="row">
+        <div class="project-tile col-sm-6 col-md-4">
+            <div class="project-tile-image fullscreener fsr-container">
+                <img width="650" height="420" src="http://themes.wplook.com/construction/wp-content/uploads/sites/15/2015/04/Helsinki-Central-Library-650x420.jpg" class="attachment-project-image size-project-image wp-post-image fsr-image fsr-hidden" alt="Helsinki-Central-Library">
             </div>
-            <div class="col-md-12 bosuutap-grid bosuutap-home">
-                <h6 class="number-items section-header">@Model.Count item(s)</h6>
-                <div class="oderby-html">
-                    <span>Sort by</span>
-                    <select>
-                        <option>Default</option>
-                        <option>Prince</option>
-                        <option>Default</option>
-                    </select>
-                </div>
-                <div class="row">
-                    @foreach (Category item in Model)
-                    {
-                        string image = item.getDetailValue("image").ToString();
-                        System.Text.RegularExpressions.Regex regexr = new System.Text.RegularExpressions.Regex(@"\.(\w+)$", System.Text.RegularExpressions.RegexOptions.Singleline);
-                        string image_cropped = regexr.Replace(image, "_cropped") + regexr.Match(image).ToString();
-                        <div class="item-product col-md-4">
-                            <div class="image">
-                                <a href="@Url.Action("Detail", "BoSuuTap", new { @Id = @item.Id })"><img src="@url/@image_cropped" alt="" /></a>
-                            </div>
-                            <div class="detail-item">
-                                <h3 class="title-item"><a href="@Url.Action("Detail", "BoSuuTap", new { @Id = @item.Id })">@item.name</a></h3>
-                                <p class="cat-price">@item.getDetailValue("price") đ</p>
-                            </div>
-                        </div>
-                    }
-                </div>
+
+            <div class="project-tile-overlay">
+                <h4>HELSINKI CENTRAL LIBRARY</h4>
+                <a href="#" class="button tiny">View Project</a>
+            </div>
+        </div>
+        <div class="project-tile col-sm-6 col-md-4">
+            <div class="project-tile-image fullscreener fsr-container">
+                <img width="650" height="420" src="http://themes.wplook.com/construction/wp-content/uploads/sites/15/2015/04/golf-academy-650x420.jpg" class="attachment-project-image size-project-image wp-post-image fsr-image fsr-hidden" alt="Helsinki-Central-Library">
+            </div>
+
+            <div class="project-tile-overlay">
+                <h4>GOLF CLUB SKOLKOVO</h4>
+                <a href="#" class="button tiny">View Project</a>
+            </div>
+        </div>
+        <div class="project-tile col-sm-6 col-md-4">
+            <div class="project-tile-image fullscreener fsr-container">
+                <img width="650" height="420" src="http://themes.wplook.com/construction/wp-content/uploads/sites/15/2015/04/sbb-650x420.jpg" class="attachment-project-image size-project-image wp-post-image fsr-image fsr-hidden" alt="Helsinki-Central-Library">
+            </div>
+
+            <div class="project-tile-overlay">
+                <h4>HOTEL SOCHI</h4>
+                <a href="#" class="button tiny">View Project</a>
+            </div>
+        </div>
+        <div class="project-tile col-sm-6 col-md-4">
+            <div class="project-tile-image fullscreener fsr-container">
+                <img width="650" height="420" src="http://themes.wplook.com/construction/wp-content/uploads/sites/15/2015/04/putney-650x420.jpg" class="attachment-project-image size-project-image wp-post-image fsr-image fsr-hidden" alt="Helsinki-Central-Library">
+            </div>
+
+            <div class="project-tile-overlay">
+                <h4>CBC</h4>
+                <a href="#" class="button tiny">View Project</a>
+            </div>
+        </div>
+        <div class="project-tile col-sm-6 col-md-4">
+            <div class="project-tile-image fullscreener fsr-container">
+                <img width="650" height="420" src="http://themes.wplook.com/construction/wp-content/uploads/sites/15/2015/04/Hotel-Sochi-650x420.jpg" class="attachment-project-image size-project-image wp-post-image fsr-image fsr-hidden" alt="Helsinki-Central-Library">
+            </div>
+
+            <div class="project-tile-overlay">
+                <h4>PUTNEY HOMES</h4>
+                <a href="#" class="button tiny">View Project</a>
+            </div>
+        </div>
+        <div class="project-tile col-sm-6 col-md-4">
+            <div class="project-tile-image fullscreener fsr-container">
+                <img width="650" height="420" src="http://themes.wplook.com/construction/wp-content/uploads/sites/15/2015/04/home-650x420.jpg" class="attachment-project-image size-project-image wp-post-image fsr-image fsr-hidden" alt="Helsinki-Central-Library">
+            </div>
+
+            <div class="project-tile-overlay">
+                <h4>CENTRAL SPA HOBBY</h4>
+                <a href="#" class="button tiny">View Project</a>
             </div>
         </div>
     </div>
-</div>
 
-<script type="text/javascript">
-    jQuery(document).ready(function ($) {
-        $("#slider-bosuutap").nivoSlider({
-            effect: 'random',
-            animSpeed: 500,
-            pauseTime: 4000,
-            startSlide: 0,
-            directionNav: true,
-            controlNav: false,
-            //pauseOnHover: false,
-            prevText: '<i class="fa fa-angle-left"></i>',
-            nextText: '<i class="fa fa-angle-right"></i>'
-        });
-    });
-</script>
+</div>

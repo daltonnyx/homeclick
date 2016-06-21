@@ -1,5 +1,4 @@
-﻿using Homeclick.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,22 +8,29 @@ namespace Homeclick.Controllers
 {
     public class ProjectController : Controller
     {
-        vinabits_homeclickEntities db = new vinabits_homeclickEntities();
-
+        Homeclick.Models.vinabits_homeclickEntities db = new Models.vinabits_homeclickEntities();
         // GET: Project
         public ActionResult Index()
         {
-            IList<Project> project = db.Projects.ToList<Project>();
+            ViewBag.MetaKeyword = "homeclick";
+            ViewBag.MetaDescription = "project";
+            var v = db.ProjectLayout_Collections.ToList();
             return View();
         }
 
-        //public ActionResult Index(int id)
-        //{
-        //    return View("ProjectIndex");
-        //}
-
-        public ActionResult Sidebar()
+        public ActionResult _Collections(int? collectionId)
         {
+            return PartialView();
+        }
+
+        public ActionResult _CollectionDetails(int? collectionId)
+        {
+            return PartialView();
+        }
+
+        public ActionResult Details(int? ProjectId)
+        {
+
             return View();
         }
 

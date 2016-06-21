@@ -282,6 +282,96 @@
     <Compile Include="Models\Tag.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\test\Canva.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Cart.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Category.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Category_detail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Category_type.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\City.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Customer.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Customer_type.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\CustomSecurityRole.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Department.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Floor.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Model1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Post.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\PostDanhSachPosts_CategoryDanhSachCategories.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Post_detail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Product.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\ProductsLayoutsLink.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Product_detail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Product_type.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Project.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\ProjectItem.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\ProjectLayout_Collection.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Room.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Tag.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\User.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\test\Wishlist.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
@@ -304,6 +394,7 @@
     <Content Include="Content\Owl.theme.css" />
     <Content Include="Content\owl.transitions.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Project.css" />
     <Content Include="Content\Responsive.css" />
     <Content Include="Content\spectrum.css" />
     <Content Include="Content\Style.css" />
@@ -342,8 +433,25 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <EntityDeploy Include="Models\test\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\test\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Models\test\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\test\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\canvas.nocache.js" />
@@ -374,6 +482,29 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\notify.min.js" />
     <Content Include="Scripts\owl.carousel.min.js" />
+    <Content Include="Scripts\Plugins\easyTabs\jquery.easytabs.js" />
+    <Content Include="Scripts\Plugins\easyTabs\jquery.easytabs.min.js" />
+    <Content Include="Scripts\Plugins\easyTabs\jquery.hashchange.min.js" />
+    <Content Include="Scripts\Plugins\fancyBox\blank.gif" />
+    <Content Include="Scripts\Plugins\fancyBox\fancybox_loading%402x.gif" />
+    <Content Include="Scripts\Plugins\fancyBox\fancybox_loading.gif" />
+    <Content Include="Scripts\Plugins\fancyBox\fancybox_overlay.png" />
+    <Content Include="Scripts\Plugins\fancyBox\fancybox_sprite%402x.png" />
+    <Content Include="Scripts\Plugins\fancyBox\fancybox_sprite.png" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox-buttons.css" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox-buttons.js" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox-media.js" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox-thumbs.css" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox-thumbs.js" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox.css" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox.pack.js" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.mousewheel-3.0.6.pack.js" />
+    <Content Include="Scripts\Plugins\slick\ajax-loader.gif" />
+    <Content Include="Scripts\Plugins\slick\fonts\slick.svg" />
+    <Content Include="Scripts\Plugins\slick\slick-theme.css" />
+    <Content Include="Scripts\Plugins\slick\slick.css" />
+    <Content Include="Scripts\Plugins\slick\slick.js" />
+    <Content Include="Scripts\Plugins\slick\slick.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -567,6 +698,14 @@
     <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.0.0.min.map" />
     <Content Include="Views\Design\_CategoryOptions.cshtml" />
+    <Content Include="Scripts\Plugins\slick\config.rb" />
+    <Content Include="Scripts\Plugins\slick\fonts\slick.eot" />
+    <Content Include="Scripts\Plugins\slick\fonts\slick.ttf" />
+    <Content Include="Scripts\Plugins\slick\fonts\slick.woff" />
+    <Content Include="Scripts\Plugins\slick\slick-theme.less" />
+    <Content Include="Scripts\Plugins\slick\slick-theme.scss" />
+    <Content Include="Scripts\Plugins\slick\slick.less" />
+    <Content Include="Scripts\Plugins\slick\slick.scss" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\Html\Phong.cshtml" />
     <Content Include="Views\Html\Thietke1.cshtml" />
@@ -593,11 +732,15 @@
     <Content Include="Views\SanPham\Sidebar.cshtml" />
     <Content Include="Views\Shared\_Layout_Project.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
-    <Content Include="Views\Project\ProjectIndex.cshtml" />
-    <Content Include="Views\Project\Sidebar.cshtml" />
-    <Content Include="Views\Project\Detail.cshtml" />
     <Content Include="Views\SanPham\CanvasList.cshtml" />
     <Content Include="Views\SanPham\_CanvasList.cshtml" />
+    <Content Include="Views\Project\Details.cshtml" />
+    <Content Include="Views\Project\_CollectionDetails.cshtml" />
+    <Content Include="Views\Project\_Collections.cshtml" />
+    <Content Include="Views\Project\_LayoutTemplated.cshtml" />
+    <Content Include="Views\Project\_Sidebar.cshtml" />
+    <Content Include="Views\Project\_Slider.cshtml" />
+    <Content Include="Views\Project\_Thumbnail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
