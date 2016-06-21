@@ -98,16 +98,18 @@
         }
 
         function Back() {
+            $('#tabs2').hide(); //just in case
             $('#tabs2').html($g);
+            $('#tabs2').fadeIn('slow');
             event.preventDefault();
         }
 
-        function Click() {
+        function CollectionClick(data) {
+            var urlAction = '/Project/_CollectionDetails?collectionId=' + data;
 
-            var urlAction = '/Project/_CollectionDetails';
             $g = $('#tabs2').html();
 
-            $('#tabs2').html('<img id="loader-img" alt="" src="https://sire.uniandes.edu.co/pagos/javax.faces.resource/ajax-loader.gif.xhtml?ln=images" width="50" height="50" align="center" />');
+            //$('#tabs2').html('<img id="loader-img" alt="" src="https://sire.uniandes.edu.co/pagos/javax.faces.resource/ajax-loader.gif.xhtml?ln=images" width="50" height="50" align="center" />');
 
             $.ajax({
                 url: urlAction,
@@ -117,7 +119,9 @@
             })
             .done(function (data) {
                 console.log("success");
+                $('#tabs2').hide(); //just in case
                 $('#tabs2').html(data);
+                $('#tabs2').fadeIn('slow');
             })
             .fail(function () {
                 console.log("error");
@@ -128,11 +132,9 @@
             event.preventDefault();
         };
 
-        //Layouts
-        $(".layoutLink").click(function () {
-            $('#Collections').html('<img id="loader-img" alt="" src="https://sire.uniandes.edu.co/pagos/javax.faces.resource/ajax-loader.gif.xhtml?ln=images" width="50" height="50" align="center" />');
-
-            var urlAction = '/Project/_Collections';
+        function LayoutClick(data) {
+            //$('#Collections').html('<img id="loader-img" alt="" src="https://sire.uniandes.edu.co/pagos/javax.faces.resource/ajax-loader.gif.xhtml?ln=images" width="50" height="50" align="center" />');
+            var urlAction = '/Project/_Collections?layoutId=' + data;
             $.ajax({
                 url: urlAction,
                 type: 'GET',
@@ -141,7 +143,10 @@
             })
             .done(function (data) {
                 console.log("success");
+ 
+                $('#Collections').hide(); //just in case
                 $('#Collections').html(data);
+                $('#Collections').fadeIn('slow');
             })
             .fail(function () {
                 console.log("error");
@@ -149,7 +154,8 @@
             .always(function () {
                 console.log("complete");
             });
-        });
+            event.preventDefault();
+        };
 
         //slider home
         $(window).load(function () {

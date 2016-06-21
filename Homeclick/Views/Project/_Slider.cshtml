@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<Homeclick.Models.ProjectItem>
+
 <style>
     .owl-buttons {
         display: none;
@@ -19,8 +20,9 @@
 
 <div class="project-slider">
     <div id="slider-home" class="owl-carousel owl-theme">
-        <div class="item"><a href="#"><img src="https://demo.proteusthemes.com/buildpress/wp-content/uploads/sites/16/2014/10/project_03-1024x574.jpg" alt=""></a></div>
-        <div class="item"><a href="#"><img src="https://demo.proteusthemes.com/buildpress/wp-content/uploads/sites/16/2014/10/project_12-1024x574.jpg" alt=""></a></div>
-        <div class="item"><a href="#"><img src="https://demo.proteusthemes.com/buildpress/wp-content/uploads/sites/16/2014/10/project_08-1024x574.jpg" alt=""></a></div>
+        @foreach (var item in Model)
+        {
+            <div class="item"><a href="#"><img src="@item.Image" alt="@item.Description"></a></div>
+        }
     </div>
 </div>

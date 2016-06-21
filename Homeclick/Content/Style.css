@@ -106,7 +106,7 @@ a:focus{
 }
 a, 
 button, 
-input {
+input, textarea {
 	transition: all 0.3s ease-in-out 0s;
 	-moz-transition: all 0.3s ease-in-out 0s;
 	-o-transition: all 0.3s ease-in-out 0s;
@@ -133,7 +133,7 @@ input[type=password]:focus,
 input[type=number]:focus,
 input[type=search]:focus,
 textarea:focus {
-	border-color: #44d1cb;
+	border-color: #44d1cb!important;
 	outline: none;
 }
 .table > tbody > tr > td, 
@@ -3101,6 +3101,7 @@ select.ins{
     width: 47%;
     margin: 0 0 15px 3%;
     position: relative;
+    height: 35px;
 }
 .contact_form_area .inputError {
     -webkit-box-shadow: 0 0 0 1px #da0000;
@@ -3116,7 +3117,7 @@ select.ins{
     color: #fff;
     font-size: 13px;
     line-height: 16px;
-    font-weight: 700;
+    font-weight: normal;
     padding: 10px 15px;
     text-transform: capitalize;
     overflow: auto;

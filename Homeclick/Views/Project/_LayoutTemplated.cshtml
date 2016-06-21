@@ -1,69 +1,29 @@
-﻿<style>
-    .title{
+﻿@model IEnumerable<Homeclick.Models.ProjectItem>
 
-    }
+<style>
     .title span{
         font-size:16px;
     }
-
-
 </style>
+
 <div class="title">
     <span> Layout mẫu</span>
 </div>
-<div class="row " style="padding-bottom: 20px;">
-    <div class="col-xs-6 col-sm-3">
-        <div class="card card-shadow">
-            <div>
-                <a class="layoutLink" href="#1" title="">
-                    <img style="height:auto; width:100%" src="https://demo.proteusthemes.com/buildpress/wp-content/uploads/sites/16/2014/10/project_06-1024x574.jpg" alt="" />
-                </a>
-            </div>
-            <div class="card-title">
-                <span>Layout</span>
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-6 col-sm-3">
-        <div class="card card-shadow">
-            <div>
-                <a class="layoutLink" href="#2" title="">
-                    <img style="height:auto; width:100%" src="https://demo.proteusthemes.com/buildpress/wp-content/uploads/sites/16/2014/10/project_10-1024x574.jpg" alt="" />
-                </a>
-            </div>
-            <div class="card-title">
-                <span>Layout</span>
+
+<div class="row " style="padding: 0 0 20px 0;">
+    @foreach (var item in Model)
+    {
+        <div class="col-xs-6 col-sm-3">
+            <div class="card card-shadow">
+                <div>
+                    <a class="layoutLink" onclick="LayoutClick(@item.Id)" title="@item.Description">
+                        <img style="height:auto; width:100%" src="@item.Image" alt="@item.Description" />
+                    </a>
+                </div>
+                <div class="card-title">
+                    <span>@item.Name</span>
+                </div>
             </div>
         </div>
-    </div>
-    <div  class="col-xs-6 col-sm-3">
-        <div class="card card-shadow">
-            <div>
-                <a class="layoutLink" href="#3" title="">
-                    <img style="height:auto; width:100%" src="https://demo.proteusthemes.com/buildpress/wp-content/uploads/sites/16/2014/10/project_13.jpg" alt="" />
-                </a>
-            </div>
-            <div class="card-title">
-                <span>Layout</span>
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-6 col-sm-3">
-        <div class="card card-shadow">
-            <div>
-                <a class="layoutLink" href="#4" title="">
-                    <img style="height:auto; width:100%" src="https://demo.proteusthemes.com/buildpress/wp-content/uploads/sites/16/2014/10/project_06-1024x574.jpg" alt="" />
-                </a>
-            </div>
-            <div class="card-title">
-                <span>Layout</span>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="title">
-    <span>Các phương án đề nghị</span>
-</div>
-<div id="Collections">
-    @{Html.RenderPartial("_Collections");}
+    }
 </div>

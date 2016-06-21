@@ -1,7 +1,8 @@
-﻿
+﻿@model Homeclick.Models.Project
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout_Project.cshtml";
+
 }
 
 <div class="row widget">
@@ -10,17 +11,24 @@
     </div>
 
     <div class="col-md-8 col-lg-9 project-content">
-        @Html.Partial("_Slider")
+        @Html.Partial("_Slider", ViewBag.Layouts as IEnumerable<Homeclick.Models.ProjectItem>)
         <div id="tab-container" class="tab-container">
             <ul class='etabs'>
                 <li class='tab'><a href="#tabs1">Introduction</a></li>
                 <li class='tab'><a href="#tabs2">Layouts</a></li>
             </ul>
             <div id="tabs1" class="project-tab">
+                @Html.Partial("_ProjectHtmlContent", Model)
                 @Html.Partial("_Thumbnail")
             </div>
             <div id="tabs2" class="project-tab">
-                @Html.Partial("_LayoutTemplated")
+                @Html.Partial("_LayoutTemplated", ViewBag.Layouts as IEnumerable<Homeclick.Models.ProjectItem>)
+                <div class="title">
+                    <span>Các phương án đề nghị</span>
+                </div>
+                <div id="Collections">
+                    @{Html.RenderAction("_Collections", new { layoutId = (int)ViewBag.firstLayoutId });}
+                </div>
             </div>
         </div>
     </div>

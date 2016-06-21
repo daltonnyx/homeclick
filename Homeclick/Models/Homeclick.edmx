@@ -45,6 +45,7 @@
         <Property Name="Image" Type="nvarchar" MaxLength="Max" />
         <Property Name="Order" Type="int"/>
         <Property Name="ProjectId" Type="int"/>
+        <Property Name="CategoryId" Type="int"/>
         <Property Name="LockedOut" Type="bit" />
         <Property Name="CreatedDate" Type="datetime" />
         <Property Name="CreatedBy" Type="int" />
@@ -805,6 +806,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             </Dependent>
           </ReferentialConstraint>
         </Association>
+      
         <Association Name="FK_ProjectItem_ProjectId">
           <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
           <End Role="ProjectItem" Type="Self.ProjectItem" Multiplicity="*" />

@@ -14,6 +14,12 @@ namespace Homeclick
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+            name: "Project",
+            url: "Project/Details/{projectId}",
+            defaults: new { controller = "Project", action = "Details", projectId = UrlParameter.Optional}
+            );
+
+            routes.MapRoute(
                 name: "Product",
                 url: "Product/{model_id}/{typo_id}/{mate_id}",
                 defaults: new { controller = "Category", action = "Filter", model_id = UrlParameter.Optional, typo_id = UrlParameter.Optional, mate_id = UrlParameter.Optional}

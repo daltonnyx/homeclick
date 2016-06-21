@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1dab5d5ad23249948b3e91ae11068f2c" Name="Diagram1" ZoomLevel="88">
+      <Diagram DiagramId="1dab5d5ad23249948b3e91ae11068f2c" Name="Diagram1" ZoomLevel="63">
         <EntityTypeShape EntityType="vinabits_homeclickModel.Canva" Width="1.5" PointX="15.625" PointY="15" />
         <EntityTypeShape EntityType="vinabits_homeclickModel.Cart" Width="1.5" PointX="13.25" PointY="15.375" IsExpanded="true" />
         <EntityTypeShape EntityType="vinabits_homeclickModel.Category" Width="1.5" PointX="11.25" PointY="7.375" FillColor="192, 0, 192" />
