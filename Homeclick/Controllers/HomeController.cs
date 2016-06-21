@@ -14,11 +14,12 @@ namespace Homeclick.Controllers
     public class HomeController : Controller
     {
         vinabits_homeclickEntities db = new vinabits_homeclickEntities();
-        
         public ActionResult Index()
         {
+            var v = db.Projects.ToList();
             return View();
         }
+
         //Slider home
         public PartialViewResult Slider()
         {

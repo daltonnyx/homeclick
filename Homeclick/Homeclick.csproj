@@ -73,32 +73,32 @@
       <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Owin.Security.Facebook, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Security.Facebook, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Owin.Security.Google, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Owin.Security.Twitter, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Security.Twitter, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -292,12 +292,14 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\front-to-back.css" />
+    <Content Include="Content\load.gif" />
     <Content Include="Content\Nivo-slider.css" />
     <Content Include="Content\notify.min.css" />
     <Content Include="Content\Owl.carousel.css" />
     <Content Include="Content\Owl.theme.css" />
     <Content Include="Content\owl.transitions.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Project.css" />
     <Content Include="Content\Responsive.css" />
     <Content Include="Content\spectrum.css" />
     <Content Include="Content\Style.css" />
@@ -368,6 +370,29 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\notify.min.js" />
     <Content Include="Scripts\owl.carousel.min.js" />
+    <Content Include="Scripts\Plugins\easyTabs\jquery.easytabs.js" />
+    <Content Include="Scripts\Plugins\easyTabs\jquery.easytabs.min.js" />
+    <Content Include="Scripts\Plugins\easyTabs\jquery.hashchange.min.js" />
+    <Content Include="Scripts\Plugins\fancyBox\blank.gif" />
+    <Content Include="Scripts\Plugins\fancyBox\fancybox_loading%402x.gif" />
+    <Content Include="Scripts\Plugins\fancyBox\fancybox_loading.gif" />
+    <Content Include="Scripts\Plugins\fancyBox\fancybox_overlay.png" />
+    <Content Include="Scripts\Plugins\fancyBox\fancybox_sprite%402x.png" />
+    <Content Include="Scripts\Plugins\fancyBox\fancybox_sprite.png" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox-buttons.css" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox-buttons.js" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox-media.js" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox-thumbs.css" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox-thumbs.js" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox.css" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox.pack.js" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.mousewheel-3.0.6.pack.js" />
+    <Content Include="Scripts\Plugins\slick\ajax-loader.gif" />
+    <Content Include="Scripts\Plugins\slick\fonts\slick.svg" />
+    <Content Include="Scripts\Plugins\slick\slick-theme.css" />
+    <Content Include="Scripts\Plugins\slick\slick.css" />
+    <Content Include="Scripts\Plugins\slick\slick.js" />
+    <Content Include="Scripts\Plugins\slick\slick.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -561,6 +586,14 @@
     <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.0.0.min.map" />
     <Content Include="Views\Design\_CategoryOptions.cshtml" />
+    <Content Include="Scripts\Plugins\slick\config.rb" />
+    <Content Include="Scripts\Plugins\slick\fonts\slick.eot" />
+    <Content Include="Scripts\Plugins\slick\fonts\slick.ttf" />
+    <Content Include="Scripts\Plugins\slick\fonts\slick.woff" />
+    <Content Include="Scripts\Plugins\slick\slick-theme.less" />
+    <Content Include="Scripts\Plugins\slick\slick-theme.scss" />
+    <Content Include="Scripts\Plugins\slick\slick.less" />
+    <Content Include="Scripts\Plugins\slick\slick.scss" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\Html\Phong.cshtml" />
     <Content Include="Views\Html\Thietke1.cshtml" />
@@ -586,12 +619,17 @@
     <Content Include="Views\Shared\_Layout_Cat.cshtml" />
     <Content Include="Views\SanPham\Sidebar.cshtml" />
     <Content Include="Views\Shared\_Layout_Project.cshtml" />
-    <Content Include="Views\Project\Index.cshtml" />
-    <Content Include="Views\Project\ProjectIndex.cshtml" />
-    <Content Include="Views\Project\Sidebar.cshtml" />
-    <Content Include="Views\Project\Detail.cshtml" />
     <Content Include="Views\SanPham\CanvasList.cshtml" />
     <Content Include="Views\SanPham\_CanvasList.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Project\Details.cshtml" />
+    <Content Include="Views\Project\_Sidebar.cshtml" />
+    <Content Include="Views\Project\_Slider.cshtml" />
+    <Content Include="Views\Project\_Thumbnail.cshtml" />
+    <Content Include="Views\Project\_LayoutTemplated.cshtml" />
+    <Content Include="Views\Project\_Collections.cshtml" />
+    <Content Include="Views\Project\_CollectionDetails.cshtml" />
+    <Content Include="Views\Shared\_Loading.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

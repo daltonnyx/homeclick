@@ -2,16 +2,204 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <meta name="keywords" content="@ViewBag.MetaKeyword"/>
+    <meta name="description" content="@ViewBag.MetaDescription"/>
     <title>@ViewBag.Title</title>
     <link href="~/fonts/Stylesheet.css" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/taggd.css")
+
+
+    <link href="~/Content/Project.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="wapper">
+        @Html.Partial("_Header")
+        <main id="main" class="main-blog">
+            <div class="container">
+                <div class="row breadcrumb">
+                    <ul>
+                        <li><a href="http://demo.vinabits.com.vn/homeclick/">Home</a></li>
+                        <li>Dự án</li>
+                    </ul>
+                </div>
+                <div class="main-head row" data-wow-duration="21" data-wow-delay="0.5s">
+                    <div class="main-image" style="background-position: 50% 42.4733%;"></div><!-- /.main-image fullscreener -->
+
+                    <div class="main-head-content">
+                        <div class="columns large-4">
+                            <span class="main-title">Dự án</span>
+                        </div>
+                    </div>
+                </div>
+                 @RenderBody()
+            </div>
+        </main>
+        @Html.Partial("_Footer");
+    </div>
+
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/jquery.taggd.min.js")
-    @RenderSection("scripts", required: false)
+
+    <!--fancyBox-->
+    <link href="~/Scripts/Plugins/fancyBox/jquery.fancybox-buttons.css" rel="stylesheet" />
+    <link href="~/Scripts/Plugins/fancyBox/jquery.fancybox-thumbs.css" rel="stylesheet" />
+    <link href="~/Scripts/Plugins/fancyBox/jquery.fancybox.css" rel="stylesheet" />
+
+    <script src="~/Scripts/Plugins/fancyBox/jquery.fancybox.pack.js"></script>
+    <script src="~/Scripts/Plugins/fancyBox/jquery.fancybox-buttons.js"></script>
+    <script src="~/Scripts/Plugins/fancyBox/jquery.fancybox-media.js"></script>
+    <script src="~/Scripts/Plugins/fancyBox/jquery.fancybox-thumbs.js"></script>
+    <script src="~/Scripts/Plugins/fancyBox/jquery.mousewheel-3.0.6.pack.js"></script>
+    <!--fancyBox-->
+    <!--easy tabs-->
+    <script src="~/Scripts/Plugins/easyTabs/jquery.easytabs.min.js"></script>
+    <script src="~/Scripts/Plugins/easyTabs/jquery.hashchange.min.js"></script>
+
+    <!--slick-->
+    <script src="~/Scripts/Plugins/slick/slick.min.js"></script>
+    <link href="~/Scripts/Plugins/slick/slick-theme.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        $g = "";
+
+        function Collapsed(evt) {
+            if ($(evt).data('action') == undefined) {
+                return;
+            }
+            var action = $(evt).data('action');
+            var btn = $(evt);
+            switch (action) {
+                case 'collapse':
+                    $(btn).children('i').addClass('anim-turn180');
+                    $(evt).parents('.box').children('.box-content').slideToggle(500, function () {
+                        if ($(evt).is(":hidden")) {
+                            $(btn).children('i').attr('class', 'fa fa-chevron-down');
+                        } else {
+                            $(btn).children('i').attr('class', 'fa fa-chevron-up');
+                        }
+                    });
+                    break;
+                case 'close':
+                    $(evt).parents('.box').fadeOut(500, function () {
+                        $(evt).parent().remove();
+                    })
+                    break;
+                case 'config':
+                    $('#' + $(evt).data('modal')).modal('show');
+                    break;
+            }
+            event.preventDefault();
+        }
+
+        function Back() {
+            $('#tabs2').html($g);
+            event.preventDefault();
+        }
+
+        function Click() {
+
+            var urlAction = '/Project/_CollectionDetails';
+            $g = $('#tabs2').html();
+
+            $('#tabs2').html('<img id="loader-img" alt="" src="https://sire.uniandes.edu.co/pagos/javax.faces.resource/ajax-loader.gif.xhtml?ln=images" width="50" height="50" align="center" />');
+
+            $.ajax({
+                url: urlAction,
+                type: 'GET',
+                dataType: 'html',
+                data: {},
+            })
+            .done(function (data) {
+                console.log("success");
+                $('#tabs2').html(data);
+            })
+            .fail(function () {
+                console.log("error");
+            })
+            .always(function () {
+                console.log("complete");
+            });
+            event.preventDefault();
+        };
+
+        //Layouts
+        $(".layoutLink").click(function () {
+            $('#Collections').html('<img id="loader-img" alt="" src="https://sire.uniandes.edu.co/pagos/javax.faces.resource/ajax-loader.gif.xhtml?ln=images" width="50" height="50" align="center" />');
+
+            var urlAction = '/Project/_Collections';
+            $.ajax({
+                url: urlAction,
+                type: 'GET',
+                dataType: 'html',
+                data: {},
+            })
+            .done(function (data) {
+                console.log("success");
+                $('#Collections').html(data);
+            })
+            .fail(function () {
+                console.log("error");
+            })
+            .always(function () {
+                console.log("complete");
+            });
+        });
+
+        //slider home
+        $(window).load(function () {
+
+            $('#slider-bosutap').nivoSlider({
+                effect: 'random',
+                animSpeed: 500,
+                pauseTime: 4000,
+                startSlide: 0,
+                directionNav: true,
+                controlNav: false,
+                //pauseOnHover: false,
+                prevText: '<i class="fa fa-angle-left"></i>',
+                nextText: '<i class="fa fa-angle-right"></i>'
+            });
+            $(".fancybox").fancybox({
+                openEffect: 'elastic',
+                closeEffect: 'elastic',
+
+                helpers: {
+                    title: {
+                        type: 'inside'
+                    }
+                }
+            });
+
+
+        });
+
+        $(document).ready(function () {
+
+            //easy tabs
+            $('#tab-container').easytabs();
+
+            //-------------------------- Boxes -----------------------------//
+            $('.box .box-tool > a').click(function (e) {
+
+            });
+
+            //slick
+            $('.multiple-items').slick({
+                infinite: false,
+                slidesToShow: 4,
+                slidesToScroll: 1
+            });
+
+
+        });
+
+    </script>
 
     <script type="text/javascript">
         //slider home
@@ -53,31 +241,9 @@
             });
 
         });
-
     </script>
-</head>
-<body>
-    <div class="wapper">
-        @Html.Partial("_Header")
-        <main id="main" class="main-blog">
-            <div class="container">
-                <div class="row breadcrumb">
-                    <ul>
-                        <li><a href="http://demo.vinabits.com.vn/homeclick/">Home</a></li>
-                        <li>Design</li>
-                    </ul>
-                </div>
-                <div class="row">
-                    <aside id="sidebar" class="col-md-3">
-                        @Html.Action("Sidebar", "Design")
-                    </aside>
-                    <div class=" col-md-9">
-                        @RenderBody()
-                    </div>
-                </div>
-            </div>
-        </main>
-        @Html.Partial("_Footer");
-    </div>
+    @RenderSection("scripts", required: false)
+
+
 </body>
 </html>
