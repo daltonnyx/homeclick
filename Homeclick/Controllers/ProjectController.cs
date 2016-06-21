@@ -11,22 +11,15 @@ namespace Homeclick.Controllers
         // GET: Project
         public ActionResult Index()
         {
-            ViewBag.MetaKeyword = "homeclick";
-            ViewBag.MetaDescription = "project";
             return View();
         }
 
-        public ActionResult _Collections(int? collectionId)
+        public ActionResult Index(int id)
         {
-            return PartialView();
+            return View("ProjectIndex");
         }
 
-        public ActionResult _CollectionDetails(int? collectionId)
-        {
-            return PartialView();
-        }
-
-        public ActionResult Details()
+        public ActionResult Sidebar()
         {
             return View();
         }
