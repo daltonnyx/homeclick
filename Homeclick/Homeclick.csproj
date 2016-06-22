@@ -392,8 +392,6 @@
     <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox.css" />
     <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox.pack.js" />
     <Content Include="Scripts\Plugins\fancyBox\jquery.mousewheel-3.0.6.pack.js" />
-    <Content Include="Scripts\Plugins\particleGround\jquery.particleground.js" />
-    <Content Include="Scripts\Plugins\particleGround\jquery.particleground.min.js" />
     <Content Include="Scripts\Plugins\particles\particles.js" />
     <Content Include="Scripts\Plugins\particles\particles.min.js" />
     <Content Include="Scripts\Plugins\slick\ajax-loader.gif" />
