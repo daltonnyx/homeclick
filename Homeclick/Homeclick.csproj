@@ -187,6 +187,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\DesignController.cs" />
     <Compile Include="Controllers\GioHangController.cs" />
+    <Compile Include="Controllers\HoidapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HtmlController.cs" />
     <Compile Include="Controllers\LienheController.cs" />
@@ -392,6 +393,8 @@
     <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox.css" />
     <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox.pack.js" />
     <Content Include="Scripts\Plugins\fancyBox\jquery.mousewheel-3.0.6.pack.js" />
+    <Content Include="Scripts\Plugins\particles\particles.js" />
+    <Content Include="Scripts\Plugins\particles\particles.min.js" />
     <Content Include="Scripts\Plugins\slick\ajax-loader.gif" />
     <Content Include="Scripts\Plugins\slick\fonts\slick.svg" />
     <Content Include="Scripts\Plugins\slick\slick-theme.css" />
@@ -600,6 +603,8 @@
     <Content Include="Scripts\Plugins\slick\slick.less" />
     <Content Include="Scripts\Plugins\slick\slick.scss" />
     <Content Include="Views\Lienhe\Index.cshtml" />
+    <Content Include="Views\Hoidap\Index.cshtml" />
+    <Content Include="Scripts\Plugins\particles\particles.json" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\Html\Phong.cshtml" />
     <Content Include="Views\Html\Thietke1.cshtml" />
