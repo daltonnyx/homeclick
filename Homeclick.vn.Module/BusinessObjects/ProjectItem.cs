@@ -141,6 +141,15 @@ namespace Homeclick.vn.Module.BusinessObjects
             set { SetPropertyValue<User>("UpdatedBy", ref _updatedby, value); }
         }
 
+        private Category _category;
+
+        [Persistent("CategoryId")]
+        public Category Category
+        {
+            get { return _category; }
+            set { SetPropertyValue<Category>("Category", ref _category, value); }
+        }
+
         //private string _PersistentProperty;
         //[XafDisplayName("My display name"), ToolTip("My hint message")]
         //[ModelDefault("EditMask", "(000)-00"), Index(0), VisibleInListView(false)]

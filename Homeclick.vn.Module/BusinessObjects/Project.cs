@@ -119,6 +119,15 @@ namespace Homeclick.vn.Module.BusinessObjects
             set { SetPropertyValue("CompletedYear", ref _completedyear, value); }
         }
 
+        private string _image;
+
+        [Size(SizeAttribute.Unlimited),Persistent("Image")]
+        public string Image
+        {
+            get { return _image; }
+            set { SetPropertyValue("Image", ref _image, value); }
+        }
+
         private string _architetualdesignagency;
         [Size(255)]
         public string ArchitetualDesignAgency
