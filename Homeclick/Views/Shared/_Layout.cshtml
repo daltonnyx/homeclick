@@ -12,6 +12,16 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
+    
+</head>
+<body>
+    <div class="wapper">
+        @Html.Partial("_Header")
+
+        @RenderBody()
+        @Html.Partial("_Footer")
+
+    </div>
     <script type="text/javascript">
         //slider home
         $(window).load(function () {
@@ -50,18 +60,8 @@
                 $.fancybox(ez.getGalleryList());
                 return false;
             });
-
-        });
+            
 
     </script>
-</head>
-<body>
-    <div class="wapper">
-        @Html.Partial("_Header")
-
-        @RenderBody()
-        @Html.Partial("_Footer")
-
-    </div>
 </body>
 </html>

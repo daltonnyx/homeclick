@@ -3373,14 +3373,16 @@ select.ins{
     position: absolute;
     bottom: 0;
 }
+#particles-js {
+        background:#16a085;
+        position: relative;
+        margin-bottom:50px;
+        max-height: 200px;
+}
 .sc_heading {
-    position: relative;
-    margin: 0;
-    margin-bottom: 35px;
-    padding-top: 42px;
-    padding-bottom: 28px;
-    text-align: center;
-    background:rgba(0,0,0,0.5);
+    position: absolute;
+    top: 25%;
+
 }
 .sc_heading .title {
     text-transform: uppercase;
@@ -3389,14 +3391,14 @@ select.ins{
     font-weight: 700;
     margin: 0;
     margin-bottom: 2px;
-    color: #000;
+    color: #fff;
 }
 .sc_heading .sub-heading {
     font-size: 15px;
     font-weight: 400;
     margin: 0;
     line-height: 30px;
-    color: #000;
+    color: #fff;
     opacity:0.8;
 }
 .sc_heading .line {
@@ -3409,7 +3411,7 @@ select.ins{
     -o-transform: translate(-50%);
     transform: translate(-50%);
     height: 1px;
-    background-color: #333;
+    background-color: #fff;
     width: 35px;
 }
 .contact-faqs{

@@ -1,12 +1,17 @@
 ﻿@model Homeclick.Models.Project
-
-    <div class="box row" >
+<a href="#projectSidebar" id="projectSidebarLink" class="projectSidebar-link">
+    <!-- Hamburger icon -->
+    <i class="fa fa-search" aria-hidden="true"></i> 
+</a>
+    <div id="projectSidebar" class="box row " >
         <div class="box-title">
             <h5>@Model.Name</h5>
-            <div class="box-tool">
-                <a data-action="collapse" href="#" onclick="Collapsed(this);"><i class="fa fa-chevron-up"></i></a>
-            </div>
+            <a id="hideprojectSidebar" class="box-tool">
+                <!-- Hamburger icon -->
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            </a>
         </div>
+
         <div class="box-content" style="display: block;">
                 <p>
                     <span class="detail-name"><i class="fa  fa-user"></i> 
@@ -104,3 +109,51 @@
                 </p>
         </div>
     </div>
+<div style="clear:both"></div>
+<script>
+    (function (window, document) {
+
+        var layout = document.getElementById('layout'),
+            projectSidebar = document.getElementById('projectSidebar'),
+            projectSidebarLink = document.getElementById('projectSidebarLink'),
+            hideprojectSidebar = document.getElementById('hideprojectSidebar');
+
+        function toggleClass(element, className) {
+            var classes = element.className.split(/\s+/),
+                length = classes.length,
+                i = 0;
+
+            for (; i < length; i++) {
+                if (classes[i] === className) {
+                    classes.splice(i, 1);
+                    break;
+                }
+            }
+            // The className is not found
+            if (length === classes.length) {
+                classes.push(className);
+            }
+
+            element.className = classes.join(' ');
+        }
+
+        projectSidebarLink.onclick = function (e) {
+            var active = 'active';
+
+            e.preventDefault();
+            toggleClass(layout, active);
+            toggleClass(projectSidebar, active);
+            toggleClass(projectSidebarLink, active);
+        };
+
+        hideprojectSidebar.onclick = function (e) {
+            var active = 'active';
+
+            e.preventDefault();
+            toggleClass(layout, active);
+            toggleClass(projectSidebar, active);
+            toggleClass(projectSidebarLink, active);
+        };
+
+    }(this, this.document));
+</script>
