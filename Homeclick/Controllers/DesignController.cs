@@ -52,7 +52,7 @@ namespace Homeclick.Controllers
             ViewBag.SelectedTypeId = categoryTypes.FirstOrDefault().Id;
             ViewBag.CategoryTypes = categoryTypes;
 
-            var model = db.Canvas.Find(id);
+            var model = db.Rooms.Find(id);
 
             return PartialView(model);
         }

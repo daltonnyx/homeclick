@@ -155,3 +155,7 @@ span.aqua {color:#12a9a4;}
     -o-transition: 1s all;
     transition: 1s all;
 }
+.zoom-slider{
+    width:130px !important;
+    display:inline-block!important;
+}

@@ -1,4 +1,5 @@
 ﻿@using Homeclick.Models
+@model Homeclick.Models.Room
 @{
     var CategoryTypes = ViewBag.CategoryTypes as IEnumerable<Category_type>;
 }
@@ -105,7 +106,7 @@
                 <div class="control-container uk-hidden">
                 </div>
             </div>
-
+            <input type="hidden" value="@Model.canvas_data" id="canvas-data" />
             <div class="canvas-holder" id="canvas-holder">
                 <canvas id="tutorial" width="718" height="600" draggable="true"></canvas>
                 <div class="delete-button object-button"></div>
@@ -255,7 +256,7 @@
         });
     </script>
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/jquery-1.11.3.min.js")
     @Scripts.Render("~/Scripts/fabric.min.js")
 
     @Scripts.Render("~/Scripts/canvas.nocache.js")
@@ -272,7 +273,7 @@
 
     @Scripts.Render("~/Scripts/notify.min.js")
 
-    @Scripts.Render("~/Scripts/main.js")
+    
 
     @Scripts.Render("~/Scripts/spectrum.js")
 
