@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Homeclick.Models.ProjectItem>
+
+<style>
+    .title span{
+        font-size:16px;
+    }
+</style>
+
+<div class="title">
+    <span> Layout mẫu</span>
+</div>
+
+<div class="row " style="padding: 0 0 20px 0;">
+    @foreach (var item in Model)
+    {
+        <div class="col-xs-6 col-sm-3">
+            <div class="card card-shadow">
+                <div>
+                    <a class="layoutLink" onclick="LayoutClick(@item.Id)" title="@item.Description">
+                        <img style="height:auto; width:100%" src="@item.Image" alt="@item.Description" />
+                    </a>
+                </div>
+                <div class="card-title">
+                    <span>@item.Name</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>

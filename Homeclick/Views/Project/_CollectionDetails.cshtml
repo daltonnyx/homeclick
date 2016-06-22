@@ -1,0 +1,61 @@
+﻿@model Homeclick.Models.ProjectLayout_Collection
+
+<style>
+    .description p {
+        margin-bottom: 10px;
+    }
+    .description {
+    line-height: 22px;
+}
+    .category-product-detail:before  {
+        display: table;
+    content: " ";
+    }
+
+    .table-product-detail thead tr th {
+        padding: 5px 15px;
+    }
+
+</style>
+
+<div class="">
+    <div style="margin:10px 0;">
+        <a href="#tabs2" onclick="Back()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Trở về trang trước</a>
+    </div>
+
+    <div class="description">
+        @Html.Raw(Model.HtmlContent)
+    </div>
+    <section class="col-md-12 product-list-section">
+        <h3 class="section-header table-section-header">Sản phẩm trong Set</h3>
+        <div class="total-html">Tổng: <span>6390000</span>đ</div>
+
+        <div class="category-product-detail">
+            @Html.Partial("_ProductsTable")
+            <div id="clear" style="clear:both;"></div>
+        </div>
+        <div id="product-grid" >
+            <h6 class="number-items section-header">6 Sản phẩm</h6>
+
+            <div class="product-grid ">
+
+            </div>
+        </div>
+    </section>
+    <section class="col-md-12 comment">
+        <div class="fb-comments" data-width="100%" data-numposts="5"></div>
+    </section>
+
+    <script>
+        //--------------Toogle--------------//
+        $('.category-product-detail').hide();
+        $('.table-section-header').unbind('click');
+
+        $('.table-section-header').click(function () {
+            $(this).toggleClass("active-show");
+            $(this).parent('.product-list-section').addClass("list-show");
+            $('.list-show .category-product-detail').slideToggle("slow");
+            event.preventDefault();
+        });
+    </script>
+</div>

@@ -45,6 +45,7 @@
         <Property Name="Image" Type="nvarchar" MaxLength="Max" />
         <Property Name="Order" Type="int"/>
         <Property Name="ProjectId" Type="int"/>
+        <Property Name="CategoryId" Type="int"/>
         <Property Name="LockedOut" Type="bit" />
         <Property Name="CreatedDate" Type="datetime" />
         <Property Name="CreatedBy" Type="int" />
@@ -805,6 +806,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             </Dependent>
           </ReferentialConstraint>
         </Association>
+      
         <Association Name="FK_ProjectItem_ProjectId">
           <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
           <End Role="ProjectItem" Type="Self.ProjectItem" Multiplicity="*" />
@@ -1328,6 +1330,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <NavigationProperty Name="UpdatedByUser" Relationship="vinabits_homeclickModel.FK_Project_UpdatedBy" ToRole="User" FromRole="Project" />
           <!--Thêm relation sau-->
         </EntityType>
+        
         <EntityType Name="ProjectItem">
           <Key>
             <PropertyRef Name="Id" />
@@ -1386,6 +1389,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <NavigationProperty Name="Room" Relationship="vinabits_homeclickModel.FK_Canva_RoomId" FromRole="Canva" ToRole="Room" />
           <NavigationProperty Name="User" Relationship="vinabits_homeclickModel.FK_Canva_UserId" FromRole="Canva" ToRole="User" />
         </EntityType>
+        
         <EntityType Name="Cart">
           <Key>
             <PropertyRef Name="Id" />
@@ -1399,6 +1403,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <NavigationProperty Name="User" Relationship="vinabits_homeclickModel.FK_Cart_UserId" FromRole="Cart" ToRole="User" />
           <NavigationProperty Name="Products" Relationship="vinabits_homeclickModel.ProductCart" FromRole="Cart" ToRole="Product" />
         </EntityType>
+        
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="Id" />

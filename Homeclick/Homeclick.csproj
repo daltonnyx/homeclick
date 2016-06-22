@@ -189,6 +189,7 @@
     <Compile Include="Controllers\GioHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HtmlController.cs" />
+    <Compile Include="Controllers\LienheController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\SanPhamController.cs" />
@@ -228,25 +229,26 @@
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Detail_Product.cs" />
+    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\Floor.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FloorModel.cs" />
     <Compile Include="Models\Giohang.cs" />
     <Compile Include="Models\Homeclick.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Homeclick.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\Homeclick.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Homeclick.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\Homeclick.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Homeclick.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\IdentifyUser.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -276,6 +278,7 @@
     <Compile Include="Models\ProjectLayout_Collection.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Project_ProductsTable.cs" />
     <Compile Include="Models\Room.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
@@ -304,6 +307,7 @@
     <Content Include="Content\Owl.theme.css" />
     <Content Include="Content\owl.transitions.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Project.css" />
     <Content Include="Content\Responsive.css" />
     <Content Include="Content\spectrum.css" />
     <Content Include="Content\Style.css" />
@@ -322,28 +326,24 @@
     <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\libs\font-awesome\fonts\FontAwesome.otf" />
-    <EntityDeploy Include="Models\Homeclick.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Homeclick.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Models\Homeclick.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Homeclick.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Homeclick.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\Homeclick.edmx.diagram">
       <DependentUpon>Homeclick.edmx</DependentUpon>
     </Content>
     <Content Include="Models\Homeclick.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Homeclick.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Homeclick.cs</LastGenOutput>
     </Content>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\canvas.nocache.js" />
@@ -375,6 +375,29 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\notify.min.js" />
     <Content Include="Scripts\owl.carousel.min.js" />
+    <Content Include="Scripts\Plugins\easyTabs\jquery.easytabs.js" />
+    <Content Include="Scripts\Plugins\easyTabs\jquery.easytabs.min.js" />
+    <Content Include="Scripts\Plugins\easyTabs\jquery.hashchange.min.js" />
+    <Content Include="Scripts\Plugins\fancyBox\blank.gif" />
+    <Content Include="Scripts\Plugins\fancyBox\fancybox_loading%402x.gif" />
+    <Content Include="Scripts\Plugins\fancyBox\fancybox_loading.gif" />
+    <Content Include="Scripts\Plugins\fancyBox\fancybox_overlay.png" />
+    <Content Include="Scripts\Plugins\fancyBox\fancybox_sprite%402x.png" />
+    <Content Include="Scripts\Plugins\fancyBox\fancybox_sprite.png" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox-buttons.css" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox-buttons.js" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox-media.js" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox-thumbs.css" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox-thumbs.js" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox.css" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox.pack.js" />
+    <Content Include="Scripts\Plugins\fancyBox\jquery.mousewheel-3.0.6.pack.js" />
+    <Content Include="Scripts\Plugins\slick\ajax-loader.gif" />
+    <Content Include="Scripts\Plugins\slick\fonts\slick.svg" />
+    <Content Include="Scripts\Plugins\slick\slick-theme.css" />
+    <Content Include="Scripts\Plugins\slick\slick.css" />
+    <Content Include="Scripts\Plugins\slick\slick.js" />
+    <Content Include="Scripts\Plugins\slick\slick.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -568,6 +591,15 @@
     <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.0.0.min.map" />
     <Content Include="Views\Design\_CategoryOptions.cshtml" />
+    <Content Include="Scripts\Plugins\slick\config.rb" />
+    <Content Include="Scripts\Plugins\slick\fonts\slick.eot" />
+    <Content Include="Scripts\Plugins\slick\fonts\slick.ttf" />
+    <Content Include="Scripts\Plugins\slick\fonts\slick.woff" />
+    <Content Include="Scripts\Plugins\slick\slick-theme.less" />
+    <Content Include="Scripts\Plugins\slick\slick-theme.scss" />
+    <Content Include="Scripts\Plugins\slick\slick.less" />
+    <Content Include="Scripts\Plugins\slick\slick.scss" />
+    <Content Include="Views\Lienhe\Index.cshtml" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\Html\Phong.cshtml" />
     <Content Include="Views\Html\Thietke1.cshtml" />
@@ -594,14 +626,21 @@
     <Content Include="Views\SanPham\Sidebar.cshtml" />
     <Content Include="Views\Shared\_Layout_Project.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
-    <Content Include="Views\Project\ProjectIndex.cshtml" />
-    <Content Include="Views\Project\Sidebar.cshtml" />
-    <Content Include="Views\Project\Detail.cshtml" />
     <Content Include="Views\SanPham\CanvasList.cshtml" />
     <Content Include="Views\SanPham\_CanvasList.cshtml" />
+    <Content Include="Views\Project\Details.cshtml" />
+    <Content Include="Views\Project\_CollectionDetails.cshtml" />
+    <Content Include="Views\Project\_Collections.cshtml" />
+    <Content Include="Views\Project\_LayoutTemplated.cshtml" />
+    <Content Include="Views\Project\_Sidebar.cshtml" />
+    <Content Include="Views\Project\_Slider.cshtml" />
+    <Content Include="Views\Project\_Thumbnail.cshtml" />
+    <Content Include="Views\Project\_ProjectHtmlContent.cshtml" />
+    <Content Include="Views\Project\_ProductsTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -612,6 +651,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Models\Homeclick.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Homeclick.Designer.cs</LastGenOutput>
+    </EntityDeploy>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

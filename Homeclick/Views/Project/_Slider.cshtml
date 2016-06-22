@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Homeclick.Models.ProjectItem>
+
+<style>
+    .owl-buttons {
+        display: none;
+    }
+    .owl-pagination {
+        margin-top: -50px;
+        margin-bottom: 20px;
+        position: relative;
+        left: inherit;
+        bottom: inherit;
+        -moz-transform: translate(0);
+        -ms-transform: translate(0);
+        -o-transform: translate(0);
+        -webkit-transform: translate(0);
+        transform: translate(0);
+    }
+</style>
+
+<div class="project-slider">
+    <div id="slider-home" class="owl-carousel owl-theme">
+        @foreach (var item in Model)
+        {
+            <div class="item"><a href="#"><img src="@item.Image" alt="@item.Description"></a></div>
+        }
+    </div>
+</div>
