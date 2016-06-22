@@ -20,12 +20,21 @@ namespace Homeclick.Controllers
         }
 
         [HttpPost]
-        public ActionResult Feedback(Feedback f)
+        public ActionResult Feedback(Feedback f, int CaptchaValue, int? CaptchaAnswer)
         {
-            if (ModelState.IsValid && f.CaptchaResult == ((int)ViewBag.CaptchaStart + (int)ViewBag.CaptchaEnd))
+            if (CaptchaAnswer != null)
             {
-
+                if (CaptchaValue != CaptchaAnswer)
+                {
+                    TempData["CaptchaError"] = "Sai kết quả";
+                }
+                else if (ModelState.IsValid)
+                {
+                    TempData["Notification"] = "Gửi thông tin phản hồi thành công, chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất. Xin cảm ơn!";
+                }
             }
+            else
+                TempData["CaptchaError"] = "Cần nhập vào kết quả";
 
             var rd = new Random();
             ViewBag.CaptchaStart = rd.Next(1, 10);

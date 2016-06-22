@@ -187,6 +187,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\DesignController.cs" />
     <Compile Include="Controllers\GioHangController.cs" />
+    <Compile Include="Controllers\HoidapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HtmlController.cs" />
     <Compile Include="Controllers\LienheController.cs" />
@@ -599,6 +600,7 @@
     <Content Include="Scripts\Plugins\slick\slick.less" />
     <Content Include="Scripts\Plugins\slick\slick.scss" />
     <Content Include="Views\Lienhe\Index.cshtml" />
+    <Content Include="Views\Hoidap\Index.cshtml" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\Html\Phong.cshtml" />
     <Content Include="Views\Html\Thietke1.cshtml" />
