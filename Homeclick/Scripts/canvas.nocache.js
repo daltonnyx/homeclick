@@ -10,7 +10,7 @@ jQuery(document).ready(function($){
   var canvas = new fabric.Canvas('tutorial');
   var canvasObj = $("#tutorial");
   var p,isDragable = false,src,srcW,srcH,srcName,srcImage,srcZdata,srcPrice,srcScale,centerX,centerY,_isInside = false,srcOnWall;
-  const srcMultiple = 50;
+  const srcMultiple = 1;
   var isInside = function(p,obj) {
     if(typeof(p) == 'undefined' || p == null)
       return false;
@@ -77,6 +77,7 @@ jQuery(document).ready(function($){
     isDragable = true;
     srcOnWall = null;
     src = $(event.target).data("svg");
+    src = "http://localhost:1867" + src.replace(/\\/g, "/");
     srcName = $(event.target).data("name");
     srcScale = $(event.target).data("can-scale");
     srcZdata = $(event.target).data("zdata");
@@ -151,7 +152,7 @@ jQuery(document).ready(function($){
             obj.paths[i].setFill("#ffffff");
             obj.pathToFill.push(i);
           }
-          obj.paths[i].strokeWidth = obj.paths[i].strokeWidth * 10;
+          obj.paths[i].strokeWidth = obj.paths[i].strokeWidth;
         }
         obj.setControlsVisibility({mtr:false,tr:false,bl:false});
         canvas.add(obj);
@@ -331,30 +332,8 @@ jQuery(document).ready(function($){
 
 
  //   //Setting wall
- //  var wallPoints = [
- //  [
- //    {x:5000 / 20, y:0},
- //    {x:8000 / 20, y:0},
- //    {x:8000 / 20, y: 3500 / 20,hide:true},
- //    {x:5000 / 20, y: 3500 / 20,hide:true}
- //  ],
- //  [
- //    {x: 5000 / 20,y: 3500 / 20},
- //    {x: 8000 / 20,y: 3500 / 20},
- //    {x: 8000 / 20,y: 7000 / 20},
- //    {x: 5000 / 20,y: 7000 / 20,hide:true},
-    
- //  ],
- //  [
- //    {x:0,y:0},
- //    {x:5000 / 20,y:0},
- //    {x:5000 / 20,y: 3500 /20},
- //    {x: 5000 / 20,y: 7000 / 20},
- //    //{x:5000 / srcMultiple,y:7000 / srcMultiple},
- //    {x:0,y:7000 / 20}
- //  ]
- //  ];
-  var polWall = new fabric.groupLiPolygon([],{
+   var wallPoints = JSON.parse($("#canvas-data").val());
+   var polWall = new fabric.groupLiPolygon(wallPoints, {
 
     strokeWidth: 10,
     stroke: "#000000",
@@ -386,7 +365,7 @@ jQuery(document).ready(function($){
   //   perPixelTargetFind: true,},[7]));
   //polWall.redrawPolygons();
   canvas.add(polWall);
-
+  canvas.absolutePan({x : polWall.getLeft(), y : polWall.getTop()});
 
   //Pans and wall line interactive
   canvas.on("mouse:move",function(e){ // Use as less function as you can

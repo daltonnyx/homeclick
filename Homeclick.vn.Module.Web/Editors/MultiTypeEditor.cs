@@ -14,6 +14,7 @@ using System.IO;
 using Drawing = System.Drawing;
 using Homeclick.vn.Module.BusinessObjects;
 using DevExpress.ExpressApp.Web;
+using System.Web;
 
 namespace Homeclick.vn.Module.Web.Editors
 {
@@ -104,8 +105,8 @@ namespace Homeclick.vn.Module.Web.Editors
         protected override void OnValueRead()
         {
             base.OnValueRead();
-            if (filename == null && PropertyValue != null)
-                filename = PropertyValue.ToString();
+            //if (filename == null && PropertyValue != null)
+            //    filename = PropertyValue.ToString();
         }
 
         void uploadButton_FileUploadComplete2(object sender, FileUploadCompleteEventArgs e)
@@ -160,11 +161,13 @@ namespace Homeclick.vn.Module.Web.Editors
                 return string.Empty;
             string fileName = uploadedFile.FileName;
             string fullFileName = CombinePath(fileName);
-            using (Drawing.Image original = Drawing.Image.FromStream(uploadedFile.FileContent))
+            using (FileStream original = File.Create(HttpRuntime.AppDomainAppPath + fullFileName))
             {
-                Drawing.Image size1 = UploadPropertyEditor.CropImage(original, UploadPropertyEditor.getCropSize(original));
-                size1.Save(AppDomain.CurrentDomain.BaseDirectory + UploadPropertyEditor.getName(fullFileName, "_cropped"), Drawing.Imaging.ImageFormat.Png);
-                original.Save(AppDomain.CurrentDomain.BaseDirectory + fullFileName, Drawing.Imaging.ImageFormat.Png);
+                //Drawing.Image size1 = UploadPropertyEditor.CropImage(original, UploadPropertyEditor.getCropSize(original));
+                //size1.Save(AppDomain.CurrentDomain.BaseDirectory + UploadPropertyEditor.getName(fullFileName, "_cropped"), Drawing.Imaging.ImageFormat.Png);
+                //original.Save(AppDomain.CurrentDomain.BaseDirectory + fullFileName, Drawing.Imaging.ImageFormat.Png);
+                uploadedFile.FileContent.Seek(0, SeekOrigin.Begin);
+                uploadedFile.FileContent.CopyTo(original);
             }
             return fileName;
         }

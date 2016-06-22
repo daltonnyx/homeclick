@@ -167,10 +167,10 @@
         <Member Name="Id" Caption="ID" AllowEdit="False" />
         <Member Name="image" Caption="Hình ảnh" PropertyEditorType="Homeclick.vn.Module.Web.Editors.UploadPropertyEditor" />
         <Member Name="name" Caption="Tiêu đề" />
-        <Member Name="Product_typeId" Caption="Kiểu sản phẩm" />
+        <Member Name="Product_typeId" Caption="Kiểu sản phẩm" ImmediatePostData="False" />
         <Member Name="StatusEnum" Caption="Trạng thái" />
         <Member Name="updated_date" AllowEdit="False" Caption="ngày cập nhật" />
-        <Member Name="UserId" Caption="Tài khoản" />
+        <Member Name="UserId" Caption="Tài khoản" ImmediatePostData="False" />
       </OwnMembers>
     </Class>
     <Class Name="Homeclick.vn.Module.BusinessObjects.Product_detail">
@@ -197,7 +197,7 @@
       <OwnMembers>
         <Member Name="floor_id" Index="-1" />
         <Member Name="Id" Index="-1" />
-        <Member Name="canvas_data" Caption="Dữ liệu phòng" />
+        <Member Name="canvas_data" Caption="Dữ liệu phòng" PropertyEditorType="Homeclick.vn.Module.Web.Editors.SVGParseEditor" />
         <Member Name="coordinates" Caption="Tọa độ" Size="1200000000" RowCount="10" />
         <Member Name="DanhSachCanvas" Caption="Danh sách thiết kế" />
         <Member Name="description" Caption="Mô tả" />
@@ -800,7 +800,7 @@
         <ColumnInfo Id="ProductId" Index="3" />
       </Columns>
     </ListView>
-    <DetailView Id="Product_DetailView" CollectionsEditMode="View">
+    <DetailView Id="Product_DetailView" CollectionsEditMode="Edit">
       <Items>
         <PropertyEditor Id="content" PropertyEditorType="DevExpress.ExpressApp.HtmlPropertyEditor.Web.ASPxHtmlPropertyEditor" />
       </Items>
@@ -832,11 +832,11 @@
             <LayoutGroup Id="DanhSachProduct_details" RelativeSize="100">
               <LayoutItem Id="DanhSachProduct_details" SizeConstraintsType="Default" RelativeSize="100" />
             </LayoutGroup>
-            <LayoutGroup Id="DanhSachTags" RelativeSize="100">
-              <LayoutItem Id="DanhSachTags" SizeConstraintsType="Default" RelativeSize="100" />
-            </LayoutGroup>
             <LayoutGroup Id="DanhSachWishlists" RelativeSize="100" Index="3" Removed="True">
               <LayoutItem Id="DanhSachWishlists" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="DanhSachTags" RelativeSize="100">
+              <LayoutItem Id="DanhSachTags" SizeConstraintsType="Default" RelativeSize="100" />
             </LayoutGroup>
           </TabbedGroup>
         </LayoutGroup>

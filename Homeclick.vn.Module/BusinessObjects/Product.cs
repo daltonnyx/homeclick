@@ -109,8 +109,8 @@ namespace Homeclick.vn.Module.BusinessObjects
             using (UnitOfWork uow = new UnitOfWork(this.Session.DataLayer))
             {
                 Product_detail productDetail = new Product_detail(uow);
-                productDetail.name = "hinh_anh";
-                productDetail.caption = "Hình ảnh";
+                productDetail.name = "gallery";
+                productDetail.caption = "Gallery";
                 productDetail.typeEnum = TypeEnum.multiupload;
                 productDetail.value = string.Empty;
                 productDetail.ProductId = uow.FindObject<Product>(new BinaryOperator("Id", this.Id));

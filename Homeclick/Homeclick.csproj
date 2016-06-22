@@ -351,6 +351,7 @@
     <Content Include="Scripts\fabric.min.js" />
     <Content Include="Scripts\groupLiPolygon.js" />
     <None Include="Scripts\jquery-3.0.0.intellisense.js" />
+    <Content Include="Scripts\jquery-1.11.3.min.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
     <Content Include="Scripts\jquery-3.0.0.slim.js" />
