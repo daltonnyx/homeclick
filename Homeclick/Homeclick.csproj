@@ -263,6 +263,7 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductsLayoutsLink.cs" />
     <Compile Include="Models\Product_detail.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
@@ -279,7 +280,6 @@
     <Compile Include="Models\ProjectLayout_Collection.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Project_ProductsTable.cs" />
     <Compile Include="Models\Room.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
@@ -395,6 +395,8 @@
     <Content Include="Scripts\Plugins\fancyBox\jquery.mousewheel-3.0.6.pack.js" />
     <Content Include="Scripts\Plugins\particles\particles.js" />
     <Content Include="Scripts\Plugins\particles\particles.min.js" />
+    <Content Include="Scripts\Plugins\scrollToFixed\jquery-scrolltofixed-min.js" />
+    <Content Include="Scripts\Plugins\scrollToFixed\jquery-scrolltofixed.js" />
     <Content Include="Scripts\Plugins\slick\ajax-loader.gif" />
     <Content Include="Scripts\Plugins\slick\fonts\slick.svg" />
     <Content Include="Scripts\Plugins\slick\slick-theme.css" />
@@ -642,6 +644,7 @@
     <Content Include="Views\Project\_Thumbnail.cshtml" />
     <Content Include="Views\Project\_ProjectHtmlContent.cshtml" />
     <Content Include="Views\Project\_ProductsTable.cshtml" />
+    <Content Include="Views\Project\_ProductsGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

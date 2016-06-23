@@ -74,7 +74,7 @@ display: block;
     position: absolute;
     left: 0;
     width: 100%;
-    bottom: -30px;
+    bottom: 0;
     z-index: 10;
     text-align: center;
 }
@@ -84,7 +84,8 @@ display: block;
     font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
-    margin: 0 0 30px;
+    margin: 0;
+    line-height:40px;
 }
 
 
@@ -96,6 +97,7 @@ display: block;
 
 
 .project-tile-overlay .button.tiny {
+    display:none;
     width: 160px;
     font-size: 13px;
     margin-bottom: 0;
@@ -130,6 +132,9 @@ display: block;
 .project-tile:hover .project-tile-overlay {
     bottom: 50%;
     margin-bottom: -20px;
+}
+.project-tile:hover .project-tile-overlay > a {
+    display:inline-block;
 }
 
 .project-tile:hover .project-tile-image:after {
@@ -166,13 +171,12 @@ display: block;
 }
 
 .box > .box-title {
-    background-color: #f5f5f5;
     text-shadow: 0 1px 0 #aecef4;
 }
 
 .box .box-title {
     position: relative;
-    padding: 10px;
+    padding: 0 10px 10px 10px;
 }
 
     .box .box-title h5 {
@@ -396,12 +400,20 @@ display: block;
 #projectSidebarLink {
     display: none;
 }
+
+.box-title {
+    display:none;
+}
+
 @media (max-width: 991px) {
 
 /*
 Add transition to containers so they can push in and out.
 */
-
+.box .box-title {
+    padding-top: 10px;
+    display: block;
+}
 
 #layout,
 #projectSidebar,
@@ -426,8 +438,9 @@ This is the parent `<div>` that contains the projectSidebar and the content area
     min-height: 0;
 }
     #layout.active #projectSidebar {
-        left: 150px;
-        width: 200px;
+        left: 250px;
+        width: 250px;
+        box-shadow: 0 0px 10px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     }
 
     #layout.active .projectSidebar-link {
@@ -477,16 +490,15 @@ appears on the left side of the page.
 */
 
 #projectSidebar {
-    margin-left: -150px; /* "#projectSidebar" width */
-    width: 150px;
+    margin-left: -250px; /* "#projectSidebar" width */
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
-    z-index: 1000; /* so the projectSidebar or its navicon stays above all content */
-    background: #191818;
+    z-index: 99999;
+    background: white;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    border-right: 1px solid #02bdb6;
 }
     /*
     All anchors inside the projectSidebar should be styled like this.

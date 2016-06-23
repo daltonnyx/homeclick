@@ -21,6 +21,8 @@ namespace Homeclick.Controllers
             if (ModelState.IsValid)
             {
                 TempData["Notification"] = "Câu hỏi của bạn đã được gởi đi, chúng tôi sẽ trả lời thắc mắc của bạn trong thời gian sớm nhất. Xin cảm ơn!";
+
+                f.Send("temp@gmail.com");
             }
             return View("Index");
         }
