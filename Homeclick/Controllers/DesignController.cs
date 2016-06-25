@@ -49,6 +49,9 @@ namespace Homeclick.Controllers
         {
             var categoryTypes = db.Category_type.ToList();
 
+            categoryTypes.Remove(categoryTypes.Find(o => o.Id == 17));
+            categoryTypes.Remove(categoryTypes.Find(o => o.Id == 18));
+
             ViewBag.SelectedTypeId = categoryTypes.FirstOrDefault().Id;
             ViewBag.CategoryTypes = categoryTypes;
 

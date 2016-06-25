@@ -1,10 +1,25 @@
 ﻿@model IEnumerable<Homeclick.Models.Product>
-    @{ 
-        var total = Model.Count();
-    }
-<div id="product-grid">
+@{
+    var total = Model.Count();
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+}
+<div id="product-grid" class="content-product-feature">
     <h6 class="number-items section-header">@total Sản phẩm</h6>
-    <div class="product-grid ">
-
+    <div id="grid-content" class="feature-item row">
+        @foreach (var item in Model)
+            {
+                String url = "http://demo.vinabits.com.vn/homeclick2";
+                Dictionary<string, object> arrayItem = item.ToArray(item);
+                Dictionary<string, object> details = arrayItem["Product_detail"] as Dictionary<string, object>;
+            <div class="item-product col-xs-4">
+                <div class="image">
+                    <a href="@Url.Action("Product_Detail","SanPham", new {@Id=@item.Id})"><img src="@url/@item.image" alt="" /></a>
+                </div>
+                <div class="detail-item">
+                    <h3 class="title-item"><a href="@Url.Action("Product_Detail","SanPham", new {@Id=@item.Id})">@item.name</a></h3>
+                    <p>@Convert.ToInt32(details["gia"]).ToString("#,###", info.NumberFormat) vnđ</p>
+                </div>
+            </div>
+        }
     </div>
 </div>
