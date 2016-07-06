@@ -648,6 +648,7 @@
     <Content Include="Views\Shared\_LayoutAlltypologieschild.cshtml" />
     <Content Include="Views\Shared\Layout_BoSuuTap.cshtml" />
     <Content Include="Views\SanPham\AjaxProductDetail.cshtml" />
+    <Content Include="Views\Project\_ProductsGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

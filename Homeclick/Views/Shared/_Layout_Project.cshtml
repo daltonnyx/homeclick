@@ -61,7 +61,7 @@
         }
 
         function CollectionClick(data) {
-            var urlAction = '/Project/_CollectionDetails?collectionId=' + data;
+            var urlAction = 'homeclick/Project/_CollectionDetails?collectionId=' + data;
 
             $g = $('#tabs2').html();
 
@@ -90,7 +90,7 @@
 
         function LayoutClick(data) {
             //$('#Collections').html('<img id="loader-img" alt="" src="https://sire.uniandes.edu.co/pagos/javax.faces.resource/ajax-loader.gif.xhtml?ln=images" width="50" height="50" align="center" />');
-            var urlAction = '/Project/_Collections?layoutId=' + data;
+            var urlAction = 'homeclick/Project/_Collections?layoutId=' + data;
             $.ajax({
                 url: urlAction,
                 type: 'GET',
