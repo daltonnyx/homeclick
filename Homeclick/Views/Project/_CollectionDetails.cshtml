@@ -1,4 +1,8 @@
 ﻿@model Homeclick.Models.ProjectLayout_Collection
+@{ 
+    var tableItems = ViewBag.TableItems as IEnumerable<Homeclick.Models.ProductsLayoutsLink>;
+    var products = ViewBag.Products as IEnumerable<Homeclick.Models.Product>;
+}
 
 <style>
     .description p {
@@ -26,30 +30,20 @@
     <div class="description">
         @Html.Raw(Model.HtmlContent)
     </div>
-    <section class="col-md-12 product-list-section">
-        <h3 class="section-header table-section-header">Sản phẩm trong Set</h3>
-        <div class="total-html">Tổng: <span>6390000</span>đ</div>
 
-        <div class="category-product-detail">
-            @Html.Partial("_ProductsTable")
-            <div id="clear" style="clear:both;"></div>
-        </div>
-        <div id="product-grid" >
-            <h6 class="number-items section-header">6 Sản phẩm</h6>
-
-            <div class="product-grid ">
-
-            </div>
-        </div>
+    <section class="col-xs-12 product-list-section">
+        @Html.Partial("_ProductsTable", tableItems)
+        @Html.Partial("_ProductsGrid", products)
     </section>
+
     <section class="col-md-12 comment">
         <div class="fb-comments" data-width="100%" data-numposts="5"></div>
     </section>
 
     <script>
         //--------------Toogle--------------//
-        $('.category-product-detail').hide();
-        $('.table-section-header').unbind('click');
+        //$('.category-product-detail').hide();
+        //$('.table-section-header').unbind('click');
 
         $('.table-section-header').click(function () {
             $(this).toggleClass("active-show");

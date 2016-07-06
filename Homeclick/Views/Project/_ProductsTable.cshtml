@@ -1,21 +1,45 @@
-﻿
-<table class="table-striped col-md-12 table-product-detail">
-    <thead>
-        <tr>
-            <th>Sản phẩm</th>
-            <th>Số lượng</th>
-            <th>Đơn giá</th>
-            <th>Tổng</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                Skram - Ant B Side Table
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
+﻿@model IEnumerable<Homeclick.Models.ProductsLayoutsLink>
+   @{
+       var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+       var total = 0;
+       foreach (var item in Model)
+       {
+           total += item.TotalValue;
+       }
+   }
+<h3 class="section-header table-section-header  active-show">Sản phẩm trong Set</h3>
+<div class="total-html">Tổng: <span>@total.ToString("#,###", info.NumberFormat)</span>vnđ</div>
+<div class="category-product-detail" style="display:block;">
+
+    <table class="table-striped col-xs-12 table-product-detail active-show">
+        <thead>
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Tổng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.ProductName
+                    </td>
+                    <td>
+                        @item.Total
+                    </td>
+                    <td>
+                        @item.ProductValue.ToString("#,###", info.NumberFormat) vnđ
+                    </td>
+                    <td>
+                        @item.TotalValue.ToString("#,###", info.NumberFormat) vnđ
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div id="clear" style="clear:both;"></div>
+</div>
+

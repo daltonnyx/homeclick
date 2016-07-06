@@ -19,12 +19,12 @@ namespace Homeclick.Controllers
             return View(rooms);
         }
 
-
         public ActionResult Detail(int id)
         {
             Category category = db.Categories.Where(c => c.Id == id).First();
             return View("Detail", category);
         }
+
         public ActionResult ListCategory()
         {
             List<Category> listcategory = db.Categories.ToList();

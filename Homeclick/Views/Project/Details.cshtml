@@ -4,13 +4,29 @@
     Layout = "~/Views/Shared/_Layout_Project.cshtml";
 
 }
+<div class="row breadcrumb">
+    <ul>
+        <li><a href="../">Home</a></li>
+        <li><a href="/Project">Dự án</a></li>
+        <li>@Model.Name</li>      
+    </ul>
+</div>
+<div class="main-head row" data-wow-duration="21" data-wow-delay="0.5s">
+    <div class="main-image" style="background-position: 50% 42.4733%;"></div><!-- /.main-image fullscreener -->
+
+    <div class="main-head-content">
+        <div class="columns large-4">
+            <span class="main-title">@Model.Name</span>
+        </div>
+    </div>
+</div>
 
 <div class="row widget">
-    <div id="layout" class="col-md-4 col-lg-3">
+    <div id="layout" class="col-md-3 col-lg-2">
         @Html.Partial("_Sidebar")
     </div>
 
-    <div class="col-md-8 col-lg-9 project-content">
+    <div class="col-md-9 col-lg-10 project-content">
         @Html.Partial("_Slider", ViewBag.Layouts as IEnumerable<Homeclick.Models.ProjectItem>)
         <div id="tab-container" class="tab-container">
             <ul class='etabs'>
@@ -19,7 +35,7 @@
             </ul>
             <div id="tabs1" class="project-tab">
                 @Html.Partial("_ProjectHtmlContent", Model)
-                @Html.Partial("_Thumbnail")
+                @Html.Partial("_Thumbnail", ViewBag.Thumbnails as IEnumerable<Homeclick.Models.ProjectItem>)
             </div>
             <div id="tabs2" class="project-tab">
                 @Html.Partial("_LayoutTemplated", ViewBag.Layouts as IEnumerable<Homeclick.Models.ProjectItem>)

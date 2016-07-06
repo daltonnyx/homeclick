@@ -25,15 +25,9 @@ Description:
 ==========================================================*/
 /* Fonts */
 
-@import url(fonts/stylesheet.css);
 
 /* Css */
 @import url(libs/font-awesome/css/font-awesome.min.css);
-@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
-
-@import url(libs/bootstrap/css/bootstrap.min.css);
-
-
 /*==========================================================
 	2. GENERAL
 ==========================================================*/
@@ -360,7 +354,7 @@ header{
 .site-header .container{
 }
 .menu {
-    
+   padding-bottom: 15px; 
 }
 
 .mobimenu{

@@ -4,13 +4,29 @@
     Layout = "~/Views/Shared/_Layout_Project.cshtml";
 }
 
+<div class="row breadcrumb">
+    <ul>
+        <li><a href="../">Home</a></li>
+        <li>Dự án</li>
+    </ul>
+</div>
+<div class="main-head row" data-wow-duration="21" data-wow-delay="0.5s">
+    <div class="main-image" style="background-position: 50% 42.4733%;"></div><!-- /.main-image fullscreener -->
+
+    <div class="main-head-content">
+        <div class="columns large-4">
+            <span class="main-title">Dự án</span>
+        </div>
+    </div>
+</div>
+
 <div class="main-body">
     <div class="row">
         @foreach (var item in Model)
         {
             <div class="project-tile col-sm-6 col-md-4">
                 <div class="project-tile-image fullscreener fsr-container">
-                    <img width="650" height="420" src="http://themes.wplook.com/construction/wp-content/uploads/sites/15/2015/04/Helsinki-Central-Library-650x420.jpg" class="attachment-project-image size-project-image wp-post-image fsr-image fsr-hidden" alt="Helsinki-Central-Library">
+                    <img width="650" height="420" src="@item.Image" class="attachment-project-image size-project-image wp-post-image fsr-image fsr-hidden" alt="Helsinki-Central-Library">
                 </div>
                 <div class="project-tile-overlay">
                     <h4>@item.Name</h4>
