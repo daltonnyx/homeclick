@@ -60,7 +60,13 @@ namespace Homeclick.Controllers
                     ViewBag.SideTitle = "Danh mục";
                     list = db.Categories.Where<Category>(c => c.Category_type.typeFor == 0).OrderBy<Category,int>(c => c.Category_type.Id).ToList();
                     break;
-                case "":
+                case "model":
+                    ViewBag.SideTitle = "Phòng";
+                    list = db.Categories.Where<Category>(c => c.Category_type.name == "model" && c.Category_type.typeFor == 0).OrderBy<Category, int>(c => c.Category_type.Id).ToList();
+                    break;
+                case "typology":
+                    ViewBag.SideTitle = "Chủng loại";
+                    list = db.Categories.Where<Category>(c => c.Category_type.name == "typology" && c.Category_type.typeFor == 0).OrderBy<Category, int>(c => c.Category_type.Id).ToList();
                     break;
                 default:
                     break;
@@ -126,8 +132,14 @@ namespace Homeclick.Controllers
         {
             var product = db.Products.Find(id);
             ViewBag.Title = product.name;
-            ViewBag.url = "http://demo.vinabits.com.vn/homeclick2";
+            ViewBag.url = "http://demo.vinabits.com.vn/homeclick/admin";
             return View(product);
+        }
+
+        public PartialViewResult AjaxProductDetail(int id)
+        {
+            var product = db.Products.Find(id);
+            return PartialView(product);
         }
 	}
 }

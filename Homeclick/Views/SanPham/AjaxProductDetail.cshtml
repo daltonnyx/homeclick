@@ -1,0 +1,18 @@
+﻿@using Homeclick.Models
+@model Homeclick.Models.Product
+
+@{ 
+    Dictionary<string, object> productArr = Model.ToArray();
+    Dictionary<string, object> detail = productArr["Product_detail"] as Dictionary<string, object>;
+}
+<div class="row">
+    <div class="col-xs-4">
+        <img class="img-responsive" src="\admin\@detail["image"]" alt="@Model.name" />
+    </div>
+    <div class="col-xs-8">
+        <h3 class="product-title modal-title">@Model.name</h3>
+        <div class="modal-content product-content">
+            @Model.excerpt
+        </div>
+    </div>
+</div>

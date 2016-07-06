@@ -188,6 +188,14 @@ namespace Homeclick.vn.Module.BusinessObjects
                 productDetail10.ProductId = uow.FindObject<Product>(new BinaryOperator("Id", this.Id));
                 productDetail10.Save();
 
+                Product_detail productDetail11 = new Product_detail(uow);
+                productDetail11.name = "initScale";
+                productDetail11.caption = "Tỉ lệ";
+                productDetail11.typeEnum = TypeEnum.str;
+                productDetail11.value = "0.18";
+                productDetail10.ProductId = uow.FindObject<Product>(new BinaryOperator("Id", this.Id));
+                productDetail11.Save();
+
                 if (this.excerpt == string.Empty)
                 {
                     string[] words = HtmlHelper.StripTagsCharArray(this.content).Split(' ');

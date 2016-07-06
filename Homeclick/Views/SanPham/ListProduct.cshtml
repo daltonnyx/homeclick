@@ -19,7 +19,7 @@
             @foreach (Product item in Model)
             {
                 String url = "http://demo.vinabits.com.vn/homeclick2";
-                Dictionary<string, object> arrayItem = item.ToArray(item);
+                Dictionary<string, object> arrayItem = item.ToArray();
                 Dictionary<string, object> details = arrayItem["Product_detail"] as Dictionary<string, object>;
                 <div class="item-product col-md-4">
                     <div class="image">
@@ -27,9 +27,13 @@
                     </div>
                     <div class="detail-item">
                         <h3 class="title-item"><a href="@Url.Action("Product_Detail","SanPham", new {@Id=@item.Id})">@item.name</a></h3>
-                        <p>@details["gia"].ToString() đ</p>
-                    </div>
-                </div>
+                        <p>@if (details.Keys.Contains("gia") && details["gia"] != null) { @details["gia"].ToString(); } đ</p>
+ 
+
+                  </div>
+ 
+
+              </div>
             }
         </div>
     </div>

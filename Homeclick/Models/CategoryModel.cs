@@ -73,5 +73,15 @@ namespace Homeclick.Models
                           select cat).ToList<Category>();
             return descendant;
         }
+
+        public string getActionLink()
+        {
+            string type = "Typology";
+            if (this.Category_type.name == "model")
+                type = "Model";
+            else if (this.Category_type.name == "collection")
+                return String.Format("/BoSuuTap/Detail/{0}", this.Id);
+            return String.Format("/Category/{1}/{0}",this.Id, type);
+        }
     }
 }

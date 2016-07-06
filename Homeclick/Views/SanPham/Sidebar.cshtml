@@ -1,8 +1,5 @@
 ﻿@using Homeclick.Models;
 @model IList<Category>
-@{
-    Layout = null;
-}
 
 <div class="list-category sidebar">
     <h3 class="title-sidebar title-cate-sidebar">@ViewBag.SideTitle</h3>
@@ -10,7 +7,51 @@
         <ul>
             @foreach (Category item in Model)
             {
-                <li><a href="@Url.Action("")">@item.name</a></li>
+                <li><a href="@item.getActionLink()">@item.name</a></li>
+            }
+        </ul>
+    }
+    else if (ViewBag.type == "model")
+    {
+        <ul>
+            @foreach (Category item in Model)
+            {
+                <li>
+                    <a href="@Url.Action("Model", "Category", new { @id = @item.Id })">@item.name</a>
+                    @{ IList<Category> typos = item.getDescendantCategories();}
+                    @if (typos.Count > 0)
+                    {
+                        <ul class="descendant-cat">
+                            @foreach (Category typo in typos)
+                            {
+                                <li><a href="@Url.Action("Typology", "Category", new { @id = @typo.Id })">@typo.name</a></li>
+                            }
+                        </ul>
+                    }
+                </li>
+
+            }
+        </ul>
+    }
+    else if (ViewBag.type == "typology")
+    {
+        <ul>
+            @foreach (Category item in Model)
+            {
+                <li>
+                    <a href="@Url.Action("Typology", "Category", new { @id = @item.Id })">@item.name</a>
+                    @{ IList<Category> typos = item.getDescendantCategories();}
+                    @if (typos.Count > 0)
+{
+                        <ul class="descendant-cat">
+                            @foreach (Category typo in typos)
+                            {
+                                <li><a href="@Url.Action("Typology", "Category", new { @id = @typo.Id })">@typo.name</a></li>
+                            }
+                        </ul>
+                    }
+                </li>
+
             }
         </ul>
     }

@@ -71,6 +71,7 @@ namespace Homeclick.Controllers
             Category model = db.Categories.Find(id);
             IList<Product> query = model.Products.ToList<Product>();
             ViewBag.title = model.name;
+            ViewBag.type = "model";
             var products = query.OrderBy<Product, string>(p => p.name).ToPagedList<Product>(page, 20);
             return View(products);
         }
@@ -78,6 +79,7 @@ namespace Homeclick.Controllers
         public ActionResult Typologies()
         {
             IList<Category> typologies = db.Categories.Where<Category>(t => t.Category_type.name == "typology").ToList();
+            ViewBag.type = "typology";
             return View(typologies);
         }
 
@@ -85,6 +87,7 @@ namespace Homeclick.Controllers
         {
             Category cat = db.Categories.Find(id);
             ViewBag.Title = cat.name;
+            ViewBag.type = "typology";
             var query = from product in db.Products
                         where product.Categories.Where<Category>(c => c.Id == id).Count<Category>() >= 1
                         select product;

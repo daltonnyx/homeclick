@@ -1219,11 +1219,13 @@ a.nivo-prevNav{
 
 .list-category li ul {
     padding-left:30px;
-    margin-left:40px;
+    /*margin-left:40px;*/
 }
 .list-category li ul li{
     border:none;
     list-style-type: disc;
+    list-style:none;
+    line-height: 24px;
 }
 .list-category li ul li a {
     padding: 0;

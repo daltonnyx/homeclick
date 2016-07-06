@@ -605,6 +605,7 @@
     <Content Include="Views\Lienhe\Index.cshtml" />
     <Content Include="Views\Hoidap\Index.cshtml" />
     <Content Include="Scripts\Plugins\particles\particles.json" />
+    <Content Include="Views\BoSuuTap\Sidebar.cshtml" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\Html\Phong.cshtml" />
     <Content Include="Views\Html\Thietke1.cshtml" />
@@ -642,6 +643,9 @@
     <Content Include="Views\Project\_Thumbnail.cshtml" />
     <Content Include="Views\Project\_ProjectHtmlContent.cshtml" />
     <Content Include="Views\Project\_ProductsTable.cshtml" />
+    <Content Include="Views\Shared\_LayoutAlltypologieschild.cshtml" />
+    <Content Include="Views\Shared\Layout_BoSuuTap.cshtml" />
+    <Content Include="Views\SanPham\AjaxProductDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

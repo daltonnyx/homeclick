@@ -9,7 +9,7 @@ jQuery(document).ready(function($){
   // init object and variable
   var canvas = new fabric.Canvas('tutorial');
   var canvasObj = $("#tutorial");
-  var p,isDragable = false,src,srcW,srcH,srcName,srcImage,srcZdata,srcPrice,srcScale,centerX,centerY,_isInside = false,srcOnWall;
+  var p,isDragable = false,src,srcW,srcH,srcName,srcImage,srcZdata,srcPrice,srcScale,centerX,centerY,initScale,_isInside = false,srcOnWall;
   const srcMultiple = 1;
   var isInside = function(p,obj) {
     if(typeof(p) == 'undefined' || p == null)
@@ -83,7 +83,8 @@ jQuery(document).ready(function($){
     srcZdata = $(event.target).data("zdata");
     srcImage = $(event.target).data('image');
     srcPrice = $(event.target).data('price');
-    if(event.target.hasAttribute('data-on-wall')) // Stick line object for window, door, etc...
+    initScale = $(event.target).data("init");
+    if(event.target.hasAttribute('data-on-wall')) // Stick line object like window, door, etc...
     {
       srcOnWall = $(event.target).data("on-wall");
       srcOnWall = srcOnWall.replace(/\'/g,'"');
@@ -133,6 +134,7 @@ jQuery(document).ready(function($){
           centeredScaling: true,
           centeredRotation: true
         });
+        obj.scale(initScale);
         if(srcOnWall != null)
         {
           obj.onWall = srcOnWall;
