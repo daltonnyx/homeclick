@@ -11,8 +11,8 @@
         </Key>
         <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         <Property Name="Name" Type="nvarchar" MaxLength="255" />
-        <Property Name="City" Type="nvarchar" MaxLength="128" />
-        <Property Name="State" Type="nvarchar" MaxLength="128" />
+        <Property Name="CityId" Type="int"/>
+        <Property Name="StateId" Type="int"/>
         <Property Name="Address" Type="nvarchar" MaxLength="255" />
         <Property Name="Size" Type="nvarchar" MaxLength="100" />
         <Property Name="Investor" Type="nvarchar" MaxLength="255" />
@@ -35,6 +35,9 @@
         <Property Name="UpdatedBy" Type="int" />
         <Property Name="Image" Type="nvarchar(max)" />
         <Property Name="CategoryId" Type="int" />
+        <Property Name="Completed" Type="bit" />
+        <Property Name="MapLocation" Type="nvarchar" MaxLength="50" />
+
       </EntityType>
 
       <EntityType Name="ProjectItem">
@@ -152,6 +155,15 @@
           <Property Name="ship_price" Type="nvarchar" MaxLength="100" />
           <Property Name="postal_code" Type="nvarchar" MaxLength="100" />
         </EntityType>
+      
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+      
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
@@ -788,6 +800,46 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             </Dependent>
           </ReferentialConstraint>
         </Association>
+      
+      <Association Name="FK_Project_CityId">
+        <End Role="City" Type="Self.City" Multiplicity="0..1" />
+        <End Role="Project" Type="Self.Project" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="City">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="Project">
+            <PropertyRef Name="CityId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      
+       <Association Name="FK_Project_StateId">
+        <End Role="State" Type="Self.State" Multiplicity="0..1" />
+        <End Role="Project" Type="Self.Project" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="State">
+            <PropertyRef Name="Id" />
+          </Principal>
+          <Dependent Role="Project">
+            <PropertyRef Name="StateId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      
+        <Association Name="FK_Project_CategoryID">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      
         <Association Name="FK_Project_CreatedBy">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Project" Type="Self.Project" Multiplicity="*" />
@@ -800,6 +852,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             </Dependent>
           </ReferentialConstraint>
         </Association>
+      
         <Association Name="FK_Project_UpdatedBy">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Project" Type="Self.Project" Multiplicity="*" />
@@ -825,6 +878,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             </Dependent>
           </ReferentialConstraint>
         </Association>
+      
         <Association Name="FK_ProjectItem_CreatedBy">
         <End Role="User" Type="Self.User" Multiplicity="0..1" />
         <End Role="ProjectItem" Type="Self.ProjectItem" Multiplicity="*" />
@@ -836,6 +890,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             <PropertyRef Name="CreatedBy" />
           </Dependent>
         </ReferentialConstraint>
+        
       </Association>
         <Association Name="FK_ProjectItem_CategoryId">
         <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
@@ -849,6 +904,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           </Dependent>
         </ReferentialConstraint>
       </Association>
+      
         <Association Name="FK_ProjectItem_UpdatedBy">
         <End Role="User" Type="Self.User" Multiplicity="0..1" />
         <End Role="ProjectItem" Type="Self.ProjectItem" Multiplicity="*" />
@@ -861,6 +917,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           </Dependent>
         </ReferentialConstraint>
       </Association>
+      
 
         <Association Name="FK_ProjectLayout_Collection_LayoutId">
         <End Role="ProjectItem" Type="Self.ProjectItem" Multiplicity="0..1" />
@@ -926,19 +983,6 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
         </ReferentialConstraint>
       </Association>
       
-        <Association Name="FK_Project_CategoryID">
-          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
-          <End Role="Project" Type="Self.Project" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Project">
-              <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      
         <EntityContainer Name="vinabits_homeclickModelStoreContainer">
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectItem" EntityType="Self.ProjectItem" Schema="dbo" store:Type="Tables" />
@@ -958,6 +1002,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <EntitySet Name="Category_detail" EntityType="Self.Category_detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category_type" EntityType="Self.Category_type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer_type" EntityType="Self.Customer_type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomSecurityRole" EntityType="Self.CustomSecurityRole" Schema="dbo" store:Type="Tables" />
@@ -1034,10 +1079,12 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             <End Role="Category" EntitySet="Category" />
             <End Role="Category1" EntitySet="Category" />
           </AssociationSet>
+          
           <AssociationSet Name="FK_Customer_CityId" Association="Self.FK_Customer_CityId">
             <End Role="City" EntitySet="City" />
             <End Role="Customer" EntitySet="Customer" />
           </AssociationSet>
+          
           <AssociationSet Name="FK_Customer_Customer_typeId" Association="Self.FK_Customer_Customer_typeId">
             <End Role="Customer_type" EntitySet="Customer_type" />
             <End Role="Customer" EntitySet="Customer" />
@@ -1165,6 +1212,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <EntitySet Name="Category_detail" EntityType="vinabits_homeclickModel.Category_detail" />
           <EntitySet Name="Category_type" EntityType="vinabits_homeclickModel.Category_type" />
           <EntitySet Name="Cities" EntityType="vinabits_homeclickModel.City" />
+          <EntitySet Name="States" EntityType="vinabits_homeclickModel.State" />
           <EntitySet Name="Customers" EntityType="vinabits_homeclickModel.Customer" />
           <EntitySet Name="Customer_type" EntityType="vinabits_homeclickModel.Customer_type" />
           <EntitySet Name="CustomSecurityRoles" EntityType="vinabits_homeclickModel.CustomSecurityRole" />
@@ -1179,7 +1227,17 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <EntitySet Name="Tags" EntityType="vinabits_homeclickModel.Tag" />
           <EntitySet Name="Users" EntityType="vinabits_homeclickModel.User" />
           <EntitySet Name="Wishlists" EntityType="vinabits_homeclickModel.Wishlist" />
-
+          
+          <AssociationSet Name="FK_Project_CityId" Association="vinabits_homeclickModel.FK_Project_CityId">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          
+           <AssociationSet Name="FK_Project_StateId" Association="vinabits_homeclickModel.FK_Project_StateId">
+            <End Role="State" EntitySet="States" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          
           <AssociationSet Name="FK_Project_CreatedBy" Association="vinabits_homeclickModel.FK_Project_CreatedBy">
             <End Role="User" EntitySet="Users" />
             <End Role="Project" EntitySet="Projects" />
@@ -1344,8 +1402,8 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="255" />
-          <Property Name="City" Type="String" MaxLength="128" />
-          <Property Name="State" Type="String" MaxLength="128" />
+          <Property Name="CityId" Type="Int32" />
+          <Property Name="StateId" Type="Int32"/>
           <Property Name="Address" Type="String" MaxLength="255" />
           <Property Name="Size" Type="String" MaxLength="100" />
           <Property Name="Investor" Type="String" MaxLength="255" />
@@ -1368,7 +1426,11 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="Image" Type="String" MaxLength="Max" />
           <Property Name="CategoryId" Type="Int32" />
+          <Property Name="Completed" Type="Boolean"/>
+          <Property Name="MapLocation" Type="String" MaxLength="50" />
           
+          <NavigationProperty Name="State" Relationship="vinabits_homeclickModel.FK_Project_StateId" ToRole="State" FromRole="Project" />
+          <NavigationProperty Name="City" Relationship="vinabits_homeclickModel.FK_Project_CityId" ToRole="City" FromRole="Project" />
           <NavigationProperty Name="Category" Relationship="vinabits_homeclickModel.FK_Project_CategoryId" ToRole="Category" FromRole="Project" />
           <NavigationProperty Name="CreatedByUser" Relationship="vinabits_homeclickModel.FK_Project_CreatedBy" ToRole="User" FromRole="Project" />
           <NavigationProperty Name="UpdatedByUser" Relationship="vinabits_homeclickModel.FK_Project_UpdatedBy" ToRole="User" FromRole="Project" />
@@ -1503,6 +1565,15 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <Property Name="postal_code" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Customers" Relationship="vinabits_homeclickModel.FK_Customer_CityId" FromRole="City" ToRole="Customer" />
         </EntityType>
+        
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+          
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
@@ -1708,6 +1779,32 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <NavigationProperty Name="Products" Relationship="vinabits_homeclickModel.ProductWishlist" FromRole="Wishlist" ToRole="Product" />
         </EntityType>
         
+        <Association Name="FK_Project_CityId">
+          <End Role="City" Type="vinabits_homeclickModel.City" Multiplicity="0..1" />
+          <End Role="Project" Type="vinabits_homeclickModel.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        
+                  <Association Name="FK_Project_StateId">
+          <End Role="State" Type="vinabits_homeclickModel.State" Multiplicity="0..1" />
+          <End Role="Project" Type="vinabits_homeclickModel.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+          
         <Association Name="FK_Project_CreatedBy">
           <End Role="User" Type="vinabits_homeclickModel.User" Multiplicity="0..1" />
           <End Role="Project" Type="vinabits_homeclickModel.Project" Multiplicity="*" />
@@ -2128,6 +2225,8 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="vinabits_homeclickModel.Project">
               <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="MapLocation" ColumnName="MapLocation" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy"/>
@@ -2150,8 +2249,8 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
                 <ScalarProperty Name="Investor" ColumnName="Investor"/>
                 <ScalarProperty Name="Size" ColumnName="Size"/>
                 <ScalarProperty Name="Address" ColumnName="Address"/>
-                <ScalarProperty Name="State" ColumnName="State"/>
-                <ScalarProperty Name="City" ColumnName="City"/>
+                <ScalarProperty Name="StateId" ColumnName="StateId"/>
+                <ScalarProperty Name="CityId" ColumnName="CityId"/>
                 <ScalarProperty Name="Name" ColumnName="Name"/>
                 <ScalarProperty Name="Id" ColumnName="Id"/>
               </MappingFragment>
@@ -2265,6 +2364,14 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
                 <ScalarProperty Name="ship_price" ColumnName="ship_price" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="vinabits_homeclickModel.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -1,0 +1,57 @@
+﻿<div class="filterField col-md-3">
+    <ul>
+        <li>
+            <span class="list-title">Loại</span><br />
+            <select id="projectTypeSelection">
+                <option selected value="">Tất cả</option>
+                @foreach (var type in ViewBag.ProjectTypes)
+                {
+                    <option value="@type.Id">@type.description</option>
+                }
+            </select>
+        </li>
+        <li>
+            <span class="list-title">Thành phố</span><br />
+            <select id="projectCitiesSelection">
+                <option selected value="">Tất cả</option>
+                @foreach (var type in ViewBag.Cities)
+                {
+                    <option value="@type.Id">@type.name</option>
+                }
+            </select>
+        </li>
+
+        <li>
+            <span class="list-title">Tình trạng</span><br />
+            <select id="projectStatuSelection">
+                <option selected value="">Tất cả</option>
+                <option value="1">Đã hoàn thành</option>
+                <option value="0">Đang xây dựng</option>
+            </select>
+        </li>
+        <li>
+            <span class="list-title">Tìm kiếm theo</span><br />
+            <select id="findBySelection">
+                <option selected value="name">Tên dự án</option>
+                <option value="Investor">Chủ đầu tư</option>
+                <option value="architetualDesignAgency">Đơn vị thiết kế kiến trúc</option>
+                <option value="furnitureDesignAgency">Đơn vị thiết kế nội thất</option>
+                <option value="viewDesignAgency">Đơn vị thiết kế cảnh quan</option>
+                <option value="constructionAgency">Đơn vị thi công</option>
+                <option value="distributionAgency">Đơn vị phân phối</option>
+                <option value="manager">Đơn vị quản lý</option>
+            </select>
+        </li>
+        <li>
+            <div style="display: inline-block; width: 100%; padding-right: 50px;">
+                <input id="filterTextBox" type="text" placeholder="Tìm kiếm" style="float: left;" />
+                <button id="filterButton" class="btn2" style="float: right; position: absolute; right: 15px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+        </li>
+        <li>
+            <ul id="markerList"></ul>
+        </li>
+    </ul>
+</div>
+
+

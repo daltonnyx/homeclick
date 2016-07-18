@@ -1,17 +1,29 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    var url = "";
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <meta name="keywords" content="@ViewBag.MetaKeyword"/>
     <meta name="description" content="@ViewBag.MetaDescription"/>
     <title>@ViewBag.Title</title>
+
+
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/Fonts.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
     <script src="~/Scripts/jquery-1.11.3.min.js"></script>
+    <!--slick-->
+    <script src="~/Scripts/Plugins/slick/slick.min.js"></script>
+    <link href="~/Scripts/Plugins/slick/slick-theme.css" rel="stylesheet" />
+    <script src="~/Scripts/Plugins/elementqueries/EQCSS.min.js"></script>
 
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/taggd.css")
 
-
+    <style>
+    </style>
     <link href="~/Content/Project.css" rel="stylesheet" />
 
 </head>
@@ -45,14 +57,24 @@
     <script src="~/Scripts/Plugins/easyTabs/jquery.easytabs.min.js"></script>
     <script src="~/Scripts/Plugins/easyTabs/jquery.hashchange.min.js"></script>
 
-    <!--slick-->
-    <script src="~/Scripts/Plugins/slick/slick.min.js"></script>
-    <link href="~/Scripts/Plugins/slick/slick-theme.css" rel="stylesheet" />
 
     <script type="text/javascript">
-        $g = "";
 
-        
+        $g = "";
+        var slicked = false;
+                    
+        var collectionsArea = $('#collectionsArea');
+        var collectionContainer = $('#collections');
+        var collectionContent = $('#collectionContent');
+        var collectionDetail
+        function LayoutLoad()
+        {
+            $(this).fadeIn('slow').delay(2000).queue(function () {
+
+                $(this).dequeue();
+            });
+        }
+
         function Back() {
             $('#tabs2').hide(); //just in case
             $('#tabs2').html($g);
@@ -60,58 +82,57 @@
             event.preventDefault();
         }
 
-        function CollectionClick(data) {
-            var urlAction = 'homeclick/Project/_CollectionDetails?collectionId=' + data;
+        function CollectionClick(handlerElement) {
+            var data = $(handlerElement).data('content');
 
-            $g = $('#tabs2').html();
-
-            //$('#tabs2').html('<img id="loader-img" alt="" src="https://sire.uniandes.edu.co/pagos/javax.faces.resource/ajax-loader.gif.xhtml?ln=images" width="50" height="50" align="center" />');
-
+            var url = '@Url.Action("_CollectionDetails")';
             $.ajax({
-                url: urlAction,
-                type: 'GET',
-                dataType: 'html',
-                data: {},
-            })
-            .done(function (data) {
-                console.log("success");
-                $('#tabs2').hide(); //just in case
-                $('#tabs2').html(data);
-                $('#tabs2').fadeIn('slow');
-            })
-            .fail(function () {
-                console.log("error");
-            })
-            .always(function () {
-                console.log("complete");
+                type: "GET",
+                url: url,
+                data: {'collectionId' : data},
+                success: function (data) {
+                    collectionsArea.css('height', 0);
+                    collectionContent.html(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {  
+                    alert('Failed to retrieve books.');  
+                }
             });
-            event.preventDefault();
         };
 
-        function LayoutClick(data) {
-            //$('#Collections').html('<img id="loader-img" alt="" src="https://sire.uniandes.edu.co/pagos/javax.faces.resource/ajax-loader.gif.xhtml?ln=images" width="50" height="50" align="center" />');
-            var urlAction = 'homeclick/Project/_Collections?layoutId=' + data;
-            $.ajax({
-                url: urlAction,
-                type: 'GET',
-                dataType: 'html',
-                data: {},
-            })
-            .done(function (data) {
-                console.log("success");
- 
-                $('#Collections').hide(); //just in case
-                $('#Collections').html(data);
-                $('#Collections').fadeIn('slow');
-            })
-            .fail(function () {
-                console.log("error");
-            })
-            .always(function () {
-                console.log("complete");
+        $('.layoutItem').bind('click', function () {
+            loadLayout(this);
+        });
+
+        function loadLayout(layoutElement) {
+            collectionContainer.html('');
+            var data = $(layoutElement).data('content');
+            var image = $(layoutElement).data('image');
+            var url = '@Url.Action("_Collections")' + '?layoutId=' + data;
+            $.getJSON(url, function (json) {
+                var layoutFull = $('#layoutFull');
+                layoutFull.html('<img style="height:auto; width:100%" src="' + image + '" alt="" />');
+                $.each(json, function (i, item) {
+                    var itemTemplated = '<div class="card-l col-xs-6 col-sm-4 col-md-4 col-lg-4 collectionItem" data-content="' + item.id + '">' +
+                            '<div class="card card-shadow">' +
+                                '<div class="image-border">' +
+                                    '<a>' +
+                                        '<img style="height:auto; width:100%" src="' + '@url' + item.image + '" alt="" />' +
+                                    '</a>' +
+                                '</div>' +
+                                '<div class="card-title">' +
+                                    '<span>' + item.name + '</span>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>';
+                    collectionContainer.append(itemTemplated);
+                    var lastChildAdded = collectionContainer.children().last();
+                    lastChildAdded.bind('click', function () {
+                        CollectionClick(this);
+                    });
+                });
             });
-            event.preventDefault();
-        };
+        }
 
         //slider home
         $(window).load(function () {
@@ -142,6 +163,11 @@
         });
 
         $(document).ready(function () {
+            var layoutContainer = $('#layoutContainer');
+            var selectedLayout = layoutContainer.children().first();
+            if (selectedLayout) {
+                loadLayout(selectedLayout);
+            }
 
             //easy tabs
             $('#tab-container').easytabs();

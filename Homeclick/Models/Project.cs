@@ -16,7 +16,7 @@ namespace Homeclick.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string City { get; set; }
+        public Nullable<int> CityId { get; set; }
         public string State { get; set; }
         public string Address { get; set; }
         public string Size { get; set; }
@@ -40,7 +40,10 @@ namespace Homeclick.Models
         public Nullable<int> UpdatedBy { get; set; }
         public string Image { get; set; }
         public Nullable<int> CategoryId { get; set; }
+        public Nullable<bool> Completed { get; set; }
+        public string MapLocation { get; set; }
     
+        public virtual City City { get; set; }
         public virtual Category Category { get; set; }
         public virtual User CreatedByUser { get; set; }
         public virtual User UpdatedByUser { get; set; }

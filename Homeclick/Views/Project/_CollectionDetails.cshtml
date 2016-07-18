@@ -22,11 +22,6 @@
 
 </style>
 
-<div class="">
-    <div style="margin:10px 0;">
-        <a href="#tabs2" onclick="Back()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Trở về trang trước</a>
-    </div>
-
     <div class="description">
         @Html.Raw(Model.HtmlContent)
     </div>
@@ -41,10 +36,6 @@
     </section>
 
     <script>
-        //--------------Toogle--------------//
-        //$('.category-product-detail').hide();
-        //$('.table-section-header').unbind('click');
-
         $('.table-section-header').click(function () {
             $(this).toggleClass("active-show");
             $(this).parent('.product-list-section').addClass("list-show");

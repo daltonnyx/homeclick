@@ -34,7 +34,7 @@ namespace Homeclick
                     "~/Content/nivo-slider.css",
                     "~/Content/owl.carousel.css",
                     "~/Content/owl.theme.css",
-                   
+                   "~/Content/site.css",
                     "~/Content/style.css",
                     "~/Content/responsive.css"
                       ));

@@ -1,7 +1,7 @@
-﻿@model IEnumerable<Homeclick.Models.Project>
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout_Project.cshtml";
+    var url = "";
 }
 
 <div class="row breadcrumb">
@@ -10,30 +10,124 @@
         <li>Dự án</li>
     </ul>
 </div>
-<div class="main-head row" data-wow-duration="21" data-wow-delay="0.5s">
-    <div class="main-image" style="background-position: 50% 42.4733%;"></div><!-- /.main-image fullscreener -->
-
-    <div class="main-head-content">
-        <div class="columns large-4">
-            <span class="main-title">Dự án</span>
-        </div>
+<div class="main-head row">
+    <div class="col-sm-8">
+        <span class="main-title">DỰ ÁN</span>
     </div>
 </div>
-
-<div class="main-body">
+<div class="row">
     <div class="row">
-        @foreach (var item in Model)
-        {
-            <div class="project-tile col-sm-6 col-md-4">
-                <div class="project-tile-image fullscreener fsr-container">
-                    <img width="650" height="420" src="@item.Image" class="attachment-project-image size-project-image wp-post-image fsr-image fsr-hidden" alt="Helsinki-Central-Library">
+        @Html.Partial("_ProjectsFilter")
+
+        <div class="col-md-9">
+            <div class="main-body">
+                <div id="projectsGrid" class="clearfix">
+
                 </div>
-                <div class="project-tile-overlay">
-                    <h4>@item.Name</h4>
-                    <a href="/Project/Details/@item.Id" class="button tiny">Xem chi tiết</a>
+
+                <div id="projectsLoading" class="loading" style="display: none;">
+                    <img class="loadingImg" src="@url/Content/loading.gif" height="150" width="150" />
                 </div>
             </div>
-        }
+        </div>
+    </div>
     </div>
 
-</div>
+<script type='text/javascript' src="~/Scripts/Plugins/jlinq/jlinq.js"></script>
+<script type='text/javascript' src="~/Scripts/Plugins/Map/map.js"></script>
+
+<script>
+
+    var jsonData = [];
+    var typeSelection = $('#projectTypeSelection');
+    var citySelection = $('#projectCitiesSelection');
+    var statuSelection = $('#projectStatuSelection');
+    var filterTextBox = $('#filterTextBox');
+    var filterButton = $('#filterButton');
+    var projectsGrid = $('#projectsGrid');
+
+    jQuery(document).ready(function ($) {
+        //GetHtmlView('@url/Project/_Projects', 'projectsDisplay');
+        var actionUrl = '@Url.Action("GetProjectsData", "Project")'
+        $.getJSON(actionUrl, function (data) {
+            jsonData = data;
+            displayProjects(jsonData);
+        });
+    });
+
+    typeSelection.bind("change", function () {
+        selectChanged();
+    });
+
+    citySelection.bind("change", function () {
+        selectChanged();
+    });
+
+    statuSelection.bind("change", function () {
+        selectChanged();
+    });
+
+    filterButton.bind("click", function () {
+        selectChanged();
+    });
+
+    filterTextBox.bind("change",function () {
+        selectChanged();
+    });
+
+    function selectChanged() {
+        var typeSelectionVal = typeSelection.val();
+        var citySelectionVal = citySelection.val();
+        var statuSelectionVal = statuSelection.val();
+        var filterTextBoxVal = filterTextBox.val();
+
+        var result = jsonData;
+
+        if (typeSelectionVal)
+            result = filterByType(result, typeSelectionVal)
+
+        if (citySelectionVal)
+            result = filterByCity(result, citySelectionVal)
+
+        if (statuSelectionVal)
+            result = filterByStatu(result, statuSelectionVal)
+
+        if (filterTextBoxVal)
+            result = filterByName(result, filterTextBoxVal)
+        displayProjects(result);
+    }
+
+    function displayProjects(data)
+    {
+        projectsGrid.html('');
+        for (var i = 0; i < data.length; i++) {
+            var item = '<div class="project-tile col-sm-6 col-md-4">' +
+                '<div class="project-tile-image fullscreener fsr-container">' +
+                    '<img width="650" height="420" src="' + data[i].image + '" class="attachment-project-image size-project-image wp-post-image fsr-image fsr-hidden" alt="Helsinki-Central-Library">' +
+                    '</div>' +
+                    '<div class="project-tile-overlay">' +
+                        '<h4>' + data[i].name + '</h4>' +
+                        '<a href="' + data[i].link + '" class="button tiny">Xem chi tiết <i class="fa fa-search" aria-hidden="true"></i></a>' +
+                    '</div>' +
+                '</div>';
+            projectsGrid.append(item);
+        }
+    }
+
+    function GetJsonData() {
+        var actionUrl = '@Url.Action("GetProjectsData", "Project")'
+        var result = $.getJSON(actionUrl, function () {
+        })
+          .done(function () {
+              console.log("success");
+          })
+          .fail(function () {
+              console.log("error");
+          })
+          .always(function () {
+              console.log("complete");
+          });
+        return result;
+    }
+
+</script>

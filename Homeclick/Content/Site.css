@@ -1,4 +1,8 @@
-﻿body {
+﻿html {
+        overflow-x: hidden;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -39,4 +43,19 @@ input[type="checkbox"].input-validation-error {
 
 .validation-summary-valid {
     display: none;
+}
+
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 6px;
+}
+ 
+/* Track */
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #02bdb6; 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #02bdb6; 
 }

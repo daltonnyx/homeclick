@@ -13,131 +13,269 @@
     </div>
 
     <div class="box-content" style="display: block;">
-        <p>
-            <span class="detail-name">
-                <i class="fa fa-building" aria-hidden="true"></i>
-                Loại dự án
-            </span>
-            <h4 class="detail-value">@Model.Category.name</h4>
-        </p>
-        <p>
-            <span class="detail-name">
-                <i class="fa  fa-user"></i>
-                Chủ đầu tư
-            </span>
-            <h4 class="detail-value">@Model.Investor</h4>
-        </p>
-        <span class="detail-name">
-            <i class="fa  fa-map-marker"></i>
-            Vị trí
-        </span>
-        <div class="ebox">
+        <div class="uppercase small-text">Chi tiết</div>
+        <div class="seperator-hr"></div>
+
+        <div class="margin-bottom">
             <p>
-                <i class="fa fa-caret-right" aria-hidden="true"></i>
-                <span class="detail-name">
-                    Thành phố
-                </span>
-                <h4 class="detail-value">@Model.City</h4>
+                <strong class="detail-name">
+                    <i class="fa fa-building" aria-hidden="true"></i>
+                    Loại dự án:
+                </strong>
+                <strong class="detail-value">@Model.Category.name</strong>
             </p>
             <p>
-                <i class="fa fa-caret-right" aria-hidden="true"></i>
-                <span class="detail-name">
-                    Quận
-                </span>
-                <h4 class="detail-value">@Model.State</h4>
+                <strong class="detail-name">
+                    <i class="fa  fa-user"></i>
+                    Chủ đầu tư:
+                </strong>
+                <span class="detail-value">@Model.Investor</span>
+            </p>
+
+            <p>
+                <strong class="detail-name">
+                    <i class="fa  fa-map-marker"></i>
+                    Vị trí:
+                </strong>
+            </p>
+            <div class="ebox">
+                <p>
+                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                    <strong class="detail-name">
+                        Thành phố:
+                    </strong>
+                    <span class="detail-value">@Model.City.name</span>
+                </p>
+                <p>
+                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                    <strong class="detail-name">
+                        Quận:
+                    </strong>
+                    <span class="detail-value">@Model.State</span>
+                </p>
+                <p>
+                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                    <strong class="detail-name">
+                        Đường:
+                    </strong>
+                    <span class="detail-value">@Model.Address</span>
+                </p>
+            </div>
+            <p>
+                <strong class="detail-name">
+                    <i class="fa  fa-arrows-alt"></i>
+                    Quy mô diện tích:
+                </strong>
+                <span class="detail-value">@Model.Size</span>
             </p>
             <p>
-                <i class="fa fa-caret-right" aria-hidden="true"></i>
-                <span class="detail-name">
-                    Đường
-                </span>
-                <h4 class="detail-value">@Model.Address</h4>
+                <strong class="detail-name">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    Tổng số căn hộ:
+                </strong>
+                <span class="detail-value">@Model.Apartments</span>
+            </p>
+            <p>
+                <strong class="detail-name">
+                    <i class="fa  fa-calendar"></i>
+                    Năm khởi công:
+                </strong>
+                <span class="detail-value">@Model.StartYear</span>
+            </p>
+            <p>
+                <strong class="detail-name">
+                    <i class="fa  fa-calendar"></i>
+                    Dự kiến hoàn thành:
+                </strong>
+                <span class="detail-value">@Model.CompletedYear</span>
+            </p>
+            <p>
+                <strong>
+                    Đơn vị thiết kế:
+                </strong>
+            </p>
+
+            <div class="ebox">
+                <p>
+                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                    <strong class="detail-name">
+                        Nội thất:
+                    </strong>
+                    <span class="detail-value">@Model.FurnitureDesignAgency</span>
+                </p>
+                <p>
+                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                    <strong class="detail-name">
+                        Kiến trúc:
+                    </strong>
+                    <span class="detail-value">@Model.ArchitetualDesignAgency</span>
+                </p>
+                <p>
+                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                    <strong class="detail-name">
+                        Cảnh quan:
+                    </strong>
+                    <span class="detail-value">@Model.ViewDesignAgency</span>
+                </p>
+            </div>
+            <p>
+                <strong class="detail-name">
+                    Đơn vị thi công:
+                </strong>
+                <span class="detail-value">@Model.ConstructionAgency</span>
+            </p>
+            <p>
+                <strong class="detail-name">
+                    Đơn vị quản lý:
+                </strong>
+                <span class="detail-value">@Model.Manager</span>
+            </p>
+            <p>
+                <strong class="detail-name">
+                    Đơn vị phân phối:
+                </strong>
+                <span class="detail-value">@Model.DistributionAgency</span>
             </p>
         </div>
-        <p>
-            <span class="detail-name">
-                <i class="fa  fa-arrows-alt"></i>
-                Quy mô diện tích
-            </span>
-            <h4 class="detail-value">@Model.Size</h4>
-        </p>
-        <p>
-            <span class="detail-name">
-                <i class="fa fa-home" aria-hidden="true"></i>
-                Tổng số căn hộ
-            </span>
-            <h4 class="detail-value">@Model.Apartments</h4>
-        </p>
-        <p>
-            <span class="detail-name">
-                <i class="fa  fa-calendar"></i>
-                Năm khởi công
-            </span>
-            <h4 class="detail-value">@Model.StartYear</h4>
-        </p>
-        <p>
-            <span class="detail-name">
-                <i class="fa  fa-calendar"></i>
-                Dự kiến hoàn thành
-            </span>
-            <h4 class="detail-value">@Model.CompletedYear</h4>
-        </p>
-        <span>
-            ĐƠN VỊ THIẾT KẾ
-        </span>
-        <div class="ebox">
-            <p>
-                <i class="fa fa-caret-right" aria-hidden="true"></i>
-                <span class="detail-name">
-                    Nội thất
-                </span>
-                <h4 class="detail-value">@Model.FurnitureDesignAgency</h4>
-            </p>
-            <p>
-                <i class="fa fa-caret-right" aria-hidden="true"></i>
-                <span class="detail-name">
-                    Kiến trúc
-                </span>
-                <h4 class="detail-value">@Model.ArchitetualDesignAgency</h4>
-            </p>
-            <p>
-                <i class="fa fa-caret-right" aria-hidden="true"></i>
-                <span class="detail-name">
-                    Cảnh quan
-                </span>
-                <h4 class="detail-value">@Model.ViewDesignAgency</h4>
-            </p>
-        </div>
-        <p>
-            <span class="detail-name">
-                Đơn vị thi công
-            </span>
-            <h4 class="detail-value">@Model.ConstructionAgency</h4>
-        </p>
-        <p>
-            <span class="detail-name">
-                Đơn vị quản lý
-            </span>
-            <h4 class="detail-value">@Model.Manager</h4>
-        </p>
-        <p>
-            <span class="detail-name">
-                Đơn vị phân phối
-            </span>
-            <h4 class="detail-value">@Model.DistributionAgency</h4>
-        </p>
+
+        <div class="uppercase small-text">Bản đồ</div>
+        <div class="seperator-hr"></div>
+        <div style='overflow:hidden;height:250px;width:100%;'>
+            <div id='gmap_canvas' style='height:250px;width:100%;'></div>
+            <style>
+                #gmap_canvas img {
+                    max-width: none !important;
+                    background: none !important;
+                }
+            </style>
+        </div> <a href='https://embedmaps.org/'>embedded google map</a>
     </div>
 </div>
 <div style="clear:both"></div>
-<script src="~/Scripts/Plugins/scrollToFixed/jquery-scrolltofixed-min.js"></script>
+
+<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBB5V34f3crBWyutuwFCy73IzRCdIwqUrI'></script>
+<script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=8ff96f7f5fdc863299480f5e8700f6bd59dc7334'></script>
+
 <script>
+    var styles = [
+    {
+        "featureType": "water",
+        "stylers": [
+            { "color": "#bdbdbd" }
+        ]
+    }, {
+        "featureType": "landscape",
+        "stylers": [
+            { "color": "#e8e8e8" }
+        ]
+    }, {
+        "featureType": "poi",
+        "stylers": [
+            { "color": "#c9c9c9" }
+        ]
+    }, {
+        "featureType": "road",
+        "elementType": "labels",
+        "stylers": [
+            { "visibility": "on" },
+            { "weight": 0.6 },
+            { "color": "#464646" }
+        ]
+    }, {
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            { "weight": 4 },
+            { "color": "#616161" },
+            { "visibility": "off" }
+        ]
+    }, {
+        "featureType": "road.arterial",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            { "color": "#808080" }
+        ]
+    }, {
+        "featureType": "road",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            { "color": "#c6c7c7" }
+        ]
+    }, {
+        "featureType": "road.local",
+        "elementType": "geometry.fill",
+        "stylers": [
+            { "color": "#ffffff" }
+        ]
+    }, {
+        "featureType": "road.highway",
+        "elementType": "geometry.fill",
+        "stylers": [
+            { "color": "#efefee" }
+        ]
+    }, {
+        "featureType": "road.highway",
+        "elementType": "labels.icon",
+        "stylers": [
+            { "visibility": "off" }
+        ]
+    }, {
+        "elementType": "labels.icon",
+        "stylers": [
+            { "visibility": "off" }
+        ]
+    }, {
+        "elementType": "labels.text.fill",
+        "stylers": [
+            { "color": "#454646" }
+        ]
+    }, {
+    }, {
+    }, {
+    }, {
+        "featureType": "road.arterial",
+        "elementType": "geometry.fill",
+        "stylers": [
+            { "color": "#d1d1d1" }
+        ]
+    }, {
+        "featureType": "transit.line",
+        "elementType": "geometry",
+        "stylers": [
+            { "color": "#5a5a5a" }
+        ]
+    }, {
+        "featureType": "transit.line",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            { "color": "#dad8d8" },
+            { "visibility": "on" },
+            { "weight": 3.8 }
+        ]
+    }, {
+    }
+    ];
+    function init_map() {
+        var myOptions = {
+            zoom: 14, center: new google.maps.LatLng(16.0504437, 108.21537309999997),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+        marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(16.0504437, 108.21537309999997) });
+        //infowindow = new google.maps.InfoWindow({ content: '<strong>HERE</strong><br>Trưng nữ vương<br> Đà Nẵng<br>' });
+        google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); });
+        //infowindow.open(map, marker);
+
+    } google.maps.event.addDomListener(window, 'load', init_map);
+
     (function (window, document) {
 
         var layout = document.getElementById('layout'),
             projectSidebar = document.getElementById('projectSidebar'),
             projectSidebarLink = document.getElementById('projectSidebarLink'),
-            hideprojectSidebar = document.getElementById('hideprojectSidebar');
+            hideprojectSidebar = document.getElementById('hideprojectSidebar'),
+            blackSrc = document.getElementById('blackSrc');
 
+        var active = 'active';
 
         function toggleClass(element, className) {
             var classes = element.className.split(/\s+/),
@@ -159,22 +297,31 @@
         }
 
         projectSidebarLink.onclick = function (e) {
-            var active = 'active';
-
             e.preventDefault();
+            toggleClass(blackSrc, 'blackSrc')
+            toggleClass(blackSrc, 'fixed')
             toggleClass(layout, active);
             toggleClass(projectSidebar, active);
             toggleClass(projectSidebarLink, active);
         };
 
         hideprojectSidebar.onclick = function (e) {
-            var active = 'active';
-
             e.preventDefault();
+            toggleClass(blackSrc, 'blackSrc')
+            toggleClass(blackSrc, 'fixed')
+
             toggleClass(layout, active);
             toggleClass(projectSidebar, active);
             toggleClass(projectSidebarLink, active);
         };
+
+        blackSrc.onclick = function (e) {
+            toggleClass(blackSrc, 'blackSrc')
+            toggleClass(blackSrc, 'fixed')
+            toggleClass(layout, active);
+            toggleClass(projectSidebar, active);
+            toggleClass(projectSidebarLink, active);
+        }
 
     }(this, this.document));
 </script>

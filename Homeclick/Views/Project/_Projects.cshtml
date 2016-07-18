@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Homeclick.Models.Project>
+@{ 
+    var url = "/homeclick";
+}
+
+@if (ViewBag.SearchText != null)
+{
+    <div class="searchTitle col-lg-12">
+        <span>Tìm thấy <strong>@Model.Count()</strong> kết quả </span>
+        <a onclick="cancelSearching()"><i class="fa fa-undo" aria-hidden="true"></i></a>
+    </div>
+}
+
+    @foreach (var item in Model)
+    {
+        <div class="project-tile col-sm-6 col-md-4">
+            <div class="project-tile-image fullscreener fsr-container">
+                <img width="650" height="420" src="@item.Image" class="attachment-project-image size-project-image wp-post-image fsr-image fsr-hidden" alt="Helsinki-Central-Library">
+            </div>
+            <div class="project-tile-overlay">
+                <h4>@item.Name</h4>
+                <a href="@url/Project/Details/@item.Id" class="button tiny">Xem chi tiết</a>
+            </div>
+        </div>
+    }

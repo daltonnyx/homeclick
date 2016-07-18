@@ -2,13 +2,13 @@
 @{
     var total = Model.Count();
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    var url = "/homeclick";
 }
 <div id="product-grid" class="content-product-feature">
     <h6 class="number-items section-header">@total Sản phẩm</h6>
     <div id="grid-content" class="feature-item row">
         @foreach (var item in Model)
             {
-                String url = "http://demo.vinabits.com.vn/homeclick2";
                 Dictionary<string, object> arrayItem = item.ToArray(item);
                 Dictionary<string, object> details = arrayItem["Product_detail"] as Dictionary<string, object>;
             <div class="item-product col-xs-4">

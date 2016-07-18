@@ -89,6 +89,7 @@ img{
 a{
 	color:#373737;
 }
+
 a:hover{
 	color: #44d1cb;
 	text-decoration:none;
@@ -632,10 +633,8 @@ a.nivo-prevNav{
 }
 .feature-item .item-product .image{
     text-align: center;
-    margin-bottom:20px;
 }
 .feature-item .item-product .detail-item{
-    border-top:solid 1px #d7d7d7;
 	padding-top:15px;
 }
 
@@ -2440,7 +2439,7 @@ line-height: 51px;
             }
             .all-tpologies .typologies-item .item-image-tp >a{
                 display:block;
-                background:#6E706F;
+                background:#9f9e9f;
                 padding: 15px 0;
                 text-align:center;
                 box-sizing: border-box;
@@ -3543,3 +3542,10 @@ select.ins{
     margin: 80px 300px;
 }
 
+select {
+    border: 1px solid #d5d5d5;
+    padding: 8px 15px;
+    font-size: 14px;
+    color: #757575;
+    border-radius: 0;
+}

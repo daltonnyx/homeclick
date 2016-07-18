@@ -1,35 +1,40 @@
-﻿#loader-img{
+﻿
+ul {
+    list-style:none;
+}
+
+#loader-img{
 margin: 0 auto;
 display: block;
 }
  
  
-.border{border: 3px solid #fff;     border-radius: 5px;}
-/**/
+.border{border: 3px solid #fff; border-radius: 5px;}
 
     .main-head {
+        border-left: 5px solid #02bdb6;
         position: relative;
         overflow: hidden;
         margin-bottom: 15px;
         margin-top: 15px;
+        background:#f9f9f9;
+        padding: 15px 0;
     }
+
     .no-main-image{
-            background: #02bdb6;
+            
     }
     .main-image {
     height: 70px;
+
 }
-    .main-head-content {
+
+.main-head-content {
+    margin-left: 15px;    
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
-}
-.main-head-content {
-    position: absolute;
-    margin-left: 15px;
-    top: 50%;
-    width: 100%;
 }
 
 .main-title {
@@ -40,16 +45,38 @@ display: block;
     color: #000;
     text-transform: uppercase;
 }
-.main-title:after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 2px;
-    background: #02bdb6;
-    margin: 8px 0 -14px;
+
+.main-head ul {
+    list-style:none;
 }
+
+.main-head ul li {
+    margin-left:15px;
+    float:right;
+    width: 30px;
+    height: 30px;
+    border: 2px solid gray;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.main-head ul li:hover {
+    background: #02bdb6;
+    border-color: #02bdb6;
+}
+
+.main-head ul li:hover a {
+    color: white;
+}
+
+.main-head ul a {
+    line-height:30px;
+}
+
+
 .project-tab {
-    padding-top: 15px;
+    padding-top: 0px;
+    padding:15px;
 }
 .project-tile {
     position: relative;
@@ -58,6 +85,7 @@ display: block;
 }
 
 .project-tile-image {
+    position:relative;
     left: 0;
     top: 0;
     width: 100%;
@@ -98,8 +126,9 @@ display: block;
 
 .project-tile-overlay .button.tiny {
     display:none;
-    width: 160px;
+
     font-size: 13px;
+
     margin-bottom: 0;
 }
 
@@ -154,11 +183,6 @@ display: block;
     opacity: 0;
 }
 
-
-.widget {
-    margin-top: 20px;
-}
-
 .box {
 }
 
@@ -208,6 +232,12 @@ display: block;
 
 .box-content p {
     margin-top: 5px;
+    padding-bottom: 6px;
+    
+}
+
+.box-content > p {
+    border-bottom: 1px solid #eee;
 }
 
 .box-content {
@@ -215,8 +245,7 @@ display: block;
 }
 
 .detail-name {
-    text-transform: uppercase;
-    font-size:11px;
+    font-size:13px;
 }
 
 .detail-name i {
@@ -226,9 +255,6 @@ display: block;
 .detail-value {
     font-weight:normal;
     line-height: 1.5em;
-    margin-left:20px;
-    font-size:13px;
-    color: #02bdb6;
 }
 
 
@@ -238,34 +264,49 @@ display: block;
 }
 
 .card-shadow {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
 .card {
     background: #fff;
-    border-radius: 2px;
     display: inline-block;
     height: auto;
-    margin-top: 15px;
     position: relative;
     width: 100%;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        cursor: pointer;
 }
 
-    .card:hover {
-            box-shadow: 0 10px 10px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    .card:hover .card-title{
+                background-color: #f3f6f5;
     }
 
+    .card-title {
+    -webkit-transition-duration: 200ms;
+    -webkit-transition-property: color, background, opacity;
+    -webkit-transition-timing-function: ease-in-out;
+    -moz-transition-duration: 200ms;
+    -moz-transition-property: color, background, opacity;
+    -moz-transition-timing-function: ease-in-out;
+    -o-transition-duration: 200ms;
+    -o-transition-property: color, background, opacity;
+    -o-transition-timing-function: ease-in-out;
+    transition-duration: 200ms;
+    transition-property: color, background, opacity;
+}
+
 .card-title {
-    padding: 10px;
-    width: 100%;
-    background: #f5f5f5;
+    height: 40px;
+    line-height: 40px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 10px;
+    border-top:none;
 }
-
-.container, .row {
-    overflow: visible !important;
-}
-
 .etabs {
     margin: 0;
     padding: 0;
@@ -277,6 +318,7 @@ display: block;
     zoom: 1;
     *display: inline;
     background: #eee;
+        padding: 8px;
 }
 
     .tab a {
@@ -290,7 +332,6 @@ display: block;
 
     .tab.active {
         background: #02bdb6;
-        padding: 8px;
         position: relative;
     }
 
@@ -299,7 +340,8 @@ display: block;
     }
 
     .tab-container {
-        margin-top:25px;
+            border: 1px solid rgb(238, 238, 238);
+            margin-top:15px;
     }
 .tab-container .panel-container {
     background: #fff;
@@ -360,7 +402,7 @@ display: block;
     }
 
     .project-slider, .tab-container {
-        padding: 0 0 0 15px;
+        /*padding: 0 0 0 15px;*/ 
     }
 
 
@@ -369,7 +411,7 @@ display: block;
 @media (min-width: 1200px) {
 
     .project-slider, .tab-container {
-        padding: 0 0 0 15px;
+        /*padding: 0 0 0 15px;*/
     }
 }
 
@@ -377,7 +419,7 @@ display: block;
 @media (max-width: 1200px) {
 
     .project-slider, .tab-container {
-        padding: 0 0 0 15px;
+        /*padding: 0 0 0 15px;*/
     }
 
 
@@ -438,9 +480,10 @@ This is the parent `<div>` that contains the projectSidebar and the content area
     min-height: 0;
 }
     #layout.active #projectSidebar {
-        left: 250px;
-        width: 250px;
+        left: 350px;
+        width: 350px;
         box-shadow: 0 0px 10px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+            overflow: scroll!important;
     }
 
     #layout.active .projectSidebar-link {
@@ -490,7 +533,7 @@ appears on the left side of the page.
 */
 
 #projectSidebar {
-    margin-left: -250px; /* "#projectSidebar" width */
+    margin-left: -350px; /* "#projectSidebar" width */
     position: fixed;
     top: 0;
     left: 0;
@@ -676,9 +719,225 @@ Hides the projectSidebar at `48em`, but modify this based on your app's needs.
 
 .item-product .image {
     height: auto!important;
-    padding: 10px;
 }
 
 .feature-item .item-product .image a img {
     display: block;
+}
+
+.filterField {
+
+}
+
+.filterField p {
+    margin-bottom:15px;
+}
+
+.filterField input, .filterField select {
+    width: 100%;
+}
+.btn2 {
+    border: 1px solid #d5d5d5;
+    padding: 8px 15px;
+    font-size: 14px;
+    color: #757575;
+    font-style: italic;
+    border-radius: 0;
+    background: #02bdb6;
+    color: white;
+}
+
+.filterFieldRight {
+    text-align:right;
+}
+
+.filterField {
+    margin-bottom:15px;
+}
+
+.main-body {
+    position:relative;
+}
+.loading {
+        display: flex;
+    align-items: center;
+    justify-content: center;
+        position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index:1;
+}
+
+.loading::before {
+  content: "";
+    position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;  
+  opacity: .4; 
+  background:white;
+}
+
+.searchTitle {
+    margin-bottom: 15px;
+    color: #02bdb6;
+    font-size: 16px;
+}
+.searchTitle > a {
+    color: #02bdb6;
+    cursor: pointer;
+}
+
+.blackSrc {
+    width: 100%;
+    height: 100%;
+    background: black;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    opacity: .3;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.title-sidebar {
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+
+.seperator-hr {
+        border-radius: 25px;
+    height: 4px;
+    width: 85px;
+    margin-bottom: 15px;
+    margin-left: 0;
+    border: none;
+    background-color: #FFEB3B;
+}
+
+.margin-bottom{
+    margin-bottom:15px;
+}
+
+.uppercase {
+    text-transform:uppercase;
+}
+
+.small-text {
+        height: 30px;
+    line-height: 30px;
+    font-size: 18px;
+    /* font-weight: bold; */
+    text-transform: uppercase;
+}
+
+    .hentry_content {
+        font-size: 16px;
+    }
+
+    .alternative-heading {
+        position: relative;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+    }
+
+    .owl-controls {
+        position: absolute;
+        bottom: 0px;
+        right: 50%;
+        margin-top: 10px!important;
+    }
+
+    .owl-pagination {
+        margin-top: 0px!important;
+        margin-bottom: 0px!important;
+        position: relative;
+        left: 50%!important;
+        bottom: 0;
+        -moz-transform: translate(0);
+        -ms-transform: translate(0);
+        -o-transform: translate(0);
+        -webkit-transform: translate(0);
+        transform: translate(0);
+}
+
+        .title {
+font-family: 'Athiti', sans-serif;
+    margin-bottom: 15px;
+    line-height: 30px;
+    font-size: 18px;
+
+    }
+    .title span{
+         font-weight: bold;
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+
+    #layoutContainer {
+            padding: 15px 0;
+    background: #f8f8f8;
+        margin-bottom: 15px;
+            overflow: hidden!important;
+    }
+
+    #collections {
+        
+    padding: 15px 0;
+    padding-bottom: 0px;
+    background: #e7e7e7;
+    }
+
+    #tabs2 {
+        padding-bottom:0px;
+    }
+
+    .card-l {
+        margin-bottom: 15px;
+    }
+
+    .loadingImg {
+        height:64px;
+        width:64px;
+    }
+
+    .filterField > ul > li {
+        margin-bottom: 10px;
+    }
+
+    .list-title {
+        line-height:30px;
+    }
+
+    #projectsGrid {
+        margin-top: 15px;
+    }
+
+    .circle {
+        border-radius:50%;
+    }
+
+    
+ .image-border{
+     border: 10px solid white;
+ }
+
+ .collectionDetails{
+         padding: 15px;
+ }
+
+ #collectionsArea {
+  -webkit-transition: max-height 1s; 
+  -moz-transition: max-height 1s; 
+  -ms-transition: max-height 1s; 
+  -o-transition: max-height 1s; 
+  transition: max-height 1s;  
+  background: #e5feff;
+  overflow: hidden;
 }
