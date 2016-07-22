@@ -13,15 +13,6 @@ namespace Homeclick.Models
         {
             using (var db = new vinabits_homeclickEntities())
             {
-
-                /*
-                 *  select c.* 
-                 *      from  [ProductDanhSachProducts_CategoryDanhSachCategories] pc
-	             *          join [Category] c on c.Id = pc.DanhSachCategories and c.Category_typeId = 3
-	             *       where pc.DanhSachProducts =24
-                 */
-
-
                 var query = string.Format(@"select c.* 
                                         from[ProductDanhSachProducts_CategoryDanhSachCategories] pc
                                             join[Category] c on c.Id = pc.DanhSachCategories and c.Category_typeId = '{0}'
@@ -29,6 +20,34 @@ namespace Homeclick.Models
 
                 var categories = db.Database.SqlQuery<Category>(query).ToList();
 
+                return categories;
+            }
+        }
+
+        public static IList<Category> GetCategoryParents(int categoryId)
+        {
+            using (var db = new vinabits_homeclickEntities())
+            {
+                var query = string.Format(@"select c.*
+                                        from Category c
+                                        join CategoriesLink cl on cl.ChildId = '{0}'
+                                        where c.Id = cl.ParentId", categoryId);
+
+                var categories = db.Database.SqlQuery<Category>(query).ToList();
+                return categories;
+            }
+        }
+
+        public static IList<Category> GetCategoryChilds(int categoryId)
+        {
+            using (var db = new vinabits_homeclickEntities())
+            {
+                var query = string.Format(@"select c.*
+                                        from Category c
+                                        join CategoriesLink cl on cl.ParentId = '{0}'
+                                        where c.Id = cl.ChildId", categoryId);
+
+                var categories = db.Database.SqlQuery<Category>(query).ToList();
                 return categories;
             }
         }

@@ -11,9 +11,10 @@
     <ul class="nav">
         @foreach (Category item in Model)
         {
+
             <li class="model-link" data-model="@item.Id">
                 <a href="#">@item.name</a>
-                @{ IList<Category> descendants = item.getDescendantCategories(); }
+                @{ IList<Category> descendants = item.GetCategoryChilds(); }
 
                 <ul class="descendant-cat">
                     <li class="typo-link" data-model="@item.Id" data-typo="-1">

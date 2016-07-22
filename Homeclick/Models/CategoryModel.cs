@@ -91,6 +91,13 @@ namespace Homeclick.Models
             return descendant;
         }
 
+        public IList<Category> GetCategoryChilds()
+        {
+            var list = ModelHelper.GetCategoryChilds(this.Id).OrderBy(o => o.name).ToList();
+            var sortedList = list.OrderBy(o => o.Order).ToList();
+            return sortedList;
+        }
+
         public string getActionLink()
         {
             string type = "Typology";

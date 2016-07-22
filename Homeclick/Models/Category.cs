@@ -26,6 +26,7 @@ namespace Homeclick.Models
         public string name { get; set; }
         public string description { get; set; }
         public Nullable<int> parent_id { get; set; }
+        public Nullable<int> Order { get; set; }
         public Nullable<int> Category_type_id { get; set; }
         public Nullable<int> ParentCategoryId { get; set; }
         public Nullable<int> Category_typeId { get; set; }

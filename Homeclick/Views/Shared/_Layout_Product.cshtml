@@ -42,7 +42,9 @@
             float:right;
         }
     </style>
-
+    <script>
+        //window.history.pushState({}, "", '/SanPham');
+    </script>
 </head>
 <body>
     <div class="wapper">
@@ -69,6 +71,26 @@
     </div>
 
     <script type="text/javascript">
+        $.extend({
+            getJsonFromUrl: function (url, urlData) {
+                var result = null;
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: urlData,
+                    dataType: "json",
+                    async: false,
+                    success: function (jsonResult) {
+                        result = jsonResult;
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Failed to retrieve data.');
+                    }
+                })
+                return result;
+            }
+        });
+
         //snap
         var snapSlider = document.getElementById('slider-snap');
 
@@ -124,8 +146,10 @@
                 dataResult = [],
                 min = parseInt(minmax[0]),
                 max = parseInt(minmax[1]);
-
-            data = jlinq.from(sourceData).greater('value', min).notGreater('value', max).select();
+            if (min == max)
+                data = jlinq.from(sourceData).greater('value', min).select();
+            else
+                data = jlinq.from(sourceData).greater('value', min).notGreater('value', max).select();
 
             var selectedMetarials = [];
             var checkers = $('.material-checker:checked');
@@ -154,7 +178,8 @@
 
         function showProducts(data) {
             var container = $('.feature-item');
-
+            var h = container.height();
+            container.css('height', h);
             container.children().fadeOut('fast');
             $(this).delay('250').queue(function () {
                 $('#panigation').pagination({
@@ -169,14 +194,14 @@
                                             '</div>' +
                                             '<div class="detail-item">' +
                                                 '<h3 class="title-item"><a href="@Url.Action("Product_Detail","SanPham")' + '/' + pagidata[i].id + '">' + pagidata[i].name + '</a></h3>' +
-                                                '<p>' + pagidata[i].value + ' vnđ</p>' +
+                                                '<p>' + parseInt(pagidata[i].value).format(0, 3, '.') + ' vnđ</p>' +
                                           '</div>' +
                                       '</div>';
                             $('.feature-item').append(item);
                         }
                     }
                 })
-
+                container.css('height', 'auto');
                 $(this).dequeue();
             });
         }
@@ -207,20 +232,9 @@
 
         function getProducts(model_id, typo_id) {
             var url = '@Url.Action("ProductsJson")';
-            $.ajax({
-                type: "GET",
-                url: url,
-                data: { 'model_id': model_id, 'typo_id': typo_id },
-                success: function (data) {
-                    getMetarials(model_id, typo_id);
-                    currentModelData = data;
-                    currentTypoData = refineProductsByTypo(currentModelData, typo_id);
-                    filter(currentTypoData);
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert('Failed to retrieve data.');
-                }
-            });
+            currentModelData = $.getJsonFromUrl(url, { 'model_id': model_id });
+            currentTypoData = refineProductsByTypo(currentModelData, typo_id);
+            filter(currentTypoData);
         }
 
         function refineProductsByTypo(data, typo) {
@@ -229,7 +243,6 @@
                 result = jLinq.from(data).equals('typo', typo).select();
             else
                 result = currentModelData;
-
             return result;
         }
 
@@ -243,8 +256,10 @@
 
             if (!currentTypoId)
                 currentTypoId = -1;
-
-            currentTypo = $('li[data-model="' + currentTypoId + '"]').first();
+            else {
+                currentTypoId = parseInt(currentTypoId);
+            }
+            currentTypo = currentModel.find('li[data-typo="' + currentTypoId + '"]').first();
 
             if (!currentModel)
                 currentModel = $('#sidebar .nav').children().first();
@@ -252,12 +267,14 @@
             if (currentModel) {
                 currentModel.addClass('active');
                 currentModelId = currentModel.data('model');
-                var activeChild = currentModel.children('.descendant-cat').children().first();
+                if (!currentTypo) {
+                    currentTypo = currentModel.children('.descendant-cat').children().first();
+                    currentTypoId = activeChild.data('typo');
+                }
 
-                activeChild.addClass('active');
-                currentTypo = activeChild;
-                currentTypoId = activeChild.data('typo');
+                currentTypo.addClass('active');
                 getProducts(currentModelId, currentTypoId);
+                getMetarials(currentModelId, currentTypoId);
             }
 
             $('.typo-link > a').bind('click', function () {
@@ -270,6 +287,7 @@
 
                 currentTypoData = refineProductsByTypo(currentModelData, currentTypoId);
                 showProducts(currentTypoData);
+                getMetarials(currentModelId, currentTypoId);
             });
 
             $('.model-link > a').bind('click', function () {
@@ -289,6 +307,7 @@
                 currentTypo = activeChild;
                 currentTypoId = activeChild.data('typo');
                 getProducts(currentModelId, currentTypoId);
+                getMetarials(currentModelId, currentTypoId);
             });
         });
     </script>

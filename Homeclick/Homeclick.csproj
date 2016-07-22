@@ -555,6 +555,8 @@
     <Content Include="Upload\Images\pointer %282%29.png" />
     <Content Include="Upload\Images\pointer.png" />
     <Content Include="Upload\Images\power_2.png" />
+    <Content Include="Upload\Images\Products\Ottu_sofa_01.jpg" />
+    <Content Include="Upload\Images\Products\Square_table.jpg" />
     <Content Include="Upload\Images\Products\Tables\bc02-nho-nhat.jpg" />
     <Content Include="Upload\Images\product_01_lager.png" />
     <Content Include="Upload\Images\product_01_medium.png" />

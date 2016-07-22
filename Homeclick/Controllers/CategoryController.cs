@@ -122,7 +122,25 @@ namespace Homeclick.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetAllTypologyJson()
+        {
+            var categories = db.Categories.Where(o => o.Category_typeId == 1).ToList();
+            var json = new List<object>();
 
+            foreach (var category in categories)
+            {
+                var models = ModelHelper.GetCategoryParents(category.Id);
+
+                json.Add(new
+                {
+                    id = category.Id,
+                    name = category.name,
+                    icon = category.getDetailValue("icon"),
+                    models = models.Select(o => o.Id)
+                });
+            }
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
     }
 
 }

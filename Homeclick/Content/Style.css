@@ -2012,7 +2012,7 @@ line-height: 51px;
 }
 
 #sidebar .list-category.affix {width:21.2%;top: 5px;position: fixed !important;}
-.list-category > ul > li.active li.active a {font-weight:bold; color:#4FC5C7;}
+li.active > a {font-weight:bold; color:#4FC5C7!important;}
 
 /*=======================Html controler=============================================*/
 
@@ -2424,32 +2424,39 @@ line-height: 51px;
                 flex-flow: row wrap;
             }
             .all-tpologies .item-image-tp{
+                position:relative;
                float:none;
                font-size:13px;
                display:inline-block;
                vertical-align:top;
-                margin-bottom:20px;
-                padding:0 10px;
+                margin-bottom:3px;
+                margin-right:3px;
                 flex-basis: auto;
                 flex-grow: 1;
-
-                width: 25%;
+                width: 20%;
             }
             .all-tpologies .typologies-item .item-image-tp >a{
                 display:block;
                 background:#9f9e9f;
-                padding: 15px 0;
                 text-align:center;
                 box-sizing: border-box;
-                
+                padding:30px;
             }
                 .all-tpologies .typologies-item .item-image-tp:hover > a {
                     background:#02bdb6;
                 }
 
-            .all-tpologies .typologies-item .item-image-tp h3{
-                margin-top:15px;
+            .all-tpologies .typologies-item .item-image-tp span{
+                position:absolute;
+                bottom:10px;
+                left:10px;
+                color:white;
                 font-weight:normal;
+                font-size:16px;
+            }
+
+                        .all-tpologies .typologies-item .item-image-tp img{
+                max-height:155px;
             }
 
     /*Contact page*/

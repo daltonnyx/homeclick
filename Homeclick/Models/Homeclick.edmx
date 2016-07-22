@@ -119,6 +119,7 @@
           <Property Name="name" Type="nvarchar" MaxLength="100" />
           <Property Name="description" Type="nvarchar" MaxLength="100" />
           <Property Name="parent_id" Type="int" />
+          <Property Name="Order" Type="int"/>
           <Property Name="Category_type_id" Type="int" />
           <Property Name="ParentCategoryId" Type="int" />
           <Property Name="Category_typeId" Type="int" />
@@ -1527,6 +1528,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="parent_id" Type="Int32" />
+          <Property Name="Order" Type="Int32"/>
           <Property Name="Category_type_id" Type="Int32" />
           <Property Name="ParentCategoryId" Type="Int32" />
           <Property Name="Category_typeId" Type="Int32" />
@@ -2404,6 +2406,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
               <MappingFragment StoreEntitySet="Category">
                 <ScalarProperty Name="Category_typeId" ColumnName="Category_typeId" />
                 <ScalarProperty Name="ParentCategoryId" ColumnName="ParentCategoryId" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
                 <ScalarProperty Name="Category_type_id" ColumnName="Category_type_id" />
                 <ScalarProperty Name="parent_id" ColumnName="parent_id" />
                 <ScalarProperty Name="description" ColumnName="description" />

@@ -16,7 +16,12 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-
+    <script src="~/Scripts/Plugins/mixitup/jquery.mixitup.js"></script>
+    <style>
+        .typologies-item .mix{
+	        display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="wapper">
@@ -43,50 +48,73 @@
     </div>
 
     <script type="text/javascript">
-        function getTypologies(id)
-        {
-            var url = '@Url.Action("GetTypologiesJson")';
-            $.ajax({
-                type: "GET",
-                url: url,
-                data: { 'id': id },
-                success: function (data) {
-                    $('.typologies-item').empty();
-                    for (var i = 0; i < data.length; i++) {
-                        var item = '<div class="item-image-tp">' +
-                                        '<a class="typology-link" href="' + data[i].link + '"><img src="' + '@url' + '/' + data[i].icon + '" /></a>' +
-                                        '<h3><a href="' + data[i].link + '">' + data[i].name + '</a></h3>' +
-                                    '</div>';
-                        $('.typologies-item').append(item);
+        $.extend({
+            getJsonFromUrl: function (url, urlData) {
+                var result = null;
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: urlData,
+                    dataType: "json",
+                    async: false,
+                    success: function (jsonResult) {
+                        result = jsonResult;
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Failed to retrieve data.');
                     }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert('Failed to retrieve data.');
+                })
+                return result;
+            }
+        });
+
+        function GetAllTypologies()
+        {
+            var url = '@Url.Action("GetAllTypologyJson")';
+            var result = $.getJsonFromUrl(url, null);
+            return result;
+        }
+
+        function showTypologies(data) {
+
+            for (var i = 0; i < data.length; i++) {
+                var models = '';
+                for (var j = 0; j < data[i].models.length; j++) {
+                    models = models + "model-" + data[i].models[j];
+                    if (j < data[i].models.length - 1) {
+                        models = models + " ";
+                    }
                 }
+
+                var item = '<div class="item-image-tp mix ' + models + '" data-myorder="' + i + '" data-type="' + data[i].id + '">' +
+                                '<a class="typology-link" href="#"><img src="' + '@url' + '/' + data[i].icon + '" /></a>' +
+                                '<span>' + data[i].name + '</span>' +
+                            '</div>';
+                $('.typologies-item').append(item);
+            }
+
+            $('.typologies-item').mixItUp({
+                load: {
+                    filter: '.model-1'
+                }
+            });
+
+            $('.item-image-tp').bind('click', function () {
+                var data = $(this).data('type');
+                var url = '@Url.Action("Index", "SanPham")' + '?model_id=' + currentModel + '&typo_id=' + data;
+                window.location.href = url;
             });
         }
 
 
-
+        var currentModel = -1;
         $(document).ready(function () {
-            var currentModel = $('#sidebar .nav').children().first();
-            if (currentModel) {
-                currentModel.addClass('active');
-                var data = currentModel.data('content');
-                getTypologies(data);
-            }
+            var data = GetAllTypologies();
+            currentModel = $('.model-link').first().data('content');
+            showTypologies(data);
 
-            $('.model-link a').bind('click', function () {
-                if (currentModel) {
-                    currentModel.removeClass('active');
-                }
-                var liParent = $(this).parent();
-                var liId = liParent.data('content');
-                getTypologies(liId);
-
-                currentModel = liParent;
-                currentModel.addClass('active');
-
+            $('.model-link').bind('click', function () {
+                currentModel = $(this).data('content');
             });
         });
     </script>
