@@ -204,6 +204,7 @@
     <Compile Include="Models\Cart.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoriesLink.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
@@ -253,6 +254,7 @@
     </Compile>
     <Compile Include="Models\IdentifyUser.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ModelHelper.cs" />
     <Compile Include="Models\Post.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
@@ -282,6 +284,9 @@
     </Compile>
     <Compile Include="Models\ProjectViewModel.cs" />
     <Compile Include="Models\Room.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\State.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tag.cs">
@@ -401,8 +406,12 @@
     <Content Include="Scripts\Plugins\fancyBox\jquery.mousewheel-3.0.6.pack.js" />
     <Content Include="Scripts\Plugins\jlinq\jlinq.jquery.js" />
     <Content Include="Scripts\Plugins\jlinq\jlinq.js" />
+    <Content Include="Scripts\Plugins\layoutMap\layoutMap.js" />
+    <Content Include="Scripts\Plugins\maphilight\jquery.maphilight.js" />
+    <Content Include="Scripts\Plugins\maphilight\jquery.maphilight.min.js" />
     <Content Include="Scripts\Plugins\Map\map.js" />
     <Content Include="Scripts\Plugins\Map\Marker.png" />
+    <Content Include="Scripts\Plugins\Map\Marker2.png" />
     <Content Include="Scripts\Plugins\Map\markerclustererplus\images\conv30.png" />
     <Content Include="Scripts\Plugins\Map\markerclustererplus\images\conv40.png" />
     <Content Include="Scripts\Plugins\Map\markerclustererplus\images\conv50.png" />
@@ -420,6 +429,15 @@
     <Content Include="Scripts\Plugins\Map\markerclustererplus\src\markerclusterer.js" />
     <Content Include="Scripts\Plugins\Map\markerclustererplus\src\markerclusterer.min.js" />
     <Content Include="Scripts\Plugins\Map\markerclustererplus\src\markerclusterer_packaged.js" />
+    <Content Include="Scripts\Plugins\mixitup\jquery.mixitup.js" />
+    <Content Include="Scripts\Plugins\noUiSlider\nouislider.css" />
+    <Content Include="Scripts\Plugins\noUiSlider\nouislider.js" />
+    <Content Include="Scripts\Plugins\noUiSlider\nouislider.min.css" />
+    <Content Include="Scripts\Plugins\noUiSlider\nouislider.min.js" />
+    <Content Include="Scripts\Plugins\noUiSlider\nouislider.pips.css" />
+    <Content Include="Scripts\Plugins\noUiSlider\nouislider.tooltips.css" />
+    <Content Include="Scripts\Plugins\panigation\panigation.css" />
+    <Content Include="Scripts\Plugins\panigation\panigation.min.js" />
     <Content Include="Scripts\Plugins\particles\particles.js" />
     <Content Include="Scripts\Plugins\particles\particles.min.js" />
     <Content Include="Scripts\Plugins\scrollToFixed\jquery-scrolltofixed-min.js" />
@@ -537,6 +555,7 @@
     <Content Include="Upload\Images\pointer %282%29.png" />
     <Content Include="Upload\Images\pointer.png" />
     <Content Include="Upload\Images\power_2.png" />
+    <Content Include="Upload\Images\Products\Tables\bc02-nho-nhat.jpg" />
     <Content Include="Upload\Images\product_01_lager.png" />
     <Content Include="Upload\Images\product_01_medium.png" />
     <Content Include="Upload\Images\product_01_small.png" />
@@ -744,6 +763,8 @@
     <Content Include="Views\Project\_Projects.cshtml" />
     <Content Include="Views\Project\Map.cshtml" />
     <Content Include="Views\Project\_ProjectsFilter.cshtml" />
+    <Content Include="Views\Shared\_Layout_Product.cshtml" />
+    <Content Include="Views\SanPham\ProductGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

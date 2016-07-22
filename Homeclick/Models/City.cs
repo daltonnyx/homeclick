@@ -17,6 +17,7 @@ namespace Homeclick.Models
         public City()
         {
             this.Customers = new HashSet<Customer>();
+            this.States = new HashSet<State>();
         }
     
         public int Id { get; set; }
@@ -26,5 +27,6 @@ namespace Homeclick.Models
         public string postal_code { get; set; }
     
         public virtual ICollection<Customer> Customers { get; set; }
+        public virtual ICollection<State> States { get; set; }
     }
 }

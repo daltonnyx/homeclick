@@ -48,7 +48,8 @@ namespace Homeclick.Controllers
                 {
                     id = item.Id,
                     name = item.Name,
-                    image = item.Image
+                    image = item.Image,
+                    area = item.Area
                 });
             }
             return Json(json, JsonRequestBehavior.AllowGet);
@@ -139,7 +140,8 @@ namespace Homeclick.Controllers
                     image = project.Image,
                     address = project.Address,
                     city = project.CityId,
-                    Investor = project.Investor,
+                    state = project.StateId,
+                    investor = project.Investor,
                     viewDesignAgency = project.ViewDesignAgency,
                     architetualDesignAgency = project.ArchitetualDesignAgency,
                     furnitureDesignAgency = project.FurnitureDesignAgency,
@@ -154,19 +156,21 @@ namespace Homeclick.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
-        public string RenderRazorViewToString(string viewName, object model)
+        public JsonResult GetStatesData()
         {
-            ViewData.Model = model;
-            using (var sw = new StringWriter())
+            var states = db.States;
+            var jsonResult = new List<object>();
+            foreach (var state in states)
             {
-                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext,
-                                                                         viewName);
-                var viewContext = new ViewContext(ControllerContext, viewResult.View,
-                                             ViewData, TempData, sw);
-                viewResult.View.Render(viewContext, sw);
-                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
-                return sw.GetStringBuilder().ToString();
+                jsonResult.Add(new
+                {
+                    id = state.Id,
+                    name = state.Name,
+                    city = state.CityId
+                });
             }
+            return Json(jsonResult, JsonRequestBehavior.AllowGet);
         }
+
     }
 }

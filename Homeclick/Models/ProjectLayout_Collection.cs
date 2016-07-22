@@ -24,6 +24,7 @@ namespace Homeclick.Models
         public string Description { get; set; }
         public string Image { get; set; }
         public string HtmlContent { get; set; }
+        public string Area { get; set; }
         public Nullable<int> LayoutId { get; set; }
         public Nullable<bool> LockedOut { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

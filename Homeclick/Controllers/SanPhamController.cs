@@ -13,26 +13,35 @@ namespace Homeclick.Controllers
 {
     public class SanPhamController : Controller
     {
-        //
-        // GET: /SanPham/
         vinabits_homeclickEntities db = new vinabits_homeclickEntities();
-        //
-        // GET: /Bosutap/
 
-        public ActionResult Index()
+        public ActionResult Index(int? mode_id, int? typo_id, int? page)
         {
+            //    Số sản phẩm trên trang
+            //    tao số biến trong trang
+            int pageNumber = (page ?? 1);
+
+            if (mode_id == null)
+                mode_id = 1;
+
+            IList<Product> listproduct = Filter(mode_id, typo_id, null, pageNumber);
+
             ViewBag.type = "all";
-            return View();
+            return View(listproduct);
         }
 
-        public ActionResult ListProduct(int? page)
+        public ActionResult ListProduct(int? mode_id, int? typo_id, int? page)
         {
-            //    //Số sản phẩm trên trang
+            //    Số sản phẩm trên trang
             int product_number = 8;
-            ////    //tao số biến trong trang
+            //    tao số biến trong trang
             int pageNumber = (page ?? 1);
-            IList<Product> listproduct;
-            listproduct = db.Products.ToList();
+
+            if (mode_id == null)
+                mode_id = 1;
+
+            IList<Product> listproduct = Filter(mode_id, typo_id,null, pageNumber);
+
             if (Request.IsAjaxRequest())
             {
                 return View(listproduct.OrderBy(n => n.name).ToPagedList(pageNumber, product_number));
@@ -47,12 +56,15 @@ namespace Homeclick.Controllers
 
         public ActionResult ListCategory()
         {
+
+
             List<Category> listcategory = db.Categories.ToList();
             return View(listcategory);
         }
 
         public ActionResult Sidebar(string type = "all")
         {
+            /*
             IList<Category> list = new List<Category>();
             switch (type)
             {
@@ -71,6 +83,9 @@ namespace Homeclick.Controllers
                 default:
                     break;
             }
+            */
+            IList<Category> list = db.Categories.Where<Category>(c => c.Category_type.name == "model").ToList();
+
             ViewBag.type = type;
             return PartialView(list);
         }
@@ -95,7 +110,7 @@ namespace Homeclick.Controllers
             return PartialView(products);
         }
 
-        public ActionResult CategoryProduct(int categoryid)
+        public ActionResult CategoryProduct(int? categoryid)
         {
             List<Product> listproduct;
             if (categoryid == null)
@@ -108,6 +123,102 @@ namespace Homeclick.Controllers
                 listproduct = db.Products.Where(n => n.Categories.Contains(category)).ToList();
             }
             return View(listproduct);
+        }
+
+        public List<Product> Filter(int? model_id = null, int? typo_id = null, int? mate_id = null, int page = 1)
+        {
+            var products = db.Products.AsQueryable();
+            if (model_id != null)
+            {
+                products = from p in products
+                           where (from c in p.Categories
+                                  where c.Id == model_id
+                                  select c).Count() > 0
+                           select p;
+            }
+            if (typo_id != null && typo_id > 0)
+            {
+                products = from p in products
+                           where (from c in p.Categories
+                                  where c.Id == typo_id
+                                  select c).Count() > 0
+                           select p;
+            }
+            if (mate_id != null)
+            {
+                products = from p in products
+                           where (from c in p.Categories
+                                  where c.Id == mate_id
+                                  select c).Count() > 0
+                           select p;
+            }
+
+            var list = products.OrderBy<Product, string>(p => p.name).ToList();
+            return list;
+        }
+
+        public JsonResult ProductsJson(int? model_id = null, int? typo_id = null, int? mate_id = null)
+        {
+            var list = this.Filter(model_id, typo_id, mate_id);
+            var json = new List<object>();
+            foreach (var item in list)
+            {
+                var arrayItem = item.ToArray();
+                var details = arrayItem["Product_detail"] as Dictionary<string, object>;
+
+                var materialList = new List<object>();
+                var materials = ModelHelper.GetProductCategories(CategoryTypes.Material, item.Id);
+
+                var typo = ModelHelper.GetProductCategories(CategoryTypes.Typology, item.Id).FirstOrDefault();
+
+                foreach (var material in materials)
+                {
+                    materialList.Add(new
+                    {
+                        id = material.Id
+                    });
+                }
+
+                json.Add(new
+                {
+                    id = item.Id,
+                    name = item.name,
+                    image = item.image,
+                    value = Convert.ToInt32(details["gia"]),
+                    materials = materialList,
+                    typo = typo.Id
+                });
+            }
+            return Json(json, JsonRequestBehavior.AllowGet);
+            
+        }
+
+        /// <summary>
+        /// taking all of the material relating to the category
+        /// </summary>
+        /// <param name="category_id">Id of the category</param>
+        /// <param name="model_id">If 'category_id' is -1 and 'model_id' has been set, this will getting materials contained in the model</param>
+        /// <returns></returns>
+        public JsonResult GetMetarialsJson(int category_id, int? model_id)
+        {
+            IList<Category> metarials;
+            var json = new List<object>();
+            var model = db.Categories.Find((category_id == -1 && model_id != null) ? model_id : category_id);
+
+            if (model != null)
+            {
+                metarials = model.getDescendantCategories(CategoryTypes.Material);
+                foreach (var metarial in metarials)
+                {
+                    json.Add(new
+                    {
+                        id = metarial.Id,
+                        name = metarial.name
+                    });
+                }
+            }
+
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

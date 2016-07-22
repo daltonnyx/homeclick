@@ -4,6 +4,7 @@
 @{
     //ViewBag.Title = "Product_Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var url = "";
 }
 <main>
     <div class="container single-product">
@@ -18,17 +19,21 @@
 
                 <div class="image">
                     @{var image = @Model.image.Replace("\\",@"/");}
-                    <div class="imge-thumnail"><img class="zoom_03" src="@ViewBag.url/@image" data-zoom-image="@ViewBag.url/@image" /></div>
+                    <div class="imge-thumnail"><img class="zoom_03" src="@url/@image" data-zoom-image="@url/@image" /></div>
+                @*if (gallery.Length != 0)
+                {
                     <div id="gallery_01">
                         @foreach (var img in gallery)
                         {
                             image = @img.Replace("\\", @"/");
-                            <a href="#" class="item" data-image="@ViewBag.url/@image" data-zoom-image="@ViewBag.url/@image">
-                                <img class="" src="@ViewBag.url/@image" />
+                            <a href="#" class="item" data-image="@url/@image" data-zoom-image="@url/@image">
+                                <img class="" src="@image" />
                             </a>
                         }
                     </div>
-                </div>            <div class="sumary">
+                }*@
+                </div>            
+                <div class="sumary">
                     <h3 class="single-product-title">@Model.name</h3>
                     <div class="sg-prince">
                         

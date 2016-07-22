@@ -13,15 +13,15 @@
 <div id="layoutContainer" class="row">
     @foreach (var item in Model)
     {
-        <div class="col-xs-6 col-sm-3 layoutItem" data-content="@item.Id" data-image="@item.Image">
-            <div class="card card-shadow">
+        <div class="col-xs-6 col-sm-3 layoutItem">
+            <div class="card card-shadow" data-content="@item.Id" data-name="@item.Name" data-image="@item.Image">
                 <div>
                     <a>
                         <img style="height:auto; width:100%" src="@item.Image" alt="@item.Description" />
                     </a>
                 </div>
                 <div class="card-title">
-                    <span>@item.Name</span>
+                    <i class="fa fa-circle" aria-hidden="true"></i><span>@item.Name</span>
                 </div>
             </div>
         </div>

@@ -39,33 +39,59 @@
         @Html.Partial("_Slider", ViewBag.Thumbnails as IEnumerable<Homeclick.Models.ProjectItem>)
         <div id="tab-container" class="tab-container">
             <ul class='etabs'>
-                <li class='tab'><a href="#tabs1">Introduction</a></li>
                 <li class='tab'><a href="#tabs2">Layouts</a></li>
+                <li class='tab'><a href="#tabs1">Introduction</a></li>
             </ul>
             <div id="tabs1" class="clearfix project-tab">
+
+                <div style='overflow:hidden;height:250px;width:100%;'>
+                    <div id='gmap_canvas' style='height:250px;width:100%;'></div>
+                    <style>
+                        #gmap_canvas img {
+                            max-width: none !important;
+                            background: none !important;
+                        }
+                    </style>
+                </div><a href='https://embedmaps.org/'>embedded google map</a>
+
                 @Html.Partial("_ProjectHtmlContent", Model)
                 @Html.Partial("_Thumbnail", ViewBag.Thumbnails as IEnumerable<Homeclick.Models.ProjectItem>)
             </div>
             <div id="tabs2" class="clearfix project-tab">
                 @Html.Partial("_LayoutTemplated", ViewBag.Layouts as IEnumerable<Homeclick.Models.ProjectItem>)
-                    
-                <div id="collectionsArea">
-                    <div id="layoutFull" class="row">
+                <div class="title">
+                    <span id="layoutDetailTitle"> Layout mẫu</span>
+                </div>  
+                <div id="collectionsArea" class="row">
 
+                    <div id="layoutFull">
+                        <div id="mapContainer" class="effect">
+                            <img id="main" class="imgmapMainImage" alt="" usemap="#map">
+                            <map name="map" id="map">
+                            </map>
+                        </div>
                     </div>
-                    <div id="collections" class="row">
 
+                    <div id="collectionsBorder">
+                        <div class="title" style="text-align:center;">
+                            <span> Các phương án đề nghị</span>
+                        </div>
+
+                        <div id="collections" >
+
+                        </div>
+                    </div>
+
+                    <div id="collectionDetails" class="col-md-12">
+                        <div style="margin:10px 0;">
+                            <a href="#tabs2" onclick="Back()" style="font-size:18px;"><i class="fa fa-angle-left" style="margin-right:15px;" aria-hidden="true"></i><span style="font-family: 'Cousine' ;">Trở về trang trước</span> </a>
+                        </div>
+                        <div id="collectionContent">
+
+                        </div>
                     </div>
                 </div>
-
-                <div id="collectionDetails" class="row">
-                    <div style="margin:10px 0;">
-                        <a href="#tabs2" onclick="Back()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Trở về trang trước</a>
-                    </div>
-                    <div id="collectionContent">
-
-                    </div>
-            </div>
         </div>
     </div>
+</div>
 </div>

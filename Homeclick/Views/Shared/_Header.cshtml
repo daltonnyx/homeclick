@@ -61,8 +61,8 @@
                             <ul class="sub-menu">
                                 <li class="menu-item child-item">@Html.ActionLink("All Spaces","Models","Category")</li>
                                 <li class="menu-item child-item">@Html.ActionLink("All Typologies", "Typologies", "Category")</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Phòng khách", "Model", "Category", new { @id = 2}, null)</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Phòng ăn", "Model", "Category", new { @id = 2 }, null)</li>
+                                <li class="menu-item child-item">@Html.ActionLink("Phòng khách", "Index", "SanPham", new { model_id = 1}, null)</li>
+                                <li class="menu-item child-item">@Html.ActionLink("Phòng ăn", "Index", "SanPham", new { model_id = 2 }, null)</li>
                                 <li class="menu-item child-item">@Html.ActionLink("Phòng ngủ", "Model", "Category", new { @id = 2 }, null)</li>
                                 <li class="menu-item child-item">@Html.ActionLink("Phòng em bé", "Model", "Category", new { @id = 2 }, null)</li>
                                 <li class="menu-item child-item">@Html.ActionLink("Sản phẩm khác", "Model", "Category", new { @id = 2 }, null)</li>
@@ -120,4 +120,11 @@
             </div>
         </div> <!--Container-->
     </div><!-- menu-->
+
+     <script>
+
+     </script>
+
 </header><!-- .site-header -->
+
+

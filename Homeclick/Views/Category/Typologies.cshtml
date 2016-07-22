@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Typologies";
     Layout = "../Shared/_Layout_Cat.cshtml";
-    var url = "/homeclick";
+    var url = "";
     var image_src = string.Empty;
     var link = string.Empty;
     var title = string.Empty;
@@ -12,17 +12,19 @@
 <div class="all-tpologies">
     <div class="typologies">
         <div class="typologies-item col-md-12">
-            @foreach (Category typology in Model)
+            @*foreach (Category typology in Model)
             {
                 image_src = typology.getDetailValue("icon").ToString();
                 link = Url.Action("Typology", "Category", new { @Id = @typology.Id });
                 title = typology.name;
-                
+
                 <div class="item-image-tp">
                     <a href="@link"><img src="@url/@image_src" /></a>
                     <h3><a href="@link">@title</a></h3>
                 </div>
-            }
+            }*@
+
+
         </div>
     </div>
 </div>

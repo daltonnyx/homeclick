@@ -1,6 +1,4 @@
-﻿@model IEnumerable<Homeclick.Models.ProjectItem>
-
-<style>
+﻿<style>
     .owl-buttons {
         display: none;
     }
@@ -19,10 +17,7 @@
 </style>
 
 <div class="project-slider">
-    <div id="slider-home" class="owl-carousel owl-theme">
-        @foreach (var item in Model)
-        {
-            <div class="item"><img src="@item.Image" alt="@item.Description"></div>
-        }
+    <div id="slider-projectDetail" class="owl-carousel owl-theme">
+
     </div>
 </div>

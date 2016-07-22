@@ -6,10 +6,11 @@ using System.Web;
 
 namespace Homeclick.Models
 {
+
     public partial class Category
     {
 
-        vinabits_homeclickEntities db = new vinabits_homeclickEntities();
+        vinabits_homeclickEntities db = new vinabits_homeclickEntities();     
 
         public static IList<Category_detail> detail(Category category)
         {
@@ -62,6 +63,22 @@ namespace Homeclick.Models
                 descendantType = "typology";
             }
 
+
+            descendant = (from cat in db.Categories
+                          where (
+                            from product in cat.Products
+                            where (from cat2 in product.Categories
+                                   where cat2.Id == this.Id
+                                   select cat2).Count<Category>() > 0
+                            select product).Count<Product>() > 0 && cat.Category_type.name == descendantType
+                          select cat).ToList<Category>();
+            return descendant;
+        }
+
+        public IList<Category> getDescendantCategories(CategoryTypes categoryType)
+        {
+            IList<Category> descendant = new List<Category>();
+            string descendantType = categoryType.ToString().ToLower();
 
             descendant = (from cat in db.Categories
                           where (
