@@ -935,6 +935,8 @@ font-family: 'Athiti', sans-serif;
         -webkit-transition  : all 1s ease-in-out;
       overflow:hidden;
       max-height:1000px;
+      min-height: 265px;
+      margin: 15px 0;
     }
 
     #tabs2 {
@@ -980,4 +982,16 @@ font-family: 'Athiti', sans-serif;
 
 #collections{
     padding:0 15px;
+}
+
+#rooms {
+    background:white;
+    position:relative;
+}
+
+.room {
+    height:60px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }

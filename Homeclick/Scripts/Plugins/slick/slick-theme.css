@@ -34,7 +34,7 @@
     color: transparent;
     border: none;
     outline: none;
-    /* background: transparent; */
+    background: transparent;
     z-index:999;
 }
 .slick-prev:hover,
@@ -67,7 +67,7 @@
     line-height: 1;
 
     opacity: .75;
-    color: white;
+    color: gray;
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -118,7 +118,7 @@
 .slick-dots
 {
     position: absolute;
-    bottom: -25px;
+    bottom: 10px;
 
     display: block;
 

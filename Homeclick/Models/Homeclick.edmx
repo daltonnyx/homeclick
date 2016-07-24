@@ -51,6 +51,7 @@
         <Property Name="Order" Type="int"/>
         <Property Name="ProjectId" Type="int"/>
         <Property Name="CategoryId" Type="int"/>
+        <Property Name="ParentId" Type="int"/>
         <Property Name="LockedOut" Type="bit" />
         <Property Name="CreatedDate" Type="datetime" />
         <Property Name="CreatedBy" Type="int" />
@@ -1455,6 +1456,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <Property Name="Order" Type="Int32"/>
           <Property Name="ProjectId" Type="Int32"/>
           <Property Name="CategoryId" Type="Int32"/>
+          <Property Name="ParentId" Type="Int32"/>
           <Property Name="LockedOut" Type="Boolean" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedBy" Type="Int32" />
@@ -1464,6 +1466,9 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <NavigationProperty Name="CreatedByUser" Relationship="vinabits_homeclickModel.FK_ProjectItem_CreatedBy" ToRole="User" FromRole="ProjectItem" />
           <NavigationProperty Name="UpdatedByUser" Relationship="vinabits_homeclickModel.FK_ProjectItem_UpdatedBy" ToRole="User" FromRole="ProjectItem" /> <!--Thêm relation sau-->
           <NavigationProperty Name="Category" Relationship="vinabits_homeclickModel.FK_ProjectItem_CategoryId" ToRole="Category" FromRole="ProjectItem" />
+          <NavigationProperty Name="ProjectItemParent" Relationship="vinabits_homeclickModel.FK_ProjectItem_ParentId" ToRole="ProjectItem" FromRole="ProjectItemParent" />
+          <NavigationProperty Name="ProjectItemChildren" Relationship="vinabits_homeclickModel.FK_ProjectItem_ParentId" ToRole="ProjectItemParent" FromRole="ProjectItem" />
+
         </EntityType>
 
         <EntityType Name="ProjectLayout_Collection">
@@ -1884,6 +1889,19 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             </Principal>
             <Dependent Role="Project">
               <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+
+        <Association Name="FK_ProjectItem_ParentId">
+          <End Role="ProjectItem" Type="vinabits_homeclickModel.ProjectItem" Multiplicity="0..1" />
+          <End Role="ProjectItemParent" Type="vinabits_homeclickModel.ProjectItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectItem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectItemParent">
+              <PropertyRef Name="ParentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2343,6 +2361,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate"/>
                 <ScalarProperty Name="LockedOut" ColumnName="LockedOut"/>
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId"/>
+                <ScalarProperty Name="ParentId" ColumnName="ParentId"/>
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId"/>
                 <ScalarProperty Name="Order" ColumnName="Order" />
                 <ScalarProperty Name="Image" ColumnName="Image" />

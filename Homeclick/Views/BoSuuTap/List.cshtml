@@ -1,0 +1,23 @@
+﻿@model PagedList.IPagedList<Homeclick.Models.CollectionViewModel>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/Layout_BoSuuTap.cshtml";
+    var url = "/homeclick";
+    var slides = Homeclick.Models.ModelHelper.PickSomeInRandomOrder(Model, 5);
+    var baseLink = Url.Action("Detail");
+    foreach (var item in Model)
+    {
+        item.link = baseLink + "/" + item.id;
+    }
+}
+
+@Html.Partial("Slider", slides)
+
+<section role="grid" class="row">
+    @Html.Partial("_CollectionGrid", Model)
+</section>
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

@@ -28,20 +28,14 @@ namespace Homeclick.Controllers
 
         // Show product feature
 
-        public ActionResult Feature_Product(int? page)
+        public ActionResult Feature_Product()
         {
-            //    //Số sản phẩm trên trang
-            int product_number = 4;
-            ////    //tao số biến trong trang
-            int pageNumber = (page ?? 1);
-            
-            IList<Product> product;
-            product = db.Products.Where(m => m.featured == true).ToList<Product>();
-            if (Request.IsAjaxRequest())
-            {
-                return View( product.OrderBy(n => n.name).ToPagedList(pageNumber, product_number));
-            }
-            return View("Feature_Product", product.OrderBy(n => n.name).ToPagedList(pageNumber, product_number));
+            IList<Product> products;
+            products = db.Products.Where(m => m.featured == true).ToList<Product>();
+            var max = products.Count;
+            var rnd = new Random();
+            var random4Items = ModelHelper.PickSomeInRandomOrder(products, 4);
+            return View("Feature_Product", random4Items);
         }
         //Product Detail
         

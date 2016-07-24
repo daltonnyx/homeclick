@@ -14,7 +14,7 @@
         <div class="feature-item row">
             @foreach (Product item in Model)
             {
-                var url = "";
+                var url = "/homeclick";
                 Dictionary<string, object> arrayItem = item.ToArray(item);
                 Dictionary<string, object> details = arrayItem["Product_detail"] as Dictionary<string, object>;
                 <div class="item-product col-md-4">

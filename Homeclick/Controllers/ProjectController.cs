@@ -38,15 +38,43 @@ namespace Homeclick.Controllers
             return View();
         }
 
-        public JsonResult _Collections(int? layoutId)
+        public JsonResult _GetRooms(int? layout_id)
         {
-            var list = db.ProjectLayout_Collections.Where(o => o.LockedOut == false && o.LayoutId == layoutId).ToList();
+            var list = db.ProjectItems.Where(o => o.LockedOut == false && o.ParentId == layout_id).ToList();
             var json = new List<object>();
             foreach (var item in list)
             {
                 json.Add(new
                 {
                     id = item.Id,
+                    name = item.Name,
+                });
+            }
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult _Collections(int? room_id, int? layout_id)
+        {
+            var list = new List<ProjectLayout_Collection>();
+            if (room_id != null)
+                list = db.ProjectLayout_Collections.Where(o => o.LockedOut == false && o.LayoutId == room_id).ToList();
+            else
+            {
+                var temp = db.ProjectItems.Where(o => o.ParentId == layout_id).ToList();
+                foreach (var item in temp)
+                {
+                    var v = db.ProjectLayout_Collections.Where(o => o.LockedOut == false && o.LayoutId == item.Id).ToList();
+                    list.AddRange(v);
+                }
+            }
+
+            var json = new List<object>();
+            foreach (var item in list)
+            {
+                json.Add(new
+                {
+                    id = item.Id,
+                    roomId = item.LayoutId,
                     name = item.Name,
                     image = item.Image,
                     area = item.Area
@@ -55,14 +83,14 @@ namespace Homeclick.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult _CollectionDetails(int? collectionId)
+        public ActionResult _CollectionDetails(int? collection_id)
         {
-            if (collectionId == null)
+            if (collection_id == null)
             {
 
             }
 
-            var query = string.Format("SELECT * FROM dbo.ProductsLayoutsLink WHERE Layout = '{0}'", collectionId);
+            var query = string.Format("SELECT * FROM dbo.ProductsLayoutsLink WHERE Layout = '{0}'", collection_id);
             var tableItems = db.Database.SqlQuery<ProductsLayoutsLink>(query).ToList();
 
             var products = new List<Product>();
@@ -84,7 +112,7 @@ namespace Homeclick.Controllers
             ViewBag.TableItems = tableItems;
 
             var l = db.ProjectLayout_Collections.ToList();
-            var v = l.SingleOrDefault(o => o.Id == collectionId);
+            var v = l.SingleOrDefault(o => o.Id == collection_id);
        
             return PartialView(v);
         }

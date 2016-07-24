@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Homeclick.Models.CollectionViewModel>
+@{
+    var url = "/homeclick";
+}
+<section role="slider" class="row">
+    <div id="slider-home">
+        @foreach (var slide in Model)
+        {
+            var link = slide.link != null ? slide.link : "#";
+            <div class="item" data-content="@slide.id">
+                <img src="@url/@slide.image" title="@slide.name" alt="@slide.name" data-link="@link">
+            </div>
+        }
+    </div>
+    <div class="slider-caption">
+        <span>
+            Collection
+        </span>
+    </div>
+</section>
+

@@ -1,10 +1,5 @@
-﻿
-@*@model IEnumerable<Homeclick.Models.Product>*@
-
-@using Homeclick.Models;
-@using System.Collections;
-@using PagedList.Mvc;
-@model PagedList.PagedList<Product>
+﻿@using Homeclick.Models;
+@model IEnumerable<Product>
 
 @{
     ViewBag.Title = "Index";
@@ -13,7 +8,7 @@
 } 
 <div class="part-page product-feature" id="list_product_feature">
     <div class="title-feature-product title-page">
-        <h3 class=" ">Sản phẩm nổi bật</h3>
+        <h3 class="">Sản phẩm nổi bật</h3>
         <p class="feature-description">Rất nhiều sản phẩm đến từ nhiều thương hiệu uy tín hàng đầu trong lĩnh vực nội thất. Theo nhiều phong cách thiết kế từ đương đại cho đên scandinavian và nhiều hơn nữa.</p>
     </div>
     <div class="content-product-feature col-md-12">
@@ -35,10 +30,4 @@
             }
         </div>
     </div>
-    @if (Model.PageCount > 1) { 
-    <div class="pavination col-md-12" data-off-target="roleList">
-        @Html.PagedListPager(@Model, page => Url.Action("Feature_Product", new { page = page }),
-        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "list_product_feature" }))
-    </div>
-    }
 </div>

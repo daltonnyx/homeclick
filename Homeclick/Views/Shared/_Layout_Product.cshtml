@@ -1,5 +1,5 @@
 ﻿@{
-    var url = "";
+    var url = "/homeclick";
 }
 
 <!DOCTYPE html>
@@ -184,7 +184,7 @@
             $(this).delay('250').queue(function () {
                 $('#panigation').pagination({
                     dataSource: data,
-                    pageSize: 3,
+                    pageSize: 30,
                     callback: function (pagidata, pagination) {
                         container.html('');
                         for (var i = 0; i < pagidata.length; i++) {

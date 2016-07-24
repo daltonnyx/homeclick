@@ -19,7 +19,7 @@
             @*
             @foreach (Product item in Model)
             {
-                String url = "";
+                String url = "/homeclick";
                 Dictionary<string, object> arrayItem = item.ToArray();
                 Dictionary<string, object> details = arrayItem["Product_detail"] as Dictionary<string, object>;
                 <div class="item-product col-md-4">

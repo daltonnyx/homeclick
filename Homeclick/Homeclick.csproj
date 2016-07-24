@@ -218,6 +218,7 @@
     <Compile Include="Models\City.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ContextExtension.cs" />
     <Compile Include="Models\Customer.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
@@ -286,6 +287,7 @@
     <Compile Include="Models\Room.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CollectionViewModel.cs" />
     <Compile Include="Models\State.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
@@ -309,6 +311,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Fonts.css" />
     <Content Include="Content\front-to-back.css" />
+    <Content Include="Content\libs\Bosuutap.css" />
     <Content Include="Content\loading.gif" />
     <Content Include="Content\Nivo-slider.css" />
     <Content Include="Content\notify.min.css" />
@@ -360,12 +363,7 @@
     <Content Include="Scripts\canvas.nocache.js" />
     <Content Include="Scripts\fabric.min.js" />
     <Content Include="Scripts\groupLiPolygon.js" />
-    <None Include="Scripts\jquery-3.0.0.intellisense.js" />
-    <Content Include="Scripts\jquery-1.11.3.min.js" />
-    <Content Include="Scripts\jquery-3.0.0.js" />
-    <Content Include="Scripts\jquery-3.0.0.min.js" />
-    <Content Include="Scripts\jquery-3.0.0.slim.js" />
-    <Content Include="Scripts\jquery-3.0.0.slim.min.js" />
+    <Content Include="Scripts\jquery-1.11.3.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.elevatezoom.js" />
     <Content Include="Scripts\jquery.imagemapster.min.js" />
@@ -557,7 +555,7 @@
     <Content Include="Upload\Images\power_2.png" />
     <Content Include="Upload\Images\Products\Ottu_sofa_01.jpg" />
     <Content Include="Upload\Images\Products\Square_table.jpg" />
-    <Content Include="Upload\Images\Products\Tables\bc02-nho-nhat.jpg" />
+    <Content Include="Upload\Images\Products\bc02-nho-nhat.jpg" />
     <Content Include="Upload\Images\product_01_lager.png" />
     <Content Include="Upload\Images\product_01_medium.png" />
     <Content Include="Upload\Images\product_01_small.png" />
@@ -706,8 +704,6 @@
     <Content Include="Views\Design\Floors.cshtml" />
     <Content Include="Views\Design\Floor.cshtml" />
     <Content Include="Views\Design\Canvas.cshtml" />
-    <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
-    <Content Include="Scripts\jquery-3.0.0.min.map" />
     <Content Include="Views\Design\_CategoryOptions.cshtml" />
     <Content Include="Scripts\Plugins\slick\config.rb" />
     <Content Include="Scripts\Plugins\slick\fonts\slick.eot" />
@@ -721,6 +717,10 @@
     <Content Include="Views\Hoidap\Index.cshtml" />
     <Content Include="Scripts\Plugins\particles\particles.json" />
     <Content Include="Views\BoSuuTap\Sidebar.cshtml" />
+    <Content Include="Views\BoSuuTap\List.cshtml" />
+    <Content Include="Views\BoSuuTap\Slider.cshtml" />
+    <Content Include="Views\BoSuuTap\_CollectionGrid.cshtml" />
+    <Content Include="Views\BoSuuTap\_OtherCollections.cshtml" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\Html\Phong.cshtml" />
     <Content Include="Views\Html\Thietke1.cshtml" />

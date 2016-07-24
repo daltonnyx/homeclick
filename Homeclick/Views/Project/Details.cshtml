@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout_Project.cshtml";
-
+    var slides = ViewBag.Thumbnails as IEnumerable<Homeclick.Models.ProjectItem>;
 }
 <div class="row breadcrumb">
     <ul>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="col-md-8 col-lg-9 project-content">
-        @Html.Partial("_Slider", ViewBag.Thumbnails as IEnumerable<Homeclick.Models.ProjectItem>)
+        @Html.Partial("_Slider")
         <div id="tab-container" class="tab-container">
             <ul class='etabs'>
                 <li class='tab'><a href="#tabs2">Layouts</a></li>
@@ -72,18 +72,18 @@
                         </div>
                     </div>
 
-                    <div id="collectionsBorder">
-                        <div class="title" style="text-align:center;">
-                            <span> Các phương án đề nghị</span>
-                        </div>
+                    <div id="rooms" class="clearfix">
 
-                        <div id="collections" >
+                    </div>
+
+                    <div id="collectionsBorder">
+                        <div id="collections" class="clearfix" >
 
                         </div>
                     </div>
 
                     <div id="collectionDetails" class="col-md-12">
-                        <div style="margin:10px 0;">
+                        <div style="margin:10px 0;" hidden>
                             <a href="#tabs2" onclick="Back()" style="font-size:18px;"><i class="fa fa-angle-left" style="margin-right:15px;" aria-hidden="true"></i><span style="font-family: 'Cousine' ;">Trở về trang trước</span> </a>
                         </div>
                         <div id="collectionContent">
