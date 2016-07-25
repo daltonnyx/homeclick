@@ -57,16 +57,14 @@
                 <nav class="main-menu">
                     <ul>
                         <li class="menu-item">
-                            @Html.ActionLink("Sản Phẩm", "Index", "SanPham")
+                            @Html.ActionLink("Sản Phẩm", "Typologies", "Category")
                             <ul class="sub-menu">
                                 <li class="menu-item child-item">@Html.ActionLink("All Spaces","Models","Category")</li>
-                                <li class="menu-item child-item">@Html.ActionLink("All Typologies", "Typologies", "Category")</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Phòng khách", "Model", "Category", new { @id = 2}, null)</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Phòng ăn", "Model", "Category", new { @id = 2 }, null)</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Phòng ngủ", "Model", "Category", new { @id = 2 }, null)</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Phòng em bé", "Model", "Category", new { @id = 2 }, null)</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Sản phẩm khác", "Model", "Category", new { @id = 2 }, null)</li>
-                                
+                                <li class="menu-item child-item">@Html.ActionLink("Phòng khách", "Index", "SanPham", new { model_id = 1}, null)</li>
+                                <li class="menu-item child-item">@Html.ActionLink("Phòng ăn", "Index", "SanPham", new { model_id = 2 }, null)</li>
+                                <li class="menu-item child-item">@Html.ActionLink("Phòng ngủ", "Index", "SanPham", new { @id = 5 }, null)</li>
+                                <li class="menu-item child-item">@Html.ActionLink("Phòng em bé", "Index", "SanPham", new { @id = 10 }, null)</li>
+                                <li class="menu-item child-item">@Html.ActionLink("Sản phẩm khác", "Index", "SanPham", new { @id = 60 }, null)</li>
                             </ul>
                         </li>
                         <li class="menu-item">@Html.ActionLink("Bộ sưu tập", "Index", "BoSuuTap")
@@ -120,4 +118,11 @@
             </div>
         </div> <!--Container-->
     </div><!-- menu-->
+
+     <script>
+
+     </script>
+
 </header><!-- .site-header -->
+
+

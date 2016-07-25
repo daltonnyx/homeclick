@@ -14,6 +14,11 @@ namespace Homeclick.Models
     
     public partial class ProjectItem
     {
+        public ProjectItem()
+        {
+            this.ProjectItemChildren = new HashSet<ProjectItem>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -21,6 +26,7 @@ namespace Homeclick.Models
         public Nullable<int> Order { get; set; }
         public Nullable<int> ProjectId { get; set; }
         public Nullable<int> CategoryId { get; set; }
+        public Nullable<int> ParentId { get; set; }
         public Nullable<bool> LockedOut { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -31,5 +37,7 @@ namespace Homeclick.Models
         public virtual User CreatedByUser { get; set; }
         public virtual User UpdatedByUser { get; set; }
         public virtual Category Category { get; set; }
+        public virtual ProjectItem ProjectItemParent { get; set; }
+        public virtual ICollection<ProjectItem> ProjectItemChildren { get; set; }
     }
 }

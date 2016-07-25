@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Homeclick.Models;
+using PagedList;
 
 namespace Homeclick.Controllers
 {
@@ -14,15 +15,70 @@ namespace Homeclick.Controllers
         // GET: /Bosutap/
         public ActionResult Index()
         {
+            /*
             IList<Category> rooms = db.Categories.Where<Category>(c => c.Category_type.name == "collection").ToList();
             ViewBag.slides = rooms.Select<Category, string>(c => c.Category_detail.Where<Category_detail>(d => d.name == "image").First().value);
-            return View(rooms);
+            return View(rooms);*/
+            var maxItem = 6;
+            var dic = new Dictionary<string, IEnumerable<CollectionViewModel>>();
+            var collectionCategories = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Collection);
+            var allItem = new List<CollectionViewModel>();
+            foreach (var collectionCategory in collectionCategories)
+            {
+                var collections = ModelHelper.GetObjectListByCategory<ProjectLayout_Collection>(collectionCategory.Id);
+                var randomItems = collections.PickRandom(maxItem);
+                var viewModel = new List<CollectionViewModel>();
+
+                foreach (var item in randomItems)
+                {
+                    var temp = item.ToViewModel();
+                    temp.categoryId = collectionCategory.Id;
+                    viewModel.Add(temp);
+                    allItem.Add(temp);
+                }
+                
+                dic.Add(collectionCategory.name, viewModel);
+            }
+            ViewBag.Slides = allItem.PickRandom(5);
+            return View(dic);
         }
 
-        public ActionResult Detail(int id)
+        public ActionResult Detail(int category_id, int collection_id)
         {
-            Category category = db.Categories.Where(c => c.Id == id).First();
-            return View("Detail", category);
+            var collections = ModelHelper.GetObjectListByCategory<ProjectLayout_Collection>(category_id);
+            var othercollectionsPick5 = collections.PickRandom(5);
+            var otherCollectionViewModels = new List<CollectionViewModel>();
+            foreach (var collection in othercollectionsPick5)
+            {
+                var temp = collection.ToViewModel();
+                temp.categoryId = category_id;
+                otherCollectionViewModels.Add(temp);
+            }
+            ViewBag.OtherCollections = otherCollectionViewModels;
+
+            var query = string.Format("SELECT * FROM dbo.ProductsLayoutsLink WHERE Layout = '{0}'", collection_id);
+            var tableItems = db.Database.SqlQuery<ProductsLayoutsLink>(query).ToList();
+
+            var products = new List<Product>();
+
+            foreach (var product in tableItems)
+            {
+                var temp_p = db.Products.Find(product.Product);
+                var temp_t = temp_p.ToArray();
+                var detail = temp_t["Product_detail"] as Dictionary<string, object>;
+
+                products.Add(temp_p);
+
+                product.ProductName = temp_p.name;
+                product.ProductValue = Convert.ToInt32(detail["gia"]);
+                product.TotalValue = product.Total * product.ProductValue;
+            }
+
+            ViewBag.Products = products;
+            ViewBag.TableItems = tableItems;
+
+            var model = db.ProjectLayout_Collections.Find(collection_id);
+            return PartialView(model);
         }
 
         public ActionResult ListCategory()
@@ -53,6 +109,24 @@ namespace Homeclick.Controllers
             IList<Category> rooms = db.Categories.Where<Category>(c => c.Category_type.name == "collection").ToList();
             
             return PartialView("Sidebar", rooms);
+        }
+
+        public ActionResult List(int category_id, int? page)
+        {
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
+            var list = ModelHelper.GetObjectListByCategory<ProjectLayout_Collection>(category_id);
+            var ViewModel = new List<CollectionViewModel>();
+
+            foreach (var item in list)
+            {
+                var temp = item.ToViewModel();
+                temp.categoryId = category_id;
+                ViewModel.Add(temp);
+            }
+
+            return View(ViewModel.ToPagedList(pageNumber, pageSize));
         }
 
         public IView listproduct { get; set; }

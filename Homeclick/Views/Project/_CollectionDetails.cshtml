@@ -4,23 +4,14 @@
     var products = ViewBag.Products as IEnumerable<Homeclick.Models.Product>;
 }
 
-<style>
-    .description p {
-        margin-bottom: 10px;
-    }
-    .description {
-    line-height: 22px;
-}
-    .category-product-detail:before  {
-        display: table;
-    content: " ";
-    }
+    <div class="row" role="img">
+        <img src="/@Model.Image" />
+    </div>
 
-    .table-product-detail thead tr th {
-        padding: 5px 15px;
-    }
+    <div class="collection-title">
+        <span>@Model.Name</span>
+    </div>
 
-</style>
 
     <div class="description">
         @Html.Raw(Model.HtmlContent)
@@ -31,10 +22,6 @@
         @Html.Partial("_ProductsGrid", products)
     </section>
 
-    <section class="col-md-12 comment">
-        <div class="fb-comments" data-width="100%" data-numposts="5"></div>
-    </section>
-
     <script>
         $('.table-section-header').click(function () {
             $(this).toggleClass("active-show");
@@ -43,4 +30,4 @@
             event.preventDefault();
         });
     </script>
-</div>
+

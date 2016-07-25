@@ -280,12 +280,30 @@ display: block;
         cursor: pointer;
 }
 
-    .card:hover .card-title{
+    .card:hover {
                 background-color: #f3f6f5;
     }
+    #collections .card:hover img {
+                background-color: #f3f6f5;
+                transform: scale(1.1); 
+    }
 
-    .card-title {
-    -webkit-transition-duration: 200ms;
+    #collections .card-title{
+            text-align:center;
+    }
+
+    #layoutContainer .card-title i {
+        color:lightgray;
+        margin-right:10px;
+    }
+
+    #layoutContainer .active .card-title, #layoutContainer .active .card-title i {
+        color: #02bdb6!important;
+    }
+
+
+.card-title {
+        -webkit-transition-duration: 200ms;
     -webkit-transition-property: color, background, opacity;
     -webkit-transition-timing-function: ease-in-out;
     -moz-transition-duration: 200ms;
@@ -296,9 +314,7 @@ display: block;
     -o-transition-timing-function: ease-in-out;
     transition-duration: 200ms;
     transition-property: color, background, opacity;
-}
 
-.card-title {
     height: 40px;
     line-height: 40px;
     text-overflow: ellipsis;
@@ -307,6 +323,23 @@ display: block;
     padding: 0 10px;
     border-top:none;
 }
+
+ .image-border{
+     margin:10px;
+     overflow:hidden;
+ }
+
+ .image-border img {
+     transition: all .2s ease-in-out;
+     user-drag: none; 
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+ }
+
+
 .etabs {
     margin: 0;
     padding: 0;
@@ -887,11 +920,23 @@ font-family: 'Athiti', sans-serif;
             overflow: hidden!important;
     }
 
-    #collections {
-        
+    #collectionsArea {   
+    
     padding: 15px 0;
     padding-bottom: 0px;
     background: #e7e7e7;
+    }
+
+    #collectionsBorder {
+        position:relative;
+        transition    : all 1s ease-in-out; 
+      -o-transition       : all 1s ease-in-out;
+      -moz-transition     : all 1s ease-in-out;
+        -webkit-transition  : all 1s ease-in-out;
+      overflow:hidden;
+      max-height:1000px;
+      min-height: 265px;
+      margin: 15px 0;
     }
 
     #tabs2 {
@@ -924,20 +969,29 @@ font-family: 'Athiti', sans-serif;
     }
 
     
- .image-border{
-     border: 10px solid white;
+#collectionDetails{
+         background:white;
+         display:none;
  }
 
- .collectionDetails{
-         padding: 15px;
- }
+#layoutFull {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
- #collectionsArea {
-  -webkit-transition: max-height 1s; 
-  -moz-transition: max-height 1s; 
-  -ms-transition: max-height 1s; 
-  -o-transition: max-height 1s; 
-  transition: max-height 1s;  
-  background: #e5feff;
-  overflow: hidden;
+#collections{
+    padding:0 15px;
+}
+
+#rooms {
+    background:white;
+    position:relative;
+}
+
+.room {
+    height:60px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }

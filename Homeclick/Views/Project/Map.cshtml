@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout_Project.cshtml";
-    var url = "";
+    var url = "/homeclick";
 }
 
 <div class="row breadcrumb">
@@ -68,14 +68,14 @@
     </div>
 </div>
 
-<script type='text/javascript' src="~/Scripts/Plugins/jlinq/jlinq.js"></script>
-<script type='text/javascript' src="~/Scripts/Plugins/Map/markerclustererplus/src/markerclusterer.min.js"></script>
-<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBB5V34f3crBWyutuwFCy73IzRCdIwqUrI'></script>
+
 <script type='text/javascript' src="~/Scripts/Plugins/Map/map.js"></script>
 
 <script>
 
-    var jsonData = [];
+    var jsonData = [],
+        states = [],
+        currentCity = -1;
     var typeSelection = $('#projectTypeSelection');
     var citySelection = $('#projectCitiesSelection');
     var statuSelection = $('#projectStatuSelection');
@@ -83,6 +83,7 @@
     var filterButton = $('#filterButton');
     var projectsGrid = $('#projectsGrid');
     var findBySelection = $('#findBySelection');
+    var statesSelection = $('#statesSelection');
 
     jQuery(document).ready(function ($) {
         var actionUrl = '@Url.Action("GetProjectsData", "Project")'
@@ -91,7 +92,10 @@
             mapInit(jsonData);
         });
 
-
+        actionUrl = '@Url.Action("GetStatesData")';
+        $.getJSON(actionUrl, function (data) {
+            states = data;
+        })
     });
 
     typeSelection.bind("change", function () {
@@ -114,19 +118,38 @@
         selectChanged();
     });
 
-    function selectChanged() {
-        var typeSelectionVal = typeSelection.val();
-        var citySelectionVal = citySelection.val();
-        var statuSelectionVal = statuSelection.val();
-        var filterTextBoxVal = filterTextBox.val();
+    statesSelection.bind('change', function () {
+        selectChanged();
+    });
 
+    function selectChanged() {
+        var typeSelectionVal = typeSelection.val(),
+            citySelectionVal = citySelection.val(),
+            statuSelectionVal = statuSelection.val(),
+            filterTextBoxVal = filterTextBox.val(),
+            statesSelectionVal = statesSelection.val();
+        
         var result = jsonData;
 
         if (typeSelectionVal)
             result = filterByType(result, typeSelectionVal)
 
-        if (citySelectionVal)
-            result = filterByCity(result, citySelectionVal)
+        if (citySelectionVal && citySelectionVal != currentCity)
+        {
+            statesSelection.html('<option selected value="">Tất cả</option>');
+            var sts = filterByField(states, 'city', citySelectionVal);
+            $.each(sts, function (i, data) {
+                var element = '<option value="' + data.id + '">'+ data.name +'</option>';
+                statesSelection.append(element);
+            });
+
+            result = filterByCity(result, citySelectionVal);
+            currentCity = citySelectionVal;
+        }
+
+        if (statesSelectionVal) {
+            result = filterByField(result, 'state', statesSelectionVal)
+        }
 
         if (statuSelectionVal)
             result = filterByStatu(result, statuSelectionVal)
@@ -136,7 +159,6 @@
             var findByVal = findBySelection.val();
             result = filterByField(result, findByVal, filterTextBoxVal);
         }
-
 
         showMarkers(result);
     }

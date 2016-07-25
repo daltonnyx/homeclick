@@ -12,17 +12,19 @@
 <div class="all-tpologies">
     <div class="typologies">
         <div class="typologies-item col-md-12">
-            @foreach (Category typology in Model)
+            @*foreach (Category typology in Model)
             {
                 image_src = typology.getDetailValue("icon").ToString();
                 link = Url.Action("Typology", "Category", new { @Id = @typology.Id });
                 title = typology.name;
-                
+
                 <div class="item-image-tp">
                     <a href="@link"><img src="@url/@image_src" /></a>
                     <h3><a href="@link">@title</a></h3>
                 </div>
-            }
+            }*@
+
+
         </div>
     </div>
 </div>

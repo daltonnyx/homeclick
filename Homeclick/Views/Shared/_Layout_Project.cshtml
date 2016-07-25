@@ -1,28 +1,41 @@
-﻿@{ 
-    var url = "";
+﻿@{
+    var url = "/homeclick";
 }
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <meta name="keywords" content="@ViewBag.MetaKeyword"/>
-    <meta name="description" content="@ViewBag.MetaDescription"/>
+    <meta name="keywords" content="@ViewBag.MetaKeyword" />
+    <meta name="description" content="@ViewBag.MetaDescription" />
     <title>@ViewBag.Title</title>
 
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/Fonts.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
-    <script src="~/Scripts/jquery-1.11.3.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Cousine|Open+Sans+Condensed:300&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
+
+    <script src="~/Scripts/jquery-1.11.3.js"></script>
     <!--slick-->
     <script src="~/Scripts/Plugins/slick/slick.min.js"></script>
     <link href="~/Scripts/Plugins/slick/slick-theme.css" rel="stylesheet" />
     <script src="~/Scripts/Plugins/elementqueries/EQCSS.min.js"></script>
 
+    <script type='text/javascript' src="~/Scripts/Plugins/jlinq/jlinq.js"></script>
+    <script type='text/javascript' src="~/Scripts/Plugins/Map/markerclustererplus/src/markerclusterer.min.js"></script>
+    <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBB5V34f3crBWyutuwFCy73IzRCdIwqUrI'></script>
+
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/taggd.css")
 
     <style>
+        .active > a {
+            color: #44d1cb;
+        }
+
+        .active > .card-title {
+            color: #44d1cb;
+        }
     </style>
     <link href="~/Content/Project.css" rel="stylesheet" />
 
@@ -32,7 +45,7 @@
         @Html.Partial("_Header")
         <main id="main" class="main-blog">
             <div class="container">
-                 @RenderBody()
+                @RenderBody()
             </div>
         </main>
         @Html.Partial("_Footer");
@@ -57,18 +70,50 @@
     <script src="~/Scripts/Plugins/easyTabs/jquery.easytabs.min.js"></script>
     <script src="~/Scripts/Plugins/easyTabs/jquery.hashchange.min.js"></script>
 
+    <script src="~/Scripts/Plugins/maphilight/jquery.maphilight.js"></script>
+    <script src="~/Scripts/Plugins/layoutMap/layoutMap.js"></script>
 
     <script type="text/javascript">
+        function init_map() {
+            var myOptions = {
+                zoom: 14, center: new google.maps.LatLng(16.0504437, 108.21537309999997),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+            marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(16.0504437, 108.21537309999997) });
+            //infowindow = new google.maps.InfoWindow({ content: '<strong>HERE</strong><br>Trưng nữ vương<br> Đà Nẵng<br>' });
+            google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); });
+            //infowindow.open(map, marker);
 
-        $g = "";
-        var slicked = false;
-                    
+        } google.maps.event.addDomListener(window, 'load', init_map);
+
+
+        $.extend({
+            getJsonFromUrl: function (url, urlData) {
+                var result = null;
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: urlData,
+                    dataType: "json",
+                    async: false,
+                    success: function (jsonResult) {
+                        result = jsonResult;
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Failed to retrieve data.');
+                    }
+                })
+                return result;
+            }
+        });
+
+        var collectionsData = [];
         var collectionsArea = $('#collectionsArea');
         var collectionContainer = $('#collections');
         var collectionContent = $('#collectionContent');
-        var collectionDetail
-        function LayoutLoad()
-        {
+
+        function LayoutLoad() {
             $(this).fadeIn('slow').delay(2000).queue(function () {
 
                 $(this).dequeue();
@@ -76,78 +121,218 @@
         }
 
         function Back() {
-            $('#tabs2').hide(); //just in case
-            $('#tabs2').html($g);
-            $('#tabs2').fadeIn('slow');
+            $('#collectionDetails').fadeOut('slow');
+            $('#collectionsBorder').css('max-height', 1000);
+            clearMap();
             event.preventDefault();
         }
 
         function CollectionClick(handlerElement) {
-            var data = $(handlerElement).data('content');
+            if (currentCollection == handlerElement)
+                return;
 
+            if (currentCollection)
+                currentCollection.removeClass('active');
+
+            currentCollection = handlerElement;
+            currentCollection.addClass('active');
+
+            var data = currentCollection.data('content');
+            var area = currentCollection.data('area');
+            /*
+            $('#map').html('<area alt="" title="" shape="rect" coords="' + area + '" />');
+            setCoordinates();
+            */
             var url = '@Url.Action("_CollectionDetails")';
             $.ajax({
                 type: "GET",
                 url: url,
-                data: {'collectionId' : data},
+                data: { 'collection_id': data },
                 success: function (data) {
-                    collectionsArea.css('height', 0);
+                    $('#collectionDetails').fadeIn('slow');
                     collectionContent.html(data);
                 },
-                error: function (xhr, ajaxOptions, thrownError) {  
-                    alert('Failed to retrieve books.');  
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Failed to retrieve books.');
                 }
             });
         };
 
-        $('.layoutItem').bind('click', function () {
+        $('.layoutItem .card').bind('click', function (event) {
+            event.preventDefault();
+
             loadLayout(this);
         });
 
-        function loadLayout(layoutElement) {
-            collectionContainer.html('');
-            var data = $(layoutElement).data('content');
-            var image = $(layoutElement).data('image');
-            var url = '@Url.Action("_Collections")' + '?layoutId=' + data;
-            $.getJSON(url, function (json) {
-                var layoutFull = $('#layoutFull');
-                layoutFull.html('<img style="height:auto; width:100%" src="' + image + '" alt="" />');
-                $.each(json, function (i, item) {
-                    var itemTemplated = '<div class="card-l col-xs-6 col-sm-4 col-md-4 col-lg-4 collectionItem" data-content="' + item.id + '">' +
-                            '<div class="card card-shadow">' +
-                                '<div class="image-border">' +
-                                    '<a>' +
-                                        '<img style="height:auto; width:100%" src="' + '@url' + item.image + '" alt="" />' +
-                                    '</a>' +
+        var currentCollection = null;
+        var currentRoom = null;
+        var currentLayout = null;
+        var slideIndex = -1;
+        var roomIndex = -1;
+
+        var roomData = [];
+
+        function roomClick(layoutElement) {
+            if (currentRoom == layoutElement)
+                return;
+
+            if (currentRoom)
+                currentRoom.removeClass('active');
+
+            currentRoom = layoutElement;
+            currentRoom.addClass('active');
+
+            var roomId = currentRoom.data('room');
+
+            if (roomData.length == 0) {
+                var layoutId = currentLayout.data('content');
+                var url = '@Url.Action("_Collections")' + '?room_id=' + roomId + '&layout_id=' + layoutId;
+
+                $.getJSON(url, function (json) {
+                    collectionsData = json;
+                    roomData = json;
+
+                    if (slideIndex >= 0) {
+                        for (slideIndex; slideIndex >= 0; slideIndex--) {
+                            collectionContainer.slick('slickRemove', slideIndex);
+                        }
+                    }
+                    $.each(json, function (i, item) {
+                        var itemTemplated = '<div class="card-l col-xs-6 col-sm-4 col-md-4 col-lg-4 collectionItem room-' + item.roomId + '">' +
+                                '<div class="card card-shadow" data-content="' + item.id + '" data-area=' + item.area + '>' +
+                                    '<div class="image-border">' +
+                                        '<a>' +
+                                            '<img style="height:auto; width:100%" src="' + '@url' + '/' + item.image + '" alt="" />' +
+                                        '</a>' +
+                                    '</div>' +
+                                    '<div class="card-title">' +
+                                        '<span>' + item.name + '</span>' +
+                                    '</div>' +
                                 '</div>' +
-                                '<div class="card-title">' +
-                                    '<span>' + item.name + '</span>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>';
-                    collectionContainer.append(itemTemplated);
-                    var lastChildAdded = collectionContainer.children().last();
-                    lastChildAdded.bind('click', function () {
-                        CollectionClick(this);
+                            '</div>';
+
+                        slideIndex = i;
+                        collectionContainer.slick('slickAdd', itemTemplated);
+
+                        if (collectionsData.length - 1 == i) {
+
+
+                            var cards = $('.collectionItem .card');
+
+                            cards.bind('mousedown', function (event) {
+                                if (event.which == 1) {
+                                    $(this).addClass('mouse-down');
+                                }
+                            });
+
+                            cards.bind('mousemove', function () {
+                                if ($(this).hasClass('mouse-down')) {
+                                    $(this).removeClass('mouse-down');
+                                    $(this).addClass('noclick');
+                                }
+                            });
+
+                            cards.bind('mouseleave', function () {
+                                if ($(this).hasClass('noclick')) {
+                                    $(this).removeClass('noclick');
+                                }
+                            });
+
+                            cards.bind('click', function (event) {
+                                event.preventDefault();
+                                if (!$(this).hasClass('noclick')) {
+                                    CollectionClick($(this));
+                                }
+                                $(this).removeClass('noclick');
+                            });
+
+                        }
                     });
+
                 });
-            });
+            }
+            else
+            {
+                collectionContainer.slick('slickUnfilter');
+
+                if (roomId) {
+                    var vv = '.room-' + roomId
+                    collectionContainer.slick('slickFilter', vv);
+                }
+
+            }
+            
         }
 
-        //slider home
-        $(window).load(function () {
+        function loadLayout(layoutElement) {
+            /*
+                        var owl = $(".owl-carousel").data('owlCarousel');
+                        var owlItemCount = owl.itemsAmount;
+                        for (var j = 0; j < collectionsData.length; j++) {
+                            var item = '<div class="item"><img src="' + collectionsData[j].image + '" alt="' + collectionsData[j].name + '"/></div>';
+                            owl.addItem(item);
+                        }
 
-            $('#slider-bosutap').nivoSlider({
-                effect: 'random',
-                animSpeed: 500,
-                pauseTime: 4000,
-                startSlide: 0,
-                directionNav: true,
-                controlNav: false,
-                //pauseOnHover: false,
-                prevText: '<i class="fa fa-angle-left"></i>',
-                nextText: '<i class="fa fa-angle-right"></i>'
+                        
+                        $(this).delay(100).queue(function () {
+                            for (var j = 0; j < owlItemCount; j++) {
+                                owl.removeItem(0);
+                            }
+                            $(this).dequeue();
+                        });
+
+            */
+
+            if ($('#collectionDetails').css('display') == 'block') {
+                Back();
+            }
+
+            if (currentLayout) {
+                currentLayout.removeClass('active');
+            }
+
+            currentLayout = $(layoutElement);
+            currentLayout.addClass('active')
+
+            var data = currentLayout.data('content');
+            var image = currentLayout.data('image');
+
+            var url = '@Url.Action("_GetRooms")';
+
+
+            //room
+
+            if (roomIndex >= 0) {
+                for (roomIndex; roomIndex >= 0; roomIndex--) {
+                    $('#rooms').slick('slickRemove', roomIndex);
+                }
+            }
+
+            var item = '<div class="room col-md-3" data-room=""><a> Tất cả phòng</a></div>';
+
+            $('#rooms').slick('slickAdd', item);
+            var rooms = $.getJsonFromUrl(url, { 'layout_id': data })
+
+            for (var i = 0; i < rooms.length; i++) {
+                item = '<div class="room col-md-3" data-room="' + rooms[i].id + '"><a>' + rooms[i].name + '</a></div>';
+                roomIndex = i;
+                $('#rooms').slick('slickAdd', item);
+            }
+            roomIndex = roomIndex + 1;
+
+            roomClick($('.room').first());
+
+            $('.room').bind('click', function (event) {
+                roomClick($(this));
             });
+            //
+            $('#mapContainer').find('img').attr('src', image);
+
+            $('#layoutDetailTitle').html(currentLayout.data('name'));
+
+        }
+
+        $(document).ready(function () {
             $(".fancybox").fancybox({
                 openEffect: 'elastic',
                 closeEffect: 'elastic',
@@ -159,15 +344,33 @@
                 }
             });
 
+            collectionContainer.slick({
+                dots: true,
+                infinite: true,
+                prevArrow: false,
+                nextArrow: false,
+                slidesToShow: 3,
+                slidesToScroll: 3,
+            });
 
-        });
+            $('#rooms').slick({
+                infinite: false,
+                slidesToShow: 3,
+                slidesToScroll: 3
+            });
 
-        $(document).ready(function () {
-            var layoutContainer = $('#layoutContainer');
-            var selectedLayout = layoutContainer.children().first();
+            var layoutContainer = $('#layoutContainer .card');
+            var selectedLayout = layoutContainer.first();
             if (selectedLayout) {
                 loadLayout(selectedLayout);
             }
+
+            $('#slider-projectDetail').owlCarousel({
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                autoPlay: 5000,
+                singleItem: true
+            });
 
             //easy tabs
             $('#tab-container').easytabs();
@@ -178,35 +381,21 @@
             });
 
             //slick
-            $('.multiple-items').slick({
-                infinite: false,
-                slidesToShow: 4,
-                slidesToScroll: 1
+
+
+            $("#slider-home").owlCarousel({
+                navigation: false,
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                pagination: true,
+                items: 1,
+                itemsDesktop: false,
+                itemsDesktopSmall: false,
+                itemsTablet: false,
+                itemsMobile: false,
+                navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
             });
 
-
-        });
-
-    </script>
-
-    <script type="text/javascript">
-        //slider home
-        $(window).load(function () {
-            $('#slider-bosutap').nivoSlider({
-                effect: 'random',
-                animSpeed: 500,
-                pauseTime: 4000,
-                startSlide: 0,
-                directionNav: true,
-                controlNav: false,
-                //pauseOnHover: false,
-                prevText: '<i class="fa fa-angle-left"></i>',
-                nextText: '<i class="fa fa-angle-right"></i>'
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
             $(".zoom_03").elevateZoom(
                    {
                        gallery: 'gallery_01',
@@ -218,7 +407,6 @@
                        zoomWindowHeight: 400,
                        responsive: true,
                        borderSize: 1
-
                    });
 
             $(".zoom_03").bind("click", function (e) {

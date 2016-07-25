@@ -94,6 +94,53 @@ namespace Homeclick.Controllers
             var products = query.OrderBy<Product, string>(p => p.name).ToPagedList<Product>(page, 20);
             return View(products);
         }
+
+        public JsonResult GetTypologiesJson(int id)
+        {
+            var categories = db.Categories.Where(o => o.Category_typeId == 1).ToList();
+
+            var query = string.Format("SELECT * FROM dbo.CategoriesLink WHERE ParentId = '{0}'", id);
+            var categoriesLinks = db.Database.SqlQuery<CategoriesLink>(query).ToList();
+
+            var json = new List<object>();
+
+            foreach (var categoriesLink in categoriesLinks)
+            {
+                var temp = categories.SingleOrDefault(o => o.Id == categoriesLink.ChildId);
+                if (temp != null)
+                {
+                    json.Add(new
+                    {
+                        id = temp.Id,
+                        name = temp.name,
+                        icon = temp.getDetailValue("icon"),
+                        link = Url.Action("Typology", "Category", new { id = temp.Id, modelId = id })
+                });
+                }
+            }
+
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetAllTypologyJson()
+        {
+            var categories = db.Categories.Where(o => o.Category_typeId == 1).ToList();
+            var json = new List<object>();
+
+            foreach (var category in categories)
+            {
+                var models = ModelHelper.GetCategoryParents(category.Id);
+
+                json.Add(new
+                {
+                    id = category.Id,
+                    name = category.name,
+                    icon = category.getDetailValue("icon"),
+                    models = models.Select(o => o.Id)
+                });
+            }
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
     }
 
 }

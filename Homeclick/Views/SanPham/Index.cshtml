@@ -1,6 +1,7 @@
-﻿
+﻿@model IEnumerable<Homeclick.Models.Product>
+
 @{
     ViewBag.Title = "Sản phẩm";
-    Layout = "~/Views/Shared/_Layout_Cat.cshtml";
+    Layout = "~/Views/Shared/_Layout_Product.cshtml";
 }
 @Html.Action("ListProduct","SanPham")

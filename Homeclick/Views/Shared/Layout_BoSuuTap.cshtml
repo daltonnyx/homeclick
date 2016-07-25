@@ -5,6 +5,8 @@
     <title>@ViewBag.Title</title>
     <link href="~/fonts/Stylesheet.css" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
+
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/taggd.css")
     @Scripts.Render("~/bundles/modernizr")
@@ -13,48 +15,6 @@
     @Scripts.Render("~/Scripts/jquery.taggd.min.js")
     @RenderSection("scripts", required: false)
 
-    <script type="text/javascript">
-        //slider home
-        $(window).load(function () {
-            $('#slider-bosutap').nivoSlider({
-                effect: 'random',
-                animSpeed: 500,
-                pauseTime: 4000,
-                startSlide: 0,
-                directionNav: true,
-                controlNav: false,
-                //pauseOnHover: false,
-                prevText: '<i class="fa fa-angle-left"></i>',
-                nextText: '<i class="fa fa-angle-right"></i>'
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".zoom_03").elevateZoom(
-                   {
-                       gallery: 'gallery_01',
-                       cursor: 'pointer',
-                       galleryActiveClass: "active",
-                       imageCrossfade: true,
-                       loadingIcon: "",
-                       zoomWindowWidth: 400,
-                       zoomWindowHeight: 400,
-                       responsive: true,
-                       borderSize: 1
-
-                   });
-
-            $(".zoom_03").bind("click", function (e) {
-                var ez = $('.zoom_03').data('elevateZoom');
-                ez.closeAll(); //NEW: This function force hides the lens, tint and window
-                $.fancybox(ez.getGalleryList());
-                return false;
-            });
-
-        });
-
-    </script>
 </head>
 <body>
     <div class="wapper">
@@ -79,5 +39,31 @@
         </main>
         @Html.Partial("_Footer")
     </div>
+    <script type="text/javascript">
+        //slider home
+        $(window).load(function () {
+            $("#slider-home").owlCarousel({
+                navigation: false,
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                pagination: true,
+                items: 1,
+                itemsDesktop: false,
+                itemsDesktopSmall: false,
+                itemsTablet: false,
+                itemsMobile: false,
+                navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
+            });
+
+            owl = $('#slider-home').owlCarousel();
+            owl.on('translated.owl.carousel', function (event) {
+                var activeImg = $(this).find('.active').find('img');
+                var comment = activeImg.attr('alt');
+                var title = activeImg.attr('title');
+                var link = activeImg.data('link');
+                if (comment) $('.slider-caption').html('<a href="' + link + '"><h3>' + title + '</h4></a>');
+            });
+        });
+    </script>
 </body>
 </html>
