@@ -120,7 +120,7 @@ namespace Homeclick.vn.Module.BusinessObjects
                 productDetail2.name = "gia";
                 productDetail2.caption = "Giá";
                 productDetail2.typeEnum = TypeEnum.str;
-                productDetail2.value = string.Empty;
+                productDetail2.value = string.Empty;    
                 productDetail2.ProductId = uow.FindObject<Product>(new BinaryOperator("Id", this.Id));
                 productDetail2.Save();
 

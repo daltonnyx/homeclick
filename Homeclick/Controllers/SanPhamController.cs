@@ -47,7 +47,7 @@ namespace Homeclick.Controllers
 
         public ActionResult ListCategory()
         {
-            List<Category> listcategory = db.Categories.ToList();
+            List<Category> listcategory = db.Categories.Where(o => o.Category_typeId != 17 || o.Category_typeId != 18).ToList();
             return View(listcategory);
         }
 
