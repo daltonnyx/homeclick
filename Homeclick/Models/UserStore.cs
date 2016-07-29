@@ -67,7 +67,7 @@ namespace Homeclick.Models
         public override Task<TUser> FindAsync(string userName, string password)
         {
             UserLoginInfo model = new UserLoginInfo(userName, password);
-            return ((IUserLoginStore<TUser>)this.Store).FindAsync(model);
+            return ((UserStore<TUser>)this.Store).FindAsync(model);
             
         }
 
