@@ -12,7 +12,6 @@
         <span>@Model.Name</span>
     </div>
 
-
     <div class="description">
         @Html.Raw(Model.HtmlContent)
     </div>
@@ -22,12 +21,4 @@
         @Html.Partial("_ProductsGrid", products)
     </section>
 
-    <script>
-        $('.table-section-header').click(function () {
-            $(this).toggleClass("active-show");
-            $(this).parent('.product-list-section').addClass("list-show");
-            $('.list-show .category-product-detail').slideToggle("slow");
-            event.preventDefault();
-        });
-    </script>
 

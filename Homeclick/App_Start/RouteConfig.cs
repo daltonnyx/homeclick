@@ -20,6 +20,26 @@ namespace Homeclick
             );
 
             routes.MapRoute(
+                name: "ProjectCollectionDetails",
+                url: "View/Project/{action}/{collection_id}",
+                defaults: new { controller = "Project", action = "Details" }
+            );
+
+            routes.MapRoute(
+                name: "ProjectCategory",
+                url: "Project/{category_id}",
+                defaults: new { controller = "Project", action = "Category" }
+            );
+
+            routes.MapRoute(
+                name: "ProjectDetails",
+                url: "Project/{category_id}/{project_id}",
+                defaults: new { controller = "Project", action = "Details" }
+            );
+
+
+
+            routes.MapRoute(
                 name: "Collection",
                 url: "BoSuuTap",
                 defaults: new { controller = "BoSuuTap", action = "Index"}

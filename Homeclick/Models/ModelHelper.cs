@@ -9,7 +9,7 @@ using System.Web;
 
 namespace Homeclick.Models
 {
-    public enum CategoryTypes { Material = 3, Model = 2, Typology = 1, LifeStype = 4, Collection = 5, Masonry = 15, Postcat = 16 }
+    public enum CategoryTypes { Material = 3, Model = 2, Typology = 1, LifeStype = 4, Collection = 5, Masonry = 15, Postcat = 16, ProjectType = 18 }
 
     public static class ModelHelper
     {

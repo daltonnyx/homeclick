@@ -1,13 +1,22 @@
 ﻿@using Homeclick.Models;
 @model IList<Category>
-
+@{ 
+    var categoryValue = Request.RequestContext.RouteData.Values["category_id"];
+    var baseLink = Request.RequestContext.RouteData.Values["Controller"];
+    var url = "";
+}
 
 <div class="list-category sidebar">
     <h3 class="title-sidebar title-cate-sidebar">Bộ sưu tập</h3>
     <ul>
         @foreach (Category item in Model)
         {
-            <li><a href="/BoSuuTap/@item.Id">@item.name</a></li>
+            <li class="category-link" data-category="@item.Id"><a href="@url/@baseLink/@item.Id">@item.name</a></li>
         }
     </ul>
 </div>
+
+<script>
+    var selectedCategory = '@categoryValue';
+    $('.category-link').filter('[data-category="' + selectedCategory + '"]').addClass('active');
+</script>

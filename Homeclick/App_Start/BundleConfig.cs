@@ -23,7 +23,7 @@ namespace Homeclick
                     "~/Scripts/bootstrap.js",
                     "~/Scripts/respond.js",
                     "~/Scripts/jquery.nivo.slider.js",
-                    "~/Scripts/owl.carousel.min.js",
+                    "~/Scripts/plugins/owlCarousel/owl.carousel.min.js",
                     "~/Scripts/jquery.elevatezoom.js",
                     "~/Scripts/jquery.unobtrusive-ajax.js",
                     "~/Scripts/main.js",
@@ -32,8 +32,7 @@ namespace Homeclick
             bundles.Add(new StyleBundle("~/Content/css").Include(
                     "~/Content/bootstrap.css",
                     "~/Content/nivo-slider.css",
-                    "~/Content/owl.carousel.css",
-                    "~/Content/owl.theme.css",
+                    "~/Scripts/plugins/owlCarousel/assets/owl.carousel.css",
                    "~/Content/site.css",
                     "~/Content/style.css",
                     "~/Content/responsive.css"

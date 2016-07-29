@@ -173,7 +173,8 @@
             );
         });
 
-    });
+	});
+
 })(jQuery);
 
 $(window).resize(function(){
@@ -207,8 +208,8 @@ $(document).ready(function ($) {
         columnWidth: '.grid-item',
         gutter: 5
     });
-});
 
+});
    // $(function() {
       //   var pgurl = window.location.href.substr(window.location.href
    // .lastIndexOf("/")+1);

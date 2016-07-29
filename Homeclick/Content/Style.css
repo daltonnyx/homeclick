@@ -1091,17 +1091,10 @@ a.nivo-prevNav{
 }
 #sidebar{
     font-size: 14px;
-    width: 25%;
-    display: inline-block;
-    box-sizing: border-box;
-    background:url("images/bg_sidebar.jpg") repeat-y;
-    vertical-align: top;
-	padding-left:0;
-
+    padding-right: 0px;
 }
 #sidebar .list-category{
-    padding: 0 25px;
-	padding-left:0;
+
 }
 
 .title-sidebar{
@@ -1113,7 +1106,6 @@ a.nivo-prevNav{
     padding-left: 10px;
    
     border-left: solid 5px #4fc5c7;
-    margin-top: 13px;
     background: url('../Upload/Images/assets/stripe.png') left top / 50% repeat transparent;
 }
 .content-page{
@@ -1128,7 +1120,7 @@ a.nivo-prevNav{
 /* HTML*/
 .breadcrumb {
 	padding:0;
-	margin:0 -15px !important;
+	margin:0 -15px 15px -15px !important;
 	background:none !important;
 	
 }
@@ -2009,7 +2001,7 @@ line-height: 51px;
     margin-right: -15px;
 }
 
-#sidebar .list-category.affix {width:21.2%;top: 5px;position: fixed !important;}
+#sidebar .list-category.affix { width: 292.5px;top: 10px;position: fixed !important;}
 li.active > a {font-weight:bold; color:#4FC5C7!important;}
 
 /*=======================Html controler=============================================*/

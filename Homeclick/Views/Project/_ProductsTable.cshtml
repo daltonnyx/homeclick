@@ -8,9 +8,9 @@
        }
 
    }
-<h3 class="section-header table-section-header  active-show">Sản phẩm trong Set</h3>
+<h3 class="section-header table-section-header">Sản phẩm trong Set</h3>
 <div class="total-html">Tổng: <span>@total.ToString("#,###", info.NumberFormat)</span>vnđ</div>
-<div class="category-product-detail" style="display:block;">
+<div class="category-product-detail clearfix" style="display:block;">
 
     <table class="table-striped col-xs-12 table-product-detail">
         <thead>
@@ -41,6 +41,14 @@
             }
         </tbody>
     </table>
-    <div id="clear" style="clear:both;"></div>
+
+    <script>
+        $('.table-section-header').click(function () {
+            $(this).toggleClass("active-show");
+            $(this).parent('.product-list-section').addClass("list-show");
+            $('.list-show .category-product-detail').slideToggle("slow");
+            event.preventDefault();
+        });
+    </script>
 </div>
 

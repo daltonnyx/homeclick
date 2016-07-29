@@ -1,36 +1,49 @@
-﻿
+﻿/*font-family: 'Roboto Condensed', sans-serif;*/
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed&subset=latin,vietnamese);
+
+/*font-family: 'Athiti', sans-serif;*/
+@import url(https://fonts.googleapis.com/css?family=Athiti);
+
+@import url(https://fonts.googleapis.com/css?family=Cousine|Open+Sans+Condensed:300&subset=latin,vietnamese);
+
+.bg-body {
+    background: url(http://cdn.livedemo00.template-help.com:82/wt_40036/images/bg-body.gif) center 0 repeat #ecedee!important;
+}
+
 ul {
-    list-style:none;
+    list-style: none;
 }
 
-#loader-img{
-margin: 0 auto;
-display: block;
+#loader-img {
+    margin: 0 auto;
+    display: block;
 }
- 
- 
-.border{border: 3px solid #fff; border-radius: 5px;}
 
-    .main-head {
-        border-left: 5px solid #02bdb6;
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 15px;
-        margin-top: 15px;
-        background:#f9f9f9;
-        padding: 15px 0;
-    }
 
-    .no-main-image{
-            
-    }
-    .main-image {
+.border {
+    border: 3px solid #fff;
+    border-radius: 5px;
+}
+
+.main-head {
+    border-left: 5px solid #02bdb6;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    background: #f9f9f9;
+    padding: 15px 0;
+}
+
+.no-main-image {
+}
+
+.main-image {
     height: 70px;
-
 }
 
 .main-head-content {
-    margin-left: 15px;    
+    margin-left: 15px;
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     -o-transform: translateY(-50%);
@@ -41,62 +54,63 @@ display: block;
     position: relative;
     z-index: 10;
     font-size: 21px;
-    font-weight:normal;
+    font-weight: normal;
     color: #000;
     text-transform: uppercase;
 }
 
 .main-head ul {
-    list-style:none;
+    list-style: none;
 }
 
-.main-head ul li {
-    margin-left:15px;
-    float:right;
-    width: 30px;
-    height: 30px;
-    border: 2px solid gray;
-    border-radius: 50%;
-    text-align: center;
-}
+    .main-head ul li {
+        margin-left: 15px;
+        float: right;
+        width: 30px;
+        height: 30px;
+        border: 2px solid gray;
+        border-radius: 50%;
+        text-align: center;
+    }
 
-.main-head ul li:hover {
-    background: #02bdb6;
-    border-color: #02bdb6;
-}
+        .main-head ul li:hover {
+            background: #02bdb6;
+            border-color: #02bdb6;
+        }
 
-.main-head ul li:hover a {
-    color: white;
-}
+            .main-head ul li:hover a {
+                color: white;
+            }
 
-.main-head ul a {
-    line-height:30px;
-}
+    .main-head ul a {
+        line-height: 30px;
+    }
 
 
 .project-tab {
     padding-top: 0px;
-    padding:15px;
 }
+
 .project-tile {
     position: relative;
-    padding:0;
-    overflow:hidden;
+    padding: 0 0 0 15px;
+    overflow: hidden;
+    margin-bottom: 14px;
 }
 
 .project-tile-image {
-    position:relative;
+    position: relative;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
 }
 
-.project-tile-image:after, .project-tile-overlay {
-    -webkit-transition: all 0.2s ease-out;
-    -o-transition: all 0.2s ease-out;
-    transition: all 0.2s ease-out;
-}
+    .project-tile-image:after, .project-tile-overlay {
+        -webkit-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+    }
 
 .project-tile-overlay {
     position: absolute;
@@ -107,35 +121,34 @@ display: block;
     text-align: center;
 }
 
-.project-tile-overlay h4 {
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin: 0;
-    line-height:40px;
-}
+    .project-tile-overlay h4 {
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin: 0;
+        line-height: 40px;
+    }
 
 
-.project-tile-overlay p {
-    color: #7b7b7b;
-    font-size: 13px;
-    text-transform: uppercase;
-}
+    .project-tile-overlay p {
+        color: #7b7b7b;
+        font-size: 13px;
+        text-transform: uppercase;
+    }
 
 
-.project-tile-overlay .button.tiny {
-    display:none;
-
-    font-size: 13px;
-
-    margin-bottom: 0;
-}
+    .project-tile-overlay .button.tiny {
+        display: none;
+        font-size: 13px;
+        margin-bottom: 0;
+    }
 
 .button.tiny {
     padding: 0.625rem 1.25rem 0.6875rem 1.25rem;
     font-size: 0.6875rem;
 }
+
 .button {
     -webkit-transition: all 0.2s ease-out;
     -o-transition: all 0.2s ease-out;
@@ -158,13 +171,15 @@ display: block;
     -o-transform: translateY(50%);
     transform: translateY(50%);
 }
+
 .project-tile:hover .project-tile-overlay {
     bottom: 50%;
     margin-bottom: -20px;
 }
-.project-tile:hover .project-tile-overlay > a {
-    display:inline-block;
-}
+
+    .project-tile:hover .project-tile-overlay > a {
+        display: inline-block;
+    }
 
 .project-tile:hover .project-tile-image:after {
     visibility: visible;
@@ -233,7 +248,6 @@ display: block;
 .box-content p {
     margin-top: 5px;
     padding-bottom: 6px;
-    
 }
 
 .box-content > p {
@@ -241,19 +255,18 @@ display: block;
 }
 
 .box-content {
-    padding: 0 15px;
 }
 
 .detail-name {
-    font-size:13px;
+    font-size: 13px;
 }
 
-.detail-name i {
-    margin-right:7px;
-}
+    .detail-name i {
+        margin-right: 7px;
+    }
 
 .detail-value {
-    font-weight:normal;
+    font-weight: normal;
     line-height: 1.5em;
 }
 
@@ -264,9 +277,9 @@ display: block;
 }
 
 .card-shadow {
-    -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
-    -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
@@ -276,34 +289,34 @@ display: block;
     height: auto;
     position: relative;
     width: 100%;
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-        cursor: pointer;
+    cursor: pointer;
 }
 
     .card:hover {
-                background-color: #f3f6f5;
-    }
-    #collections .card:hover img {
-                background-color: #f3f6f5;
-                transform: scale(1.1); 
+        background-color: #f3f6f5;
     }
 
-    #collections .card-title{
-            text-align:center;
-    }
+#collections .card:hover img {
+    background-color: #f3f6f5;
+    transform: scale(1.1);
+}
 
-    #layoutContainer .card-title i {
-        color:lightgray;
-        margin-right:10px;
-    }
+#collections .card-title {
+    text-align: center;
+}
 
-    #layoutContainer .active .card-title, #layoutContainer .active .card-title i {
-        color: #02bdb6!important;
-    }
+#layoutContainer .card-title i {
+    color: lightgray;
+    margin-right: 10px;
+}
+
+#layoutContainer .active .card-title, #layoutContainer .active .card-title i {
+    color: #02bdb6 !important;
+}
 
 
 .card-title {
-        -webkit-transition-duration: 200ms;
+    -webkit-transition-duration: 200ms;
     -webkit-transition-property: color, background, opacity;
     -webkit-transition-timing-function: ease-in-out;
     -moz-transition-duration: 200ms;
@@ -314,36 +327,35 @@ display: block;
     -o-transition-timing-function: ease-in-out;
     transition-duration: 200ms;
     transition-property: color, background, opacity;
-
     height: 40px;
     line-height: 40px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     padding: 0 10px;
-    border-top:none;
+    border-top: none;
 }
 
- .image-border{
-     margin:10px;
-     overflow:hidden;
- }
+.image-border {
+    margin: 10px;
+    overflow: hidden;
+}
 
- .image-border img {
-     transition: all .2s ease-in-out;
-     user-drag: none; 
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-drag: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
- }
+    .image-border img {
+        transition: all .2s ease-in-out;
+        user-drag: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
 
 
 .etabs {
     margin: 0;
     padding: 0;
-    background:#ebebeb;
+    background: #ebebeb;
 }
 
 .tab {
@@ -351,7 +363,7 @@ display: block;
     zoom: 1;
     *display: inline;
     background: #eee;
-        padding: 8px;
+    padding: 8px;
 }
 
     .tab a {
@@ -360,7 +372,7 @@ display: block;
         display: block;
         padding: 0 10px;
         outline: none;
-        text-transform:uppercase;
+        text-transform: uppercase;
     }
 
     .tab.active {
@@ -372,24 +384,23 @@ display: block;
         color: white;
     }
 
-    .tab-container {
-            border: 1px solid rgb(238, 238, 238);
-            margin-top:15px;
-    }
-.tab-container .panel-container {
-    background: #fff;
-    border: solid #666 1px;
-    padding: 10px;
-    -moz-border-radius: 0 4px 4px 4px;
-    -webkit-border-radius: 0 4px 4px 4px;
+.tab-container {
 }
+
+    .tab-container .panel-container {
+        background: #fff;
+        border: solid #666 1px;
+        padding: 10px;
+        -moz-border-radius: 0 4px 4px 4px;
+        -webkit-border-radius: 0 4px 4px 4px;
+    }
 
 .project-content {
     padding: 0;
 }
 
 .multiple-items {
-    overflow:hidden!important;
+    overflow: hidden !important;
     position: relative;
     display: block;
     -moz-box-sizing: border-box;
@@ -406,8 +417,8 @@ display: block;
 }
 
 @media (min-width: 992px) {
-            .box-tool {
-        display: none!important;
+    .box-tool {
+        display: none !important;
     }
 }
 
@@ -425,7 +436,7 @@ display: block;
 
 
 @media (max-width: 1170px) {
-    
+
     .box-title {
         margin: 0 -15px;
     }
@@ -435,10 +446,8 @@ display: block;
     }
 
     .project-slider, .tab-container {
-        /*padding: 0 0 0 15px;*/ 
+        /*padding: 0 0 0 15px;*/
     }
-
-
 }
 
 @media (min-width: 1200px) {
@@ -472,203 +481,206 @@ display: block;
     max-width: 100%;
     height: auto;
 }
+
 #projectSidebarLink {
     display: none;
 }
 
 .box-title {
-    display:none;
+    display: none;
 }
 
 @media (max-width: 991px) {
 
-/*
+    /*
 Add transition to containers so they can push in and out.
 */
-.box .box-title {
-    padding-top: 10px;
-    display: block;
-}
+    .box .box-title {
+        padding-top: 10px;
+        display: block;
+    }
 
-#layout,
-#projectSidebar,
-.projectSidebar-link {
-    -webkit-transition: all 0.2s ease-out;
-    -moz-transition: all 0.2s ease-out;
-    -ms-transition: all 0.2s ease-out;
-    -o-transition: all 0.2s ease-out;
-    transition: all 0.2s ease-out;
-}
+    #layout,
+    #projectSidebar,
+    .projectSidebar-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+    }
 
-#projectSidebarLink {
-    display: block;
-}
+    #projectSidebarLink {
+        display: block;
+    }
 
-/*
+    /*
 This is the parent `<div>` that contains the projectSidebar and the content area.
 */
-#layout {
-    position: relative;
-    padding-left: 0;
-    min-height: 0;
-}
-    #layout.active #projectSidebar {
-        left: 350px;
-        width: 350px;
-        box-shadow: 0 0px 10px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-            overflow: scroll!important;
+    #layout {
+        position: relative;
+        padding-left: 0;
+        min-height: 0;
     }
 
-    #layout.active .projectSidebar-link {
+        #layout.active #projectSidebar {
+            left: 350px;
+            width: 350px;
+            box-shadow: 0 0px 10px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+            overflow: scroll !important;
+        }
 
-    }
-/*
+        #layout.active .projectSidebar-link {
+        }
+    /*
 The content `<div>` is where all your content goes.
 */
-.content {
-    margin: 0 auto;
-    padding: 0 2em;
-    max-width: 800px;
-    margin-bottom: 50px;
-    line-height: 1.6em;
-}
-
-.header {
-     margin: 0;
-     color: #333;
-     text-align: center;
-     padding: 2.5em 2em 0;
-     border-bottom: 1px solid #eee;
- }
-    .header h1 {
-        margin: 0.2em 0;
-        font-size: 3em;
-        font-weight: 300;
-    }
-     .header h2 {
-        font-weight: 300;
-        color: #ccc;
-        padding: 0;
-        margin-top: 0;
+    .content {
+        margin: 0 auto;
+        padding: 0 2em;
+        max-width: 800px;
+        margin-bottom: 50px;
+        line-height: 1.6em;
     }
 
-.content-subhead {
-    margin: 50px 0 20px 0;
-    font-weight: 300;
-    color: #888;
-}
+    .header {
+        margin: 0;
+        color: #333;
+        text-align: center;
+        padding: 2.5em 2em 0;
+        border-bottom: 1px solid #eee;
+    }
+
+        .header h1 {
+            margin: 0.2em 0;
+            font-size: 3em;
+            font-weight: 300;
+        }
+
+        .header h2 {
+            font-weight: 300;
+            color: #ccc;
+            padding: 0;
+            margin-top: 0;
+        }
+
+    .content-subhead {
+        margin: 50px 0 20px 0;
+        font-weight: 300;
+        color: #888;
+    }
 
 
 
-/*
+    /*
 The `#projectSidebar` `<div>` is the parent `<div>` that contains the `.pure-projectSidebar` that
 appears on the left side of the page.
 */
 
-#projectSidebar {
-    margin-left: -350px; /* "#projectSidebar" width */
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 99999;
-    background: white;
-    overflow-y: auto;
-    border-right: 1px solid #02bdb6;
-}
-    /*
-    All anchors inside the projectSidebar should be styled like this.
-    */
-    #projectSidebar > a {
-        color: #999;
-        border: none;
-        padding: 0.6em 0 0.6em 0.6em;
-    }
-
-    /*
-    Remove all background/borders, since we are applying them to #projectSidebar.
-    */
-     #projectSidebar .pure-projectSidebar,
-     #projectSidebar .pure-projectSidebar ul {
-        border: none;
-        background: transparent;
-    }
-
-    /*
-    Add that light border to separate items into groups.
-    */
-    #projectSidebar .pure-projectSidebar ul,
-    #projectSidebar .pure-projectSidebar .projectSidebar-item-divided {
-        border-top: 1px solid #333;
+    #projectSidebar {
+        margin-left: -350px; /* "#projectSidebar" width */
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 99999;
+        background: white;
+        overflow-y: auto;
+        border-right: 1px solid #02bdb6;
     }
         /*
-        Change color of the anchor links on hover/focus.
-        */
-        #projectSidebar .pure-projectSidebar li a:hover,
-        #projectSidebar .pure-projectSidebar li a:focus {
+    All anchors inside the projectSidebar should be styled like this.
+    */
+        #projectSidebar > a {
+            color: #999;
+            border: none;
+            padding: 0.6em 0 0.6em 0.6em;
+        }
+
+        /*
+    Remove all background/borders, since we are applying them to #projectSidebar.
+    */
+        #projectSidebar .pure-projectSidebar,
+        #projectSidebar .pure-projectSidebar ul {
+            border: none;
             background: transparent;
         }
 
-    /*
+            /*
+    Add that light border to separate items into groups.
+    */
+            #projectSidebar .pure-projectSidebar ul,
+            #projectSidebar .pure-projectSidebar .projectSidebar-item-divided {
+                border-top: 1px solid #333;
+            }
+            /*
+        Change color of the anchor links on hover/focus.
+        */
+            #projectSidebar .pure-projectSidebar li a:hover,
+            #projectSidebar .pure-projectSidebar li a:focus {
+                background: transparent;
+            }
+
+        /*
     This styles the selected projectSidebar item `<li>`.
     */
-    #projectSidebar .pure-projectSidebar-selected,
-    #projectSidebar .pure-projectSidebar-heading {
-        background: #1f8dd6;
-    }
-        /*
+        #projectSidebar .pure-projectSidebar-selected,
+        #projectSidebar .pure-projectSidebar-heading {
+            background: #1f8dd6;
+        }
+            /*
         This styles a link within a selected projectSidebar item `<li>`.
         */
-        #projectSidebar .pure-projectSidebar-selected a {
-            color: #fff;
-        }
+            #projectSidebar .pure-projectSidebar-selected a {
+                color: #fff;
+            }
 
-    /*
+        /*
     This styles the projectSidebar heading.
     */
-    #projectSidebar .pure-projectSidebar-heading {
-        font-size: 110%;
-        color: #fff;
-        margin: 0;
-    }
+        #projectSidebar .pure-projectSidebar-heading {
+            font-size: 110%;
+            color: #fff;
+            margin: 0;
+        }
 
-/* -- Dynamic Button For Responsive projectSidebar -------------------------------------*/
+    /* -- Dynamic Button For Responsive projectSidebar -------------------------------------*/
 
-/*
+    /*
 The button to open/close the projectSidebar is custom-made and not part of Pure. Here's
 how it works:
 */
 
-/*
+    /*
 `.projectSidebar-link` represents the responsive projectSidebar toggle that shows/hides on
 small screens.
 */
-.projectSidebar-link {
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-size: 14px;
-    z-index: 10;
-    height: auto;
-    background: white;
-    margin: 15px;
-    border-radius: 5px;
-    height: 40px;
-    width: 40px;
-    text-align: center;
-    line-height: 40px;
-}
+    .projectSidebar-link {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 14px;
+        z-index: 10;
+        height: auto;
+        background: white;
+        margin: 15px;
+        border-radius: 5px;
+        height: 40px;
+        width: 40px;
+        text-align: center;
+        line-height: 40px;
+    }
 }
 
-    .projectSidebar-link:hover,
-    .projectSidebar-link:focus {
-        background: #fff;
-    }
+.projectSidebar-link:hover,
+.projectSidebar-link:focus {
+    background: #fff;
+}
 
-    .projectSidebar-link span {
-        position: relative;
-        display: block;
-    }
+.projectSidebar-link span {
+    position: relative;
+    display: block;
+}
 
     .projectSidebar-link span,
     .projectSidebar-link span:before,
@@ -708,6 +720,7 @@ Hides the projectSidebar at `48em`, but modify this based on your app's needs.
         padding-left: 150px; /* left col width "#projectSidebar" */
         left: 0;
     }
+
     #projectSidebar {
         left: 150px;
     }
@@ -747,28 +760,27 @@ Hides the projectSidebar at `48em`, but modify this based on your app's needs.
 }
 
 @media (max-width: 991px) {
-
 }
 
 .item-product .image {
-    height: auto!important;
+    height: auto !important;
 }
 
 .feature-item .item-product .image a img {
     display: block;
 }
 
-.filterField {
-
+#filter-fields {
 }
 
-.filterField p {
-    margin-bottom:15px;
-}
+    #filter-fields p {
+        margin-bottom: 15px;
+    }
 
-.filterField input, .filterField select {
-    width: 100%;
-}
+    #filter-fields input[type="text"], #filter-fields select {
+        width: 100%;
+    }
+
 .btn2 {
     border: 1px solid #d5d5d5;
     padding: 8px 15px;
@@ -781,48 +793,50 @@ Hides the projectSidebar at `48em`, but modify this based on your app's needs.
 }
 
 .filterFieldRight {
-    text-align:right;
+    text-align: right;
 }
 
 .filterField {
-    margin-bottom:15px;
+    margin-bottom: 15px;
 }
 
 .main-body {
-    position:relative;
+    position: relative;
 }
+
 .loading {
-        display: flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-        position: absolute;
+    position: absolute;
     height: 100%;
     width: 100%;
     top: 0;
     left: 0;
-    z-index:1;
+    z-index: 1;
 }
 
-.loading::before {
-  content: "";
-    position: absolute;
-  top: 0; 
-  left: 0;
-  width: 100%; 
-  height: 100%;  
-  opacity: .4; 
-  background:white;
-}
+    .loading::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: .4;
+        background: white;
+    }
 
 .searchTitle {
     margin-bottom: 15px;
     color: #02bdb6;
     font-size: 16px;
 }
-.searchTitle > a {
-    color: #02bdb6;
-    cursor: pointer;
-}
+
+    .searchTitle > a {
+        color: #02bdb6;
+        cursor: pointer;
+    }
 
 .blackSrc {
     width: 100%;
@@ -840,158 +854,188 @@ Hides the projectSidebar at `48em`, but modify this based on your app's needs.
 
 .title-sidebar {
     margin-top: 0px;
-    margin-bottom: 15px;
 }
 
 .seperator-hr {
-        border-radius: 25px;
+    border-radius: 25px;
     height: 4px;
     width: 85px;
     margin-bottom: 15px;
     margin-left: 0;
     border: none;
-    background-color: #FFEB3B;
+    background-color: #02bdb6;
 }
 
-.margin-bottom{
-    margin-bottom:15px;
+.margin-bottom {
+    margin-bottom: 15px;
 }
 
 .uppercase {
-    text-transform:uppercase;
+    text-transform: uppercase;
 }
 
 .small-text {
-        height: 30px;
+    height: 30px;
     line-height: 30px;
     font-size: 18px;
     /* font-weight: bold; */
     text-transform: uppercase;
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
-    .hentry_content {
-        font-size: 16px;
-    }
-
-    .alternative-heading {
-        position: relative;
-        margin-top: 30px;
-        margin-bottom: 15px;
-        padding-bottom: 15px;
-    }
-
-    .owl-controls {
-        position: absolute;
-        bottom: 0px;
-        right: 50%;
-        margin-top: 10px!important;
-    }
-
-    .owl-pagination {
-        margin-top: 0px!important;
-        margin-bottom: 0px!important;
-        position: relative;
-        left: 50%!important;
-        bottom: 0;
-        -moz-transform: translate(0);
-        -ms-transform: translate(0);
-        -o-transform: translate(0);
-        -webkit-transform: translate(0);
-        transform: translate(0);
+.hentry_content {
+    text-align:justify;
 }
 
-        .title {
-font-family: 'Athiti', sans-serif;
+.alternative-heading {
+    position: relative;
+    margin-top: 30px;
     margin-bottom: 15px;
+    padding-bottom: 15px;
+}
+
+.owl-controls {
+    position: absolute;
+    bottom: 0px;
+    right: 50%;
+    margin-top: 10px !important;
+}
+
+.owl-pagination {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    position: relative;
+    left: 50% !important;
+    bottom: 0;
+    -moz-transform: translate(0);
+    -ms-transform: translate(0);
+    -o-transform: translate(0);
+    -webkit-transform: translate(0);
+    transform: translate(0);
+}
+
+.title {
+    font-family: 'Athiti', sans-serif;
     line-height: 30px;
     font-size: 18px;
+}
 
-    }
-    .title span{
-         font-weight: bold;
-        font-size: 16px;
+    .title span {
         text-transform: uppercase;
     }
 
-    #layoutContainer {
-            padding: 15px 0;
-    background: #f8f8f8;
-        margin-bottom: 15px;
-            overflow: hidden!important;
-    }
-
-    #collectionsArea {   
-    
+#layoutContainer {
     padding: 15px 0;
+    background: white;
+    overflow: hidden !important;
+    margin: 0 -5px 0 -7px;
+}
+
+
+.layoutItem {
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+#collectionsArea {
     padding-bottom: 0px;
+    background: white;
+}
+
+#collectionsBorder {
+    position: relative;
+    transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -webkit-transition: all 1s ease-in-out;
+    overflow: hidden;
+    max-height: 1000px;
+    min-height: 265px;
+    margin-bottom: 15px
+}
+
+#tabs2 {
+    padding-bottom: 0px;
+}
+
+.card-l {
+    margin-bottom: 15px;
+    margin: 0 -7px;
+}
+
+.loadingImg {
+    height: 64px;
+    width: 64px;
+}
+
+.filterField > ul > li {
+    margin-bottom: 10px;
+}
+
+.list-title {
+    line-height: 30px;
+    margin-bottom: 10px;
+}
+
+#projectsGrid {
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+
+#collectionDetails {
+    background: white;
+    display: none;
+}
+
+#mapContainer {
     background: #e7e7e7;
-    }
-
-    #collectionsBorder {
-        position:relative;
-        transition    : all 1s ease-in-out; 
-      -o-transition       : all 1s ease-in-out;
-      -moz-transition     : all 1s ease-in-out;
-        -webkit-transition  : all 1s ease-in-out;
-      overflow:hidden;
-      max-height:1000px;
-      min-height: 265px;
-      margin: 15px 0;
-    }
-
-    #tabs2 {
-        padding-bottom:0px;
-    }
-
-    .card-l {
-        margin-bottom: 15px;
-    }
-
-    .loadingImg {
-        height:64px;
-        width:64px;
-    }
-
-    .filterField > ul > li {
-        margin-bottom: 10px;
-    }
-
-    .list-title {
-        line-height:30px;
-    }
-
-    #projectsGrid {
-        margin-top: 15px;
-    }
-
-    .circle {
-        border-radius:50%;
-    }
-
-    
-#collectionDetails{
-         background:white;
-         display:none;
- }
-
-#layoutFull {
+    width:100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-#collections{
-    padding:0 15px;
+#collections {
+        margin: 0 -7px;
 }
 
 #rooms {
-    background:white;
-    position:relative;
+    overflow:hidden;
+    background: white;
+    position: relative;
 }
 
 .room {
-    height:60px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+#filter-fields ul {
+}
+
+    #filter-fields ul li {
+        margin-bottom: 10px;
+    }
+
+    .slick-dots {
+        bottom:0;
+    }
+
+    #layout-side {
+        padding-left:0px;
+    }
+
+    .detail-thumbnail {
+            padding: 0 5px 0 0;
+    }
+
+    .thumbnail {
+        margin-bottom: 0px;
+        border-radius: 0px;
+
+    }

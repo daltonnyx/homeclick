@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<Homeclick.Models.Project>
+
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout_Project.cshtml";
     var url = "";
@@ -33,7 +35,7 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 
 <script type='text/javascript' src="~/Scripts/Plugins/jlinq/jlinq.js"></script>
 <script type='text/javascript' src="~/Scripts/Plugins/Map/map.js"></script>
@@ -151,7 +153,7 @@
         projectsGrid.html('');
         var baseLink = '@Request.RequestContext.RouteData.Values["controller"]';
         for (var i = 0; i < data.length; i++) {
-            var link = '@url' + "/" + baseLink + "/" + data[i].type + "/" + data[i].id;
+            var link =  '@url' + "/" + baseLink + "/" + data[i].type + "/" + data[i].id;
             var item = '<div class="project-tile col-sm-6 col-md-4">' +
                 '<div class="project-tile-image fullscreener fsr-container">' +
                     '<img width="650" height="420" src="' + data[i].image + '" class="attachment-project-image size-project-image wp-post-image fsr-image fsr-hidden" alt="Helsinki-Central-Library">' +

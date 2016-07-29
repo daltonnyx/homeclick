@@ -21,8 +21,27 @@ namespace Homeclick.Controllers
 
             ViewBag.ProjectTypes = types;
             ViewBag.Cities = cities;
-
+            var categories = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.ProjectType);
+            ViewBag.Categories = categories;
             var v = db.Projects.ToList();
+            return View(v);
+        }
+
+        public ActionResult Category(int category_id)
+        {
+            ViewBag.MetaKeyword = "homeclick";
+            ViewBag.MetaDescription = "project";
+
+            var types = db.Categories.Where(o => o.parent_id == 28);
+            var cities = db.Cities.ToList();
+
+            ViewBag.ProjectTypes = types;
+            ViewBag.Cities = cities;
+
+            var categories = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.ProjectType);
+            ViewBag.Categories = categories;
+
+            var v = db.Projects.Where(o => o.CategoryId == category_id).ToList();
             return View(v);
         }
 
@@ -35,55 +54,15 @@ namespace Homeclick.Controllers
 
             ViewBag.ProjectTypes = types;
             ViewBag.Cities = cities;
+
+            var categories = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.ProjectType);
+            ViewBag.Categories = categories;
             return View();
         }
 
-        public JsonResult _GetRooms(int? layout_id)
-        {
-            var list = db.ProjectItems.Where(o => o.LockedOut == false && o.ParentId == layout_id).ToList();
-            var json = new List<object>();
-            foreach (var item in list)
-            {
-                json.Add(new
-                {
-                    id = item.Id,
-                    name = item.Name,
-                });
-            }
-            return Json(json, JsonRequestBehavior.AllowGet);
-        }
+        
 
-        public JsonResult _Collections(int? room_id, int? layout_id)
-        {
-            var list = new List<ProjectLayout_Collection>();
-            if (room_id != null)
-                list = db.ProjectLayout_Collections.Where(o => o.LockedOut == false && o.LayoutId == room_id).ToList();
-            else
-            {
-                var temp = db.ProjectItems.Where(o => o.ParentId == layout_id).ToList();
-                foreach (var item in temp)
-                {
-                    var v = db.ProjectLayout_Collections.Where(o => o.LockedOut == false && o.LayoutId == item.Id).ToList();
-                    list.AddRange(v);
-                }
-            }
-
-            var json = new List<object>();
-            foreach (var item in list)
-            {
-                json.Add(new
-                {
-                    id = item.Id,
-                    roomId = item.LayoutId,
-                    name = item.Name,
-                    image = item.Image,
-                    area = item.Area
-                });
-            }
-            return Json(json, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult _CollectionDetails(int? collection_id)
+        public ActionResult _CollectionDetails(int collection_id)
         {
             if (collection_id == null)
             {
@@ -137,68 +116,22 @@ namespace Homeclick.Controllers
             return PartialView(v);
         }
 
-        public ActionResult Details(int? ProjectId)
+        public ActionResult Details(int category_id, int project_id)
         {
-            var layouts = db.ProjectItems.Where(o => o.ProjectId == ProjectId && o.Category.Id == 25).ToList();
+            var layouts = db.ProjectItems.Where(o => o.ProjectId == project_id && o.Category.Id == 25).ToList();
             ViewBag.Layouts = layouts;
 
             var firstLayoutId = layouts.FirstOrDefault().Id;
             ViewBag.firstLayoutId = firstLayoutId;
 
 
-            var thumbnails = db.ProjectItems.Where(o => o.ProjectId == ProjectId && o.Category.Id == 24).ToList();
+            var thumbnails = db.ProjectItems.Where(o => o.ProjectId == project_id && o.Category.Id == 24).ToList();
             ViewBag.Thumbnails = thumbnails;
 
             var project = db.Projects.ToList();
-            var v = project.SingleOrDefault(o => o.Id == ProjectId);
+            var v = project.SingleOrDefault(o => o.Id == project_id);
             
             return View(v);
         }
-
-        public JsonResult GetProjectsData()
-        {
-            var projects = db.Projects.ToList();
-            var json = new List<object>();
-            foreach (var project in projects)
-            {
-                json.Add(new
-                {
-                    id = project.Id,
-                    name = project.Name,
-                    image = project.Image,
-                    address = project.Address,
-                    city = project.CityId,
-                    state = project.StateId,
-                    investor = project.Investor,
-                    viewDesignAgency = project.ViewDesignAgency,
-                    architetualDesignAgency = project.ArchitetualDesignAgency,
-                    furnitureDesignAgency = project.FurnitureDesignAgency,
-                    constructionAgency = project.ConstructionAgency,
-                    distributionAgency = project.DistributionAgency,
-                    manager = project.Manager,
-                    statu = Convert.ToInt32(project.Completed),
-                    type = project.CategoryId,
-                    link = Url.Action("details", new { ProjectId = project.Id})
-                });
-            }
-            return Json(json, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult GetStatesData()
-        {
-            var states = db.States;
-            var jsonResult = new List<object>();
-            foreach (var state in states)
-            {
-                jsonResult.Add(new
-                {
-                    id = state.Id,
-                    name = state.Name,
-                    city = state.CityId
-                });
-            }
-            return Json(jsonResult, JsonRequestBehavior.AllowGet);
-        }
-
     }
 }

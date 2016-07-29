@@ -9,12 +9,22 @@
 
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/taggd.css")
+
+    <script src="~/Scripts/jquery-1.11.3.min.js"></script>
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/jquery.taggd.min.js")
     @RenderSection("scripts", required: false)
 
+    <style>
+        .owl-theme .owl-controls {
+            margin-top: 0px;
+        }
+
+        .owl-pagination {
+            bottom: 80px;
+        }
+    </style>
 </head>
 <body>
     <div class="wapper">
@@ -42,7 +52,9 @@
     <script type="text/javascript">
         //slider home
         $(window).load(function () {
-            $("#slider-home").owlCarousel({
+            var owl = $('.owl-carousel');
+
+            owl.owlCarousel({
                 navigation: false,
                 slideSpeed: 300,
                 paginationSpeed: 400,
@@ -55,14 +67,31 @@
                 navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
             });
 
-            owl = $('#slider-home').owlCarousel();
             owl.on('translated.owl.carousel', function (event) {
                 var activeImg = $(this).find('.active').find('img');
                 var comment = activeImg.attr('alt');
                 var title = activeImg.attr('title');
                 var link = activeImg.data('link');
-                if (comment) $('.slider-caption').html('<a href="' + link + '"><h3>' + title + '</h4></a>');
+                var templated = '<div>' +
+                                    '<span class="slider-title">' +
+                                        title +
+                                '</span> <br />' +
+                                '<a class="slider-link" href="' + link + '">' +
+                                    'Xem' +
+                                '</a>' +
+                            '</div>';
+                if (comment) $('.slider-caption').html(templated);
             });
+
+            $(".list-category").affix({
+                offset: {
+                    top: $("#header").height() + 22,
+                    bottom: $("#footer").height() + 40
+                }
+            });
+
+            $('.table-section-header').toggleClass("active-show");
+            $('.list-show .category-product-detail').slideToggle("slow");
         });
     </script>
 </body>
