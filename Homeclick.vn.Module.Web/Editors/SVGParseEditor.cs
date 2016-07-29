@@ -24,6 +24,7 @@ namespace Homeclick.vn.Module.Web.Editors
     public class SVGParseEditor : ASPxStringPropertyEditor
     {
         private ASPxUploadControl uploadButton;
+        protected string SavePath = System.Configuration.ConfigurationManager.AppSettings["UploadFolder"];
         private Webs.WebControl currentControl;
         public SVGParseEditor(Type objectType, IModelMemberViewItem model) : base(objectType, model)
         {
@@ -51,69 +52,39 @@ namespace Homeclick.vn.Module.Web.Editors
             return currentControl;
         }
 
+        protected string SavePostedFile(UploadedFile uploadedFile)
+        {
+            if (!uploadedFile.IsValid)
+                return string.Empty;
+            string fileName = uploadedFile.FileName;
+            string fullFileName = CombinePath(fileName);
+            using (Image original = Image.FromStream(uploadedFile.FileContent))
+            {
+                Image size1 = UploadPropertyEditor.CropImage(original, UploadPropertyEditor.getCropSize(original));
+                size1.Save(AppDomain.CurrentDomain.BaseDirectory + UploadPropertyEditor.getName(fullFileName, "_cropped"), ImageFormat.Png);
+                original.Save(AppDomain.CurrentDomain.BaseDirectory + fullFileName, ImageFormat.Png);
+            }
+            PropertyValue = fullFileName;
+            return fileName;
+        }
 
+        protected string CombinePath(string fileName)
+        {
+            if (fileName == null)
+                return null;
+            return Path.Combine(SavePath, fileName);
+        }
 
         void uploadButton_FileUploadComplete(object sender, FileUploadCompleteEventArgs e)
         {
             XmlDocument xml = new XmlDocument();
             xml.Load(e.UploadedFile.FileContent);
-
-            //e.CallbackData = SavePostedFile(e.UploadedFile);
-            //we will do something here
-            //filename = e.CallbackData;
-            //((ASPxTextBox)Editor).Value = e.CallbackData;
-            XmlNodeList paths = xml.DocumentElement.GetElementsByTagName("path");
-            IList<object> value = new List<object>();
-            foreach (XmlNode path in paths)
+            XmlNodeList groups = xml.DocumentElement.GetElementsByTagName("g");
+            bool 
+            foreach(XmlNode group in groups)
             {
-                string style = path.Attributes["style"].Value;
-                string dpath = path.Attributes["d"].Value;
-                string[] styleCanva = style.Split(';');
-                Regex reg = new Regex(@"([mlca]|[MLCA])(\s+-*\d+\.?\d*,\s*-*\d+\.?\d*)+");
-                IList<object> points = new List<object>();
-                MatchCollection svgPatterns = reg.Matches(dpath);
-                foreach(Match pattern in svgPatterns)
-                {
-                    string patternValue = pattern.Value;
-                    string[] pointstext = patternValue.Split(' ');
-                    try
-                    {
-                        if (pointstext[0] == "m" || pointstext[0] == "l" || pointstext[0] == "c" || pointstext[0] == "a")
-                        {
-                        
-                            points.Add(new { x = Convert.ToSingle(pointstext[1].Split(',')[0]), y = Convert.ToSingle(pointstext[1].Split(',')[1]) });
-                            for(int i = 2; i < pointstext.Length; i++)
-                            {
-                                string[] xy = pointstext[i].Split(',');
-                                dynamic lastPoint = points[i - 2];
-                                points.Add(new { x = lastPoint.x + Convert.ToSingle(xy[0]), y = lastPoint.y + Convert.ToSingle(xy[1]) });
-                            }
-                        }
-                        else if (pointstext[0] == "M" || pointstext[0] == "L" || pointstext[0] == "C" || pointstext[0] == "A") 
-                        {
-                            points.Add(new { x = Convert.ToSingle(pointstext[1].Split(',')[0]), y = Convert.ToSingle(pointstext[1].Split(',')[1]) });
-                            for (int i = 2; i < pointstext.Length; i++)
-                            {
-                                string[] xy = pointstext[i].Split(',');
-                                dynamic lastPoint = points[i - 2];
-                                points.Add(new { x = Convert.ToSingle(xy[0]), y = Convert.ToSingle(xy[1]) });
-                            }
-                        }
-                        if (dpath.Last() == 'z')
-                        {
-                            points.Add(points[0]);
-                        }
-                        
-                    }
-                    catch
-                    {
-                        continue;
-                    }
-                }
-                value.Add(points);
+                group.Attributes["id"]
             }
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            this.PropertyValue = serializer.Serialize(value);
         }
 
         protected override object GetControlValueCore()
