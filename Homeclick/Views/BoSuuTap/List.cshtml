@@ -4,13 +4,7 @@
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/Layout_BoSuuTap.cshtml";
-    var url = "/homeclick";
     var slides = Homeclick.Models.ModelHelper.PickSomeInRandomOrder(Model, 5);
-    var baseLink = Url.Action("Detail");
-    foreach (var item in Model)
-    {
-        item.link = baseLink + "/" + item.id;
-    }
 }
 
 @Html.Partial("Slider", slides)

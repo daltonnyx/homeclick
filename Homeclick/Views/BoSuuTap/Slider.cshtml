@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<Homeclick.Models.CollectionViewModel>
 @{
-    var url = "/homeclick";
+    var url = "";
+    var firstItem = Model.First();
+    var firstlink = firstItem.link != null ? firstItem.link : "#";
+
 }
 <section role="slider" class="row">
-    <div id="slider-home">
+    <div id="slider-home" class="owl-carousel">
         @foreach (var slide in Model)
         {
             var link = slide.link != null ? slide.link : "#";
@@ -12,10 +15,16 @@
             </div>
         }
     </div>
+
     <div class="slider-caption">
-        <span>
-            Collection
-        </span>
+        <div>
+            <span class="slider-title">
+                @firstItem.name
+            </span> <br />
+            <a class="slider-link" href="@firstlink">
+                Xem
+            </a>
+        </div>
     </div>
 </section>
 

@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<Homeclick.Models.CollectionViewModel>
 @{ 
     var baseLink = Request.RequestContext.RouteData.Values["Controller"];
-    var url = "/homeclick";
+    var url = "";
 }
 <div class="grid-content clearfix">
     @foreach (var item in Model)
             {
-                item.link = "/" + baseLink + "/" +item.categoryId + "/" + item.id;
+                item.link = url + "/" + baseLink + "/" +item.categoryId + "/" + item.id;
 
         <div class="collection-item col-md-4">
             <div class="collection-inner">

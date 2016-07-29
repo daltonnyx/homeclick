@@ -1,16 +1,13 @@
 ﻿@model IEnumerable<Homeclick.Models.ProjectItem>
 @{
-    var url = "/homeclick";
+    var url = "";
 }
-<style>
-
-</style>
 
 <div class="title">
     <span> Layout mẫu</span>
 </div>
 
-<div id="layoutContainer" class="row">
+<div id="layoutContainer">
     @foreach (var item in Model)
     {
         <div class="col-xs-6 col-sm-3 layoutItem">
@@ -27,8 +24,3 @@
         </div>
     }
 </div>
-
-<script>
-
-
-</script>

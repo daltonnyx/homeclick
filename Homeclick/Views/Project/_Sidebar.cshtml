@@ -3,7 +3,7 @@
     <!-- Hamburger icon -->
     <i class="fa fa-search" aria-hidden="true"></i>
 </a>
-<div id="projectSidebar" class="box row ">
+<div id="projectSidebar" class="box">
     <div class="box-title">
         <h5>@Model.Name</h5>
         <a id="hideprojectSidebar" class="box-tool">
@@ -138,6 +138,31 @@
             </p>
         </div>
     </div>
+
+    <hr />
+    <div class="uppercase small-text">Ảnh chụp</div>
+    <div class="seperator-hr"></div>
+    @Html.Partial("_Thumbnail", ViewBag.Thumbnails as IEnumerable<Homeclick.Models.ProjectItem>)
+    <hr />
+
+    <div class="uppercase small-text">hentry</div>
+    <div class="seperator-hr"></div>
+    <div class="hentry_content project_content">
+        @Html.Raw(Model.HtmlContent)
+    </div>
+    <hr />
+    <div class="uppercase small-text">Vị trí</div>
+    <div class="seperator-hr"></div>
+    <div style='overflow:hidden;height:250px;width:100%;'>
+        <div id='gmap_canvas' style='height:250px;width:100%;'></div>
+        <style>
+            #gmap_canvas img {
+                max-width: none !important;
+                background: none !important;
+            }
+        </style>
+    </div><a href='https://embedmaps.org/' hidden>embedded google map</a>
+
 </div>
 <div style="clear:both"></div>
 
