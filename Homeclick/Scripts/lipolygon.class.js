@@ -18,7 +18,7 @@ fabric.LiPolygon = fabric.util.createClass(fabric.Polygon,{ //Need to assign cla
     this.lineWidths = lineWidths || [ ];
     //this.pointColors = pointColors || [ ];
     this.doors = [];
-    
+
     this.callSuper('initialize', points, options);
     this._calcDimensions();
     if( this.points.length < 1 || this.points[0].x != this.points[this.points.length - 1].x || this.points[0].y != this.points[this.points.length - 1].y)
@@ -57,14 +57,14 @@ fabric.LiPolygon = fabric.util.createClass(fabric.Polygon,{ //Need to assign cla
       this._renderStroke(ctx);
       //ctx.stroke();
      }
-     
+
     }
-    
+
      //this.callSuper('_renderFill',ctx);
-    
+
      if(!this.commonRender(ctx))
       return;
-    
+
   },
 
   makePoint : function(rPoints) {
@@ -96,7 +96,7 @@ fabric.LiPolygon = fabric.util.createClass(fabric.Polygon,{ //Need to assign cla
       }
       this._applyPointOffset = null;
     }
-    
+
     for (var i = 1; i <= len; i++) {
       var j = i;
       //this._renderStroke(ctx);

@@ -6,7 +6,14 @@
  */
 jQuery(document).ready(function($){
 
-  var undoStack = [];
+    var undoStack = [];
+
+    var cart = new Cart();
+
+    var wishlist = [];
+
+  jQuery("#undo").attr("disabled","disabled");
+
   // init object and variable
   var canvas = new fabric.Canvas('tutorial');
   var canvasObj = $("#tutorial");
@@ -78,7 +85,7 @@ jQuery(document).ready(function($){
     isDragable = true;
     srcOnWall = null;
     src = $(event.target).data("svg");
-    src = "http://demo.vinabits.com.vn/homeclick/" + src.replace(/\\/g, "/");
+    src =  src.replace(/\\/g, "/");
     srcName = $(event.target).data("name");
     srcScale = $(event.target).data("can-scale");
     srcPId = $(event.target).data('pid');
@@ -114,7 +121,11 @@ jQuery(document).ready(function($){
     event.preventDefault();
     // pageX and pageY IN originalEvent but NOT event
     var e = event.originalEvent;
+
     p = {x:e.pageX,y:e.pageY};
+
+    //if(pushHistory != undefined)
+      pushHistory();
     if(isInside(p,canvasObj) == true && isDragable && src != null)
     {
       fabric.loadSVGFromURL(src,function(objects,options){
@@ -167,6 +178,8 @@ jQuery(document).ready(function($){
         obj.hexCode = "#ffffff";
         obj.setControlsVisibility({mtr:false,tr:false,bl:false});
         canvas.add(obj);
+        addItemToCart(obj);
+        
       });
       isDragable = false;
     }
@@ -187,7 +200,7 @@ jQuery(document).ready(function($){
   var isHold = false,isMoveObject = false,isPermentPans = false;
   canvas.on("mouse:up",function(e){//Mouse up event
 
-      if(isPermentsZoom || isPermentPans || isDrawMode || isMeasure){
+      if(isPermentsZoom || isPermentPans || isDrawMode || isMeasure || isCamera){
         isHold = false;
         return;
       }
@@ -218,7 +231,7 @@ jQuery(document).ready(function($){
       canvas.renderAll();
     });
   var loadWallControl = function(e){//Load Wall control
-    if(typeof pWall ==  'undefined')
+    if(typeof pWall ==  'undefined' || pWall == null)
       return;
     var f = canvas.getPointer(e),
         m = {x:e.pageX,y:e.pageY},
@@ -266,6 +279,16 @@ jQuery(document).ready(function($){
     //pWall = null;
   };
 
+  var loadCameraControl = function(o) {
+    var   delete_button = jQuery(".delete-button"),
+          container = jQuery("#tutorial");
+    delete_button.css({
+        "display": 'block',
+        "left": o.oCoords.tr.x - 8 + container.offset().left + "px",
+        "top":  o.oCoords.tr.y - 8 + container.offset().top + "px"
+    });
+  }
+
   var loadObjectControl = function(e){ //Load Object control
     var obj = canvas.findTarget(e),
         m = {x:e.pageX,y:e.pageY},
@@ -274,6 +297,11 @@ jQuery(document).ready(function($){
         f = {x:e.pageX,y:e.pageY};
     //console.log(e);
     //Reset everything
+    if(obj.isCamera) {
+      loadCameraControl(obj);
+      return;
+    }
+
     control.find("h4.product-name").text("No Name");
     control.find(".product-image").html('');
     control.find(".product-price .value").text('');
@@ -346,7 +374,7 @@ jQuery(document).ready(function($){
 
 
  //   //Setting wall
-   var svgLink = 'http://demo.vinabits.com.vn/homeclick/admin/' + $("#canvas-data").val();
+   var svgLink = 'http://localhost:1867/admin/' + $("#canvas-data").val();
    var polWall = {};
    fabric.GroupLiPolygon.fromURL(svgLink,{
        originX: "left",
@@ -358,6 +386,7 @@ jQuery(document).ready(function($){
        originX: "left",
        originY: "top",
        hasControls: false,
+       hoverCursor: "normal",
        hasBorders: false,
        lockMovementX: true,
        lockMovementY: true,
@@ -369,8 +398,9 @@ jQuery(document).ready(function($){
       polWall.floorPrice = 0;
       canvas.add(polWall);
       canvas.absolutePan({x : polWall.getLeft(), y : polWall.getTop()});
-      var savedCanvas = jQuery.extend(true, {}, canvas);
-      undoStack.push(savedCanvas);
+      //if(pushHistory != undefined)
+      pushHistory();
+      window.setTimeout(function() {canvas.renderAll()}, 200);
    });
  //   var polWall = new fabric.GroupLiPolygon(wallPoints, ,[5,5,5,5]);
 
@@ -403,7 +433,8 @@ jQuery(document).ready(function($){
         isMoveObject = false;
         isDrawMode = false;
         isMeasure = false;
-        getCanvasElement(canvas).removeClass('grab zoomin measure');
+        isCamera = false;
+        getCanvasElement(canvas).removeClass('grab zoomin measure render');
         jQuery('.toolbar div').removeClass('active');
       },
       getCanvasElement = function(canvas){
@@ -480,6 +511,8 @@ jQuery(document).ready(function($){
     if(!isMeasure)
       return;
     if(!isDrawing) {
+      //if(pushHistory != undefined)
+        pushHistory();
       isDrawing = true;
       var firstPoint = canvas.getPointer(e.e);
       drawLine = new fabric.measureLine(
@@ -589,6 +622,8 @@ jQuery(document).ready(function($){
   };
 
   var onLineWall = function(p,w,k){ //Check on wall line
+    if(w == undefined || w == null)
+      return;
     p = w.toLocalPoint(w.group.toLocalPoint(p,'center','center'),'center','center');
     k = typeof k !== 'undefined' ? k : 10;
     for(var i = 0; i < w.points.length;i++)
@@ -625,7 +660,7 @@ jQuery(document).ready(function($){
     jQuery(".object-control").css("display","none");
     jQuery(".dimession").css("display","none");
     jQuery(".delete-button").css("display","none");
-    jQuery(".rotate-button").css("display","none")
+    jQuery(".rotate-button").css("display","none");
     if(this.findTarget(e.e) != undefined && this.findTarget(e.e).type == 'GroupLiPolygon')
     {
       e = e.e;
@@ -768,41 +803,89 @@ jQuery(document).ready(function($){
   jQuery("#new").click(function(e){
     var msg = "Bạn có muốn Reset lại không?";
     if(confirm(msg)) {
-      console.log(undoStack[0]);
-      canvas = fabric.Canvas.getHistory(undoStack);
+      //console.log(undoStack[0]);
+      canvas = fabric.Canvas.getHistory(jQuery.extend(true, {}, undoStack[0].canvas), canvas);
+      
+      z = canvas.getZoom();
       canvas.renderAll();
+      undoStack.splice(0, undoStack.length - 1);
+      jQuery("#undo").attr("disabled", "disabled");
+      jQuery(".wall-control").css("display","none");
+      jQuery(".object-control").css("display","none");
+      jQuery(".dimession").css("display","none");
+      jQuery(".delete-button").css("display","none");
+      jQuery(".rotate-button").css("display","none");
     }
   });
 
+  jQuery("#undo").click(function(e){
+      e.preventDefault();
+      if(this.hasAttribute("disabled"))
+      return;
+      canvas = fabric.Canvas.getHistory(jQuery.extend(true, {}, undoStack[undoStack.length - 1].canvas), canvas);
+      cart = Cart.clone(undoStack[undoStack.length - 1].cart);
+      undoStack.pop();
+      if ( undoStack.length <= 1 ){
+        jQuery(this).attr("disabled","disabled");
+      }
+      z = canvas.getZoom();
+      canvas.renderAll();
+      recreateCart();
+      jQuery(".wall-control").css("display","none");
+      jQuery(".object-control").css("display","none");
+      jQuery(".dimession").css("display","none");
+      jQuery(".delete-button").css("display","none");
+      jQuery(".rotate-button").css("display","none");
+  });
+
   jQuery("#saveJSON").click(function(e){ //Save
-    e.preventDefault();
-    var jsdaa = canvas.toJSON();
-    // JSON.stringify(
-    //   canvas.toJSON(
-    //     [
-    //       'isLock',
-    //       'srcSVG',
-    //       'hexCode',
-    //       'pathToFill',
-    //       'left',
-    //       'top',
-    //       'strokeWidth',
-    //       'strokeLineCap',
-    //       'fill',
-    //       'hasControls',
-    //       'hasBorders',
-    //       'lockMovementY',
-    //       'lockMovementX',
-    //       'perPixelTargetFind',
-    //       'padding'
-    //     ]
-    //   ));
-    UIkit.notify({
-    message : '<i class="uk-icon-check"></i> Saved!',
-    status  : 'success',
-    timeout : 2000,
-    pos     : 'top-center'
-    });
+      e.preventDefault();
+      var jsdaa = JSON.stringify(
+              canvas.toJSON(
+                [
+                  'isLock',
+                  'srcSVG',
+                  'hexCode',
+                  'pathToFill',
+                  'left',
+                  'top',
+                  'strokeWidth',
+                  'strokeLineCap',
+                  'fill',
+                  'hasControls',
+                  'hasBorders',
+                  'lockMovementY',
+                  'lockMovementX',
+                  'perPixelTargetFind',
+                  'padding'
+                ]
+              ));
+      jQuery.post('/User/SaveCanvas', { data: jsdaa }, function (response, status, xhr) {
+          if (status = 202) {
+              UIkit.notify({
+                  message: '<i class="uk-icon-check"></i> Saved!',
+                  status: 'success',
+                  timeout: 2000,
+                  pos: 'top-center'
+              });
+          }
+          else {
+              UIkit.notify({
+                  message: '<i class="uk-icon-check"></i> Oops! Something wrong;!',
+                  status: 'error',
+                  timeout: 2000,
+                  pos: 'top-center'
+              });
+          }
+      }).fail(function (data, status, xhr) {
+          if (data.status == 403) {
+              $form_modal.addClass('is-visible');
+              login_selected();
+          }
+      });
+    
+    
+    
   });
 
   jQuery("#loadJSON").click(function(e){//Load
@@ -861,6 +944,8 @@ jQuery(document).ready(function($){
     {
         return;
     }
+    //if(pushHistory != undefined)
+      pushHistory();
     var c = canvas.getActiveObject();
     var cC = fabric.Path.makeClone(c,cloneOffset,canvas); //Create whole new object with c.options not clone
     cloneOffset += 10;
@@ -870,6 +955,8 @@ jQuery(document).ready(function($){
     e.preventDefault();
     if(canvas._activeGroup == null)
       return;
+    //if(pushHistory != undefined)
+      pushHistory();
     var selecteds = canvas._activeGroup._objects;
     var groups = new fabric.Group(selecteds,{
       left: canvas._activeGroup.left,
@@ -904,6 +991,8 @@ jQuery(document).ready(function($){
      e.preventDefault();
     if(canvas._activeGroup != null)
       return;
+    //if(pushHistory != undefined)
+      pushHistory();
     var group = canvas.getActiveObject(),
         center = group.getCenterPoint();
     var a = fabric.util.degreesToRadians(group.getAngle());
@@ -937,6 +1026,8 @@ jQuery(document).ready(function($){
     {
       return;
     }
+    //if(pushHistory != undefined)
+      pushHistory();
     var cR = canvas.getActiveObject();
     cR.rotate(cR.getAngle() + 45);
     cR.setCoords();
@@ -950,6 +1041,8 @@ jQuery(document).ready(function($){
     {
       return;
     }
+    //if(pushHistory != undefined)
+      pushHistory();
     var cR = canvas.getActiveObject();
     cR.rotate(cR.getAngle() - 45);
     cR.setCoords();
@@ -998,6 +1091,8 @@ jQuery(document).ready(function($){
     {
         return;
     }
+    //if(pushHistory != undefined)
+      pushHistory();
     var cR = canvas.getActiveObject();
     cR.bringForward(true);
   });
@@ -1008,6 +1103,8 @@ jQuery(document).ready(function($){
     {
         return;
     }
+    //if(pushHistory != undefined)
+      pushHistory();
     var cR = canvas.getActiveObject();
     cR.sendBackwards(true);
   });
@@ -1019,6 +1116,8 @@ jQuery(document).ready(function($){
     {
         return;
     }
+    //if(pushHistory != undefined)
+      pushHistory();
     var c = canvas.getActiveObject();
     if(c.pathToFill.length > 0)
     {
@@ -1033,6 +1132,8 @@ jQuery(document).ready(function($){
   });
 
   var deleteObject = function() {
+    //if(pushHistory != undefined)
+      pushHistory();
     var cR = canvas.getActiveObject();
     if(cR != null && cR.type == 'GroupLiPolygon')
       return;
@@ -1050,6 +1151,7 @@ jQuery(document).ready(function($){
         canvas.discardActiveObject(); // Need both discard
         return;
     }
+    minusItemFromCart(cR);
     canvas.remove(cR);
     jQuery(".object-button").css("display","none");
     jQuery(".dimession").css("display","none");
@@ -1072,6 +1174,8 @@ jQuery(document).ready(function($){
   jQuery(".rotate-button").on('mousedown',function(event) { // Init rotate event
     isRotate = true;
     var control = jQuery(".object-control");
+    //if(pushHistory != undefined)
+      pushHistory();
     control.css({
       "display": 'none'
     });
@@ -1085,7 +1189,7 @@ jQuery(document).ready(function($){
   });
   canvas.on("mouse:move",function(e){ // Mouse move event when rotate object
 
-    if(!isRotate || isDrawMode || isMeasure)
+    if(!isRotate || isDrawMode || isMeasure || isCamera)
       return;
     var oR = canvas.getActiveObject();
     if(oR == null)
@@ -1126,7 +1230,7 @@ jQuery(document).ready(function($){
     event.preventDefault();
     var oZ = canvas.getActiveObject();
     var c = canvas.getCenter();
-    if(oZ != null && oZ.type != 'GroupLiPolygon'){
+    if(oZ != null && oZ.type != 'GroupLiPolygon' && !oZ.isCamera){
       if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
       //Rotate clockwise
         oZ.rotate(oZ.getAngle() + 2);
@@ -1137,7 +1241,7 @@ jQuery(document).ready(function($){
       }
       oZ.setCoords();
       canvas.renderAll();
-      updateControl(oZ);
+
     }
     else {
       if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
@@ -1160,12 +1264,35 @@ jQuery(document).ready(function($){
       }
       canvas.zoomToPoint({x:c.left,y:c.top},z);
     }
+    updateControl(oZ);
   });
 
   jQuery(document).on("mouseleave","#canvas-holder",function(e){
     e.preventDefault();
     jQuery('.object-control').hide(50);
   });
+
+  var justMoving = false;
+
+  canvas.on("object:moving",function(e){
+    if(!justMoving)
+    {
+      pushHistory();
+      justMoving = true;
+    }
+  });
+
+  canvas.on("mouse:up",function(e){
+    if(justMoving)
+    {
+      justMoving = false;
+    }
+  });
+
+  jQuery('input[type="color"]').spectrum({
+		showInput: true,
+		allowEmpty: true,
+	});
 
   ////////////////////////////////////////////////////////////////////////////
   /////////////             Door and window section              /////////////
@@ -1413,7 +1540,7 @@ jQuery(document).ready(function($){
 
   canvas.on("mouse:up",function(e){
     var o;
-    if(typeof pWall == 'undefined' || pWall == null || isDrawMode || isMeasure)
+    if(typeof pWall == 'undefined' || pWall == null || isDrawMode || isMeasure || isCamera)
       return;
     for (var i = pWall.doors.length - 1; i >= 0; i--) {
       o = canvas._objects[pWall.doors[i]];
@@ -1787,6 +1914,59 @@ jQuery(document).ready(function($){
   ////////////////            End drawing Section           //////////////////
   ////////////////////////////////////////////////////////////////////////////
 
+
+  ////////////////////////////////////////////////////////////////////////////
+  ////////////////              Camera Section              //////////////////
+  ////////////////////////////////////////////////////////////////////////////
+
+  var cameraPath = "M324,594 L324,604 C324,606 326,606 326,606 L337.916016,606 C337.916016,606 339.916016,606 339.916016,604 L339.916016,594 C339.916016,592 337.916016,592 337.916016,592 L326,592 C326,592 324,592 324,594 Z M341.080933,602.128784 L346,606 L346,592 L341.080933,595.906562 L341.080933,602.128784 Z";
+  var isCamera = false;
+
+  jQuery(".toolbar div.camera").on("click","span.camera",function(event){
+    resetState();
+    isCamera = true;
+    var d = event.delegateTarget;
+    jQuery(d).addClass('active');
+    getCanvasElement(canvas).addClass('render');
+  });
+
+  canvas.on("mouse:up",function(e){
+    if(!isCamera) {
+      var curObj = canvas.getActiveObject();
+      if(curObj == null || !curObj.isCamera)
+        return;
+
+      return;
+    }
+    var camera = new fabric.Path(cameraPath,{
+      left: canvas.getPointer(e.e).x,
+      top: canvas.getPointer(e.e).y,
+      lockScalingX: true,
+      lockScalingY: true,
+      hoverCursor: "move",
+    });
+    camera.setControlsVisibility({
+      tl:false,
+      mt:false,
+      ml:false,
+      mb:false,
+      mr: false,
+      tr:false,
+      bl:false,
+      br: false,
+    });
+    resetState();
+    jQuery('div.pointer').addClass('active');
+    isCamera = false;
+    camera.isCamera = true;
+    canvas.add(camera);
+  });
+
+
+  ////////////////////////////////////////////////////////////////////////////
+  ////////////////            End Camera Section            //////////////////
+  ////////////////////////////////////////////////////////////////////////////
+
   jQuery(".object-control .product-container").on('click', '.view-detail', function(event) {
   event.preventDefault();
   var activeObj = canvas.getActiveObject();
@@ -1813,6 +1993,291 @@ jQuery(document).ready(function($){
 
   }
   });
+
+
+  //Track history
+  var pushHistory = function() {
+
+    var savedCanvas = jQuery.extend(true, {}, canvas);
+    var historyObject = {};
+    savedCanvas._objects.length = 0;
+    canvas._objects.forEach(function(el){
+      savedCanvas._objects.push(jQuery.extend(true, {}, el));
+      if(el.type == "path-group")
+      {
+          savedCanvas._objects[savedCanvas._objects.length - 1].paths.length = 0;
+          el.paths.forEach(function(p){
+            savedCanvas._objects[savedCanvas._objects.length - 1].paths.push(jQuery.extend(true, {}, p));
+          });
+      }
+    });
+    historyObject.canvas = savedCanvas;
+    historyObject.cart = Cart.clone(cart);
+    undoStack.push(historyObject);
+    if(undoStack.length > 1)
+      document.getElementById("undo").removeAttribute("disabled");
+  }
+
+   //Add item to Cart
+   /**
+    * Save data to cart array and push div element to Cart Tab
+    * Only save to cookie when press checkout or save
+    *
+    **/
+  var productDiv = '<div class="product" id="cart-product-{{productId}}" data-pid="{{productId}}">'
+                 + '<div class="row">'
+                 + '<div class="product-image col-md-4">'
+                 + '<img class="img-responsive" src="{{productImg}}" />'
+                 + '</div>'
+                 + '<div class="product-detail col-md-8">'
+                 + '<h3 class="product-title">'
+                 + '{{productTitle}}'
+                 + '</h3>'
+                 + '<p class="product-quantity">'
+                 + '{{productPrice}} <span class="text-right">x {{productQuantity}}</span>'
+                 + '</p>'
+                 + '</div>'
+                 + '</div>'
+                 + '</div>';
+
+    var addItemToCart = function (obj) {
+        var product = new Product({
+            Id: obj.pId,
+            Name: obj.ProName,
+            ImgUrl: obj.realImage,
+            Price: obj.price,
+            Quantity: 1
+        });
+        if(cart.checkProduct(product))
+        {
+            cart.addProduct(product);
+            jQuery("#furnitures .cart .cart #cart-product-"+product.Id).find(".product-quantity span").text('x'+cart.getProduct(product.Id).Quantity);
+        }
+        else
+        {
+            cart.pushProduct(product);
+            var insertDiv = productDiv.replace(/{{productId}}/g, product.Id)
+                                      .replace(/{{productImg}}/g, product.ImgUrl)
+                                      .replace(/{{productTitle}}/g, product.Name)
+                                      .replace(/{{productPrice}}/g, String(product.Price).addCommas().curencyPostfix("đ"))
+                                      .replace(/{{productQuantity}}/g, product.Quantity);
+            jQuery("#furnitures .cart .cart").append(insertDiv);
+        }
+    }
+
+    var minusItemFromCart = function (obj) {
+        var product = cart.getProduct(obj.pId);
+
+        if (product.Quantity > 1) {
+            cart.minusProduct(product);
+            jQuery("#furnitures .cart .cart #cart-product-" + product.Id).find(".product-quantity span").text('x' + cart.getProduct(product.Id).Quantity);
+        }
+        else {
+            cart.deleteProduct(product);
+            jQuery("#furnitures .cart .cart #cart-product-" + product.Id).remove();
+        }
+    }
+
+    var recreateCart = function () {
+        jQuery("#furnitures .cart .cart").html('');
+        for(var i = 0; i < cart.cartData.length; i++)
+        {
+            var product = cart.cartData[i];
+            var insertDiv = productDiv.replace(/{{productId}}/g, product.Id)
+                                     .replace(/{{productImg}}/g, product.ImgUrl)
+                                     .replace(/{{productTitle}}/g, product.Name)
+                                     .replace(/{{productPrice}}/g, String(product.Price).addCommas().curencyPostfix("đ"))
+                                     .replace(/{{productQuantity}}/g, product.Quantity);
+            jQuery("#furnitures .cart .cart").append(insertDiv);
+        }
+    }
+
+    //Modal
+    var $form_modal = jQuery('.cd-user-modal'),
+		$form_login = $form_modal.find('#cd-login'),
+		$form_signup = $form_modal.find('#cd-signup'),
+		$form_forgot_password = $form_modal.find('#cd-reset-password'),
+		$form_modal_tab = $('.cd-switcher'),
+		$tab_login = $form_modal_tab.children('li').eq(0).children('a'),
+		$tab_signup = $form_modal_tab.children('li').eq(1).children('a'),
+		$forgot_password_link = $form_login.find('.cd-form-bottom-message a'),
+		$back_to_login_link = $form_forgot_password.find('.cd-form-bottom-message a'),
+		$main_nav = jQuery('.main-nav');
+
+
+    //IE9 placeholder fallback
+    //credits http://www.hagenburger.net/BLOG/HTML5-Input-Placeholder-Fix-With-jQuery.html
+    if (!Modernizr.input.placeholder) {
+        $('[placeholder]').focus(function () {
+            var input = $(this);
+            if (input.val() == input.attr('placeholder')) {
+                input.val('');
+            }
+        }).blur(function () {
+            var input = $(this);
+            if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                input.val(input.attr('placeholder'));
+            }
+        }).blur();
+        $('[placeholder]').parents('form').submit(function () {
+            $(this).find('[placeholder]').each(function () {
+                var input = $(this);
+                if (input.val() == input.attr('placeholder')) {
+                    input.val('');
+                }
+            })
+        });
+    }
+
+    //open modal
+    //$main_nav.on('click', function (event) {
+
+    //    if ($(event.target).is($main_nav)) {
+    //        // on mobile open the submenu
+    //        $(this).children('ul').toggleClass('is-visible');
+    //    } else {
+    //        // on mobile close submenu
+    //        $main_nav.children('ul').removeClass('is-visible');
+    //        //show modal layer
+    //        $form_modal.addClass('is-visible');
+    //        //show the selected form
+    //        ($(event.target).is('.cd-signup')) ? signup_selected() : login_selected();
+    //    }
+
+    //});
+
+    //close modal
+    $('.cd-user-modal').on('click', function (event) {
+        if ($(event.target).is($form_modal) || $(event.target).is('.cd-close-form')) {
+            $form_modal.removeClass('is-visible');
+        }
+    });
+    //close modal when clicking the esc keyboard button
+    $(document).keyup(function (event) {
+        if (event.which == '27') {
+            $form_modal.removeClass('is-visible');
+        }
+    });
+
+    //switch from a tab to another
+    $form_modal_tab.on('click', function (event) {
+        event.preventDefault();
+        ($(event.target).is($tab_login)) ? login_selected() : signup_selected();
+    });
+
+    //hide or show password
+    $('.hide-password').on('click', function () {
+        var $this = $(this),
+			$password_field = $this.prev('input');
+
+        ('password' == $password_field.attr('type')) ? $password_field.attr('type', 'text') : $password_field.attr('type', 'password');
+        ('Hide' == $this.text()) ? $this.text('Show') : $this.text('Hide');
+        //focus and move cursor to the end of input field
+        $password_field.putCursorAtEnd();
+    });
+
+    //show forgot-password form 
+    $forgot_password_link.on('click', function (event) {
+        event.preventDefault();
+        forgot_password_selected();
+    });
+
+    //back to login from the forgot-password form
+    $back_to_login_link.on('click', function (event) {
+        event.preventDefault();
+        login_selected();
+    });
+
+    function login_selected() {
+        $form_login.addClass('is-selected');
+        $form_signup.removeClass('is-selected');
+        $form_forgot_password.removeClass('is-selected');
+        $tab_login.addClass('selected');
+        $tab_signup.removeClass('selected');
+    }
+
+    function signup_selected() {
+        $form_login.removeClass('is-selected');
+        $form_signup.addClass('is-selected');
+        $form_forgot_password.removeClass('is-selected');
+        $tab_login.removeClass('selected');
+        $tab_signup.addClass('selected');
+    }
+
+    function forgot_password_selected() {
+        $form_login.removeClass('is-selected');
+        $form_signup.removeClass('is-selected');
+        $form_forgot_password.addClass('is-selected');
+    }
+
+    //REMOVE THIS - it's just to show error messages 
+    $form_login.find('input[type="submit"]').on('click', function (event) {
+        event.preventDefault();
+        //$form_login.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+        
+        jQuery(this).addClass('loading');
+        jQuery.post('/Account/AjaxLogin', { model: $form_login.find('form').serialize() }, function (data, status, xhr) {
+            var jsdaa = JSON.stringify(
+              canvas.toJSON(
+                [
+                  'isLock',
+                  'srcSVG',
+                  'hexCode',
+                  'pathToFill',
+                  'left',
+                  'top',
+                  'strokeWidth',
+                  'strokeLineCap',
+                  'fill',
+                  'hasControls',
+                  'hasBorders',
+                  'lockMovementY',
+                  'lockMovementX',
+                  'perPixelTargetFind',
+                  'padding'
+                ]
+              ));
+            jQuery.post('/User/SaveCanvas', { data: jsdaa }, function (response, status, xhr) {
+                if (status = 202) {
+                    UIkit.notify({
+                        message: '<i class="uk-icon-check"></i> Saved!',
+                        status: 'success',
+                        timeout: 2000,
+                        pos: 'top-center'
+                    });
+                }
+                else {
+                    UIkit.notify({
+                        message: '<i class="uk-icon-check"></i> Oops! Something wrong;!',
+                        status: 'error',
+                        timeout: 2000,
+                        pos: 'top-center'
+                    });
+                }
+                $form_modal.removeClass('is-visible');
+            }).fail(function (data, status, xhr) {
+                if (data.status == 403) {
+                    UIkit.notify({
+                        message: '<i class="uk-icon-check"></i> Oops! Something wrong;!',
+                        status: 'error',
+                        timeout: 2000,
+                        pos: 'top-center'
+                    });
+                }
+            }).done(function () {
+                
+            });
+        }).fail(function(){
+    
+        }).done(function (data, status, xhr) {
+            
+            jQuery(this).removeClass('loading');
+        });
+    });
+    $form_signup.find('input[type="submit"]').on('click', function (event) {
+        event.preventDefault();
+        //$form_signup.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+    });
 
 });
 
@@ -1901,13 +2366,14 @@ var updateControl = function(o) { //Update corner control
         dimession_height = jQuery(".height-dimession"),
         delete_button = jQuery(".delete-button"),
         container = jQuery("#tutorial");
-
-  rotate_button.css({
-      "display": 'block',
-      "left": o.oCoords.bl.x - 10 + container.offset().left + "px",
-      "top":  o.oCoords.bl.y - 12 + container.offset().top + "px",
-      "transform" : "rotate("+o.getAngle()+"deg)"
-  });
+  if(!o.isCamera) {
+    rotate_button.css({
+        "display": 'block',
+        "left": o.oCoords.bl.x - 10 + container.offset().left + "px",
+        "top":  o.oCoords.bl.y - 12 + container.offset().top + "px",
+        "transform" : "rotate("+o.getAngle()+"deg)"
+    });
+  }
   delete_button.css({
       "display": 'block',
       "left": o.oCoords.tr.x - 8 + container.offset().left + "px",
@@ -2024,4 +2490,158 @@ var showPopUp = function(data) {
   dimbg.appendChild(popup);
 
   document.body.appendChild(dimbg);
+}
+
+//Cart Class 
+
+var Cart = function (cart) {
+    this.cartData = (cart) ? cart : [];
+}
+
+Cart.prototype.pushProduct = function (product) {
+    this.cartData.push(product);
+};
+
+Cart.prototype.getProduct = function(productId) {
+    for(var i = this.cartData.length - 1; i >=0; i--)
+    {
+        if(this.cartData[i].Id == productId)
+        {
+            return this.cartData[i];
+        }
+    }
+    return 0;
+}
+
+Cart.prototype.deleteProduct = function(product) {
+    for(var i = this.cartData.length - 1; i >=0; i--)
+    {
+        if(this.cartData[i].Id == product.Id)
+        {
+            this.cartData.splice(i,1);
+            return;
+        }
+    }
+}
+
+Cart.prototype.checkProduct = function (product) {
+    for (var i = this.cartData.length - 1; i >= 0; i--) {
+        if (this.cartData[i].Id == product.Id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+Cart.prototype.addProduct = function (product) {
+    for (var i = this.cartData.length - 1; i >= 0; i--) {
+        if (this.cartData[i].Id == product.Id) {
+            this.cartData[i].Quantity++;
+        }
+    }
+}
+
+Cart.prototype.minusProduct = function (product) {
+    for (var i = this.cartData.length - 1; i >= 0; i--) {
+        if (this.cartData[i].Id == product.Id) {
+            this.cartData[i].Quantity--;
+        }
+    }
+}
+
+Cart.prototype.serialize = function () {
+    var json = JSON.stringify(this.cartData);
+    return Base64.encode(json);
+}
+
+Cart.prototype.deserialize = function (base64string) {
+    var json = Base64.decode(base64string);
+    this.cartData = JSON.parse(json);
+}
+
+Cart.clone = function (cart) {
+    var clone = jQuery.extend(true, {}, cart);
+    clone.cartData.length = 0;
+    for (var i = cart.cartData.length - 1; i >= 0; i--)
+    {
+        clone.cartData.unshift(JSON.parse(JSON.stringify(cart.cartData[i])));
+    }
+    return clone;
+}
+
+//Product Class
+var Product = function (data) {
+    this.Id = data.Id;
+    this.Name = data.Name;
+    this.Price = data.Price;
+    this.Quantity = data.Quantity;
+    this.ImgUrl = data.ImgUrl;
+}
+
+//Base64
+var Base64 = { _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", encode: function (e) { var t = ""; var n, r, i, s, o, u, a; var f = 0; e = Base64._utf8_encode(e); while (f < e.length) { n = e.charCodeAt(f++); r = e.charCodeAt(f++); i = e.charCodeAt(f++); s = n >> 2; o = (n & 3) << 4 | r >> 4; u = (r & 15) << 2 | i >> 6; a = i & 63; if (isNaN(r)) { u = a = 64 } else if (isNaN(i)) { a = 64 } t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a) } return t }, decode: function (e) { var t = ""; var n, r, i; var s, o, u, a; var f = 0; e = e.replace(/[^A-Za-z0-9+/=]/g, ""); while (f < e.length) { s = this._keyStr.indexOf(e.charAt(f++)); o = this._keyStr.indexOf(e.charAt(f++)); u = this._keyStr.indexOf(e.charAt(f++)); a = this._keyStr.indexOf(e.charAt(f++)); n = s << 2 | o >> 4; r = (o & 15) << 4 | u >> 2; i = (u & 3) << 6 | a; t = t + String.fromCharCode(n); if (u != 64) { t = t + String.fromCharCode(r) } if (a != 64) { t = t + String.fromCharCode(i) } } t = Base64._utf8_decode(t); return t }, _utf8_encode: function (e) { e = e.replace(/rn/g, "n"); var t = ""; for (var n = 0; n < e.length; n++) { var r = e.charCodeAt(n); if (r < 128) { t += String.fromCharCode(r) } else if (r > 127 && r < 2048) { t += String.fromCharCode(r >> 6 | 192); t += String.fromCharCode(r & 63 | 128) } else { t += String.fromCharCode(r >> 12 | 224); t += String.fromCharCode(r >> 6 & 63 | 128); t += String.fromCharCode(r & 63 | 128) } } return t }, _utf8_decode: function (e) { var t = ""; var n = 0; var r = c1 = c2 = 0; while (n < e.length) { r = e.charCodeAt(n); if (r < 128) { t += String.fromCharCode(r); n++ } else if (r > 191 && r < 224) { c2 = e.charCodeAt(n + 1); t += String.fromCharCode((r & 31) << 6 | c2 & 63); n += 2 } else { c2 = e.charCodeAt(n + 1); c3 = e.charCodeAt(n + 2); t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63); n += 3 } } return t } }
+
+
+jQuery(document).ready(function ($) {
+    
+
+    
+
+
+    //IE9 placeholder fallback
+    //credits http://www.hagenburger.net/BLOG/HTML5-Input-Placeholder-Fix-With-jQuery.html
+    if (!Modernizr.input.placeholder) {
+        $('[placeholder]').focus(function () {
+            var input = $(this);
+            if (input.val() == input.attr('placeholder')) {
+                input.val('');
+            }
+        }).blur(function () {
+            var input = $(this);
+            if (input.val() == '' || input.val() == input.attr('placeholder')) {
+                input.val(input.attr('placeholder'));
+            }
+        }).blur();
+        $('[placeholder]').parents('form').submit(function () {
+            $(this).find('[placeholder]').each(function () {
+                var input = $(this);
+                if (input.val() == input.attr('placeholder')) {
+                    input.val('');
+                }
+            })
+        });
+    }
+
+});
+
+
+//credits http://css-tricks.com/snippets/jquery/move-cursor-to-end-of-textarea-or-input/
+jQuery.fn.putCursorAtEnd = function () {
+    return this.each(function () {
+        // If this function exists...
+        if (this.setSelectionRange) {
+            // ... then use it (Doesn't work in IE)
+            // Double the length because Opera is inconsistent about whether a carriage return is one character or two. Sigh.
+            var len = $(this).val().length * 2;
+            this.setSelectionRange(len, len);
+        } else {
+            // ... otherwise replace the contents with itself
+            // (Doesn't work in Google Chrome)
+            $(this).val($(this).val());
+        }
+    });
+};
+
+String.prototype.addCommas = function() {
+    var rx = /(\d+)(\d{3})/;
+    return this.replace(/^\d+/, function (w) {
+        while (rx.test(w)) {
+            w = w.replace(rx, '$1,$2');
+        }
+        return w;
+    });
+};
+
+String.prototype.curencyPostfix = function (postfix) {
+    return this + " " + postfix;
 }

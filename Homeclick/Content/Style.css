@@ -3544,3 +3544,29 @@ select {
     color: #757575;
     border-radius: 0;
 }
+
+.loading.arc {
+  position: absolute;
+  border: 2px solid;
+  border-color: transparent #02BDB6 #02BDB6 #02BDB6;
+border-radius: 50%;
+margin: -6.5% 0 0 51%;
+width: 24px;
+height: 24px;
+  -webkit-animation: single-arc-rotate 1s infinite linear;
+          animation: single-arc-rotate 1s infinite linear;
+}
+
+@-webkit-keyframes single-arc-rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes single-arc-rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}

@@ -20,20 +20,20 @@
     @Styles.Render("~/Content/front-to-back.css")
 </head>
 <body>
-    @Html.Partial("_Header")
+    @* @Html.Partial("_Header") *@
 
-    <main class="uk-grid main-page uk-container uk-container-center">
-        <div id="productbar" class="uk-width-2-5">
+    <main class="uk-grid main-page">
+        <div id="productbar" class="uk-width-3-10">
             <div class="logo uk-width-1-1">
-                <img src="img/icon.png" class="uk-width-1-5" />
-                <span class="uk-width-4-5 slogan"><span class="aqua">Tự</span> thiết kế</span>
+              <a href="@Url.Action("Index","Home")"><img src="~/Upload/Images/assets/logo.png" alt="" /></a>
+              <p>Online furniture store project</p>
             </div>
             <div id="sidebar-container">
                 <ul class="uk-tab" data-uk-tab="{connect:'#furnitures'}">
                     <li><a href="">Sản phẩm</a></li>
                     <li><a href="">Ký hiệu</a></li>
-                    <li><a href="">Tìm kiếm</a></li>
-                    <li><a href="">Wishlist</a></li>
+                    <li><a href="">Mong muốn</a></li>
+                    <li><a href="">Giỏ hàng</a></li>
                 </ul>
                 <ul class="uk-switcher svg-container" id="furnitures">
                     <li class="tab-list product-fur">
@@ -50,25 +50,31 @@
                             </div>
                         </div>
                     </li>
-                    <li class="tab-list sign-fur">
+                    <li class="tab-list symbol">
+                      <div class="product-list">
 
-                    </li>
-                    <li class="tab-list search">
-
+                      </div>
                     </li>
                     <li class="tab-list wishlist">
+                      <div class="wishlist">
 
+                      </div>
+                    </li>
+                    <li class="tab-list cart">
+                      <div class="cart">
+                        
+                      </div>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="uk-width-3-5 main-canvas">
+        <div class="uk-width-7-10 main-canvas">
             <div class="seperator-big"></div>
             <div class="control-container main-menu">
-                <button class="uk-button" id="new">new</button>
                 <button class="uk-button" id="saveJSON"">save</button>
+                <button class="uk-button" id="new">Refresh</button>
                 <button class="uk-button" id="print">print</button>
-                <button class="uk-button" id="search">search</button>
+                @* <button class="uk-button" id="search">search</button> *@
                 <button class="uk-button" id="undo">undo</button>
             </div>
             <div class="control-container toolbar">
@@ -81,16 +87,24 @@
                 <div class="ruler">
                     <span class="ruler icon"></span>
                 </div>
+
+                <div class="camera">
+                    <span class="camera icon"></span>
+                </div>
+
                 <div class="pen">
                     <span class="pen icon"><i class="fa fa-pencil"></i></span>
                 </div>
                 <div class="zoom-pointer">
                     <span class="zoom-pointer icon"></span>
                 </div>
+                <div class="fit-to-width">
+                    <span class="fit-to-width icon"></span>
+                </div>
                 <div class="zoom uk-vertical-align">
                     <span class="uk-vertical-align-middle">Zoom </span>
                     <input type="range" min="10" max="500" step="10" class="zoom-slider uk-form-width-small uk-vertical-align-middle" value="100" name="zoom_slider" oninput="zoom_change(event)" />
-                    <input type="text" name="zoom_value" class="zoom-value uk-form-width-mini uk-vertical-align-middle" value="100" />
+                    <input type="text" name="zoom_value" class="zoom-value uk-form-width-small uk-vertical-align-middle" value="100" />
                 </div>
                 <!-- 	<div class="control-container">
                         <a id="saveJSON" href="#">Save</a>
@@ -108,7 +122,7 @@
             </div>
             <input type="hidden" value="@Model.canvas_data" id="canvas-data" />
             <div class="canvas-holder" id="canvas-holder">
-                <canvas id="tutorial" width="718" height="600" draggable="true"></canvas>
+                <canvas id="tutorial" width="914" height="600" draggable="true"></canvas>
                 <div class="delete-button object-button"></div>
                 <div class="rotate-button object-button"></div>
                 <span class="dimession width-dimession"></span>
@@ -178,7 +192,7 @@
         </div>
     </main>
 
-    <footer id="main-footer" class="main-footer">
+    @* <footer id="main-footer" class="main-footer">
         <h3 class="footer-title">Nhận thông tin</h3>
         <div class="footer-seperator"></div>
         <div class="subscribe">
@@ -197,7 +211,103 @@
         <div class="copyright">
             <p>Copyright &copy; 2015 Homeclick.vn - Design by: websiteplaza</p>
         </div>
-    </footer>
+    </footer> *@
+
+    <div class="cd-user-modal">
+        <!-- this is the entire modal form, including the background -->
+        <div class="cd-user-modal-container">
+            <!-- this is the container wrapper -->
+            <ul class="cd-switcher">
+                <li><a href="#0">Sign in</a></li>
+                <li><a href="#0">New account</a></li>
+            </ul>
+
+            <div id="cd-login">
+                <!-- log in form -->
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <label class="image-replace cd-username" for="signin-email">Username</label>
+                        <input class="full-width has-padding has-border" id="signin-email" name="UserName" type="text" placeholder="Username">
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-password" for="signin-password">Password</label>
+                        <input class="full-width has-padding has-border" id="signin-password" name="Password" type="password" placeholder="Password">
+                        <a href="#0" class="hide-password">Show</a>
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <input type="checkbox" name="RememberMe" id="remember-me" checked>
+                        <label for="remember-me">Remember me</label>
+                    </p>
+
+                    <p class="fieldset">
+                        <input class="full-width" type="submit" value="Login">
+                    </p>
+                </form>
+
+                <p class="cd-form-bottom-message"><a href="#0">Forgot your password?</a></p>
+                <!-- <a href="#0" class="cd-close-form">Close</a> -->
+            </div> <!-- cd-login -->
+
+            <div id="cd-signup">
+                <!-- sign up form -->
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <label class="image-replace cd-username" for="signup-username">Username</label>
+                        <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-email" for="signup-email">E-mail</label>
+                        <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-password" for="signup-password">Password</label>
+                        <input class="full-width has-padding has-border" id="signup-password" type="text" placeholder="Password">
+                        <a href="#0" class="hide-password">Hide</a>
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <input type="checkbox" id="accept-terms">
+                        <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
+                    </p>
+
+                    <p class="fieldset">
+                        <input class="full-width has-padding" type="submit" value="Create account">
+                    </p>
+                </form>
+
+                <!-- <a href="#0" class="cd-close-form">Close</a> -->
+            </div> <!-- cd-signup -->
+
+            <div id="cd-reset-password">
+                <!-- reset password form -->
+                <p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
+
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <label class="image-replace cd-email" for="reset-email">E-mail</label>
+                        <input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail">
+                        <span class="cd-error-message">Error message here!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <input class="full-width has-padding" type="submit" value="Reset password">
+                    </p>
+                </form>
+
+                <p class="cd-form-bottom-message"><a href="#0">Back to log-in</a></p>
+            </div> <!-- cd-reset-password -->
+            <a href="#0" class="cd-close-form">Close</a>
+        </div> <!-- cd-user-modal-container -->
+    </div> <!-- cd-user-modal -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
@@ -242,7 +352,7 @@
                     GetHtmlView('/Sanpham/canvasList?cat_id=' + v, 'Funiture-list');
                 }
             });
-            
+
             $('#saveJSON').click(function () {
 
             });
@@ -257,7 +367,7 @@
     </script>
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/Scripts/jquery-1.11.3.min.js")
-    @Scripts.Render("~/Scripts/fabric.min.js")
+    @Scripts.Render("~/Scripts/fabric.js")
 
     @Scripts.Render("~/Scripts/canvas.nocache.js")
 
@@ -269,11 +379,13 @@
 
     @Scripts.Render("~/Scripts/groupLiPolygon.js")
 
+    @Scripts.Render("~/Scripts/measureLine.js")
+
     @Scripts.Render("~/Scripts/uikit.min.js")
 
     @Scripts.Render("~/Scripts/notify.min.js")
 
-    
+    @Scripts.Render("~/Scripts/main.js")
 
     @Scripts.Render("~/Scripts/spectrum.js")
 

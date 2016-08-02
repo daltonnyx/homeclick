@@ -35,36 +35,36 @@
 
 
         //--------------slider home--------------//
+			if(jQuery().owlCarousel) {
+	        $("#gallery_01").owlCarousel({// slider home
+	            items: 4,
+	            //transitionStyle : "owl-fade-in",
+	            slideSpeed: 300,
+	            paginationSpeed: 400,
+	            itemsDesktop: [1199, 3],
+	            itemsDesktopSmall: [979, 3],
+	            itemsTablet: [767, 2],
+	            itemsMobile: false,
+	            navigation: true,
+	            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
+	        });
 
-        $("#gallery_01").owlCarousel({// slider home
-            items: 4,
-            //transitionStyle : "owl-fade-in",
-            slideSpeed: 300,
-            paginationSpeed: 400,
-            itemsDesktop: [1199, 3],
-            itemsDesktopSmall: [979, 3],
-            itemsTablet: [767, 2],
-            itemsMobile: false,
-            navigation: true,
-            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
-        });
+	        $("#thietkemau-slider").owlCarousel({
 
-        $("#thietkemau-slider").owlCarousel({
+	            navigation: true, // Show next and prev buttons
+	            slideSpeed: 300,
+	            paginationSpeed: 400,
+	            pagination: true,
 
-            navigation: true, // Show next and prev buttons
-            slideSpeed: 300,
-            paginationSpeed: 400,
-            pagination: true,
+	            items: 1,
+	            itemsDesktop: false,
+	            itemsDesktopSmall: false,
+	            itemsTablet: false,
+	            itemsMobile: false,
+	            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
+	        });
+				}
 
-            items: 1,
-            itemsDesktop: false,
-            itemsDesktopSmall: false,
-            itemsTablet: false,
-            itemsMobile: false,
-            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
-        });
-
-       
 
 
         $('.layout-built-item li').click(function () {
@@ -101,7 +101,7 @@
         //--------------Toogle--------------//
 		$('.category-product-detail').hide();
             $('.table-section-header').unbind('click');
-			
+
             $('.table-section-header').click(function(){
 				$(this).toggleClass("active-show");
 				$(this).parent('.product-list-section').addClass("list-show");
@@ -112,11 +112,11 @@
 			$('.main-menu ul li a').click(function(){
 				$('.main-menu ul li a').parent().removeClass('active');
 				$(this).parent().addClass("active");
-				 
+
 			});
-			
+
 //Click  item menu
-		var pgurl = window.location.href.substr(window.location.href.lastIndexOf("/")+1);	
+		var pgurl = window.location.href.substr(window.location.href.lastIndexOf("/")+1);
          $(".list-category ul li a").each(function(){
 			var icon=$(this).attr("href");
 			var hre=icon.split("/");
@@ -131,12 +131,12 @@
               if(acti == pgurl || acti == '' )
               $(this).addClass("active");
 			$(this).parents('.sub-menu').addClass("active");
-			
-         });	
+
+         });
 		//$(".main-menu ul li ul.sub-menu.active").each(function(){
 		//	$(this).parent('.menu-item').addClass("active");
-		//});		 
-			
+		//});
+
         //------------menu mobie------------//
 
         $('.mobimenu').click(function(){
@@ -144,7 +144,7 @@
             return false;
         });
 
-        
+
 
         //--------------back to top--------------//
 
@@ -173,8 +173,7 @@
             );
         });
 
-	});
-
+    });
 })(jQuery);
 
 $(window).resize(function(){
@@ -208,8 +207,8 @@ $(document).ready(function ($) {
         columnWidth: '.grid-item',
         gutter: 5
     });
-
 });
+
    // $(function() {
       //   var pgurl = window.location.href.substr(window.location.href
    // .lastIndexOf("/")+1);
