@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Homeclick.Models.Post>
+
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_SharedLayout.cshtml";
+    var categories = ViewBag.Categories as IEnumerable<Homeclick.Models.Category>;
+    var posts = ViewBag.Posts as IEnumerable<Homeclick.Models.Post>;
+    var categoryValue = Request.Params["category_id"];
+    var url = "";
+}
+
+<section id="content">
+    <div class="grid row">
+        @foreach (var item in Model)
+        {
+            <div class="blog-item col-xs-6 col-md-4">
+                <div class="thumb-image">
+                    <img src="@url/@item.image" alt="">
+                </div>
+                <div class="blog-item-conent">
+                    <h3 class="blog-item-title"><a href="@Url.Action("Details",new { category_id = categoryValue, post_id = item.Id})">@item.title </a></h3>
+                    <div class="blog-grid-text">
+                        @item.excerpt
+                    </div>
+                    <p class="date-blog">@item.created_date</p>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section breadcrumb {
+    <ul>
+        <li><a href="@Url.Action("Index","Home")">Home</a></li>
+        <li>Thư viện</li>
+    </ul>
+}
+
+@section styles {
+    <style>
+    </style>
+}
+
+@section scripts {
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+    })
+</script>
+}

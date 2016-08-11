@@ -1,211 +1,300 @@
 ﻿@model Homeclick.Models.Project
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout_Project.cshtml";
+    Layout = "~/Views/Shared/_SharedLayout_NoSidebar.cshtml";
     var url = "";
     var slides = ViewBag.Thumbnails as IEnumerable<Homeclick.Models.ProjectItem>;
 }
-<div class="row breadcrumb">
+
+<div class="container">
+    <div class="row">
+        <div id="layout-side" class="co-xs-12 col-md-4 col-lg-3">
+            @Html.Partial("_Sidebar_details")
+        </div>
+
+        <div class="co-xs-12 col-md-8 col-lg-9 project-content">
+            <div class="clearfix">
+                @Html.Partial("_LayoutTemplated", ViewBag.Layouts as IEnumerable<Homeclick.Models.ProjectItem>)
+
+                <div id="collectionsArea">
+                    <div id="layoutFull">
+                        <div id="mapContainer" class="effect" />
+                    </div>
+
+                    <div id="rooms" class="clearfix">
+
+                    </div>
+
+                    <div id="collectionsBorder">
+                        <div id="collections" class="clearfix">
+
+                        </div>
+                    </div>
+
+                    <div id="collectionDetails" class="clearfix">
+
+                        <div id="collectionContent">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section breadcrumb {
     <ul>
         <li><a href="../">Home</a></li>
         <li><a href="/Project">Dự án</a></li>
         <li>@Model.Name</li>
     </ul>
-</div>
-
-<div class="row widget">
-    <div id="blackSrc"></div>
-    <div id="layout-side" class="col-md-4 col-lg-3">
-        @Html.Partial("_Sidebar")
-    </div>
-
-    <div class="col-md-8 col-lg-9 project-content">
-        <div id="tabs2" class="clearfix project-tab">
-            @Html.Partial("_LayoutTemplated", ViewBag.Layouts as IEnumerable<Homeclick.Models.ProjectItem>)
-
-            <div id="collectionsArea">
-                <div id="layoutFull">
-                    <div id="mapContainer" class="effect">
-                        <img class="imgmapMainImage" width="810" height="611" alt="" usemap="#map">
-                        <map name="map" id="map">
-                            <area id="a1" href="#" shape="poly" coords="552,197,429,197,429,298,550,298" />
-                        </map>
-                    </div>
-                </div>
-
-                <div id="rooms" class="clearfix">
-
-                </div>
-
-                <div id="collectionsBorder">
-                    <div id="collections" class="clearfix">
-
-                    </div>
-                </div>
-
-                <div id="collectionDetails" class="col-md-12">
-                    <div style="margin:10px 0;" hidden>
-                        <a href="#tabs2" onclick="Back()" style="font-size:18px;"><i class="fa fa-angle-left" style="margin-right:15px;" aria-hidden="true"></i><span style="font-family: 'Cousine' ;">Trở về trang trước</span> </a>
-                    </div>
-                    <div id="collectionContent">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<!--fancyBox-->
-<link href="~/Scripts/Plugins/fancyBox/jquery.fancybox-buttons.css" rel="stylesheet" />
-<link href="~/Scripts/Plugins/fancyBox/jquery.fancybox-thumbs.css" rel="stylesheet" />
-<link href="~/Scripts/Plugins/fancyBox/jquery.fancybox.css" rel="stylesheet" />
-
-<script src="~/Scripts/Plugins/fancyBox/jquery.fancybox.pack.js"></script>
-<script src="~/Scripts/Plugins/fancyBox/jquery.fancybox-buttons.js"></script>
-<script src="~/Scripts/Plugins/fancyBox/jquery.fancybox-media.js"></script>
-<script src="~/Scripts/Plugins/fancyBox/jquery.fancybox-thumbs.js"></script>
-<script src="~/Scripts/Plugins/fancyBox/jquery.mousewheel-3.0.6.pack.js"></script>
-<!--fancyBox-->
-
-<script src="~/Scripts/Plugins/ImageMap/rwdImageMaps/jquery.rwdImageMaps.js"></script>
-<script src="~/Scripts/Plugins/ImageMap/maphilight/jquery.maphilight.min.js"></script>
-<script src="~/Scripts/Plugins/ImageMap/mapify/mapify.js"></script>
-<link href="~/Scripts/Plugins/ImageMap/mapify/jquery.mapify.css" rel="stylesheet" />
-<style>
-    .mapify-hover {
-    fill: rgba(0,0,0,0.15);
-    stroke: #fff;
-    stroke-width: 2;
 }
-</style>
-<script type="text/javascript">
-    var imgMap = $('img[usemap]');
 
-    var styles = [{ "featureType": "landscape.natural", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "color": "#e0efef" }] }, { "featureType": "poi", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "hue": "#1900ff" }, { "color": "#c0e8e8" }] }, { "featureType": "road", "elementType": "geometry", "stylers": [{ "lightness": 100 }, { "visibility": "simplified" }] }, { "featureType": "road", "elementType": "labels", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit.line", "elementType": "geometry", "stylers": [{ "visibility": "on" }, { "lightness": 700 }] }, { "featureType": "water", "elementType": "all", "stylers": [{ "color": "#7dcdcd" }] }];
-    function init_map() {
-        var styledMap = new google.maps.StyledMapType(styles, { name: "Styled Map" });
-        var customMapTypeId = 'custom_style';
+@section styles {
+    <link href="~/Scripts/Plugins/slick/slick-theme.css" rel="stylesheet" />
+    <link href="~/Content/Project.css" rel="stylesheet" />
+    <style>
+        .mapify-hover {
+            fill: rgba(0,0,0,0.15);
+            stroke: #fff;
+            stroke-width: 2;
+        }
+    </style>
+}
 
-        var myOptions = {
-            disableDefaultUI: true,
-            zoom: 14, center: new google.maps.LatLng(16.0504437, 108.21537309999997),
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            mapTypeControlOptions: {
-                mapTypeId: [google.maps.MapTypeId.ROADMAP, customMapTypeId]
+@section scripts {
+    <!--fancyBox-->
+    <link href="~/Scripts/Plugins/fancyBox/jquery.fancybox-buttons.css" rel="stylesheet" />
+    <link href="~/Scripts/Plugins/fancyBox/jquery.fancybox-thumbs.css" rel="stylesheet" />
+    <link href="~/Scripts/Plugins/fancyBox/jquery.fancybox.css" rel="stylesheet" />
+
+    <script src="~/Scripts/Plugins/fancyBox/jquery.fancybox.pack.js"></script>
+    <script src="~/Scripts/Plugins/fancyBox/jquery.fancybox-buttons.js"></script>
+    <script src="~/Scripts/Plugins/fancyBox/jquery.fancybox-media.js"></script>
+    <script src="~/Scripts/Plugins/fancyBox/jquery.fancybox-thumbs.js"></script>
+    <script src="~/Scripts/Plugins/fancyBox/jquery.mousewheel-3.0.6.pack.js"></script>
+    <!--fancyBox-->
+
+    <script src="~/Scripts/Plugins/ImageMap/rwdImageMaps/jquery.rwdImageMaps.js"></script>
+    <script src="~/Scripts/Plugins/ImageMap/maphilight/jquery.maphilight.min.js"></script>
+    <script src="~/Scripts/Plugins/ImageMap/mapify/mapify.js"></script>
+    <link href="~/Scripts/Plugins/ImageMap/mapify/jquery.mapify.css" rel="stylesheet" />
+
+    <script type='text/javascript' src="~/Scripts/Plugins/jlinq/jlinq.js"></script>
+    <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBB5V34f3crBWyutuwFCy73IzRCdIwqUrI'></script>
+    <script src="~/Scripts/Plugins/slick/slick.min.js"></script>
+    <script src="~/Scripts/Plugins/elementqueries/EQCSS.min.js"></script>
+
+    <script type="text/javascript">
+        var mapify = null;
+        var styles = [{ "featureType": "landscape.natural", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "color": "#e0efef" }] }, { "featureType": "poi", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "hue": "#1900ff" }, { "color": "#c0e8e8" }] }, { "featureType": "road", "elementType": "geometry", "stylers": [{ "lightness": 100 }, { "visibility": "simplified" }] }, { "featureType": "road", "elementType": "labels", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit.line", "elementType": "geometry", "stylers": [{ "visibility": "on" }, { "lightness": 700 }] }, { "featureType": "water", "elementType": "all", "stylers": [{ "color": "#7dcdcd" }] }];
+        function init_map() {
+            var styledMap = new google.maps.StyledMapType(styles, { name: "Styled Map" });
+            var customMapTypeId = 'custom_style';
+
+            var myOptions = {
+                disableDefaultUI: true,
+                zoom: 14, center: new google.maps.LatLng(16.0504437, 108.21537309999997),
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                mapTypeControlOptions: {
+                    mapTypeId: [google.maps.MapTypeId.ROADMAP, customMapTypeId]
+                }
+            };
+
+            map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+
+            map.mapTypes.set(customMapTypeId, styledMap);
+            map.setMapTypeId(customMapTypeId);
+
+            marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(16.0504437, 108.21537309999997) });
+            google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); });
+        } google.maps.event.addDomListener(window, 'load', init_map);
+
+        $.extend({
+            getJsonFromUrl: function (url, urlData) {
+                var result = null;
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: urlData,
+                    dataType: "json",
+                    async: false,
+                    success: function (jsonResult) {
+                        result = jsonResult;
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Failed to retrieve data.');
+                    }
+                })
+                return result;
             }
-        };
+        });
 
-        map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+        var collectionsData = [];
+        var collectionsArea = $('#collectionsArea');
+        var collectionContainer = $('#collections');
+        var collectionContent = $('#collectionContent');
 
-        map.mapTypes.set(customMapTypeId, styledMap);
-        map.setMapTypeId(customMapTypeId);
+        function LayoutLoad() {
+            $(this).fadeIn('slow').delay(2000).queue(function () {
 
-        marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(16.0504437, 108.21537309999997) });
-        google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); });
-    } google.maps.event.addDomListener(window, 'load', init_map);
+                $(this).dequeue();
+            });
+        }
 
-    $.extend({
-        getJsonFromUrl: function (url, urlData) {
-            var result = null;
+        function Back() {
+            $('#collectionDetails').fadeOut('slow');
+            $('#collectionsBorder').css('max-height', 1000);
+            clearMap();
+            event.preventDefault();
+        }
+
+        function CollectionClick(handlerElement) {
+            if (currentCollection == handlerElement)
+                return;
+
+            if (currentCollection)
+                currentCollection.removeClass('active');
+
+            currentCollection = handlerElement;
+            currentCollection.addClass('active');
+
+            var collection_id = currentCollection.data('content');
+            var area = currentCollection.data('area');
+
+            var url = '@Url.Action("_CollectionDetails")' + '?collection_id=' + collection_id;
+
             $.ajax({
                 type: "GET",
                 url: url,
-                data: urlData,
-                dataType: "json",
-                async: false,
-                success: function (jsonResult) {
-                    result = jsonResult;
+                success: function (data) {
+                    $('#collectionDetails').fadeIn('slow');
+                    collectionContent.html(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    alert('Failed to retrieve data.');
+                    alert('Failed to retrieve books.');
                 }
-            })
-            return result;
-        }
-    });
+            });
+        };
 
-    var collectionsData = [];
-    var collectionsArea = $('#collectionsArea');
-    var collectionContainer = $('#collections');
-    var collectionContent = $('#collectionContent');
+        $('.layoutItem .card').bind('click', function (event) {
+            event.preventDefault();
 
-    function LayoutLoad() {
-        $(this).fadeIn('slow').delay(2000).queue(function () {
-
-            $(this).dequeue();
+            loadLayout(this);
         });
-    }
 
-    function Back() {
-        $('#collectionDetails').fadeOut('slow');
-        $('#collectionsBorder').css('max-height', 1000);
-        clearMap();
-        event.preventDefault();
-    }
+        var currentCollection = null;
+        var currentRoom = null;
+        var currentLayout = null;
+        var slideIndex = -1;
+        var roomIndex = -1;
 
-    function CollectionClick(handlerElement) {
-        if (currentCollection == handlerElement)
-            return;
+        var roomData = [];
 
-        if (currentCollection)
-            currentCollection.removeClass('active');
+        function roomClick(layoutElement) {
 
-        currentCollection = handlerElement;
-        currentCollection.addClass('active');
+            if (currentRoom == layoutElement)
+                return;
 
-        var data = currentCollection.data('content');
-        var area = currentCollection.data('area');
-        /*
-        $('#map').html('<area alt="" title="" shape="rect" coords="' + area + '" />');
-        setCoordinates();
-        */
-        var url = '/View/' + '@Url.Action("_CollectionDetails")' + '/' + data;
-
-        $.ajax({
-            type: "GET",
-            url: url,
-            success: function (data) {
-                $('#collectionDetails').fadeIn('slow');
-                collectionContent.html(data);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert('Failed to retrieve books.');
+            if (currentRoom) {
+                mapify.toggle('a' + currentRoom.data('room'), false);
+                currentRoom.removeClass('active');
             }
-        });
-    };
 
-    $('.layoutItem .card').bind('click', function (event) {
-        event.preventDefault();
+            currentRoom = layoutElement;
+            currentRoom.addClass('active');
 
-        loadLayout(this);
-    });
+            var roomId = currentRoom.data('room');
 
-    var currentCollection = null;
-    var currentRoom = null;
-    var currentLayout = null;
-    var slideIndex = -1;
-    var roomIndex = -1;
+            if (roomId) {
+                mapify.toggle('a' + roomId, true);
+            }
 
-    var roomData = [];
 
-    function roomClick(layoutElement) {
-        if (currentRoom == layoutElement)
-            return;
+            if (roomData.length == 0) {
+                var layoutId = currentLayout.data('content');
+                var url = '@Url.Action("_Collections","JSON")' + '?room_id=' + roomId + '&layout_id=' + layoutId;
+                getRoomData(url);
+            }
+            else {
+                collectionContainer.slick('slickUnfilter');
 
-        if (currentRoom)
-            currentRoom.removeClass('active');
+                if (roomId) {
+                    var vv = '.room-' + roomId
+                    collectionContainer.slick('slickFilter', vv);
+                }
 
-        currentRoom = layoutElement;
-        currentRoom.addClass('active');
+            }
 
-        var roomId = currentRoom.data('room');
+        }
 
-        if (roomData.length == 0) {
-            var layoutId = currentLayout.data('content');
-            var url = '@Url.Action("_Collections","JSON")' + '?room_id=' + roomId + '&layout_id=' + layoutId;
+        function loadLayout(layoutElement) {
+            if (currentLayout) {
+                currentLayout.removeClass('active');
+            }
 
+            currentLayout = $(layoutElement);
+            currentLayout.addClass('active')
+
+            var data = currentLayout.data('content');
+            var image = currentLayout.data('image');
+
+            var url = '@Url.Action("_GetRooms","JSON")';
+
+            //map image
+            $('#mapContainer').html('');
+            var mapImg = '<img class="imgmapMainImage" width="810" height="611" alt="" src="' + '@url' + '/' + image + '" usemap="#map">';
+            var imgMap = '<map name="map" id="map"></map>';
+            $('#mapContainer').append(mapImg);
+            $('#mapContainer').append(imgMap);
+
+            //room
+
+            if (roomIndex >= 0) {
+                for (roomIndex; roomIndex >= 0; roomIndex--) {
+                    $('#rooms').slick('slickRemove', roomIndex);
+                }
+            }
+
+            var item = '<div class="room" data-room=""><a> Tất cả phòng</a></div>';
+
+            $('#rooms').slick('slickAdd', item);
+            var rooms = $.getJsonFromUrl(url, { 'layout_id': data })
+
+            for (var i = 0; i < rooms.length; i++) {
+                area = '<area id="a' + rooms[i].id + '" href="#" shape="poly" coords="' + rooms[i].areaCoords + '" />';
+                $('#map').append(area);
+
+                item = '<div class="room" data-room="' + rooms[i].id + '"><a>' + rooms[i].name + '</a></div>';
+                roomIndex = i;
+                $('#rooms').slick('slickAdd', item);
+            }
+            roomIndex = roomIndex + 1;
+            //
+
+
+            $('#layoutDetailTitle').html(currentLayout.data('name'));
+
+            mapify = $('img[usemap]').mapify();
+
+            $('area').bind('click', function (event) {
+                var areaId = $(this).attr('id').replace('a', '');
+                var room = $('.room').filter('[data-room="' + areaId + '"]');
+                roomClick(room);
+                event.preventDefault();
+            });
+
+            roomData = [];
+            roomClick($('.room').first());
+
+            $('.room').bind('click', function (event) {
+                roomClick($(this));
+            });
+        }
+
+        function getRoomData(url) {
             $.getJSON(url, function (json) {
                 collectionsData = json;
                 roomData = json;
@@ -234,19 +323,33 @@
 
                     if (collectionsData.length - 1 == i) {
 
-
                         var cards = $('.collectionItem .card');
 
                         cards.bind('mousedown', function (event) {
                             if (event.which == 1) {
+                                currentMousePos.x = event.pageX;
+                                currentMousePos.y = event.pageY;
                                 $(this).addClass('mouse-down');
                             }
                         });
 
-                        cards.bind('mousemove', function () {
-                            if ($(this).hasClass('mouse-down')) {
+                        cards.bind('mouseup', function (event) {
+                            if (event.which == 1) {
+                                if (!$(this).hasClass('noclick') && $(this).hasClass('mouse-down')) {
+                                    CollectionClick($(this));
+                                }
+                                $(this).removeClass('noclick');
                                 $(this).removeClass('mouse-down');
-                                $(this).addClass('noclick');
+                            }
+                            event.preventDefault();
+                        });
+
+                        cards.bind('mousemove', function (event) {
+                            if ($(this).hasClass('mouse-down')) {
+                                var mousePositionTemp = { x: event.pageX, y: event.pageY };
+                                if (JSON.stringify(mousePositionTemp) != JSON.stringify(currentMousePos)) {
+                                    $(this).addClass('noclick');
+                                }
                             }
                         });
 
@@ -254,164 +357,78 @@
                             if ($(this).hasClass('noclick')) {
                                 $(this).removeClass('noclick');
                             }
-                        });
-
-                        cards.bind('click', function (event) {
-                            event.preventDefault();
-                            if (!$(this).hasClass('noclick')) {
-                                CollectionClick($(this));
+                            if ($(this).hasClass('mouse-down')) {
+                                $(this).removeClass('mouse-down');
                             }
-                            $(this).removeClass('noclick');
                         });
-
                     }
                 });
-
             });
         }
-        else {
-            collectionContainer.slick('slickUnfilter');
+        var currentMousePos = { x: -1, y: -1 };
 
-            if (roomId) {
-                var vv = '.room-' + roomId
-                collectionContainer.slick('slickFilter', vv);
-            }
+        $(document).ready(function () {
+            $(".fancybox").fancybox({
+                openEffect: 'elastic',
+                closeEffect: 'elastic',
 
-        }
-
-    }
-
-    function loadLayout(layoutElement) {
-        if ($('#collectionDetails').css('display') == 'block') {
-            Back();
-        }
-
-        if (currentLayout) {
-            currentLayout.removeClass('active');
-        }
-
-        currentLayout = $(layoutElement);
-        currentLayout.addClass('active')
-
-        var data = currentLayout.data('content');
-        var image = currentLayout.data('image');
-
-        var url = '@Url.Action("_GetRooms","JSON")';
-
-        //room
-
-        if (roomIndex >= 0) {
-            for (roomIndex; roomIndex >= 0; roomIndex--) {
-                $('#rooms').slick('slickRemove', roomIndex);
-            }
-        }
-
-        var item = '<div class="room col-md-3" data-room=""><a> Tất cả phòng</a></div>';
-
-        $('#rooms').slick('slickAdd', item);
-        var rooms = $.getJsonFromUrl(url, { 'layout_id': data })
-
-        for (var i = 0; i < rooms.length; i++) {
-            item = '<div class="room col-md-3" data-room="' + rooms[i].id + '"><a>' + rooms[i].name + '</a></div>';
-            roomIndex = i;
-            $('#rooms').slick('slickAdd', item);
-        }
-        roomIndex = roomIndex + 1;
-
-        roomClick($('.room').first());
-
-        $('.room').bind('click', function (event) {
-            roomClick($(this));
-        });
-        //
-        $('#mapContainer').find('img').attr('src', image);
-
-        $('#layoutDetailTitle').html(currentLayout.data('name'));
-        /*
-        imgMap.maphilight({
-            alwaysOn: true
-        });
-        imgMap.rwdImageMaps();
-        */
-
-        var mapify = imgMap.mapify({
-            alwayOn: true
-        });
-        mapify.toggleHilight('a1');
-    }
-
-    $(document).ready(function () {
-        $(".fancybox").fancybox({
-            openEffect: 'elastic',
-            closeEffect: 'elastic',
-
-            helpers: {
-                title: {
-                    type: 'inside'
+                helpers: {
+                    title: {
+                        type: 'inside'
+                    }
                 }
+            });
+
+            collectionContainer.slick({
+                dots: true,
+                infinite: false,
+                prevArrow: false,
+                nextArrow: false,
+                slidesToShow: 3,
+                slidesToScroll: 3,
+            });
+
+            $('#rooms').slick({
+                infinite: false,
+                slidesToShow: 3,
+                slidesToScroll: 3
+            });
+
+            var layoutContainer = $('#layoutContainer .card');
+            if (true) {
+
             }
+
+            var selectedLayout = layoutContainer.first();
+            if (selectedLayout) {
+                loadLayout(selectedLayout);
+            }
+
+            $('#slider-projectDetail').owlCarousel({
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                autoPlay: 5000,
+                singleItem: true
+            });
+
+            //-------------------------- Boxes -----------------------------//
+            $('.box .box-tool > a').click(function (e) {
+
+            });
+
+            //slick
+            $("#slider-home").owlCarousel({
+                navigation: false,
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                pagination: true,
+                items: 1,
+                itemsDesktop: false,
+                itemsDesktopSmall: false,
+                itemsTablet: false,
+                itemsMobile: false,
+                navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
+            });
         });
-
-        collectionContainer.slick({
-            dots: true,
-            infinite: true,
-            prevArrow: false,
-            nextArrow: false,
-            slidesToShow: 3,
-            slidesToScroll: 3,
-        });
-
-        $('#rooms').slick({
-            infinite: false,
-            slidesToShow: 3,
-            slidesToScroll: 3
-        });
-
-        var layoutContainer = $('#layoutContainer .card');
-        if (true) {
-
-        }
-
-        var selectedLayout = layoutContainer.first();
-        if (selectedLayout) {
-            loadLayout(selectedLayout);
-        }
-
-        $('#slider-projectDetail').owlCarousel({
-            slideSpeed: 300,
-            paginationSpeed: 400,
-            autoPlay: 5000,
-            singleItem: true
-        });
-
-        //-------------------------- Boxes -----------------------------//
-        $('.box .box-tool > a').click(function (e) {
-
-        });
-
-        //slick
-        $("#slider-home").owlCarousel({
-            navigation: false,
-            slideSpeed: 300,
-            paginationSpeed: 400,
-            pagination: true,
-            items: 1,
-            itemsDesktop: false,
-            itemsDesktopSmall: false,
-            itemsTablet: false,
-            itemsMobile: false,
-            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
-        });
-    });
-
-    jQuery(window).bind('resize', function (e) {
-        window.resizeEvt;
-        jQuery(window).resize(function () {
-            clearTimeout(window.resizeEvt);
-            window.resizeEvt = setTimeout(function () {
-                jQuery('img[usemap]').maphilight();
-            }, 250);
-        });
-    });;
-
-</script>
+    </script>
+}

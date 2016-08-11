@@ -34,7 +34,7 @@ namespace Homeclick.Controllers
             products = db.Products.Where(m => m.featured == true).ToList<Product>();
             var max = products.Count;
             var rnd = new Random();
-            var random4Items = ModelHelper.PickSomeInRandomOrder(products, 4);
+            var random4Items = ModelHelper.PickRandom(products, 4);
             return View("Feature_Product", random4Items);
         }
         //Product Detail

@@ -56,6 +56,39 @@ namespace Homeclick.Models
             return result;
         }
 
+        public static IList<T> getParents<T>(string parentTableName, string childrenTableName, int childId)
+        {
+            var referenceTableName = parentTableName + "_" + childrenTableName + "_Link";
+            var query = string.Format(@"select a.* from
+                                        [{0}] a
+                                            join [{1}] b on b.ParentId = a.Id
+                                        where b.ChildId = '{2}'", parentTableName, referenceTableName, childId);
+            var result = GetListByQuery<T>(query);
+            return result;
+        }
+
+        public static IList<T> getChildren<T>(string parentTableName, string childrenTableName, int parentId)
+        {
+            var referenceTableName = parentTableName + "_" + childrenTableName + "_Link";
+            var query = string.Format(@"select a.* from
+                                        [{0}] a
+                                            join [{1}] b on b.ChildId = a.Id
+                                        where b.ParentId = '{2}'", childrenTableName, referenceTableName, parentId);
+            var result = GetListByQuery<T>(query);
+            return result;
+        }
+
+        public static IEnumerable<T> PickRandom<T>(this IEnumerable<T> someTypes, int maxCount)
+        {
+            Random random = new Random(DateTime.Now.Millisecond);
+
+            Dictionary<double, T> randomSortTable = new Dictionary<double, T>();
+
+            foreach (T someType in someTypes)
+                randomSortTable[random.NextDouble()] = someType;
+
+            return randomSortTable.OrderBy(KVP => KVP.Key).Take(maxCount).Select(KVP => KVP.Value);
+        }
 
 
         public static IList<Category> GetProductCategories(CategoryTypes type, int productId)
@@ -71,63 +104,6 @@ namespace Homeclick.Models
 
                 return categories;
             }
-        }
-
-        public static IList<Category> GetCategoryParents(int categoryId)
-        {
-            using (var db = new vinabits_homeclickEntities())
-            {
-                var query = string.Format(@"select c.*
-                                        from Category c
-                                        join CategoriesLink cl on cl.ChildId = '{0}'
-                                        where c.Id = cl.ParentId", categoryId);
-
-                var categories = db.Database.SqlQuery<Category>(query).ToList();
-                return categories;
-            }
-        }
-
-        public static IList<Category> GetCategoryChilds(int categoryId)
-        {
-            using (var db = new vinabits_homeclickEntities())
-            {
-                var query = string.Format(@"select c.*
-                                        from Category c
-                                        join CategoriesLink cl on cl.ParentId = '{0}'
-                                        where c.Id = cl.ChildId", categoryId);
-
-                var categories = db.Database.SqlQuery<Category>(query).ToList();
-                return categories;
-            }
-        }
-
-        public static IEnumerable<T> PickSomeInRandomOrder<T>( IEnumerable<T> someTypes, int maxCount)
-        {
-            Random random = new Random(DateTime.Now.Millisecond);
-
-            Dictionary<double, T> randomSortTable = new Dictionary<double, T>();
-
-            foreach (T someType in someTypes)
-                randomSortTable[random.NextDouble()] = someType;
-
-            return randomSortTable.OrderBy(KVP => KVP.Key).Take(maxCount).Select(KVP => KVP.Value);
-        }
-
-        public static IEnumerable<T> PickRandom<T>(this IEnumerable<T> someTypes, int maxCount)
-        {
-            Random random = new Random(DateTime.Now.Millisecond);
-
-            Dictionary<double, T> randomSortTable = new Dictionary<double, T>();
-
-            foreach (T someType in someTypes)
-                randomSortTable[random.NextDouble()] = someType;
-
-            return randomSortTable.OrderBy(KVP => KVP.Key).Take(maxCount).Select(KVP => KVP.Value);
-        }
-
-        public static void  Each<T, U>(this IEnumerable<U> list, Func<U, T> action)
-        {
-
         }
     }
 }

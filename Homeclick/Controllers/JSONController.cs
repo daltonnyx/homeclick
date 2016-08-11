@@ -21,6 +21,7 @@ namespace Homeclick.Controllers
                 {
                     id = item.Id,
                     name = item.Name,
+                    areaCoords = item.AreaCoords
                 });
             }
             return Json(json, JsonRequestBehavior.AllowGet);
@@ -60,9 +61,8 @@ namespace Homeclick.Controllers
         {
             IEnumerable<Project> projects;
 
-            projects = category_id != null ? 
-                            db.Projects.Where(o => o.CategoryId == category_id).ToList() 
-                            : db.Projects.ToList();
+            projects = category_id == null || category_id == -1 ? db.Projects.ToList() :
+                                db.Projects.Where(o => o.CategoryId == category_id).ToList();
 
             var json = new List<object>();
             foreach (var project in projects)

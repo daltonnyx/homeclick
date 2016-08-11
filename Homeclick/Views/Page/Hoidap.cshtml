@@ -1,27 +1,22 @@
 ﻿@model Homeclick.Models.Feedback
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Hỏi đáp";
+    Layout = "~/Views/Shared/_SharedLayout_NoSidebar.cshtml";
+    var url = "";
 }
 
-<main id="main" class="site-main">
     <div class="container page-faqs">
-        <div id="particles-js"  class="row">
-            <div class="sc_heading text-center col-xs-12">
+        <div id="particles-js">
+            <div class="sc_heading text-center">
                 <h3 class="title">CÁC CÂU HỎI THƯỜNG GẶP</h3>
                 <p class="sub-heading" style="">Chúng tôi sẽ trả lời tất cả các câu hỏi của bạn</p>
                 <span class="line"></span>
             </div>
         </div>
-        <script src="~/Scripts/Plugins/particles/particles.js"></script>
 
-        <script>
-            particlesJS.load('particles-js', '/Scripts/Plugins/particles/particles.json', function () {
-                console.log('callback - particles.js config loaded');
-            });
-        </script>
 
-        <div class="row">
+
+        <div class="clearfix">
             <div class="left-faqs col-sm-6">
                 <div>
                     <h3 class="title-content-faq">Purchases &amp; Refunds</h3>
@@ -121,7 +116,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="clearfix">
             <div class="contact-faqs text-center">
                 <h4>Không tìm thấy câu trả lời?</h4>
                 <div class="form-questions">
@@ -176,5 +171,18 @@
             </div>
         </div>
         </div>
-    </main>
 
+@section breadcrumb {
+    <ul>
+        <li><a href="@Url.Action("Index","Home")">Home</a></li>
+        <li>Hỏi đáp</li>
+    </ul>
+}
+
+@section scripts {
+    <script src="~/Scripts/Plugins/particles/particles.js"></script>
+    <script>   
+                particlesJS.load('particles-js', '@url' + '/Scripts/Plugins/particles/particles.json', function () {
+                });
+    </script>
+}

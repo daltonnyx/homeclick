@@ -1,0 +1,79 @@
+﻿@model Dictionary<string, IEnumerable<Homeclick.Models.CollectionViewModel>>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_SharedLayout.cshtml";
+    var slides = ViewBag.Slides as IEnumerable<Homeclick.Models.CollectionViewModel>;
+    var categoryValue = Request.RequestContext.RouteData.Values["category_id"];
+}
+
+@Html.Partial("_Slider", slides)
+
+@foreach (var pair in Model)
+{
+    var list = pair.Value;
+    <section role="grid">
+        <div class="category-title">
+            <span>
+                @pair.Key
+            </span>
+            <a href="/BoSuuTap/@list.First().categoryId">Xem thêm >></a>
+        </div>
+        @Html.Partial("_CollectionGrid", list)
+    </section>
+    <hr style="margin: 20px -15px;" />
+}
+
+@section breadcrumb {
+    <ul>
+        <li><a href="@Url.Action("Index","Home")">Home</a></li>
+        <li>Bộ sưu tập</li>
+    </ul>
+}
+
+@section styles {
+    <style>
+    </style>
+}
+
+@section scripts {
+    <script type="text/javascript">
+
+        //slider home
+        $(window).load(function () {
+            var owl = $('.owl-carousel');
+
+            owl.owlCarousel({
+                navigation: false,
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                pagination: true,
+                items: 1,
+                itemsDesktop: false,
+                itemsDesktopSmall: false,
+                itemsTablet: false,
+                itemsMobile: false,
+                navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
+            });
+
+            owl.on('translated.owl.carousel', function (event) {
+                var activeImg = $(this).find('.active').find('img');
+                var comment = activeImg.attr('alt');
+                var title = activeImg.attr('title');
+                var link = activeImg.data('link');
+                var templated = '<div>' +
+                                    '<span class="slider-title">' +
+                                        title +
+                                '</span> <br />' +
+                                '<a class="slider-link" href="' + link + '">' +
+                                    'Xem' +
+                                '</a>' +
+                            '</div>';
+                if (comment) $('.slider-caption').html(templated);
+            });
+
+            $('.table-section-header').toggleClass("active-show");
+            $('.list-show .category-product-detail').slideToggle("slow");
+        });
+    </script>
+}

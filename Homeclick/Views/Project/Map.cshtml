@@ -1,183 +1,232 @@
 ﻿@{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout_Project.cshtml";
+    Layout = "~/Views/Shared/_SharedLayout.cshtml";
     var url = "";
+    var categories = ViewBag.Categories as IEnumerable<Homeclick.Models.Category>;
 }
 
-<div class="row breadcrumb">
-    <ul>
-        <li><a href="../">Home</a></li>
-        <li>Dự án</li>
-    </ul>
-</div>
-<div class="main-head row">
-    <div class="col-sm-8">
-        <span class="main-title">DỰ ÁN</span>
-    </div>
-</div>
 <div class="row">
-    <div class="row">
-        @Html.Partial("_ProjectsFilter")
-        <div class="col-md-9">
-            <div id="gmap" style='overflow:hidden;height:730px; width:100%;'>
-                <div id='gmap_canvas' style="height:730px;width:100%;">
-                </div>
-                <div>
-                    <small>
-                        <a href="http://embedgooglemaps.com"></a>
-                    </small>
-                </div>
-                <style>
-                    #gmap_canvas img {
-                        max-width: none !important;
-                        background: none !important;
-                    }
-
-                    #gmap_canvas .info .info-body img {
-                        max-height: 200px !important;
-                    }
-
-                    #gmap_canvas .info h3 {
-                        margin-bottom: 15px;
-                        color: #02bdb6;
-                    }
-
-                    .gm-style-iw {
-                        width: auto !important;
-                        top: 15px !important;
-                        background-color: #fff;
-                        box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
-                        border-radius: 2px 2px 0 0;
-                    }
-
-                    .info {
-                        padding: 15px;
-                    }
-                </style>
+    <div class="col-xs-12">
+        <div id="gmap" style='overflow:hidden;height:682px; width:100%;'>
+            <div id='gmap_canvas' style="height:682px;width:100%;">
             </div>
-            <div class="main-body">
-                <div id="projectsGrid" class="clearfix">
+            <div>
+                <small>
+                    <a href="http://embedgooglemaps.com"></a>
+                </small>
+            </div>
 
-                </div>
+        </div>
+        <div class="main-body">
+            <div id="projectsGrid" class="clearfix">
 
-                <div id="projectsLoading" class="loading" style="display: none;">
-                    <img class="loadingImg" src="@url/Content/loading.gif" height="150" width="150" />
-                </div>
+            </div>
+
+            <div id="projectsLoading" class="loading" style="display: none;">
+                <img class="loadingImg" src="@url/Content/loading.gif" height="150" width="150" />
             </div>
         </div>
     </div>
 </div>
 
 
-<script type='text/javascript' src="~/Scripts/Plugins/Map/map.js"></script>
+@section breadcrumb {
+    <ul>
+        <li><a href="../">Home</a></li>
+        <li>Dự án</li>
+    </ul>
+}
 
-<script>
+@section styles {
+    <link href="~/Content/Project.css" rel="stylesheet" />
+    <style>
+        #gmap_canvas img {
+            max-width: none !important;
+            background: none !important;
+        }
 
-    var jsonData = [],
-        states = [],
-        currentCity = -1;
-    var typeSelection = $('#projectTypeSelection');
-    var citySelection = $('#projectCitiesSelection');
-    var statuSelection = $('#projectStatuSelection');
-    var filterTextBox = $('#filterTextBox');
-    var filterButton = $('#filterButton');
-    var projectsGrid = $('#projectsGrid');
-    var findBySelection = $('#findBySelection');
-    var statesSelection = $('#statesSelection');
+        #gmap_canvas .info .info-body img {
+            max-height: 200px !important;
+        }
 
-    jQuery(document).ready(function ($) {
-        var actionUrl = '@Url.Action("GetProjectsData", "Project")'
-        $.getJSON(actionUrl, function (data) {
-            jsonData = data;
-            mapInit(jsonData);
+        #gmap_canvas .info h3 {
+            font-family: 'Roboto Condensed', sans-serif;
+            margin-bottom: 15px;
+            color: #02bdb6;
+        }
+
+        .gm-style-iw {
+            width: auto !important;
+            top: 15px !important;
+            background-color: #fff;
+            box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
+            border-radius: 2px 2px 0 0;
+            left: 20px !important;
+        }
+
+        .info {
+            padding: 10px;
+            margin-bottom: 0px;
+        }
+    </style>
+
+}
+
+@section scripts {
+    <script type='text/javascript' src="~/Scripts/Plugins/Map/map.js"></script>
+    <script type='text/javascript' src="~/Scripts/Plugins/jlinq/jlinq.js"></script>
+    <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBB5V34f3crBWyutuwFCy73IzRCdIwqUrI'></script>
+    <script type='text/javascript' src="~/Scripts/Plugins/Map/markerclustererplus/src/markerclusterer.min.js"></script>
+
+    <script>
+
+        $.extend({
+            getJsonFromUrl: function (url, urlData) {
+                var result = null;
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: urlData,
+                    dataType: "json",
+                    async: false,
+                    success: function (jsonResult) {
+                        result = jsonResult;
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Failed to retrieve data.');
+                    }
+                })
+                return result;
+            }
         });
 
-        actionUrl = '@Url.Action("GetStatesData")';
-        $.getJSON(actionUrl, function (data) {
-            states = data;
-        })
-    });
+        (function ($) {
+            $.fn.toggleAtrr = function (atrr) {
+                if ($(this).attr('checked'))
+                    $(this).removeAttr('checked')
+                else
+                    $(this).attr('checked', 'checked');
+            };
+        })(jQuery);
 
-    typeSelection.bind("change", function () {
-        selectChanged();
-    });
+        var jsonData = [];
+        var currentJsonData = [];
+        var typeSelection = $('#projectTypeSelection');
+        var citySelection = $('#projectCitiesSelection');
+        var statesSelection = $('#statesSelection');
 
-    citySelection.bind("change", function () {
-        selectChanged();
-    });
+        var statuCheckers = [
+            $('#statu-true'),
+            $('#statu-false')
+        ];
 
-    statuSelection.bind("change", function () {
-        selectChanged();
-    });
+        var filterTextBox = $('#filterTextBox');
+        var filterButton = $('#filterButton');
+        var projectsGrid = $('#projectsGrid');
 
-    filterButton.bind("click", function () {
-        selectChanged();
-    });
+        citySelection.bind("change", function () {
+            //Get states
+            statesSelection.html('');
+            var item = '<option selected value="">Quận</option>';
+            statesSelection.append(item)
 
-    filterTextBox.bind("change",function () {
-        selectChanged();
-    });
+            if ($(this).val()) {
+                var url = '@Url.Action("GetStates", "JSON")';
+                var states = $.getJsonFromUrl(url, { 'city_id': citySelection.val() })
 
-    statesSelection.bind('change', function () {
-        selectChanged();
-    });
+                for (var i = 0; i < states.length; i++) {
+                    item = '<option value="' + states[i].id + '">' + states[i].name + '</option>';
+                    statesSelection.append(item);
+                }
+            }
 
-    function selectChanged() {
-        var typeSelectionVal = typeSelection.val(),
-            citySelectionVal = citySelection.val(),
-            statuSelectionVal = statuSelection.val(),
-            filterTextBoxVal = filterTextBox.val(),
-            statesSelectionVal = statesSelection.val();
-        
-        var result = jsonData;
+            selectChanged(currentJsonData);
+        });
 
-        if (typeSelectionVal)
-            result = filterByType(result, typeSelectionVal)
+        statesSelection.bind("change", function () {
+            selectChanged(currentJsonData);
+        });
 
-        if (citySelectionVal && citySelectionVal != currentCity)
-        {
-            statesSelection.html('<option selected value="">Tất cả</option>');
-            var sts = filterByField(states, 'city', citySelectionVal);
-            $.each(sts, function (i, data) {
-                var element = '<option value="' + data.id + '">'+ data.name +'</option>';
-                statesSelection.append(element);
-            });
+        statuCheckers[0].bind("change", function () {
+            $(this).toggleAtrr('checked')
+            selectChanged(currentJsonData);
+        });
 
-            result = filterByCity(result, citySelectionVal);
-            currentCity = citySelectionVal;
+        statuCheckers[1].bind("change", function () {
+            $(this).toggleAtrr('checked')
+            selectChanged(currentJsonData);
+        });
+
+        filterButton.bind("click", function () {
+            selectChanged(currentJsonData);
+        });
+
+        filterTextBox.bind("change", function () {
+            selectChanged(currentJsonData);
+        });
+
+        var selectedCategory = $('.category-link').first();
+        $('.category-link').bind('click', function () {
+            if (selectedCategory) {
+                $(selectedCategory).removeClass('active');
+            }
+            selectedCategory = this;
+            $(selectedCategory).addClass('active');
+
+            var category = $(selectedCategory).data('category');
+
+            currentJsonData = category != -1 ? filterByField(jsonData, 'type', category) : jsonData;
+            selectChanged(currentJsonData);
+        });
+
+        function selectChanged(data) {
+            var typeSelectionVal = typeSelection.val();
+            var citySelectionVal = citySelection.val();
+            var statesSelectionVal = statesSelection.val();
+            var filterTextBoxVal = filterTextBox.val();
+
+            var result = data;
+
+            if (typeSelectionVal)
+                result = filterByType(result, typeSelectionVal)
+
+            if (citySelectionVal)
+                result = filterByCity(result, citySelectionVal)
+
+            if (statesSelectionVal)
+                result = filterByField(result, 'state', statesSelectionVal)
+
+            if (statuCheckers[0].attr('checked') && statuCheckers[1].attr('checked')) {
+            }
+            else if (statuCheckers[0].attr('checked')) {
+                result = filterByField(result, 'statu', statuCheckers[0].val())
+            }
+            else if (statuCheckers[1].attr('checked')) {
+                result = filterByField(result, 'statu', statuCheckers[1].val())
+            }
+            else {
+                result = [];
+            }
+
+            if (filterTextBoxVal) {
+                var manageradiorel = $('input[name="a"]:checked').val();
+                result = filterByField(result, manageradiorel, filterTextBoxVal)
+            }
+
+            showMarkers(result);
         }
 
-        if (statesSelectionVal) {
-            result = filterByField(result, 'state', statesSelectionVal)
-        }
-
-        if (statuSelectionVal)
-            result = filterByStatu(result, statuSelectionVal)
-
-        if (filterTextBoxVal)
-        {
-            var findByVal = findBySelection.val();
-            result = filterByField(result, findByVal, filterTextBoxVal);
-        }
-
-        showMarkers(result);
-    }
 
 
-    function GetJsonData() {
-        var actionUrl = '@Url.Action("GetProjectsData", "Project")'
-        var result = $.getJSON(actionUrl, function () {
-        })
-          .done(function () {
-              console.log("success");
-          })
-          .fail(function () {
-              console.log("error");
-          })
-          .always(function () {
-              console.log("complete");
-          });
-        return result;
-    }
+        var category_id = '@Request.RequestContext.RouteData.Values["category_id"]'
+        jQuery(document).ready(function ($) {
+            var url = '@Url.Action("GetProjectsData", "JSON")'
+            var data = $.getJsonFromUrl(url, { 'category_id': category_id });
+            jsonData = data;
+            currentJsonData = jsonData;
+            mapInit(currentJsonData);
+        });
+    </script>
+}
 
-</script>
+

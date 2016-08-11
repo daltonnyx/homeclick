@@ -3,112 +3,214 @@
 
 @{
     //ViewBag.Title = "Product_Detail";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    Layout = "~/Views/Shared/_SharedLayout_NoSidebar.cshtml";
     var url = "";
+    var colors = ModelHelper.getChildren<Color>(typeof(Product).Name, typeof(Color).Name, Model.Id);
 }
-<main>
-    <div class="container single-product">
-        <div class="row">
 
-            @{
-
-                Dictionary<string, object> arrayItem = Model.ToArray(Model);
-                Dictionary<string, object> details = arrayItem["Product_detail"] as Dictionary<string, object>;
-
-                var gallery = details["hinh_anh"].ToString().Split(';');
-
-                <div class="image">
-                    @{var image = @Model.image.Replace("\\",@"/");}
-                    <div class="imge-thumnail"><img class="zoom_03" src="@url/@image" data-zoom-image="@url/@image" /></div>
-                @*if (gallery.Length != 0)
-                {
-                    <div id="gallery_01">
-                        @foreach (var img in gallery)
-                        {
-                            image = @img.Replace("\\", @"/");
+<div class="single-product">
+    @{
+        Dictionary<string, object> arrayItem = Model.ToArray(Model);
+        Dictionary<string, object> details = arrayItem["Product_detail"] as Dictionary<string, object>;
+        var gallery = details["hinh_anh"].ToString().Split(';');
+        Array.Resize(ref gallery, gallery.Length - 1);
+        <div class="image col-sm-5 col-md-4">
+            <div class="elevatezoom-wrapper">
+                @{var image = @Model.image.Replace("\\", @"/");}
+                <img class="elevatezoom-img" src="@url/@gallery[0]" data-zoom-image="@url/@gallery[0]" />
+                <div id="elevatezoom-gallery">
+                    @foreach (var img in gallery)
+                    {
+                        image = @img.Replace("\\", @"/");
+                        <div class="elevatezoom-thumb">
                             <a href="#" class="item" data-image="@url/@image" data-zoom-image="@url/@image">
-                                <img class="" src="@image" />
+                                <img class="" src="@url/@image" />
                             </a>
-                        }
-                    </div>
-                }*@
-                </div>            
-                <div class="sumary">
-                    <h3 class="single-product-title">@Model.name</h3>
-                    <div class="sg-prince">
-                        
-                        <div class="number-prince">@details["gia"]  VNĐ</div>
-                    </div>
-                    <div class="form-add-to-cart">
-                        @using (Html.BeginForm("ThemSanPham", "GioHang", new { @Id = @Model.Id, @strUrl = Request.Url.ToString() }))
-                        {
-                            <div id="color">
-                                <span>Màu</span>
-                                <button class="color hong" onclick=""></button>
-                                <button class="color xanh-lam" onclick=""></button>
-                                <button class="color xanh-nhat" onclick=""></button>
-                            </div>
-                            <div id="quality">
-                                <label>Số lượng</label>
-                                <div class="quantity">
-                                    <span class="minus">-</span>
-                                    <input type="text" step="1" min="0" value="1" title="Qty" class="qty" size="4" name="txtqty">
-                                    <span class="plus">+</span>
-                                   
-                                </div>
-                            </div>
-
-                            <div class="add-shop">
-                                <input class="input add-to-cart" type="submit" value="Đặt hàng" />
-                            </div>
-                        }
-                    </div>
-                    <div class="detail-product">
-                        <h3 class="detail-product-title">Chi tiết</h3>
-                        <div class="detail-product-content">
-                            <h3>Ghế Mata</h3>
-                            @{var escaped = new HtmlString(Model.content);}
-                            <p>@escaped</p>
-                            <p><span>Chất liệu:</span>@*@details["chat_lieu"]*@</p>
-                            <p><span>Kích thước:</span>@details["kich_thuoc"]</p>
-                            <p><span>Bảo hành:</span>@details["bao_hanh"]</p>
-                            <p><span>Xuất xứ:</span>@details["xuat_xu"]</p>
-                            <p><span>Đặt hàng:</span>@details["dat_hang"]</p>
                         </div>
-                    </div>
-                    <div class="detail-product">
-                        <h3 class="detail-product-title">Designer</h3>
-                        <div class="detail-product-content">
-                           
-                        </div>
-                    </div>
-                    <div class="detail-product">
-                        <h3 class="detail-product-title">Brand</h3>
-                        <div class="detail-product-content">
-
-                        </div>
-                    </div>
-                    <div class="detail-product">
-                        <h3 class="detail-product-title">Returns & Echanges</h3>
-                        <div class="detail-product-content">
-
-                        </div>
-                    </div>
-                    <div class="Share-product">
-                        <h3 class="social-detail">Chia sẻ</h3>
-                        <span class='st_facebook_large'></span>
-                        <span class='st_twitter_large'></span>
-                        <span class='st_googleplus_large'></span>
-                        <span class='st_pinterest_large'></span>
-                    </div>
-                    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-                    <script type="text/javascript">stLight.options({ publisher: "fe9119ac-4400-41f7-90df-64d76f41b1ac", doNotHash: false, doNotCopy: false, hashAddressBar: false });</script>
+                    }
                 </div>
+            </div>
+        </div>
 
+        <div class="sumary col-sm-7 col-md-8">
+            <h3 class="single-product-title">@Model.name</h3>
+            <div class="sg-prince">
+                <div class="number-prince">@Convert.ToInt32(details["gia"]).ToString("#,###", info.NumberFormat) vnđ</div>
+            </div>
+
+            <div class="form-add-to-cart">
+                @using (Html.BeginForm("ThemSanPham", "GioHang", new { @Id = @Model.Id, @strUrl = Request.Url.ToString() }))
+                {
+                    <div class="colors-wrapper clearfix">
+                        <div class="wrapper-title">
+                            <label class="control-label">Màu sắc</label>
+                        </div>
+                        <div class="wrapper-content">
+                            @foreach (var color in colors)
+                            {
+                                <div class="color-item">
+                                    <img src="@url/@color.Image" alt="@color.Name" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div id="quality">
+                        <div class="wrapper-title">
+                            <label>Số lượng</label>
+                        </div>
+                        <div class="quantity wrapper-content">
+                            <span class="minus">-</span>
+                            <input type="text" step="1" min="0" value="1" title="Qty" class="qty" size="4" name="txtqty">
+                            <span class="plus">+</span>
+                        </div>
+                        <div class="add-shop">
+                            <input class="input add-to-cart" type="submit" value="Đặt hàng" />
+                        </div>
+                    </div>
+                }
+            </div>
+            <hr />
+            <div class="detail-product">
+                <h3 class="detail-product-title" hidden="hidden">Chi tiết</h3>
+                <div class="detail-product-content">
+                    <h3>Chi tiết</h3>
+                    @{var escaped = new HtmlString(Model.content);}
+                    <p>@escaped</p>
+                    <p><span>Kích thước:</span>@details["kich_thuoc"]</p>
+                    <p><span>Bảo hành:</span>@details["bao_hanh"] Tháng</p>
+                </div>
+            </div>
+            <ul class="product-social clearfix">
+                <li>
+                    <a href="#">
+                        <img src="~/Upload/Images/assets/icon_instr.png" height="20" width="20" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Upload/Images/assets/icon_facebook.png" height="20" width="9" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Upload/Images/assets/icon_pint.png" height="20" width="14" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Upload/Images/assets/icon_google.png" height="20" width="20" alt="">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Upload/Images/assets/icon_e.png" height="18" width="16" alt="">
+                    </a>
+                </li>
+            </ul>
+            @*
+                <div class="Share-product">
+                    <span class='st_facebook_large'></span>
+                    <span class='st_twitter_large'></span>
+                    <span class='st_googleplus_large'></span>
+                    <span class='st_pinterest_large'></span>
+                </div>
+                <script type="text/javascript">stLight.options({ publisher: "fe9119ac-4400-41f7-90df-64d76f41b1ac", doNotHash: false, doNotCopy: false, hashAddressBar: false });</script>*@
+        </div>
+    }
+</div>
+
+
+@section breadcrumb {
+    <ul>
+        <li><a href="@Url.Action("Index","Home")">Home</a></li>
+        <li><a href="@Url.Action("Index")">Sản phẩm</a></li>
+        <li>@Model.name</li>
+    </ul>
+}
+
+@section styles {
+    <link href="~/Scripts/Plugins/fancyBox/jquery.fancybox.css" rel="stylesheet" />
+    <link href="~/Scripts/Plugins/slick/slick-theme.css" rel="stylesheet" />
+    <style>
+        .elevatezoom-wrapper {
+            margin-bottom: 15px;
+        }
+
+        .zoomWrapper {
+            border: 1px solid lightgray;
+            margin-bottom: 5px;
+        }
+
+        #elevatezoom-gallery {
+            height: auto !important;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .elevatezoom-thumb {
+            float: left;
+            margin: 0 2px 0 0;
+            border: 1px solid lightgray;
+        }
+
+        .elevatezoom-img {
+            position: absolute !important;
+        }
+
+        .slick-prev, .slick-next {
+            height: 100%;
+            background: rgba(50,50,50,.5);
+            color: white;
+        }
+
+            .slick-prev:hover, .slick-prev:focus, .slick-next:hover, .slick-next:focus {
+                color: transparent;
+                outline: none;
+                background: rgba(50,50,50,.3);
             }
 
+            .slick-prev:before, .slick-next:before {
+                color: white;
+            }
+    </style>
+}
 
-        </div>
-    </div>
-    
-</main><!-- Main-->
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/jquery.elevatezoom.js"></script>
+    <script type="text/javascript" src="~/Scripts/Plugins/shareThis/button.js"></script>
+    <script type="text/javascript" src="~/Scripts/Plugins/slick/slick.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/Plugins/fancyBox/jquery.fancybox.pack.js"></script>
+
+    <script type="text/javascript">
+        $(".elevatezoom-img").elevateZoom(
+                  {
+                      gallery: 'elevatezoom-gallery',
+                      cursor: 'pointer',
+                      galleryActiveClass: "active",
+                      imageCrossfade: true,
+                      loadingIcon: "",
+                      constrainSize: 274,
+                      zoomType: "lens",
+                      containLensZoom: true,
+                      responsive: true,
+                      borderSize: 1
+                  });
+
+        $(".elevatezoom-img").bind("click", function (event) {
+            var ez = $('.zoom_img').data('elevateZoom');
+            ez.closeAll(); //NEW: This function force hides the lens, tint and window
+            $.fancybox(ez.getGalleryList());
+            event.preventDefault();
+        });
+
+        var gallery = $('#elevatezoom-gallery');
+        gallery.slick({
+            infinite: true,
+            dots: false,
+            slidesToShow: 3,
+            slidesToScroll: 3
+        });
+    </script>
+
+}

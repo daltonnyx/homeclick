@@ -6,12 +6,12 @@
 }
 <div id="product-grid" class="content-product-feature">
     <h6 class="number-items section-header">@total Sản phẩm</h6>
-    <div id="grid-content" class="feature-item row">
+    <div id="grid-content" class="feature-items row">
         @foreach (var item in Model)
             {
                 Dictionary<string, object> arrayItem = item.ToArray(item);
                 Dictionary<string, object> details = arrayItem["Product_detail"] as Dictionary<string, object>;
-            <div class="item-product col-xs-4">
+            <div class="item-product col-xs-6 col-sm-4">
                 <div class="image">
                     <a href="@Url.Action("Product_Detail","SanPham", new {@Id=@item.Id})"><img src="@url/@item.image" alt="" /></a>
                 </div>

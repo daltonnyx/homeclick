@@ -1,11 +1,4 @@
-﻿/*font-family: 'Roboto Condensed', sans-serif;*/
-@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed&subset=latin,vietnamese);
-
-/*font-family: 'Athiti', sans-serif;*/
-@import url(https://fonts.googleapis.com/css?family=Athiti);
-
-@import url(https://fonts.googleapis.com/css?family=Cousine|Open+Sans+Condensed:300&subset=latin,vietnamese);
-
+﻿
 .bg-body {
     background: url(http://cdn.livedemo00.template-help.com:82/wt_40036/images/bg-body.gif) center 0 repeat #ecedee!important;
 }
@@ -93,9 +86,8 @@ ul {
 
 .project-tile {
     position: relative;
-    padding: 0 0 0 15px;
+    padding: 1px;
     overflow: hidden;
-    margin-bottom: 14px;
 }
 
 .project-tile-image {
@@ -203,58 +195,6 @@ ul {
 
 .ebox {
     padding-left: 15px;
-}
-
-.box .box-title .box-tool > a > i {
-    display: inline-block;
-}
-
-.box > .box-title {
-    text-shadow: 0 1px 0 #aecef4;
-}
-
-.box .box-title {
-    position: relative;
-    padding: 0 10px 10px 10px;
-}
-
-    .box .box-title h5 {
-        display: inline-block;
-        line-height: 20px;
-        margin: 0;
-        color: #000;
-        white-space: nowrap;
-    }
-
-    .box .box-title .box-tool {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        display: inline-block;
-        float: right;
-        line-height: 20px;
-        white-space: nowrap;
-    }
-
-        .box .box-title .box-tool > a {
-            color: #02bdb6;
-            font-size: 16px;
-            margin: 0 3px;
-            opacity: 0.6;
-            -webkit-transition: all 0.3s ease;
-            transition: all 0.3s ease;
-        }
-
-.box-content p {
-    margin-top: 5px;
-    padding-bottom: 6px;
-}
-
-.box-content > p {
-    border-bottom: 1px solid #eee;
-}
-
-.box-content {
 }
 
 .detail-name {
@@ -396,7 +336,6 @@ ul {
     }
 
 .project-content {
-    padding: 0;
 }
 
 .multiple-items {
@@ -416,64 +355,6 @@ ul {
     -webkit-tap-highlight-color: transparent;
 }
 
-@media (min-width: 992px) {
-    .box-tool {
-        display: none !important;
-    }
-}
-
-@media (max-width: 992px) {
-
-
-    .tab-container {
-        padding: 0px !important;
-    }
-
-    .project-slider {
-        padding: 0px !important;
-    }
-}
-
-
-@media (max-width: 1170px) {
-
-    .box-title {
-        margin: 0 -15px;
-    }
-
-    .box-content {
-        padding: 0px;
-    }
-
-    .project-slider, .tab-container {
-        /*padding: 0 0 0 15px;*/
-    }
-}
-
-@media (min-width: 1200px) {
-
-    .project-slider, .tab-container {
-        /*padding: 0 0 0 15px;*/
-    }
-}
-
-
-@media (max-width: 1200px) {
-
-    .project-slider, .tab-container {
-        /*padding: 0 0 0 15px;*/
-    }
-
-
-    .box-title {
-        margin: 0 -15px;
-    }
-
-    .box-content {
-        padding: 0px;
-    }
-}
-
 
 
 /*details*/
@@ -484,192 +365,6 @@ ul {
 
 #projectSidebarLink {
     display: none;
-}
-
-.box-title {
-    display: none;
-}
-
-@media (max-width: 991px) {
-
-    /*
-Add transition to containers so they can push in and out.
-*/
-    .box .box-title {
-        padding-top: 10px;
-        display: block;
-    }
-
-    #layout,
-    #projectSidebar,
-    .projectSidebar-link {
-        -webkit-transition: all 0.2s ease-out;
-        -moz-transition: all 0.2s ease-out;
-        -ms-transition: all 0.2s ease-out;
-        -o-transition: all 0.2s ease-out;
-        transition: all 0.2s ease-out;
-    }
-
-    #projectSidebarLink {
-        display: block;
-    }
-
-    /*
-This is the parent `<div>` that contains the projectSidebar and the content area.
-*/
-    #layout {
-        position: relative;
-        padding-left: 0;
-        min-height: 0;
-    }
-
-        #layout.active #projectSidebar {
-            left: 350px;
-            width: 350px;
-            box-shadow: 0 0px 10px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-            overflow: scroll !important;
-        }
-
-        #layout.active .projectSidebar-link {
-        }
-    /*
-The content `<div>` is where all your content goes.
-*/
-    .content {
-        margin: 0 auto;
-        padding: 0 2em;
-        max-width: 800px;
-        margin-bottom: 50px;
-        line-height: 1.6em;
-    }
-
-    .header {
-        margin: 0;
-        color: #333;
-        text-align: center;
-        padding: 2.5em 2em 0;
-        border-bottom: 1px solid #eee;
-    }
-
-        .header h1 {
-            margin: 0.2em 0;
-            font-size: 3em;
-            font-weight: 300;
-        }
-
-        .header h2 {
-            font-weight: 300;
-            color: #ccc;
-            padding: 0;
-            margin-top: 0;
-        }
-
-    .content-subhead {
-        margin: 50px 0 20px 0;
-        font-weight: 300;
-        color: #888;
-    }
-
-
-
-    /*
-The `#projectSidebar` `<div>` is the parent `<div>` that contains the `.pure-projectSidebar` that
-appears on the left side of the page.
-*/
-
-    #projectSidebar {
-        margin-left: -350px; /* "#projectSidebar" width */
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        z-index: 99999;
-        background: white;
-        overflow-y: auto;
-        border-right: 1px solid #02bdb6;
-    }
-        /*
-    All anchors inside the projectSidebar should be styled like this.
-    */
-        #projectSidebar > a {
-            color: #999;
-            border: none;
-            padding: 0.6em 0 0.6em 0.6em;
-        }
-
-        /*
-    Remove all background/borders, since we are applying them to #projectSidebar.
-    */
-        #projectSidebar .pure-projectSidebar,
-        #projectSidebar .pure-projectSidebar ul {
-            border: none;
-            background: transparent;
-        }
-
-            /*
-    Add that light border to separate items into groups.
-    */
-            #projectSidebar .pure-projectSidebar ul,
-            #projectSidebar .pure-projectSidebar .projectSidebar-item-divided {
-                border-top: 1px solid #333;
-            }
-            /*
-        Change color of the anchor links on hover/focus.
-        */
-            #projectSidebar .pure-projectSidebar li a:hover,
-            #projectSidebar .pure-projectSidebar li a:focus {
-                background: transparent;
-            }
-
-        /*
-    This styles the selected projectSidebar item `<li>`.
-    */
-        #projectSidebar .pure-projectSidebar-selected,
-        #projectSidebar .pure-projectSidebar-heading {
-            background: #1f8dd6;
-        }
-            /*
-        This styles a link within a selected projectSidebar item `<li>`.
-        */
-            #projectSidebar .pure-projectSidebar-selected a {
-                color: #fff;
-            }
-
-        /*
-    This styles the projectSidebar heading.
-    */
-        #projectSidebar .pure-projectSidebar-heading {
-            font-size: 110%;
-            color: #fff;
-            margin: 0;
-        }
-
-    /* -- Dynamic Button For Responsive projectSidebar -------------------------------------*/
-
-    /*
-The button to open/close the projectSidebar is custom-made and not part of Pure. Here's
-how it works:
-*/
-
-    /*
-`.projectSidebar-link` represents the responsive projectSidebar toggle that shows/hides on
-small screens.
-*/
-    .projectSidebar-link {
-        position: absolute;
-        top: 0;
-        left: 0;
-        font-size: 14px;
-        z-index: 10;
-        height: auto;
-        background: white;
-        margin: 15px;
-        border-radius: 5px;
-        height: 40px;
-        width: 40px;
-        text-align: center;
-        line-height: 40px;
-    }
 }
 
 .projectSidebar-link:hover,
@@ -708,59 +403,7 @@ small screens.
 /*
 Hides the projectSidebar at `48em`, but modify this based on your app's needs.
 */
-@media (max-width: 48em) {
 
-    .header,
-    .content {
-        padding-left: 2em;
-        padding-right: 2em;
-    }
-
-    #layout {
-        padding-left: 150px; /* left col width "#projectSidebar" */
-        left: 0;
-    }
-
-    #projectSidebar {
-        left: 150px;
-    }
-
-    .projectSidebar-link {
-        position: fixed;
-        left: 150px;
-        display: none;
-    }
-
-    #layout.active .projectSidebar-link {
-        left: 150px;
-    }
-}
-
-@media (max-width: 48em) {
-    /* Only apply this when the window is small. Otherwise, the following
-    case results in extra padding on the left:
-        * Make the window small.
-        * Tap the projectSidebar to trigger the active state.
-        * Make the window large again.
-    */
-    #layout.active {
-        position: relative;
-        left: 150px;
-    }
-}
-
-#grid-content {
-    margin: 15px -15px 0 -15px;
-}
-
-@media (max-width: 1200px) {
-    #grid-content {
-        margin: 15px -30px 0 -30px;
-    }
-}
-
-@media (max-width: 991px) {
-}
 
 .item-product .image {
     height: auto !important;
@@ -771,6 +414,7 @@ Hides the projectSidebar at `48em`, but modify this based on your app's needs.
 }
 
 #filter-fields {
+    margin-left: 15px;
 }
 
     #filter-fields p {
@@ -950,7 +594,6 @@ Hides the projectSidebar at `48em`, but modify this based on your app's needs.
     -webkit-transition: all 1s ease-in-out;
     overflow: hidden;
     max-height: 1000px;
-    min-height: 265px;
     margin-bottom: 15px
 }
 
@@ -1013,6 +656,7 @@ Hides the projectSidebar at `48em`, but modify this based on your app's needs.
     display: flex;
     justify-content: center;
     align-items: center;
+    float: left;
 }
 
 #filter-fields ul {
@@ -1027,7 +671,6 @@ Hides the projectSidebar at `48em`, but modify this based on your app's needs.
     }
 
     #layout-side {
-        padding-left:0px;
     }
 
     .detail-thumbnail {

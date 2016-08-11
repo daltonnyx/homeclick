@@ -1,48 +1,10 @@
-﻿@*@model IEnumerable<Homeclick.Models.Product>*@
-
+﻿
 @using Homeclick.Models;
 @using System.Collections;
 @using PagedList.Mvc;
-@model PagedList.PagedList<Product>
 
 @{
     ViewBag.Title = "Sản phẩm";
     Layout = null;
 }
 
-<div class="part-page product-feature" id="list_product_feature">
-    <div class="title-page title-feature">
-        <h1 class="">@ViewBag.Title</h1>
-    </div>
-    <div class="content-product-feature">
-        <div class="feature-item row">
-            @*
-            @foreach (Product item in Model)
-            {
-                String url = "";
-                Dictionary<string, object> arrayItem = item.ToArray();
-                Dictionary<string, object> details = arrayItem["Product_detail"] as Dictionary<string, object>;
-                <div class="item-product col-md-4">
-                    <div class="image">
-                        <a href="@Url.Action("Product_Detail","SanPham", new {@Id=@item.Id})"><img src="@url/@item.image" alt="" /></a>
-                    </div>
-                    <div class="detail-item">
-                        <h3 class="title-item"><a href="@Url.Action("Product_Detail","SanPham", new {@Id=@item.Id})">@item.name</a></h3>
-                        <p>@if (details.Keys.Contains("gia") && details["gia"] != null) { @details["gia"].ToString(); } đ</p>
-                  </div>
-              </div>
-            }
-            *@
-        </div>
-    </div>
-    <div id="panigation" class="paginationjs-theme-blue">
-
-    </div>
-    @if (Model.PageCount > 1)
-    {
-        <div class="pavination col-md-12" data-off-target="roleList">
-            @Html.PagedListPager(@Model, page => Url.Action("FilterProduct", "SanPham", new { page = page }),
-                                            PagedList.Mvc.PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "list_product_feature" }));
-        </div>
-    }
-</div>

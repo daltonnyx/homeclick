@@ -2,10 +2,10 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_SharedLayout_NoSidebar.cshtml";
 }
-@Html.Partial("~/Views/Home/SliderPartial.cshtml")
-<main id="main" class="site-main">
+    @Html.Partial("_Slider")
+
     <div class="container category">
         <div class="row">
             <div class="col-md-6 tuthietke">
@@ -42,4 +42,29 @@
                  @Html.Action("Feature_Product", "Home")
         </div>
     </div>
-</main>
+
+@section styles {
+    <style>
+        .slider-home {
+            margin-bottom:15px;
+        }
+
+        .owl-controls {
+            bottom:10px!important;
+        }
+    </style>
+}
+
+@section scripts {
+    <script type="text/javascript">
+        var owl = $('.owl-carousel');
+        owl.owlCarousel({
+            nav: false,
+            slideSpeed: 300,
+            paginationSpeed: 400,
+            pagination: true,
+            items: 1,
+            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
+        });
+    </script>
+}

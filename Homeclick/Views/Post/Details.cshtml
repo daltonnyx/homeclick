@@ -1,0 +1,70 @@
+﻿@using Homeclick.Models
+@model Homeclick.Models.Post
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_SharedLayout.cshtml";
+    var categories = ModelHelper.getParents<Category>(typeof(Category).Name,typeof(Post).Name, Model.Id);
+    var categoryValue = Request.RequestContext.RouteData.Values["category_id"];
+    var url = "";
+}
+
+<div class="">
+    <h3>@Model.title</h3>
+    <div class="postmeta-primary widget">
+        <span class="meta-date">@Model.created_date</span>
+        <span class="meta-categories label label-success">
+            @foreach (var cat in categories)
+            {
+                <a href="#">@cat.name</a>
+                if (cat != categories)
+                {
+                    Html.Raw(", ");
+                }
+            }
+        </span>
+    </div>
+    <article class="entry widget">
+        @Html.Raw(Model.content)
+    </article>
+    <hr />
+    <h4 style="margin-bottom:15px;">Các bài viết liên quan</h4>
+    <section id="content">
+        <div class="grid row">
+            @foreach (var item in ViewBag.OthersPost as IEnumerable<Post>)
+            {
+                <div class="blog-item col-xs-6 col-md-4">
+                    <div class="thumb-image">
+                        <img src="@url/@item.image" alt="">
+                    </div>
+                    <div class="blog-item-conent">
+                        <h3 class="blog-item-title"><a href="@Url.Action("Details",new { category_id = categoryValue, post_id = item.Id})">@item.title </a></h3>
+                        <div class="blog-grid-text">
+                            @item.excerpt
+                        </div>
+                        <p class="date-blog">@item.created_date</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</div>
+
+
+@section breadcrumb {
+    <ul>
+        <li><a href="@Url.Action("Index","Home")">Home</a></li>
+        <li>Thư viện</li>
+    </ul>
+}
+
+@section styles {
+    <style>
+    </style>
+}
+
+@section scripts {
+    <script type="text/javascript">
+
+    </script>
+}

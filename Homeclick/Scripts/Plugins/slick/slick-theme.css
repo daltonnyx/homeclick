@@ -117,7 +117,7 @@
 
 .slick-dots
 {
-    position: absolute;
+    position: relative;
     bottom: 10px;
     display: block;
     width: 100%;
@@ -195,4 +195,18 @@
 {
     opacity: .75;
     color: black;
+}
+.slick-list{
+    clear:both;
+}
+
+.slick-list::before {
+    content: "";
+    display:table;
+}
+
+.slick-list::after {
+        display: table;
+    content: " ";
+    clear:both;
 }

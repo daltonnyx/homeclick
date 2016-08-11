@@ -22,20 +22,23 @@ namespace Homeclick
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                     "~/Scripts/bootstrap.js",
                     "~/Scripts/respond.js",
-                    "~/Scripts/jquery.nivo.slider.js",
                     "~/Scripts/plugins/owlCarousel/owl.carousel.min.js",
-                    "~/Scripts/jquery.elevatezoom.js",
                     "~/Scripts/jquery.unobtrusive-ajax.js",
                     "~/Scripts/main.js",
+                    "~/Scripts/plugins/ResponsiveMenu/flaunt/flaunt.js",
                     "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                     "~/Content/bootstrap.css",
                     "~/Content/nivo-slider.css",
-                    "~/Scripts/plugins/owlCarousel/assets/owl.carousel.css",
-                   "~/Content/site.css",
                     "~/Content/style.css",
-                    "~/Content/responsive.css"
+                    "~/Content/site.css",
+                    "~/Content/responsive.css",
+                    "~/Content/fonts/fonts.css",
+                    "~/Content/libs/font-awesome/css/font-awesome.min.css",
+                    "~/Scripts/plugins/owlCarousel/assets/owl.carousel.css",
+                    "~/Scripts/plugins/owlCarousel/assets/owl.carousel.theme.css",
+                    "~/Scripts/plugins/ResponsiveMenu/flaunt/menu.css"
                       ));
         }
     }

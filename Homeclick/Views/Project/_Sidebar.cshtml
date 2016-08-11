@@ -1,228 +1,90 @@
-﻿@model Homeclick.Models.Project
-<a href="#projectSidebar" id="projectSidebarLink" class="projectSidebar-link">
-    <!-- Hamburger icon -->
-    <i class="fa fa-search" aria-hidden="true"></i>
-</a>
-<div id="projectSidebar" class="box">
-    <div class="box-title">
-        <h5>@Model.Name</h5>
-        <a id="hideprojectSidebar" class="box-tool">
-            <!-- Hamburger icon -->
-            <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        </a>
-    </div>
+﻿@model IEnumerable<Homeclick.Models.Category>
 
-    <div class="box-content" style="display: block;">
-        <div class="uppercase small-text">Chi tiết</div>
-        <div class="seperator-hr"></div>
+@{
+    var baseLink = Request.RequestContext.RouteData.Values["Controller"];
+    var url = "";
+    var db = new Homeclick.Models.vinabits_homeclickEntities();
+    var cities = db.Cities;
+}
 
-        <div class="margin-bottom">
-            <p>
-                <strong class="detail-name">
-                    <i class="fa fa-building" aria-hidden="true"></i>
-                    Loại dự án:
-                </strong>
-                <strong class="detail-value">@Model.Category.name</strong>
-            </p>
-            <p>
-                <strong class="detail-name">
-                    <i class="fa  fa-user"></i>
-                    Chủ đầu tư:
-                </strong>
-                <span class="detail-value">@Model.Investor</span>
-            </p>
-
-            <p>
-                <strong class="detail-name">
-                    <i class="fa  fa-map-marker"></i>
-                    Vị trí:
-                </strong>
-            </p>
-            <div class="ebox">
-                <p>
-                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                    <strong class="detail-name">
-                        Thành phố:
-                    </strong>
-                    <span class="detail-value">@Model.City.name</span>
-                </p>
-                <p>
-                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                    <strong class="detail-name">
-                        Quận:
-                    </strong>
-                    <span class="detail-value">@Model.State.Name</span>
-                </p>
-                <p>
-                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                    <strong class="detail-name">
-                        Đường:
-                    </strong>
-                    <span class="detail-value">@Model.Address</span>
-                </p>
+<div class="sidebar-box">
+    <div class="box">
+        <div class="box-title">
+            <h3 class="title-sidebar title-cate-sidebar">Dự án</h3>
+            <div class="box-tool">
+                <a data-action="collapse" href="#"><i class="nav-arrow"></i></a>
             </div>
-            <p>
-                <strong class="detail-name">
-                    <i class="fa  fa-arrows-alt"></i>
-                    Quy mô diện tích:
-                </strong>
-                <span class="detail-value">@Model.Size</span>
-            </p>
-            <p>
-                <strong class="detail-name">
-                    <i class="fa fa-home" aria-hidden="true"></i>
-                    Tổng số căn hộ:
-                </strong>
-                <span class="detail-value">@Model.Apartments</span>
-            </p>
-            <p>
-                <strong class="detail-name">
-                    <i class="fa  fa-calendar"></i>
-                    Năm khởi công:
-                </strong>
-                <span class="detail-value">@Model.StartYear</span>
-            </p>
-            <p>
-                <strong class="detail-name">
-                    <i class="fa  fa-calendar"></i>
-                    Dự kiến hoàn thành:
-                </strong>
-                <span class="detail-value">@Model.CompletedYear</span>
-            </p>
-            <p>
-                <strong>
-                    Đơn vị thiết kế:
-                </strong>
-            </p>
-
-            <div class="ebox">
-                <p>
-                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                    <strong class="detail-name">
-                        Nội thất:
-                    </strong>
-                    <span class="detail-value">@Model.FurnitureDesignAgency</span>
-                </p>
-                <p>
-                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                    <strong class="detail-name">
-                        Kiến trúc:
-                    </strong>
-                    <span class="detail-value">@Model.ArchitetualDesignAgency</span>
-                </p>
-                <p>
-                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                    <strong class="detail-name">
-                        Cảnh quan:
-                    </strong>
-                    <span class="detail-value">@Model.ViewDesignAgency</span>
-                </p>
-            </div>
-            <p>
-                <strong class="detail-name">
-                    Đơn vị thi công:
-                </strong>
-                <span class="detail-value">@Model.ConstructionAgency</span>
-            </p>
-            <p>
-                <strong class="detail-name">
-                    Đơn vị quản lý:
-                </strong>
-                <span class="detail-value">@Model.Manager</span>
-            </p>
-            <p>
-                <strong class="detail-name">
-                    Đơn vị phân phối:
-                </strong>
-                <span class="detail-value">@Model.DistributionAgency</span>
-            </p>
+        </div>
+        <div class="box-content clearfix">
+            <ul class="category-list">
+                <li class="category-link " data-category="-1"><a href="#">Tất cả</a></li>
+                @foreach (var item in Model)
+                {
+                    <li class="category-link" data-category="@item.Id"><a href="#">@item.name</a></li>
+                }
+            </ul>
+            <hr />
+            <section id="filter-fields">
+                <div class="filter-field">
+                    <h4 class="list-title">Vị trí</h4>
+                    <ul>
+                        <li>
+                            <select id="projectCitiesSelection">
+                                <option selected value="">Thành phố</option>
+                                @foreach (var city in cities)
+                                {
+                                    <option value="@city.Id">@city.name</option>
+                                }
+                            </select>
+                        </li>
+                        <li>
+                            <select id="statesSelection">
+                                <option selected value="">Quận</option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+                <div class="filter-field">
+                    <h4 class="list-title">Tình trạng</h4>
+                    <div class="checkbox">
+                        <label><input id="statu-true" type="checkbox" name="status" value="True" checked />Đã hoàn thành</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input id="statu-false" type="checkbox" name="status" value="False" checked />Đang thi công</label>
+                    </div>
+                </div>
+                <div class="filter-field" >
+                    <h4 class="list-title">Tìm theo</h4>
+                    <div class="radio">
+                        <label><input type="radio" name="a" value="name" checked />Tên dự án</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="a" value="i" />Chủ đầu tư</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="a" value="a" />Đơn vị thiết kế kiến trúc</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="a" value="f" />Đơn vị thiết kế nội thất</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="a" value="v" />Đơn vị thiết kế cảnh quan</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="a" value="c" />Đơn vị thi công</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="a" value="d" />Đơn vị phân phối</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" name="a" value="m" />Đơn vị quản lý</label>
+                    </div>
+                    <div style="display: inline-block; width: 100%; padding-right: 50px;">
+                        <input id="filterTextBox" type="text" placeholder="Tìm kiếm" style="float: left;" />
+                        <button id="filterButton" class="btn2" style="float: right; position: absolute; right: 15px;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
-
-    <hr />
-    <div class="uppercase small-text">Ảnh chụp</div>
-    <div class="seperator-hr"></div>
-    @Html.Partial("_Thumbnail", ViewBag.Thumbnails as IEnumerable<Homeclick.Models.ProjectItem>)
-    <hr />
-
-    <div class="uppercase small-text">hentry</div>
-    <div class="seperator-hr"></div>
-    <div class="hentry_content project_content">
-        @Html.Raw(Model.HtmlContent)
-    </div>
-    <hr />
-    <div class="uppercase small-text">Vị trí</div>
-    <div class="seperator-hr"></div>
-    <div style='overflow:hidden;height:250px;width:100%;'>
-        <div id='gmap_canvas' style='height:250px;width:100%;'></div>
-        <style>
-            #gmap_canvas img {
-                max-width: none !important;
-                background: none !important;
-            }
-        </style>
-    </div><a href='https://embedmaps.org/' hidden>embedded google map</a>
-
 </div>
-<div style="clear:both"></div>
-
-
-<script>
-    (function (window, document) {
-
-        var layout = document.getElementById('layout'),
-            projectSidebar = document.getElementById('projectSidebar'),
-            projectSidebarLink = document.getElementById('projectSidebarLink'),
-            hideprojectSidebar = document.getElementById('hideprojectSidebar'),
-            blackSrc = document.getElementById('blackSrc');
-
-        var active = 'active';
-
-        function toggleClass(element, className) {
-            var classes = element.className.split(/\s+/),
-                length = classes.length,
-                i = 0;
-
-            for (; i < length; i++) {
-                if (classes[i] === className) {
-                    classes.splice(i, 1);
-                    break;
-                }
-            }
-            // The className is not found
-            if (length === classes.length) {
-                classes.push(className);
-            }
-
-            element.className = classes.join(' ');
-        }
-
-        projectSidebarLink.onclick = function (e) {
-            e.preventDefault();
-            toggleClass(blackSrc, 'blackSrc')
-            toggleClass(blackSrc, 'fixed')
-            toggleClass(layout, active);
-            toggleClass(projectSidebar, active);
-            toggleClass(projectSidebarLink, active);
-        };
-
-        hideprojectSidebar.onclick = function (e) {
-            e.preventDefault();
-            toggleClass(blackSrc, 'blackSrc')
-            toggleClass(blackSrc, 'fixed')
-
-            toggleClass(layout, active);
-            toggleClass(projectSidebar, active);
-            toggleClass(projectSidebarLink, active);
-        };
-
-        blackSrc.onclick = function (e) {
-            toggleClass(blackSrc, 'blackSrc')
-            toggleClass(blackSrc, 'fixed')
-            toggleClass(layout, active);
-            toggleClass(projectSidebar, active);
-            toggleClass(projectSidebarLink, active);
-        }
-
-    }(this, this.document));
-</script>

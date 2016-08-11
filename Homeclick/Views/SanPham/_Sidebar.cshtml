@@ -1,0 +1,65 @@
+﻿@using Homeclick.Models;
+@model IEnumerable<Category>
+
+@{ 
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+
+}
+<div class="sidebar">
+    <div class="box">
+        <div class="box-title">
+            <h3 class="title-sidebar title-cate-sidebar">@Resource.Product</h3>
+            <div class="box-tool">
+                <a data-action="collapse" href="#"><i class="nav-arrow"></i></a>
+            </div>
+        </div>
+        <div class="box-content">
+            <ul class="nav">
+                @foreach (Category item in Model)
+                {
+                    <li class="category-link" data-category="@item.Id">
+                        <a href="@Url.Action("Category",new { category_id = item.Id})">@item.name</a>
+                        @{ IList<Category> descendants = item.GetCategoryChilds(); }
+
+                        <ul class="descendant-cat">
+                            <li class="typo-link" data-category="@item.Id" data-typo="-1">
+                                <a href="#">All</a>
+                            </li>
+                            @if (descendants.Count > 0)
+                            {
+                                foreach (Category des in descendants)
+                                {
+                                    var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+                                    <li class="typo-link" data-category="@item.Id" data-typo="@des.Id">
+                                        <a href="#">@des.name</a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+
+                    </li>
+                  }
+            </ul>
+            <div class="box-subBox">
+                <hr />
+                <h4>Chất liệu</h4>
+                <div class="product-metarials">
+                    <ul class="material-list"></ul>
+                </div>
+            </div>
+            <div class="box-subBox">
+                <hr />
+                <h4>Giá</h4>
+                <div id="slider-snap" class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
+                <div style="display: inline-block; width: 100%; margin-bottom: 5px;">
+                    @Resource.From <span id="slider-snap-value-lower" style="float: right; font-weight:bold"></span>
+                </div>
+                <div style="display: inline-block; width: 100%;">
+                    @Resource.To <span id="slider-snap-value-upper" style="float: right; font-weight:bold"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

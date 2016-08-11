@@ -1,14 +1,15 @@
 ﻿@model Homeclick.Models.ProjectLayout_Collection
 @{ 
-    var tableItems = ViewBag.TableItems as IEnumerable<Homeclick.Models.ProductsLayoutsLink>;
+    var tableItems = ViewBag.TableItems as IEnumerable<Homeclick.Models.ProjectLayout_Collection_Product_Link>;
     var products = ViewBag.Products as IEnumerable<Homeclick.Models.Product>;
+    var url = "";
 }
 
-    <div class="row" role="img">
-        <img src="/@Model.Image" />
+    <div class="" role="img">
+        <img src="@url/@Model.Image" />
     </div>
 
-    <div class="collection-title">
+    <div class="details-title">
         <span>@Model.Name</span>
     </div>
 
@@ -16,9 +17,12 @@
         @Html.Raw(Model.HtmlContent)
     </div>
 
-    <section class="col-xs-12 product-list-section">
+    <section class="product-list-section">
         @Html.Partial("_ProductsTable", tableItems)
         @Html.Partial("_ProductsGrid", products)
     </section>
 
+<div>
+    <button class="add-to-cart btn bg pull-right"><i class="fa fa-plus" aria-hidden="true"></i> Thêm vào giỏ</button>
+</div>
 

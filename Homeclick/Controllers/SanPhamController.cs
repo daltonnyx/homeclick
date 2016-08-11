@@ -11,85 +11,25 @@ using System.Reflection;
 
 namespace Homeclick.Controllers
 {
-    public class SanPhamController : Controller
+    public class SanPhamController : BaseController
     {
-        vinabits_homeclickEntities db = new vinabits_homeclickEntities();
+        public override CategoryTypes CategoryType { get { return CategoryTypes.Model; } }
 
-        public ActionResult Index(int? mode_id, int? typo_id, int? page)
+        public ActionResult Index()
         {
-            //    Số sản phẩm trên trang
-            //    tao số biến trong trang
-            int pageNumber = (page ?? 1);
-
-            if (mode_id == null)
-                mode_id = 1;
-
-            IList<Product> listproduct = Filter(mode_id, typo_id, null, pageNumber);
-
-            ViewBag.type = "all";
-            return View(listproduct);
+            return View();
         }
 
-        public ActionResult ListProduct(int? mode_id, int? typo_id, int? page)
+        public ActionResult Category(int category_id)
         {
-            //    Số sản phẩm trên trang
-            int product_number = 8;
-            //    tao số biến trong trang
-            int pageNumber = (page ?? 1);
-
-            if (mode_id == null)
-                mode_id = 1;
-
-            IList<Product> listproduct = Filter(mode_id, typo_id,null, pageNumber);
-
-            if (Request.IsAjaxRequest())
-            {
-                return View(listproduct.OrderBy(n => n.name).ToPagedList(pageNumber, product_number));
-            }
-            return View("ListProduct", listproduct.OrderBy(n => n.name).ToPagedList(pageNumber, product_number));
-        }
-
-        public PartialViewResult SliderSanPham()
-        {
-            return PartialView();
+            return View();
         }
 
         public ActionResult ListCategory()
         {
-
-
             List<Category> listcategory = db.Categories.ToList();
             return View(listcategory);
         }
-
-        public ActionResult Sidebar(string type = "all")
-        {
-            /*
-            IList<Category> list = new List<Category>();
-            switch (type)
-            {
-                case "all":
-                    ViewBag.SideTitle = "Danh mục";
-                    list = db.Categories.Where<Category>(c => c.Category_type.typeFor == 0).OrderBy<Category,int>(c => c.Category_type.Id).ToList();
-                    break;
-                case "model":
-                    ViewBag.SideTitle = "Phòng";
-                    list = db.Categories.Where<Category>(c => c.Category_type.name == "model" && c.Category_type.typeFor == 0).OrderBy<Category, int>(c => c.Category_type.Id).ToList();
-                    break;
-                case "typology":
-                    ViewBag.SideTitle = "Chủng loại";
-                    list = db.Categories.Where<Category>(c => c.Category_type.name == "typology" && c.Category_type.typeFor == 0).OrderBy<Category, int>(c => c.Category_type.Id).ToList();
-                    break;
-                default:
-                    break;
-            }
-            */
-            IList<Category> list = db.Categories.Where<Category>(c => c.Category_type.name == "model").ToList();
-
-            ViewBag.type = type;
-            return PartialView(list);
-        }
-
 
         public ActionResult CanvasList(int? cat_id, int? type_id)
         {
@@ -125,7 +65,7 @@ namespace Homeclick.Controllers
             return View(listproduct);
         }
 
-        public List<Product> Filter(int? model_id = null, int? typo_id = null, int? mate_id = null, int page = 1)
+        public List<Product> Filter(int? model_id = null, int? typo_id = null, int? mate_id = null)
         {
             var products = db.Products.AsQueryable();
             if (model_id != null)
@@ -157,9 +97,9 @@ namespace Homeclick.Controllers
             return list;
         }
 
-        public JsonResult ProductsJson(int? model_id = null, int? typo_id = null, int? mate_id = null)
+        public JsonResult ProductsJson(int? category_id = null, int? typo_id = null, int? mate_id = null)
         {
-            var list = this.Filter(model_id, typo_id, mate_id);
+            var list = this.Filter(category_id, typo_id, mate_id);
             var json = new List<object>();
             foreach (var item in list)
             {
@@ -189,8 +129,7 @@ namespace Homeclick.Controllers
                     typo = typo.Id
                 });
             }
-            return Json(json, JsonRequestBehavior.AllowGet);
-            
+            return Json(json, JsonRequestBehavior.AllowGet);     
         }
 
         /// <summary>

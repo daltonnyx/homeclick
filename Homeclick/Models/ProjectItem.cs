@@ -23,6 +23,7 @@ namespace Homeclick.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+        public string AreaCoords { get; set; }
         public Nullable<int> Order { get; set; }
         public Nullable<int> ProjectId { get; set; }
         public Nullable<int> CategoryId { get; set; }

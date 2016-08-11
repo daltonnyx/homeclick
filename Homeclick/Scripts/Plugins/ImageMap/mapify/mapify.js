@@ -52,7 +52,8 @@
 
     	var imageMap = this;
     	var map = null;
-
+    	var popOverIsEnabled = false
+    	var popOver = null;
     	imageMap.each(function() {
 	    	var imageMap = this;
 	    	map = $(imageMap).attr("usemap");
@@ -60,7 +61,6 @@
 	    	
 	    	if( !$(imageMap).hasClass("mapify") ){ // if the map has not already been "mapified"
 	    	
-	    		var popOverIsEnabled = false;
 	    		if( settings.popOver ){ // Setting a flag telling if the popover is enabled for each map instance
 		    		popOverIsEnabled = true;
 	    		}
@@ -124,7 +124,7 @@
 				
 				if( popOverIsEnabled ){
 					$(imageMap).after('<div class="mapify-popOver" style=" transition:'+popOverTransition+'; "><div class="mapify-popOver-content"></div><div class="mapify-popOver-arrow" style=" transition:'+popOverArrowTransition+'; "></div></div>')
-					var popOver = $(imageMap).next(".mapify-popOver");
+					popOver = $(imageMap).next(".mapify-popOver");
 					var popOverArrow = popOver.find(".mapify-popOver-arrow");
 					
 					popOver.css({width: settings.popOver.width,height: settings.popOver.height});
@@ -285,29 +285,7 @@
 				
 				console.log("mapified");
 				
-				var popOverTimeOut;
-				function clearMap(popOver, mapSVG){
-					
-					if( popOverIsEnabled ){
-						clearTimeout(popOverTimeOut);
-										
-						popOverTimeOut = setTimeout(function(){
-							popOver.removeClass("mapify-visible");
-						}, 300);
-					}
-										
-					var polygons = mapSVG.find("polygon");
-
-					$.each(polygons, function (i, o) {
-					    var classes = 'mapify-polygon';
-					    var polygon = $(o);
-					    var isToggle = polygon.data('toggle')
-					    if (isToggle) {
-					        classes = classes + " mapify-toggle";
-					    }
-					    polygon.attr("class", classes);
-					})
-                }
+				
 
 				function renderPopOver(popOver, elem){
 				
@@ -432,15 +410,48 @@
 		
     	});
 
-    	var mapify = {
-    	    toggleHilight: function (areaId) {
-    	        imageMap.each( function(){
-    	            var imageMap = this;
-    	            var area = document.getElementById(areaId);
+    	var popOverTimeOut;
+    	function clearMap(popOver, mapSVG) {
 
-    	            drawToggleHilight(area, imageMap, mapSVG, settings.hoverClass);
-    	        })
+    	    if (popOverIsEnabled) {
+    	        clearTimeout(popOverTimeOut);
+
+    	        popOverTimeOut = setTimeout(function () {
+    	            popOver.removeClass("mapify-visible");
+    	        }, 300);
     	    }
+
+    	    var polygons = mapSVG.find("polygon");
+
+    	    $.each(polygons, function (i, o) {
+    	        var classes = 'mapify-polygon';
+    	        var polygon = $(o);
+    	        var isToggle = polygon.data('toggle')
+    	        if (isToggle) {
+    	            classes = classes + " mapify-toggle";
+    	        }
+    	        polygon.attr("class", classes);
+    	    })
+    	};
+
+    	var mapify = {
+    	    toggle: function (areaId, bool) {
+    	        imageMap.each(function () {
+    	            if (bool) {
+    	                var imageMap = this;
+    	                var area = document.getElementById(areaId);
+
+    	                drawToggleHilight(area, imageMap, mapSVG, settings.hoverClass);
+    	            }
+    	            else {
+    	                var area = document.getElementById(areaId);
+    	                var areaIndex = $(area).index()
+    	                var polygon = mapSVG.find("polygon:eq(" + areaIndex + ")");
+    	                $(polygon).data('toggle', false);
+    	                clearMap(popOver, mapSVG);
+    	            }
+    	        });   
+    	    },
     	};
 
     	return mapify;
@@ -511,8 +522,8 @@
 	        });
 	    }
 	    polygon.data('toggle', true);
-
 	}
+
 	function remapZones(zones, imageMap){
 		zones.each(function(){
 									   

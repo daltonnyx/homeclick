@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Homeclick.Models.ProductsLayoutsLink>
+﻿@model IEnumerable<Homeclick.Models.ProjectLayout_Collection_Product_Link>
    @{
        var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
        var total = 0;
@@ -29,7 +29,7 @@
                         @item.ProductName
                     </td>
                     <td>
-                        @item.Total
+                        @item.Quantity
                     </td>
                     <td>
                         @item.ProductValue.ToString("#,###", info.NumberFormat) vnđ

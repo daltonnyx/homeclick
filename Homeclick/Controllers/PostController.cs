@@ -17,34 +17,51 @@ namespace Homeclick.Controllers
         // GET: Post
         public ActionResult Index()
         {
+            var categories = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Postcat).ToList();
+            ViewBag.categories = categories;
             return View();
         }
 
-        public ActionResult Detail(int id)
+        public ActionResult Category(int category_id)
         {
-            Category category = db.Categories.Where(c => c.Id == id).First();
-            return View("Detail", category);
+            var posts = GetPostByCategory(category_id);
+            return View(posts);
         }
 
-        public ActionResult ListPost(int? page)
+        public ActionResult _SideBar()
         {
-            //    //Số sản phẩm trên trang
-            int product_number = 8;
-            ////    //tao số biến trong trang
-            int pageNumber = (page ?? 1);
-            IList<Post> listpost;
-            listpost = db.Posts.ToList();
-            if (Request.IsAjaxRequest())
-            {
-                return View(listpost.OrderBy(n => n.title).ToPagedList(pageNumber, product_number));
-            }
-            return View("ListPost", listpost.OrderBy(n => n.title).ToPagedList(pageNumber, product_number));
+            var categories = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Postcat).ToList();
+            return PartialView(categories);
         }
 
-        public ViewResult Post_Detail(int? id)
+        public ActionResult Details(int category_id, int post_id)
         {
-            var post = db.Posts.Find(id);
+            var categoryParent = db.Categories.Find(category_id);
+            var othersPost = GetPostByCategory(categoryParent.Id);
+            ViewBag.OthersPost = othersPost.PickRandom(3);
+
+            var post = db.Posts.Find(post_id);
             return View(post);
+        }
+
+        private IEnumerable<Post> GetPostByCategory(int category_id)
+        {
+            var posts = new List<Post>();
+            var category = db.Categories.Where(o => o.Id == category_id).FirstOrDefault();
+            var categoryChildren = category.GetCategoryChilds();
+            if (categoryChildren.Count > 0)
+            {
+                foreach (var child in categoryChildren)
+                {
+                    var temp = child.getItems<Post>();
+                    posts.AddRange(temp);
+                }
+            }
+            else
+            {
+                posts = category.getItems<Post>().ToList();
+            }
+            return posts;
         }
 
         [HttpPost]
@@ -68,7 +85,6 @@ namespace Homeclick.Controllers
         public ActionResult Sidebar()
         {
             IList<Category> rooms = db.Categories.Where<Category>(c => c.Category_type.name == "collection").ToList();
-
             return PartialView("Sidebar", rooms);
         }
 

@@ -183,8 +183,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BoSuuTapController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CollectionController.cs" />
     <Compile Include="Controllers\DesignController.cs" />
     <Compile Include="Controllers\GioHangController.cs" />
     <Compile Include="Controllers\HoidapController.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="Controllers\HtmlController.cs" />
     <Compile Include="Controllers\JSONController.cs" />
     <Compile Include="Controllers\LienheController.cs" />
+    <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\SanPhamController.cs" />
@@ -220,6 +222,10 @@
     <Compile Include="Models\City.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Color.cs">
+      <DependentUpon>Homeclick.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ColorViewModel.cs" />
     <Compile Include="Models\ContextExtension.cs" />
     <Compile Include="Models\Customer.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
@@ -312,6 +318,13 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Fonts.css" />
+    <Content Include="Content\fonts\arial.svg" />
+    <Content Include="Content\fonts\arialbd.svg" />
+    <Content Include="Content\fonts\arialbi.svg" />
+    <Content Include="Content\fonts\ariali.svg" />
+    <Content Include="Content\fonts\fonts.css" />
+    <Content Include="Content\fonts\front-to-back.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\front-to-back.css" />
     <Content Include="Content\libs\Bosuutap.css" />
     <Content Include="Content\loading.gif" />
@@ -350,6 +363,40 @@
     <Content Include="homeclick\Upload\Images\Products\Thumbs.db" />
     <Content Include="homeclick\Upload\Images\Projects\Products\Thumbs.db" />
     <Content Include="homeclick\Upload\Images\Thumbs.db" />
+    <Content Include="Content\fonts\arial.eot" />
+    <Content Include="Content\fonts\arial.otf" />
+    <Content Include="Content\fonts\arial.ttf" />
+    <Content Include="Content\fonts\arial.woff" />
+    <Content Include="Content\fonts\arialbd.eot" />
+    <Content Include="Content\fonts\arialbd.otf" />
+    <Content Include="Content\fonts\arialbd.ttf" />
+    <Content Include="Content\fonts\arialbd.woff" />
+    <Content Include="Content\fonts\arialbi.eot" />
+    <Content Include="Content\fonts\arialbi.otf" />
+    <Content Include="Content\fonts\arialbi.ttf" />
+    <Content Include="Content\fonts\arialbi.woff" />
+    <Content Include="Content\fonts\ariali.eot" />
+    <Content Include="Content\fonts\ariali.otf" />
+    <Content Include="Content\fonts\ariali.ttf" />
+    <Content Include="Content\fonts\ariali.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\front-to-back.eot" />
+    <Content Include="Content\fonts\front-to-back.ttf" />
+    <Content Include="Content\fonts\front-to-back.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\fonts\UTM Avo.ttf" />
+    <Content Include="Content\fonts\UTM AvoBold.ttf" />
+    <Content Include="Content\fonts\UTM AvoBold_Italic.ttf" />
+    <Content Include="Content\fonts\UTM AvoItalic.ttf" />
+    <Content Include="Content\fonts\UTM Soraya.ttf" />
+    <Content Include="Content\Thumbs.db" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="homeclick\Upload\Images\accessories.png" />
@@ -635,6 +682,7 @@
     <Content Include="Scripts\Plugins\Map\markerclustererplus\src\markerclusterer.min.js" />
     <Content Include="Scripts\Plugins\Map\markerclustererplus\src\markerclusterer_packaged.js" />
     <Content Include="Scripts\Plugins\mixitup\jquery.mixitup.js" />
+    <Content Include="Scripts\Plugins\mixitup\jquery.mixitup.pagination.min.js" />
     <Content Include="Scripts\Plugins\noUiSlider\nouislider.css" />
     <Content Include="Scripts\Plugins\noUiSlider\nouislider.js" />
     <Content Include="Scripts\Plugins\noUiSlider\nouislider.min.css" />
@@ -642,6 +690,7 @@
     <Content Include="Scripts\Plugins\noUiSlider\nouislider.pips.css" />
     <Content Include="Scripts\Plugins\noUiSlider\nouislider.tooltips.css" />
     <Content Include="Scripts\Plugins\owlCarousel\assets\owl.carousel.css" />
+    <Content Include="Scripts\Plugins\owlCarousel\assets\owl.carousel.theme.css" />
     <Content Include="Scripts\Plugins\owlCarousel\owl.carousel.js" />
     <Content Include="Scripts\Plugins\owlCarousel\owl.carousel.min.js" />
     <Content Include="Scripts\Plugins\panigation\panigation.css" />
@@ -669,6 +718,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Upload\Images\accessories.png" />
     <Content Include="Upload\Images\assets\bosuutap.png" />
+    <Content Include="Upload\Images\assets\drop.svg" />
     <Content Include="Upload\Images\assets\en.gif" />
     <Content Include="Upload\Images\assets\icon-email.png" />
     <Content Include="Upload\Images\assets\icon-location.png" />
@@ -676,10 +726,26 @@
     <Content Include="Upload\Images\assets\icon-search.png" />
     <Content Include="Upload\Images\assets\icon-shoppingcart.png" />
     <Content Include="Upload\Images\assets\icon-slider-content.png" />
+    <Content Include="Upload\Images\assets\icon_e.png" />
+    <Content Include="Upload\Images\assets\icon_facebook.png" />
+    <Content Include="Upload\Images\assets\icon_google.png" />
+    <Content Include="Upload\Images\assets\icon_instr.png" />
+    <Content Include="Upload\Images\assets\icon_pint.png" />
     <Content Include="Upload\Images\assets\logo-footer.png" />
     <Content Include="Upload\Images\assets\logo.png" />
     <Content Include="Upload\Images\assets\slider-logo.png" />
+    <Content Include="Upload\Images\assets\ttk01.png" />
+    <Content Include="Upload\Images\assets\ttk02.png" />
+    <Content Include="Upload\Images\assets\ttk03.png" />
+    <Content Include="Upload\Images\assets\ttk04.png" />
+    <Content Include="Upload\Images\assets\ttk05.png" />
+    <Content Include="Upload\Images\assets\ttk05_.png" />
     <Content Include="Upload\Images\assets\tuthietke.png" />
+    <Content Include="Upload\Images\assets\tutk-01.jpg" />
+    <Content Include="Upload\Images\assets\tutk-02.jpg" />
+    <Content Include="Upload\Images\assets\tutk-03.jpg" />
+    <Content Include="Upload\Images\assets\tutk-04.jpg" />
+    <Content Include="Upload\Images\assets\tutk-05.jpg" />
     <Content Include="Upload\Images\assets\vi_vn.gif" />
     <Content Include="Upload\Images\bancs.png" />
     <Content Include="Upload\Images\beforekeotha.png" />
@@ -692,6 +758,8 @@
     <Content Include="Upload\Images\blog2.jpg" />
     <Content Include="Upload\Images\blog3.jpg" />
     <Content Include="Upload\Images\blog4.jpg" />
+    <Content Include="Upload\Images\blog5.jpg" />
+    <Content Include="Upload\Images\blog6.jpg" />
     <Content Include="Upload\Images\bosutap.png" />
     <Content Include="Upload\Images\cabinet.png" />
     <Content Include="Upload\Images\canthietke01.jpg" />
@@ -765,6 +833,7 @@
     <Content Include="Upload\Images\pointer %282%29.png" />
     <Content Include="Upload\Images\pointer.png" />
     <Content Include="Upload\Images\power_2.png" />
+    <Content Include="Upload\Images\Products\happy-chair.jpg" />
     <Content Include="Upload\Images\Products\Ottu_sofa_01.jpg" />
     <Content Include="Upload\Images\Products\Square_table.jpg" />
     <Content Include="Upload\Images\Products\bc02-nho-nhat.jpg" />
@@ -813,6 +882,24 @@
     <Content Include="Upload\Images\Projects\Collections\d2.jpg" />
     <Content Include="Upload\Images\Projects\Collections\d3.jpg" />
     <Content Include="Upload\Images\Projects\Collections\d4.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\1.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\2.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\3.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\4.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\b1.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\b2.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\b3.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\b4.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\b5.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\b6.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\c1.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\c2.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\c3.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\c4.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\d1.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\d2.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\d3.jpg" />
+    <Content Include="Upload\Images\Projects\Collections\New folder\d4.jpg" />
     <Content Include="Upload\Images\Projects\Layouts\Layout1.jpg" />
     <Content Include="Upload\Images\Projects\Layouts\Layout2.jpg" />
     <Content Include="Upload\Images\Projects\Layouts\Layout3.jpg" />
@@ -886,7 +973,7 @@
     <Content Include="Views\Home\Feature_Product.cshtml" />
     <Content Include="Views\SanPham\Product_Detail.cshtml" />
     <Content Include="Views\Home\Search_form.cshtml" />
-    <Content Include="Views\BoSuuTap\Index.cshtml" />
+    <Content Include="Views\Collection\Index.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\SanPham\Index.cshtml" />
@@ -899,7 +986,7 @@
     <Content Include="Views\Category\Typologies.cshtml" />
     <Content Include="Views\Category\Typology.cshtml" />
     <Content Include="Views\SanPham\FilterProduct.cshtml" />
-    <Content Include="Views\BoSuuTap\Detail.cshtml" />
+    <Content Include="Views\Collection\Detail.cshtml" />
     <Content Include="Views\SanPham\Detail.cshtml" />
     <Content Include="Views\Design\DesignSliderPartial.cshtml" />
     <Content Include="Views\Design\Index.cshtml" />
@@ -924,11 +1011,21 @@
     <Content Include="Views\Page\Lienhe.cshtml" />
     <Content Include="Views\Page\Hoidap.cshtml" />
     <Content Include="Scripts\Plugins\particles\particles.json" />
-    <Content Include="Views\BoSuuTap\Sidebar.cshtml" />
-    <Content Include="Views\BoSuuTap\List.cshtml" />
-    <Content Include="Views\BoSuuTap\Slider.cshtml" />
-    <Content Include="Views\BoSuuTap\_CollectionGrid.cshtml" />
-    <Content Include="Views\BoSuuTap\_OtherCollections.cshtml" />
+    <Content Include="Views\Collection\Sidebar.cshtml" />
+    <Content Include="Views\Collection\List.cshtml" />
+    <Content Include="Views\Collection\Slider.cshtml" />
+    <Content Include="Views\Collection\_CollectionGrid.cshtml" />
+    <Content Include="Views\Collection\_OtherCollections.cshtml" />
+    <Content Include="Views\Category\_Sidebar.cshtml" />
+    <Content Include="Views\Collection\Category.cshtml" />
+    <Content Include="Views\Collection\_Sidebar.cshtml" />
+    <Content Include="Views\Collection\_Slider.cshtml" />
+    <Content Include="Views\Home\Sidebar.cshtml%28old%29" />
+    <Content Include="Views\Home\SidebarOfModel.cshtml" />
+    <Content Include="Views\Home\_Slider.cshtml" />
+    <Content Include="Views\Post\Category.cshtml" />
+    <Content Include="Views\Post\Details.cshtml" />
+    <Content Include="Views\Post\Index.cshtml" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\Shared\Layout_html.cshtml" />
     <Content Include="Views\Shared\_Layout_Cat.cshtml" />
@@ -956,11 +1053,23 @@
     <Content Include="Views\SanPham\ProductGrid.cshtml" />
     <Content Include="Views\Project\Sidebar_Landing.cshtml" />
     <Content Include="Views\Project\Category.cshtml" />
+    <Content Include="Views\SanPham\Category.cshtml" />
+    <Content Include="Views\SanPham\_Sidebar.cshtml" />
+    <Content Include="Views\Post\_Categories.cshtml" />
+    <Content Include="Views\Post\_Sidebar.cshtml" />
+    <Content Include="Views\Project\Category%28old%29.cshtml" />
+    <Content Include="Views\Project\Index%28old%29.cshtml" />
+    <Content Include="Views\Project\_Sidebar%28old%29.cshtml" />
+    <Content Include="Views\Project\_Sidebar_Details.cshtml" />
+    <Content Include="Views\Shared\_SharedLayout.cshtml" />
+    <Content Include="Views\Shared\_SharedLayout_NoSidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\test\" />
-    <Folder Include="Views\JSON\" />
+    <Folder Include="Scripts\Plugins\ResponsiveMenu\" />
+    <Folder Include="Scripts\Plugins\shareThis\" />
+    <Folder Include="Upload\Images\assets\Colors\" />
+    <Folder Include="Upload\Images\Products\Details\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

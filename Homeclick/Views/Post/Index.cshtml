@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var categories = ViewBag.Categories as IEnumerable<Homeclick.Models.Category>;
+}
+
+@Html.Partial("Sidebar", categories)
+
+
+@section breadcrumb {
+    <ul>
+        <li><a href="@Url.Action("Index","Home")">Home</a></li>
+        <li>Thư viện</li>
+    </ul>
+}
+
+@section styles {
+    <style>
+    </style>
+}
+
+@section scripts {
+   
+}

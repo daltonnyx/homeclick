@@ -1,0 +1,70 @@
+﻿@{
+    var url = "";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @if (IsSectionDefined("styles"))
+    {
+        @RenderSection("styles", false)
+    }
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/jquery-1.11.3.min.js")
+    @Scripts.Render("~/bundles/bootstrap")
+
+</head>
+<body>
+    <div class="wapper">
+        @Html.Partial("_Header")
+        <main id="main" class="site-main">
+            <div class="container page-bosuutap">
+                <div class="row breadcrumb">
+                    @RenderSection("breadcrumb", false)
+                </div>
+                <div class="row">
+                    <aside id="sidebar" class="col-sm-4 col-md-3">
+                        @Html.Action("_Sidebar")
+                    </aside>
+                    <div class="content-page col-xs-12 col-sm-8 col-md-9">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </main>
+        @Html.Partial("_Footer");
+    </div>
+
+    <script>
+      
+        var menu = '@ViewContext.RouteData.Values["controller"]@ViewContext.RouteData.Values["action"]';
+        var currentMenu = $('.nav-item').filter('[data-menu="' + menu + '"]');
+        var parentMenu = currentMenu.parents('li');
+        currentMenu.addClass('active');
+        parentMenu.addClass('active')
+
+        //find current category and active it.
+        var selectedCategory = '@Request.Params["category_id"]';
+        if (!selectedCategory) {
+            selectedCategory = '-1';
+        }
+        var currentCat = $('.category-link').filter('[data-category="' + selectedCategory + '"]');
+        var parentCat = currentCat.parents('li');
+        parentCat.addClass('active');
+
+        var parentCatId = parentCat.data('category');
+        parentCat = $('.category-link').filter('[data-category="' + parentCatId + '"]');
+        currentCat.addClass('active');
+        parentCat.addClass('active');
+    </script>
+
+    @if (IsSectionDefined("scripts"))
+    {
+        @RenderSection("scripts", false)
+    }
+</body>
+</html>
+

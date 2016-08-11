@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="vinabits_homeclickModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="vinabits_homeclickModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">      
       <EntityType Name="Project">
         <Key>
           <PropertyRef Name="Id" />
@@ -37,7 +37,6 @@
         <Property Name="CategoryId" Type="int" />
         <Property Name="Completed" Type="bit" />
         <Property Name="MapLocation" Type="nvarchar" MaxLength="50" />
-
       </EntityType>
 
       <EntityType Name="ProjectItem">
@@ -48,6 +47,7 @@
         <Property Name="Name" Type="nvarchar" MaxLength="255" />
         <Property Name="Description" Type="nvarchar" MaxLength="255" />
         <Property Name="Image" Type="nvarchar" MaxLength="Max" />
+        <Property Name="AreaCoords" Type="nvarchar" MaxLength="Max"/>
         <Property Name="Order" Type="int"/>
         <Property Name="ProjectId" Type="int"/>
         <Property Name="CategoryId" Type="int"/>
@@ -77,7 +77,7 @@
         <Property Name="UpdatedBy" Type="int" />
       </EntityType>
 
-      <EntityType Name="ProductsLayoutsLink">
+      <EntityType Name="ProjectLayout_Collection_Product_Link">
         <Key>
           <PropertyRef Name="Product" />
           <PropertyRef Name="Layout" />
@@ -85,6 +85,17 @@
         <Property Name="Product" Type="int" Nullable="false" />
         <Property Name="Layout" Type="int"  Nullable="false" />
         <Property Name="ID" Type="int" />
+      </EntityType>
+
+      <EntityType Name="Color">
+        <Key>
+          <PropertyRef Name="Id"/>
+        </Key>
+        <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false"/>
+        <Property Name="Name" Type="nvarchar" MaxLength="128" />
+        <Property Name="Description" Type="nvarchar" MaxLength="128" />
+        <Property Name="Colour" Type="nvarchar" MaxLength="Max" />
+        <Property Name="Image" Type="nvarchar" MaxLength="Max" />
       </EntityType>
       
       <EntityType Name="Canva">
@@ -961,27 +972,27 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
         </ReferentialConstraint>
       </Association>
 
-        <Association Name="FK_ProductsLayoutsLink_Product">
+        <Association Name="FK_ProjectLayout_Collection_Product_Link_Product">
         <End Role="Product" Type="Self.Product" Multiplicity="1" />
-        <End Role="ProductsLayoutsLink" Type="Self.ProductsLayoutsLink" Multiplicity="*" />
+        <End Role="ProjectLayout_Collection_Product_Link" Type="Self.ProjectLayout_Collection_Product_Link" Multiplicity="*" />
         <ReferentialConstraint>
           <Principal Role="Product">
             <PropertyRef Name="Id" />
           </Principal>
-          <Dependent Role="ProductsLayoutsLink">
+          <Dependent Role="ProjectLayout_Collection_Product_Link">
             <PropertyRef Name="Product" />
           </Dependent>
         </ReferentialConstraint>
       </Association>
 
-        <Association Name="FK_ProductsLayoutsLink_Layout">
+        <Association Name="FK_ProjectLayout_Collection_Product_Link_Layout">
         <End Role="ProjectLayout_Collection" Type="Self.ProjectLayout_Collection" Multiplicity="1" />
-        <End Role="ProductsLayoutsLink" Type="Self.ProductsLayoutsLink" Multiplicity="*" />
+        <End Role="ProjectLayout_Collection_Product_Link" Type="Self.ProjectLayout_Collection_Product_Link" Multiplicity="*" />
         <ReferentialConstraint>
           <Principal Role="ProjectLayout_Collection">
             <PropertyRef Name="Id" />
           </Principal>
-          <Dependent Role="ProductsLayoutsLink">
+          <Dependent Role="ProjectLayout_Collection_Product_Link">
             <PropertyRef Name="Layout" />
           </Dependent>
         </ReferentialConstraint>
@@ -991,15 +1002,16 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectItem" EntityType="Self.ProjectItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectLayout_Collection" EntityType="Self.ProjectLayout_Collection" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProductsLayoutsLink" EntityType="Self.ProductsLayoutsLink" store:Schema="dbo" store:Type="Tables">
+          <EntitySet Name="ProjectLayout_Collection_Product_Link" EntityType="Self.ProjectLayout_Collection_Product_Link" store:Schema="dbo" store:Type="Tables">
             <DefiningQuery>
               SELECT
-              [ProductsLayoutsLink].[Product] AS [Product],
-              [ProductsLayoutsLink].[Layout] AS [Layout],
-              [ProductsLayoutsLink].[Id] AS [Id]
-              FROM [dbo].[ProductsLayoutsLink] AS [ProductsLayoutsLink]
+              [ProjectLayout_Collection_Product_Link].[Product] AS [Product],
+              [ProjectLayout_Collection_Product_Link].[Layout] AS [Layout],
+              [ProjectLayout_Collection_Product_Link].[Id] AS [Id]
+              FROM [dbo].[ProjectLayout_Collection_Product_Link] AS [ProjectLayout_Collection_Product_Link]
             </DefiningQuery>
           </EntitySet>
+          <EntitySet Name="Color" EntityType="Self.Color" Schema="dbo" store:Type="Tables"/>
           <EntitySet Name="Canva" EntityType="Self.Canva" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
@@ -1189,15 +1201,15 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             <End Role="Wishlist" EntitySet="Wishlist" />
             <End Role="WishlistDanhSachWishlists_ProductDanhSachProducts" EntitySet="WishlistDanhSachWishlists_ProductDanhSachProducts" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProductsLayoutsLink_Product" Association="Self.FK_ProductsLayoutsLink_Product">
+          <AssociationSet Name="FK_ProjectLayout_Collection_Product_Link_Product" Association="Self.FK_ProjectLayout_Collection_Product_Link_Product">
             <End Role="Product" EntitySet="Product" />
-            <End Role="ProductsLayoutsLink" EntitySet="ProductsLayoutsLink" />
+            <End Role="ProjectLayout_Collection_Product_Link" EntitySet="ProjectLayout_Collection_Product_Link" />
             
           </AssociationSet>
 
-          <AssociationSet Name="FK_ProductsLayoutsLink_Layout" Association="Self.FK_ProductsLayoutsLink_Layout">
+          <AssociationSet Name="FK_ProjectLayout_Collection_Product_Link_Layout" Association="Self.FK_ProjectLayout_Collection_Product_Link_Layout">
             <End Role="ProjectLayout_Collection" EntitySet="ProjectLayout_Collection" />
-            <End Role="ProductsLayoutsLink" EntitySet="ProductsLayoutsLink" />
+            <End Role="ProjectLayout_Collection_Product_Link" EntitySet="ProjectLayout_Collection_Product_Link" />
 
           </AssociationSet>
           
@@ -1211,6 +1223,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <EntitySet Name="Projects" EntityType="vinabits_homeclickModel.Project" />
           <EntitySet Name="ProjectItems" EntityType="vinabits_homeclickModel.ProjectItem" />
           <EntitySet Name="ProjectLayout_Collections" EntityType="vinabits_homeclickModel.ProjectLayout_Collection" />
+          <EntitySet Name="Color" EntityType="vinabits_homeclickModel.Color" />
           <EntitySet Name="Canvas" EntityType="vinabits_homeclickModel.Canva" />
           <EntitySet Name="Carts" EntityType="vinabits_homeclickModel.Cart" />
           <EntitySet Name="Categories" EntityType="vinabits_homeclickModel.Category" />
@@ -1453,6 +1466,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <Property Name="Name" Type="String" MaxLength="255" />
           <Property Name="Description" Type="String" MaxLength="255" />
           <Property Name="Image" Type="String" MaxLength="Max" />
+          <Property Name="AreaCoords" Type="String" MaxLength="Max" />
           <Property Name="Order" Type="Int32"/>
           <Property Name="ProjectId" Type="Int32"/>
           <Property Name="CategoryId" Type="Int32"/>
@@ -1492,6 +1506,17 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <NavigationProperty Name="CreatedByUser" Relationship="vinabits_homeclickModel.FK_ProjectLayout_Collection_CreatedBy" ToRole="User" FromRole="ProjectLayout_Collection" />
           <NavigationProperty Name="UpdatedByUser" Relationship="vinabits_homeclickModel.FK_ProjectLayout_Collection_UpdatedBy" ToRole="User" FromRole="ProjectLayout_Collection" />
           <!--Thêm relation sau-->
+        </EntityType>
+        
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true"/>
+          <Property Name="Description" Type="String" MaxLength="128" FixedLength="false" Unicode="true"/>
+          <Property Name="Colour" Type="String" MaxLength="Max" FixedLength="false" Unicode="true"/>
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true"/>
         </EntityType>
         
         <EntityType Name="Canva">
@@ -2364,6 +2389,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
                 <ScalarProperty Name="ParentId" ColumnName="ParentId"/>
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId"/>
                 <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="AreaCoords" ColumnName="AreaCoords" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -2389,6 +2415,18 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+
+          <EntitySetMapping Name="Color">
+            <EntityTypeMapping TypeName="vinabits_homeclickModel.Color">
+              <MappingFragment StoreEntitySet="Color">
+                <ScalarProperty Name="Id" ColumnName="Id"/>
+                <ScalarProperty Name="Name" ColumnName="Name"/>
+                <ScalarProperty Name="Description" ColumnName="Description"/>
+                <ScalarProperty Name="Colour" ColumnName="Colour"/>
+                <ScalarProperty Name="Image" ColumnName="Image"/>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2730,7 +2768,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             </EndProperty>
           </AssociationSetMapping>
 
-          <AssociationSetMapping Name="ProductLayout" TypeName="vinabits_homeclickModel.ProductLayout" StoreEntitySet="ProductsLayoutsLink">
+          <AssociationSetMapping Name="ProductLayout" TypeName="vinabits_homeclickModel.ProductLayout" StoreEntitySet="ProjectLayout_Collection_Product_Link">
             <EndProperty Name="ProjectLayout_Collection">
               <ScalarProperty Name="Id" ColumnName="Layout" />
             </EndProperty>

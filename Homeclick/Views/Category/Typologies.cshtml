@@ -1,30 +1,82 @@
 ﻿@using Homeclick.Models;
 @model IList<Category>
+
 @{
     ViewBag.Title = "Typologies";
-    Layout = "../Shared/_Layout_Cat.cshtml";
+    Layout = "~/Views/Shared/_SharedLayout.cshtml";
+
     var url = "";
-    var image_src = string.Empty;
-    var link = string.Empty;
-    var title = string.Empty;
-
 }
+
 <div class="all-tpologies">
-    <div class="typologies">
-        <div class="typologies-item col-md-12">
-            @*foreach (Category typology in Model)
+    <div class="typologies clearfix">
+        @foreach (var item in Model)
+        {
+            var categories = ModelHelper.getParents<Category>(typeof(Category).Name, typeof(Category).Name, item.Id);
+            var models = "";
+            for (var j = 0; j < categories.Count; j++)
             {
-                image_src = typology.getDetailValue("icon").ToString();
-                link = Url.Action("Typology", "Category", new { @Id = @typology.Id });
-                title = typology.name;
+                models = models + "model-" + categories[j].Id;
+                if (j < categories.Count - 1)
+                {
+                    models = models + " ";
+                }
+            }
 
-                <div class="item-image-tp">
-                    <a href="@link"><img src="@url/@image_src" /></a>
-                    <h3><a href="@link">@title</a></h3>
-                </div>
-            }*@
-
-
-        </div>
+            <div class="col-xs-4 col-md-3 item-image-tp mix @models" data-myorder="@item.Order" data-type="@item.Id">
+                <a class="typology-link" href="#"><img src="@url/@item.getDetailValue("icon")" /></a>
+                <span>@item.name</span>
+            </div>
+        }
     </div>
+
 </div>
+
+@section breadcrumb {
+     <ul>
+        <li><a href="@Url.Action("Index","Home")">Home</a></li>
+        <li>All typologies</li>
+    </ul>
+}
+
+@section styles {
+    <style>
+        .typologies {
+            overflow:hidden;
+        }
+        .typologies .mix {
+            display: none;
+        }
+        
+    </style>
+}
+
+@section scripts {
+    <script src="~/Scripts/Plugins/mixitup/jquery.mixitup.js"></script>
+
+    <script type="text/javascript">
+        var currentModel = -1;
+        $(document).ready(function () {
+            currentModel = $('.model-link').first().data('content');
+            $('.typologies').mixItUp({
+                pagination: {
+                    limit: 8,
+                    generatePagers: !0,
+                },
+                load: {
+                    filter: '.model-1'
+                }
+            });
+
+            $('.item-image-tp').bind('click', function () {
+                var data = $(this).data('type');
+                var url = '@Url.Action("Category", "SanPham")' + '?category_id=' + currentModel + '&typo_id=' + data;
+                window.location.href = url;
+            });
+
+            $('.model-link').bind('click', function () {
+                currentModel = $(this).data('content');
+            });
+        });
+    </script>
+}

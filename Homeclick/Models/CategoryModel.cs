@@ -6,7 +6,6 @@ using System.Web;
 
 namespace Homeclick.Models
 {
-
     public partial class Category
     {
 
@@ -49,9 +48,11 @@ namespace Homeclick.Models
         {
             return this.Products.ToList();
         }
-        public IList<Post> getPost()
+
+        public IList<T> getItems<T>() where T: class
         {
-            return this.Posts.ToList();
+            var posts = ModelHelper.GetObjectListByCategory<T>(this.Id);
+            return posts;
         }
 
         public IList<Category> getDescendantCategories()
@@ -93,10 +94,11 @@ namespace Homeclick.Models
 
         public IList<Category> GetCategoryChilds()
         {
-            var list = ModelHelper.GetCategoryChilds(this.Id).OrderBy(o => o.name).ToList();
+            var list = ModelHelper.getChildren<Category>(typeof(Category).Name, typeof(Category).Name,this.Id).OrderBy(o => o.name).ToList();
             var sortedList = list.OrderBy(o => o.Order).ToList();
             return sortedList;
         }
+
 
         public string getActionLink()
         {

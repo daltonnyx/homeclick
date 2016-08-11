@@ -1,55 +1,79 @@
-﻿@{
+﻿@using Homeclick.Models;
+@model IEnumerable<Project>
+@{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout_Project.cshtml";
+    Layout = "~/Views/Shared/_SharedLayout.cshtml";
     var url = "";
     var categories = ViewBag.Categories as IEnumerable<Homeclick.Models.Category>;
+    var categoryValue = Request.RequestContext.RouteData.Values["category_id"];
 }
 
-<div class="row breadcrumb">
-    <ul>
-        <li><a href="../">Home</a></li>
-        <li>Dự án</li>
-    </ul>
-</div>
-<div class="main-head row" hidden>
-    <div class="col-sm-8">
-        <span class="main-title">DỰ ÁN</span>
-    </div>
-</div>
+    <div class="main-body">
+        <div id="projectsGrid" class="clearfix">
+            @foreach (var item in Model)
+            {
+                var dataStr = "data-name=\"['" + @item.Name.ToLower() + "']\"";
+                dataStr = dataStr + " data-i=\"['" + @item.Investor.ToLower() + "']\"";
+                dataStr = dataStr + " data-a=\"['" + @item.ArchitetualDesignAgency.ToLower() + "']\"";
+                dataStr = dataStr + " data-f=\"['" + @item.FurnitureDesignAgency.ToLower() + "']\"";
+                dataStr = dataStr + " data-v=\"['" + @item.ViewDesignAgency.ToLower() + "']\"";
+                dataStr = dataStr + " data-c=\"['" + @item.ConstructionAgency.ToLower() + "']\"";
+                dataStr = dataStr + " data-d=\"['" + @item.DistributionAgency.ToLower() + "']\"";
+                dataStr = dataStr + " data-m=\"['" + @item.Manager.ToLower() + "']\"";
 
-<div class="row">
-    <div class="row">
-        @Html.Partial("Sidebar_Landing", categories)
-
-        <div class="col-md-9">
-            <div class="main-body row">
-                <div id="projectsGrid" class="clearfix">
-
+                <div class="project-tile col-xs-6 col-md-4 mix category-@item.CategoryId city-@item.CityId state-@item.StateId status-@item.Completed.ToString()" @dataStr>
+                    <div class="project-tile-image fullscreener fsr-container">
+                        <img width="650" height="420" src="@item.Image" class="attachment-project-image size-project-image wp-post-image fsr-image fsr-hidden" alt="Helsinki-Central-Library">
+                    </div>
+                    <div class="project-tile-overlay">
+                        <h4>@item.Name</h4>
+                        <a href="' + link + '" class="button tiny">Xem chi tiết <i class="fa fa-search" aria-hidden="true"></i></a>
+                    </div>
                 </div>
+            }
+        </div>
 
-                <div id="projectsLoading" class="loading" style="display: none;">
-                    <img class="loadingImg" src="@url/Content/loading.gif" height="150" width="150" />
-                </div>
-            </div>
+        <div class="control-bar">
+            <ul class="pager-list pagination">
+                <!-- Pagination buttons will be generated here -->
+            </ul>
         </div>
     </div>
-    </div>
 
-<script type='text/javascript' src="~/Scripts/Plugins/jlinq/jlinq.js"></script>
-<script type='text/javascript' src="~/Scripts/Plugins/Map/map.js"></script>
+@section breadcrumb {
+<ul>
+    <li><a href="../">Home</a></li>
+    <li>Dự án</li>
+</ul>
+}
 
-<script>
+@section styles {
+    <link href="~/Content/Project.css" rel="stylesheet" />
+    <style>
+        #projectsGrid {
+            overflow:hidden;
+        }
+        .mix {
+            display: none;
+        }
+        
+    </style>
+}
+
+@section scripts {
+    <script src="~/Scripts/Plugins/mixitup/jquery.mixitup.js"></script>
+    <script src="~/Scripts/Plugins/mixitup/jquery.mixitup.pagination.min.js"></script>
+
+    <script>
     (function ($) {
         $.fn.toggleAtrr = function (atrr) {
             if ($(this).attr('checked'))
                 $(this).removeAttr('checked')
             else
-                $(this).attr('checked')
+                $(this).attr('checked', 'checked');
         };
     })(jQuery);
 
-    var jsonData = [];
-    var typeSelection = $('#projectTypeSelection');
     var citySelection = $('#projectCitiesSelection');
     var statesSelection = $('#statesSelection');
 
@@ -61,10 +85,6 @@
     var filterTextBox = $('#filterTextBox');
     var filterButton = $('#filterButton');
     var projectsGrid = $('#projectsGrid');
-
-    typeSelection.bind("change", function () {
-        selectChanged();
-    });
 
     citySelection.bind("change", function () {
         //Get states
@@ -81,7 +101,6 @@
                 statesSelection.append(item);
             }
         }
-
         selectChanged();
     });
 
@@ -104,93 +123,70 @@
         selectChanged();
     });
 
-    filterTextBox.bind("change",function () {
+    filterTextBox.bind("change", function () {
         selectChanged();
     });
 
     function selectChanged() {
-        var typeSelectionVal = typeSelection.val();
         var citySelectionVal = citySelection.val();
         var statesSelectionVal = statesSelection.val();
         var filterTextBoxVal = filterTextBox.val();
+        var filter = '';
 
-        var result = jsonData;
 
-        if (typeSelectionVal)
-            result = filterByType(result, typeSelectionVal)
+        if (filterTextBoxVal) {
+            var manageradiorel = $('input[name="a"]:checked').val();
+            var dataAttrVal = '[data-' + manageradiorel + '*="' + filterTextBox.val().replace(/ /, '-') + '"]';
+            filterTextBox.attr('data-filter', dataAttrVal);
+            filter = filterTextBox.attr('data-filter');
+        }
+        else
+            filterTextBox.attr('data-filter', '');
 
-        if (citySelectionVal)
-            result = filterByCity(result, citySelectionVal)
+        if (category_id != -1)
+            filter = ".category-" + category_id;
 
-        if (statesSelectionVal)
-            result = filterByField(result, 'state', statesSelectionVal)
+        if (citySelection.val()) {
+            filter = filter + ".city-" + citySelectionVal;  
+        }
+
+        if (statesSelectionVal) {
+            filter = filter + ".state-" + statesSelectionVal;
+        }
 
         if (statuCheckers[0].attr('checked') && statuCheckers[1].attr('checked')) {
+
         }
         else if (statuCheckers[0].attr('checked')) {
-            result = filterByField(result, 'statu', statuCheckers[0].val())
+            filter = filter + ".status-" + statuCheckers[0].val();
         }
         else if (statuCheckers[1].attr('checked')) {
-            result = filterByField(result, 'statu', statuCheckers[1].val())
-        }
-        else {
-            return;
+            filter = filter + ".status-" + statuCheckers[1].val();
         }
 
-        if (filterTextBoxVal)
-        {
-            var manageradiorel = $('input[name="a"]:checked').val();
-            result = filterByField(result, manageradiorel, filterTextBoxVal)
-        }
+        if (filter == '')
+            filter = 'all';
 
-        showProjects(result);
+        container.mixItUp('filter', filter);
     }
 
-    function showProjects(data)
-    {
-        projectsGrid.html('');
-        var baseLink = '@Request.RequestContext.RouteData.Values["controller"]';
-        for (var i = 0; i < data.length; i++) {
-            var link = '@url' + "/" + baseLink + "/" + data[i].type + "/" + data[i].id;
-            var item = '<div class="project-tile col-sm-6 col-md-4">' +
-                '<div class="project-tile-image fullscreener fsr-container">' +
-                    '<img width="650" height="420" src="' + data[i].image + '" class="attachment-project-image size-project-image wp-post-image fsr-image fsr-hidden" alt="Helsinki-Central-Library">' +
-                    '</div>' +
-                    '<div class="project-tile-overlay">' +
-                        '<h4>' + data[i].name + '</h4>' +
-                        '<a href="' + link + '" class="button tiny">Xem chi tiết <i class="fa fa-search" aria-hidden="true"></i></a>' +
-                    '</div>' +
-                '</div>';
-            projectsGrid.append(item);
-        }
-    }
+    var container = $('#projectsGrid');
+    var category_id = '-1';
 
-    $.extend({
-        getJsonFromUrl: function (url, urlData) {
-            var result = null;
-            $.ajax({
-                type: "GET",
-                url: url,
-                data: urlData,
-                dataType: "json",
-                async: false,
-                success: function (jsonResult) {
-                    result = jsonResult;
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert('Failed to retrieve data.');
-                }
-            })
-            return result;
-        }
+    $('.category-link').bind('click', function () {
+        $('.category-link').removeClass('active');
+        $(this).addClass('active');
+        category_id = $(this).data('category');
+        selectChanged();
     });
 
-    var category_id = '@Request.RequestContext.RouteData.Values["category_id"]'
     jQuery(document).ready(function ($) {
-        var url = '@Url.Action("GetProjectsData", "JSON")'
-        var data = $.getJsonFromUrl(url, {'category_id': category_id});
-        jsonData = data;
-        showProjects(jsonData);
+        container.mixItUp({
+            pagination: {
+                limit: 6,
+                generatePagers: !0,
+            },
+        });
     });
-
 </script>
+}

@@ -1,0 +1,41 @@
+﻿@using Homeclick.Models;
+@model IList<Category>
+
+@{
+    var url = "";
+}
+
+<div class="sidebar-box">
+    <div class="box">
+        <div class="box-title">
+            <h3 class="title-sidebar title-cate-sidebar">Thư viện</h3>
+            <div class="box-tool">
+                <a data-action="collapse" href="#"><i class="nav-arrow"></i></a>
+            </div>
+        </div>
+        <div class="box-content clearfix">
+            <ul class="category-list">
+                @foreach (var item in Model)
+                {
+                    <li class="category-link" data-category="@item.Id">
+                        <a href="@Url.Action("Category", "Post", new { @category_id = @item.Id })">@item.name</a>
+                        @{
+                            var children = item.GetCategoryChilds();
+                            if (children.Count > 0)
+                            {
+                                <ul class="category-list-sub">
+                                    @foreach (var child in children)
+                                    {
+                                        <li class="category-link" data-category="@child.Id">
+                                            <a href="@Url.Action("Category", "Post", new { @category_id = @child.Id })">@child.name</a>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        }
+                    </li>
+                   }
+            </ul>
+        </div>
+    </div>
+</div>

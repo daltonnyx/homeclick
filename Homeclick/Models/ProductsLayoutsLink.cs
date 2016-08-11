@@ -5,12 +5,12 @@ using System.Web;
 
 namespace Homeclick.Models
 {
-    public class ProductsLayoutsLink
+    public class ProjectLayout_Collection_Product_Link
     {
-        public int ID { get; set; }
-        public int Layout { get; set; }
-        public int Product { get; set; }
-        public int Total { get; set; }
+        public int Id { get; set; }
+        public int PatentId { get; set; }
+        public int ChildId { get; set; }
+        public int Quantity { get; set; }
 
         public virtual string ProductName { get; set; }
         public virtual int ProductValue { get; set; }

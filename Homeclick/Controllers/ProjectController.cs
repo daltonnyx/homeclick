@@ -8,41 +8,25 @@ using System.Web.Mvc;
 
 namespace Homeclick.Controllers
 {
-    public class ProjectController : Controller
+    public class ProjectController : BaseController
     {
-        Homeclick.Models.vinabits_homeclickEntities db = new Models.vinabits_homeclickEntities();
-        // GET: Project
+        public override CategoryTypes CategoryType
+        {
+            get
+            {
+                return CategoryTypes.ProjectType;
+            }
+        }
+
         public ActionResult Index()
         {
-            ViewBag.MetaKeyword = "homeclick";
-            ViewBag.MetaDescription = "project";
-            var types = db.Categories.Where(o => o.parent_id == 28);
-            var cities = db.Cities.ToList();
-
-            ViewBag.ProjectTypes = types;
-            ViewBag.Cities = cities;
-            var categories = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.ProjectType);
-            ViewBag.Categories = categories;
-            var v = db.Projects.ToList();
-            return View(v);
+            var viewModel = db.Projects.Where(o => o.LockedOut == false);
+            return View(viewModel);
         }
 
         public ActionResult Category(int category_id)
         {
-            ViewBag.MetaKeyword = "homeclick";
-            ViewBag.MetaDescription = "project";
-
-            var types = db.Categories.Where(o => o.parent_id == 28);
-            var cities = db.Cities.ToList();
-
-            ViewBag.ProjectTypes = types;
-            ViewBag.Cities = cities;
-
-            var categories = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.ProjectType);
-            ViewBag.Categories = categories;
-
-            var v = db.Projects.Where(o => o.CategoryId == category_id).ToList();
-            return View(v);
+            return View();
         }
 
         public ActionResult Map()
@@ -57,26 +41,20 @@ namespace Homeclick.Controllers
 
             var categories = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.ProjectType);
             ViewBag.Categories = categories;
+
             return View();
         }
 
-        
-
         public ActionResult _CollectionDetails(int collection_id)
         {
-            if (collection_id == null)
-            {
-
-            }
-
-            var query = string.Format("SELECT * FROM dbo.ProductsLayoutsLink WHERE Layout = '{0}'", collection_id);
-            var tableItems = db.Database.SqlQuery<ProductsLayoutsLink>(query).ToList();
-
+            var query = string.Format("SELECT * FROM dbo.ProjectLayout_Collection_Product_Link WHERE ParentId = '{0}'", collection_id);
+            var tableItems = db.Database.SqlQuery<ProjectLayout_Collection_Product_Link>(query).ToList();
+            
             var products = new List<Product>();
 
             foreach (var product in tableItems)
             {
-                var temp_p = db.Products.Find(product.Product);
+                var temp_p = db.Products.Find(product.ChildId);
                 var temp_t = temp_p.ToArray();
                 var detail = temp_t["Product_detail"] as Dictionary<string, object>;
                 
@@ -84,7 +62,7 @@ namespace Homeclick.Controllers
 
                 product.ProductName = temp_p.name;
                 product.ProductValue = Convert.ToInt32(detail["gia"]);
-                product.TotalValue = product.Total * product.ProductValue;
+                product.TotalValue = product.Quantity * product.ProductValue;
             }
 
             ViewBag.Products = products;
@@ -93,26 +71,6 @@ namespace Homeclick.Controllers
             var l = db.ProjectLayout_Collections.ToList();
             var v = l.SingleOrDefault(o => o.Id == collection_id);
        
-            return PartialView(v);
-        }
-
-        public ActionResult _Projects (int? typeId, string text)
-        {
-            var list = db.Projects.Where(o => o.LockedOut == true).ToList();
-
-            var v = typeId != null ? db.Projects.Where(o => o.CategoryId == typeId).ToList() : db.Projects.ToList();
-
-            if (text != null)
-            {
-                var b = new List<Project>();
-                foreach (var item in v)
-                {
-                    if (item.Name.IndexOf(text, StringComparison.OrdinalIgnoreCase) >= 0)
-                        b.Add(item);
-                }
-                v = b;
-            }
-            ViewBag.SearchText = text;
             return PartialView(v);
         }
 

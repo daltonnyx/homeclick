@@ -28,6 +28,7 @@ namespace Homeclick.Models
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectItem> ProjectItems { get; set; }
         public virtual DbSet<ProjectLayout_Collection> ProjectLayout_Collections { get; set; }
+        public virtual DbSet<Color> Color { get; set; }
         public virtual DbSet<Canva> Canvas { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
