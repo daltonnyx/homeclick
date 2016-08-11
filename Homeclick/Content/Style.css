@@ -1,4 +1,4 @@
-﻿<<<<<<< HEAD
+<<<<<<< HEAD
 ﻿/*
 Theme Name: Homeclick
 Theme URI: http://
@@ -1218,6 +1218,7 @@ a.nivo-prevNav{
     padding-left: 10px;
     border-left: solid 5px #4fc5c7;
     background: url('../Upload/Images/assets/stripe.png') left top / 50% repeat transparent;
+    margin:0;
 }
 
 .content-page {
@@ -4021,7 +4022,7 @@ select {
                 display: block;
                 height: 42px;
                 width: 42px;
-                background: url(/homeclick/Upload/Images/assets/drop.svg) no-repeat center center;
+                background: url(../Upload/Images/assets/drop.svg) no-repeat center center;
                 background-size: 20px;
             }
 

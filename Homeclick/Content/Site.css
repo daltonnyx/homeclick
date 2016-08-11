@@ -19,6 +19,8 @@ html {
 
 ul {
     list-style:none;
+    margin:0px;
+    padding:0px;
 }
 
 /* Set padding to keep content from hitting the edges */
