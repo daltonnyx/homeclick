@@ -104,8 +104,10 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="room_id" Type="int" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" />
           <Property Name="user_id" Type="int" />
           <Property Name="json_data" Type="nvarchar(max)" />
+          <Property Name="UpdatedDate" Type="datetime" />
           <Property Name="cart_id" Type="int" />
           <Property Name="RoomId" Type="int" />
           <Property Name="CartId" Type="int" />
@@ -395,14 +397,16 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.TagDanhSachTags_ProductDanh
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user_id" Type="int" />
+          <Property Name="product_id" Type="int" />
           <Property Name="title" Type="nvarchar" MaxLength="100" />
           <Property Name="created_date" Type="nvarchar" MaxLength="100" />
           <Property Name="description" Type="nvarchar" MaxLength="100" />
           <Property Name="UserId" Type="int" />
+          <Property Name="ProductId" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_ProductDanhSachProducts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="WishlistDanhSachWishlists_ProductDanhSachProducts">
+        <!--<EntityType Name="WishlistDanhSachWishlists_ProductDanhSachProducts">
           <Key>
             <PropertyRef Name="DanhSachProducts" />
             <PropertyRef Name="DanhSachWishlists" />
@@ -411,7 +415,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <Property Name="DanhSachWishlists" Type="int" Nullable="false" />
           <Property Name="OID" Type="int" />
           <Property Name="OptimisticLockField" Type="int" />
-        </EntityType>
+        </EntityType>-->
       
         <Association Name="FK_Canva_CartId">
           <End Role="Cart" Type="Self.Cart" Multiplicity="0..1" />
@@ -791,7 +795,19 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_WishlistDanhSachWishlists_ProductDanhSachProducts_DanhSachProducts">
+        <Association Name="FK_Wishlist_ProductId">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Wishlist">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--<Association Name="FK_WishlistDanhSachWishlists_ProductDanhSachProducts_DanhSachProducts">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="WishlistDanhSachWishlists_ProductDanhSachProducts" Type="Self.WishlistDanhSachWishlists_ProductDanhSachProducts" Multiplicity="*" />
           <ReferentialConstraint>
@@ -802,8 +818,8 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
               <PropertyRef Name="DanhSachProducts" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_WishlistDanhSachWishlists_ProductDanhSachProducts_DanhSachWishlists">
+        </Association>-->
+        <!--<Association Name="FK_WishlistDanhSachWishlists_ProductDanhSachProducts_DanhSachWishlists">
           <End Role="Wishlist" Type="Self.Wishlist" Multiplicity="1" />
           <End Role="WishlistDanhSachWishlists_ProductDanhSachProducts" Type="Self.WishlistDanhSachWishlists_ProductDanhSachProducts" Multiplicity="*" />
           <ReferentialConstraint>
@@ -814,7 +830,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
               <PropertyRef Name="DanhSachWishlists" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
+        </Association>-->
       
       <Association Name="FK_Project_CityId">
         <End Role="City" Type="Self.City" Multiplicity="0..1" />
@@ -1059,14 +1075,14 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
     [TagDanhSachTags_ProductDanhSachProducts].[OptimisticLockField] AS [OptimisticLockField]
     FROM [dbo].[TagDanhSachTags_ProductDanhSachProducts] AS [TagDanhSachTags_ProductDanhSachProducts]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="WishlistDanhSachWishlists_ProductDanhSachProducts" EntityType="Self.WishlistDanhSachWishlists_ProductDanhSachProducts" store:Type="Tables" store:Schema="dbo">
+          <!--<EntitySet Name="WishlistDanhSachWishlists_ProductDanhSachProducts" EntityType="Self.WishlistDanhSachWishlists_ProductDanhSachProducts" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [WishlistDanhSachWishlists_ProductDanhSachProducts].[DanhSachProducts] AS [DanhSachProducts], 
     [WishlistDanhSachWishlists_ProductDanhSachProducts].[DanhSachWishlists] AS [DanhSachWishlists], 
     [WishlistDanhSachWishlists_ProductDanhSachProducts].[OID] AS [OID], 
     [WishlistDanhSachWishlists_ProductDanhSachProducts].[OptimisticLockField] AS [OptimisticLockField]
     FROM [dbo].[WishlistDanhSachWishlists_ProductDanhSachProducts] AS [WishlistDanhSachWishlists_ProductDanhSachProducts]</DefiningQuery>
-          </EntitySet>
+          </EntitySet>-->
           <AssociationSet Name="FK_Canva_CartId" Association="Self.FK_Canva_CartId">
             <End Role="Cart" EntitySet="Cart" />
             <End Role="Canva" EntitySet="Canva" />
@@ -1193,14 +1209,18 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             <End Role="User" EntitySet="User" />
             <End Role="Wishlist" EntitySet="Wishlist" />
           </AssociationSet>
-          <AssociationSet Name="FK_WishlistDanhSachWishlists_ProductDanhSachProducts_DanhSachProducts" Association="Self.FK_WishlistDanhSachWishlists_ProductDanhSachProducts_DanhSachProducts">
+          <AssociationSet Name="FK_Wishlist_ProductId" Association="Self.FK_Wishlist_ProductId">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Wishlist" EntitySet="Wishlist" />
+          </AssociationSet>
+          <!--<AssociationSet Name="FK_WishlistDanhSachWishlists_ProductDanhSachProducts_DanhSachProducts" Association="Self.FK_WishlistDanhSachWishlists_ProductDanhSachProducts_DanhSachProducts">
             <End Role="Product" EntitySet="Product" />
             <End Role="WishlistDanhSachWishlists_ProductDanhSachProducts" EntitySet="WishlistDanhSachWishlists_ProductDanhSachProducts" />
           </AssociationSet>
           <AssociationSet Name="FK_WishlistDanhSachWishlists_ProductDanhSachProducts_DanhSachWishlists" Association="Self.FK_WishlistDanhSachWishlists_ProductDanhSachProducts_DanhSachWishlists">
             <End Role="Wishlist" EntitySet="Wishlist" />
             <End Role="WishlistDanhSachWishlists_ProductDanhSachProducts" EntitySet="WishlistDanhSachWishlists_ProductDanhSachProducts" />
-          </AssociationSet>
+          </AssociationSet>-->
           <AssociationSet Name="FK_ProjectLayout_Collection_Product_Link_Product" Association="Self.FK_ProjectLayout_Collection_Product_Link_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="ProjectLayout_Collection_Product_Link" EntitySet="ProjectLayout_Collection_Product_Link" />
@@ -1400,7 +1420,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             <End Role="Post" EntitySet="Posts" />
             <End Role="Category" EntitySet="Categories" />
           </AssociationSet>
-          <AssociationSet Name="ProductWishlist" Association="vinabits_homeclickModel.ProductWishlist">
+          <AssociationSet Name="FK_Wishlist_ProductId" Association="vinabits_homeclickModel.FK_Wishlist_ProductId">
             <End Role="Product" EntitySet="Products" />
             <End Role="Wishlist" EntitySet="Wishlists" />
           </AssociationSet>
@@ -1526,8 +1546,10 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="room_id" Type="Int32" />
           <Property Name="user_id" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="255" />
           <Property Name="json_data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="cart_id" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" />
           <Property Name="RoomId" Type="Int32" />
           <Property Name="CartId" Type="Int32" />
           <Property Name="UserId" Type="Int32" />
@@ -1752,7 +1774,7 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <NavigationProperty Name="Categories" Relationship="vinabits_homeclickModel.ProductCategory" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="Tags" Relationship="vinabits_homeclickModel.ProductTag" FromRole="Product" ToRole="Tag" />
           <NavigationProperty Name="Carts" Relationship="vinabits_homeclickModel.ProductCart" FromRole="Product" ToRole="Cart" />
-          <NavigationProperty Name="Wishlists" Relationship="vinabits_homeclickModel.ProductWishlist" FromRole="Product" ToRole="Wishlist" />
+          <NavigationProperty Name="Wishlist" Relationship="vinabits_homeclickModel.FK_Wishlist_ProductId" FromRole="Product" ToRole="Wishlist" />
         </EntityType>
         
         <EntityType Name="Product_detail">
@@ -1831,12 +1853,14 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="user_id" Type="Int32" />
+          <Property Name="product_id" Type="Int32" />
           <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="created_date" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" />
           <NavigationProperty Name="User" Relationship="vinabits_homeclickModel.FK_Wishlist_UserId" FromRole="Wishlist" ToRole="User" />
-          <NavigationProperty Name="Products" Relationship="vinabits_homeclickModel.ProductWishlist" FromRole="Wishlist" ToRole="Product" />
+          <NavigationProperty Name="Product" Relationship="vinabits_homeclickModel.FK_Wishlist_ProductId" FromRole="Wishlist" ToRole="Product" />
         </EntityType>
 
         <!-- Association -->
@@ -2326,9 +2350,17 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
           <End Type="vinabits_homeclickModel.Category" Role="Category" Multiplicity="*" />
         </Association>
         
-        <Association Name="ProductWishlist">
-          <End Type="vinabits_homeclickModel.Product" Role="Product" Multiplicity="*" />
+        <Association Name="FK_Wishlist_ProductId">
+          <End Type="vinabits_homeclickModel.Product" Role="Product" Multiplicity="0..1" />
           <End Type="vinabits_homeclickModel.Wishlist" Role="Wishlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Wishlist">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         
         <Association Name="UserCustomSecurityRole">
@@ -2437,8 +2469,10 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="CartId" ColumnName="CartId" />
                 <ScalarProperty Name="RoomId" ColumnName="RoomId" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="cart_id" ColumnName="cart_id" />
                 <ScalarProperty Name="json_data" ColumnName="json_data" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="room_id" ColumnName="room_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -2705,10 +2739,12 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             <EntityTypeMapping TypeName="vinabits_homeclickModel.Wishlist">
               <MappingFragment StoreEntitySet="Wishlist">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2750,14 +2786,14 @@ warning 6002: The table/view 'vinabits_homeclick.dbo.WishlistDanhSachWishlists_P
             </EndProperty>
           </AssociationSetMapping>
           
-          <AssociationSetMapping Name="ProductWishlist" TypeName="vinabits_homeclickModel.ProductWishlist" StoreEntitySet="WishlistDanhSachWishlists_ProductDanhSachProducts" >
+          <!--<AssociationSetMapping Name="ProductWishlist" TypeName="vinabits_homeclickModel.ProductWishlist" StoreEntitySet="WishlistDanhSachWishlists_ProductDanhSachProducts" >
             <EndProperty Name="Wishlist">
               <ScalarProperty Name="Id" ColumnName="DanhSachWishlists" />
             </EndProperty>
             <EndProperty Name="Product">
               <ScalarProperty Name="Id" ColumnName="DanhSachProducts" />
             </EndProperty>
-          </AssociationSetMapping>
+          </AssociationSetMapping>-->
           
           <AssociationSetMapping Name="UserCustomSecurityRole" TypeName="vinabits_homeclickModel.UserCustomSecurityRole" StoreEntitySet="UserUsers_CustomSecurityRoleSecurityRoles">
             <EndProperty Name="User">

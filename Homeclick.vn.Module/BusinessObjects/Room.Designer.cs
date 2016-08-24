@@ -88,8 +88,7 @@ namespace Homeclick.vn.Module.BusinessObjects
     
         private string _coordinates;
     	[Required]
-        [Size(SizeAttribute.Unlimited)]
-        public string coordinates 
+    	public string coordinates 
     	{ 
     		get { return _coordinates; } 
     		set

@@ -20,12 +20,6 @@ namespace Homeclick.vn.Module.BusinessObjects
     using DevExpress.ExpressApp.Model;
     public partial class Wishlist: XPLiteObject
     {
-    	//VNB: Wishlist
-        public Wishlist()
-        {
-            //VNB disable: this.Products = new List<Product>();
-        }
-    
         private int _id;
     	[DevExpress.Xpo.Key(true)]
     	[Required]
@@ -107,8 +101,10 @@ namespace Homeclick.vn.Module.BusinessObjects
     	[Association(@"UserWishlistsReferences", typeof(User))]
     	public  User UserId { get {return _UserId;} set{ SetPropertyValue<User>("UserId", ref _UserId, value); } }
     
-        [Association(@"WishlistsProductsReferences", typeof(Product))]
-    	public  XPCollection<Product> DanhSachProducts { get{{ return GetCollection<Product>("DanhSachProducts"); }} }
+        private Product _ProductId;
+    	[ImmediatePostData]
+    	[Association(@"WishlistsProductsReferences", typeof(Product))]
+    	public  Product ProductsId { get {return _ProductId;} set{ SetPropertyValue<Product>("ProductId", ref _ProductId, value); } }
     
     }
 }

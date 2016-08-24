@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\kenkz447\Source\Repos\homeclick\Homeclick\Models\Homeclick.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\homeclick\Homeclick\Models\Homeclick.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

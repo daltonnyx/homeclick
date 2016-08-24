@@ -292,10 +292,10 @@
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProjectViewModel.cs" />
+    <Compile Include="Models\CollectionViewModel.cs" />
     <Compile Include="Models\Room.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CollectionViewModel.cs" />
     <Compile Include="Models\State.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
@@ -614,6 +614,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\canvas.nocache.js" />
+    <Content Include="Scripts\fabric.js" />
     <Content Include="Scripts\fabric.min.js" />
     <Content Include="Scripts\groupLiPolygon.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
@@ -633,6 +634,7 @@
     <Content Include="Scripts\lipolygon.class.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\masonry.pkgd.min.js" />
+    <Content Include="Scripts\measureLine.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\notify.min.js" />
@@ -1064,6 +1066,7 @@
     <Content Include="Views\Project\_Sidebar_Details.cshtml" />
     <Content Include="Views\Shared\_SharedLayout.cshtml" />
     <Content Include="Views\Shared\_SharedLayout_NoSidebar.cshtml" />
+    <Content Include="Views\User\LoadWishlists.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1071,7 +1074,6 @@
     <Folder Include="Scripts\Plugins\shareThis\" />
     <Folder Include="Upload\Images\assets\Colors\" />
     <Folder Include="Upload\Images\Products\Details\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

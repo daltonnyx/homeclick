@@ -77,14 +77,14 @@ namespace Homeclick.vn.Module.Web.Editors
 
         void uploadButton_FileUploadComplete(object sender, FileUploadCompleteEventArgs e)
         {
-            XmlDocument xml = new XmlDocument();
-            xml.Load(e.UploadedFile.FileContent);
-            XmlNodeList groups = xml.DocumentElement.GetElementsByTagName("g");
-            bool 
-            foreach(XmlNode group in groups)
-            {
-                group.Attributes["id"]
-            }
+            //XmlDocument xml = new XmlDocument();
+            //xml.Load(e.UploadedFile.FileContent);
+            //XmlNodeList groups = xml.DocumentElement.GetElementsByTagName("g");
+            //bool 
+            //foreach(XmlNode group in groups)
+            //{
+            //    group.Attributes["id"]
+            //}
         }
 
         protected override object GetControlValueCore()

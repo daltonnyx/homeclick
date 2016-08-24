@@ -1168,7 +1168,7 @@
         </Association>
         <Association Name="WishlistsProducts">
           <End Type="vnModel.Wishlist" Role="Wishlists" Multiplicity="*" />
-          <End Type="vnModel.Product" Role="Products" Multiplicity="*" />
+          <End Type="vnModel.Product" Role="Products" Multiplicity="1" />
         </Association>
         <Association Name="PostPost">
           <End Type="vnModel.Post" Role="Post" Multiplicity="0..1" />

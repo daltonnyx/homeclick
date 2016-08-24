@@ -82,6 +82,22 @@ namespace Homeclick.Controllers
             return Content("Fail to login");
         }
 
+        [AllowAnonymous]
+        public ActionResult CheckAuth()
+        {
+            if (User.Identity.GetUserId() != null)
+            {
+                Response.StatusCode = 202;
+                return Content(string.Empty);
+            }
+            else
+            {
+                Response.StatusCode = 403;
+                return Content(string.Empty);
+            }
+        }
+
+
         //
         // GET: /Account/Register
         [AllowAnonymous]

@@ -57,7 +57,7 @@
                     </li>
                     <li class="tab-list wishlist">
                       <div class="wishlist">
-
+                          @Html.Action("LoadWishlists", "User")
                       </div>
                     </li>
                     <li class="tab-list cart">
@@ -71,7 +71,8 @@
         <div class="uk-width-7-10 main-canvas">
             <div class="seperator-big"></div>
             <div class="control-container main-menu">
-                <button class="uk-button" id="saveJSON"">save</button>
+                <button class="uk-button" id="saveJSON">save</button>
+                <button class="uk-button" id="loadJSON">Open</button>
                 <button class="uk-button" id="new">Refresh</button>
                 <button class="uk-button" id="print">print</button>
                 @* <button class="uk-button" id="search">search</button> *@
@@ -106,10 +107,6 @@
                     <input type="range" min="10" max="500" step="10" class="zoom-slider uk-form-width-small uk-vertical-align-middle" value="100" name="zoom_slider" oninput="zoom_change(event)" />
                     <input type="text" name="zoom_value" class="zoom-value uk-form-width-small uk-vertical-align-middle" value="100" />
                 </div>
-                <!-- 	<div class="control-container">
-                        <a id="saveJSON" href="#">Save</a>
-                        <a id="loadJSON" href="#">Load</a>
-                    </div> -->
 
                 <div class="control-container uk-hidden">
                     <textarea id="loadArea" style="display:none;"></textarea>
@@ -121,6 +118,7 @@
                 </div>
             </div>
             <input type="hidden" value="@Model.canvas_data" id="canvas-data" />
+            <input type="hidden" value="" id="canvas-id" />
             <div class="canvas-holder" id="canvas-holder">
                 <canvas id="tutorial" width="914" height="600" draggable="true"></canvas>
                 <div class="delete-button object-button"></div>
@@ -147,7 +145,7 @@
                     </div>
                     <div class="product-container uk-width-2-3">
                         <div class="product-detail uk-width-1-1">
-                            <h4 class="product-name">Product Name</h4>
+                            <h4 class="product-name">Tên sản phẩm</h4>
                             <div class="product-dimession">
                                 <ul>
                                     <li class="x"><span class="value"></span></li>
@@ -218,37 +216,37 @@
         <div class="cd-user-modal-container">
             <!-- this is the container wrapper -->
             <ul class="cd-switcher">
-                <li><a href="#0">Sign in</a></li>
-                <li><a href="#0">New account</a></li>
+                <li><a href="#0">Đăng nhập</a></li>
+                <li><a href="#0">Đăng ký</a></li>
             </ul>
 
             <div id="cd-login">
                 <!-- log in form -->
                 <form class="cd-form">
                     <p class="fieldset">
-                        <label class="image-replace cd-username" for="signin-email">Username</label>
-                        <input class="full-width has-padding has-border" id="signin-email" name="UserName" type="text" placeholder="Username">
-                        <span class="cd-error-message">Error message here!</span>
+                        <label class="image-replace cd-username" for="signin-email">Tên đăng nhập</label>
+                        <input class="full-width has-padding has-border" id="signin-email" name="UserName" type="text" placeholder="Tên đăng nhập">
+                        <span class="cd-error-message">Tên tài khoản hoặc mật khẩu không đúng!</span>
                     </p>
 
                     <p class="fieldset">
-                        <label class="image-replace cd-password" for="signin-password">Password</label>
-                        <input class="full-width has-padding has-border" id="signin-password" name="Password" type="password" placeholder="Password">
-                        <a href="#0" class="hide-password">Show</a>
-                        <span class="cd-error-message">Error message here!</span>
+                        <label class="image-replace cd-password" for="signin-password">Mật khẩu</label>
+                        <input class="full-width has-padding has-border" id="signin-password" name="Password" type="password" placeholder="Mật khẩu">
+                        <a href="#0" class="hide-password">Hiện</a>
+                        <span class="cd-error-message">Tên tài khoản hoặc mật khẩu không đúng!</span>
                     </p>
 
                     <p class="fieldset">
                         <input type="checkbox" name="RememberMe" id="remember-me" checked>
-                        <label for="remember-me">Remember me</label>
+                        <label for="remember-me">Ghi nhớ</label>
                     </p>
 
                     <p class="fieldset">
-                        <input class="full-width" type="submit" value="Login">
+                        <input class="full-width" type="submit" value="Đăng nhập">
                     </p>
                 </form>
 
-                <p class="cd-form-bottom-message"><a href="#0">Forgot your password?</a></p>
+                <p class="cd-form-bottom-message"><a href="#0">Quên mật khẩu?</a></p>
                 <!-- <a href="#0" class="cd-close-form">Close</a> -->
             </div> <!-- cd-login -->
 
@@ -256,31 +254,37 @@
                 <!-- sign up form -->
                 <form class="cd-form">
                     <p class="fieldset">
-                        <label class="image-replace cd-username" for="signup-username">Username</label>
-                        <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">
-                        <span class="cd-error-message">Error message here!</span>
+                        <label class="image-replace cd-username" for="signup-username">Tên đăng nhập</label>
+                        <input class="full-width has-padding has-border" id="signup-username" name="username" type="text" placeholder="Tên đăng nhập">
+                        <span class="cd-error-message">Tên đăng nhập không đúng!</span>
                     </p>
 
                     <p class="fieldset">
                         <label class="image-replace cd-email" for="signup-email">E-mail</label>
-                        <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
-                        <span class="cd-error-message">Error message here!</span>
+                        <input class="full-width has-padding has-border" id="signup-email" type="email" name="email" placeholder="E-mail">
+                        <span class="cd-error-message">Email không đúng!</span>
                     </p>
 
                     <p class="fieldset">
-                        <label class="image-replace cd-password" for="signup-password">Password</label>
-                        <input class="full-width has-padding has-border" id="signup-password" type="text" placeholder="Password">
-                        <a href="#0" class="hide-password">Hide</a>
-                        <span class="cd-error-message">Error message here!</span>
+                        <label class="image-replace cd-password" for="signup-password">Mật khẩu</label>
+                        <input class="full-width has-padding has-border" id="signup-password" type="password" name="password" placeholder="Mật khẩu">
+                        <a href="#0" class="hide-password">Hiện</a>
+                        <span class="cd-error-message">Mật khẩu không đúng!</span>
+                    </p>
+
+                    <p class="fieldset">
+                        <label class="image-replace cd-password" for="signup-password">Gõ lại mật khẩu</label>
+                        <input class="full-width has-padding has-border" id="confirm-password" type="password" name="confirm-password" placeholder="Gõ lại mật khẩu">
+                        <span class="cd-error-message">Mật khẩu không đúng!</span>
                     </p>
 
                     <p class="fieldset">
                         <input type="checkbox" id="accept-terms">
-                        <label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
+                        <label for="accept-terms">Tôi đồng ý với các điều khoản sau <a href="#0">Đây</a></label>
                     </p>
 
                     <p class="fieldset">
-                        <input class="full-width has-padding" type="submit" value="Create account">
+                        <input class="full-width has-padding" type="submit" value="Tạo tài khoản">
                     </p>
                 </form>
 
@@ -289,7 +293,7 @@
 
             <div id="cd-reset-password">
                 <!-- reset password form -->
-                <p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
+                <p class="cd-form-message">Vui lòng nhập email của bạn vào ô dưới đây để lấy lại mật khẩu.</p>
 
                 <form class="cd-form">
                     <p class="fieldset">
@@ -299,17 +303,50 @@
                     </p>
 
                     <p class="fieldset">
-                        <input class="full-width has-padding" type="submit" value="Reset password">
+                        <input class="full-width has-padding" type="submit" value="Lấy lại mật khẩu">
                     </p>
                 </form>
 
-                <p class="cd-form-bottom-message"><a href="#0">Back to log-in</a></p>
+                <p class="cd-form-bottom-message"><a href="#0">Quay lại đăng nhập</a></p>
             </div> <!-- cd-reset-password -->
             <a href="#0" class="cd-close-form">Close</a>
         </div> <!-- cd-user-modal-container -->
     </div> <!-- cd-user-modal -->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <div class="load-modal">
+        <div class="load-modal-container">
+            <div class="load-table">
+                <h3>Mở thiết kế</h3>
+                <table class="open-table" id="canvas-load-table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tiêu đề</th>
+                            <th>Cập nhật cuối</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="save-modal">
+        <div class="save-modal-container">
+            <div id="form-save">
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <input type="text" name="canva_name" id="save-name" class="full-width has-padding has-border" placeholder="Tên thiết kế" />
+                    </p>
+                    <p class="fieldset">
+                        <input class="full-width has-padding" type="submit" value="Lưu thiết kế">
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 
     <script type="text/javascript">

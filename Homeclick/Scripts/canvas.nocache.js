@@ -12,7 +12,13 @@ jQuery(document).ready(function($){
 
     var wishlist = [];
 
-  jQuery("#undo").attr("disabled","disabled");
+    jQuery("#undo").attr("disabled", "disabled");
+
+    var $save_modal = jQuery('.save-modal'),
+		$load_modal = jQuery('.load-modal')
+
+    jQuery("#canvas-id").val('');
+    jQuery('#save-name').val('');
 
   // init object and variable
   var canvas = new fabric.Canvas('tutorial');
@@ -805,7 +811,8 @@ jQuery(document).ready(function($){
     if(confirm(msg)) {
       //console.log(undoStack[0]);
       canvas = fabric.Canvas.getHistory(jQuery.extend(true, {}, undoStack[0].canvas), canvas);
-      
+      cart = Cart.clone(undoStack[0].cart);
+      recreateCart();
       z = canvas.getZoom();
       canvas.renderAll();
       undoStack.splice(0, undoStack.length - 1);
@@ -840,28 +847,81 @@ jQuery(document).ready(function($){
 
   jQuery("#saveJSON").click(function(e){ //Save
       e.preventDefault();
+      jQuery.get('/Account/CheckAuth', function (response, status, xhr) {
+          $save_modal.addClass('is-visible');
+          
+      }).fail(function (data, status, xhr) {
+          if (data.status == 403) {
+              $form_modal.addClass('is-visible');
+              login_selected();
+          }
+    });
+
+      
+    
+  });
+
+  $save_modal.click(function (event) {
+      if ($(event.target).is($save_modal) || $(event.target).is('.cd-close-form')) {
+          $save_modal.removeClass('is-visible');
+      }
+  });
+
+  $load_modal.click(function (event) {
+      if ($(event.target).is($load_modal) || $(event.target).is('.cd-close-form')) {
+          $load_modal.removeClass('is-visible');
+      }
+  });
+
+
+
+  jQuery("#form-save form").on("submit", function (e) {
+      e.preventDefault();
+      polWall.cart = cart.serialize();
       var jsdaa = JSON.stringify(
-              canvas.toJSON(
-                [
-                  'isLock',
-                  'srcSVG',
-                  'hexCode',
-                  'pathToFill',
-                  'left',
-                  'top',
-                  'strokeWidth',
-                  'strokeLineCap',
-                  'fill',
-                  'hasControls',
-                  'hasBorders',
-                  'lockMovementY',
-                  'lockMovementX',
-                  'perPixelTargetFind',
-                  'padding'
-                ]
-              ));
-      jQuery.post('/User/SaveCanvas', { data: jsdaa }, function (response, status, xhr) {
+          canvas.toJSON(
+            [
+                'cart',
+                'isLock',
+                'srcSVG',
+                'hexCode',
+                'pathToFill',
+                'left',
+                'top',
+                'strokeWidth',
+                'strokeLineCap',
+                'fill',
+                'hasControls',
+                'hasBorders',
+                'lockMovementY',
+                'lockMovementX',
+                'perPixelTargetFind',
+                'padding',
+                'originalPoints',
+                'origin',
+                'hoverCursor',
+                'lockUniScaling',
+                'lockScalingFlip',
+                'centeredScaling',
+                'centeredRotation',
+                'ProName',
+                'price',
+                'pId',
+                'realImage',
+                'isLock',
+                'initScale',
+                'scale',
+                'onWall',
+                'onStick',
+                'zData',
+                'lockScalingX',
+                'lockScalingY'
+            ]
+          ));
+      var canva_id = jQuery("#canvas-id").val();
+      jQuery.post('/User/SaveCanvas/' + canva_id, { data: jsdaa, name: jQuery(this).find('#save-name').val() }, function (response, status, xhr) {
           if (status = 202) {
+              jQuery("#canvas-id").val(response);
               UIkit.notify({
                   message: '<i class="uk-icon-check"></i> Saved!',
                   status: 'success',
@@ -877,25 +937,59 @@ jQuery(document).ready(function($){
                   pos: 'top-center'
               });
           }
-      }).fail(function (data, status, xhr) {
-          if (data.status == 403) {
-              $form_modal.addClass('is-visible');
-              login_selected();
-          }
+      }).fail(function () {
+          UIkit.notify({
+              message: '<i class="uk-icon-check"></i> Oops! Something wrong;!',
+              status: 'error',
+              timeout: 2000,
+              pos: 'top-center'
+          });
+      }).done(function () {
+          $save_modal.removeClass('is-visible');
       });
-    
-    
-    
   });
 
   jQuery("#loadJSON").click(function(e){//Load
     e.preventDefault();
-    var jsonString = jQuery("#loadArea").val();
-    var JSONData = JSON.parse(jsonString);
-    canvas.loadFromJSON(JSONData,canvas.renderAll.bind(canvas),function(o,object){ //o js json object, object is fabric object
-      if(object.type == 'liPolygon')
-        polWall = object;
+    jQuery.get('/User/LoadCanvas', function (data, status, xhr) {
+        var canvas_list = JSON.parse(data);
+        jQuery("#canvas-load-table tbody").html('');
+        for (var i = 0; i < canvas_list.length; i++) {
+            jQuery("#canvas-load-table tbody").append('<tr><td><a href="#" class="canva-open">' + (i + 1) + '</a></td>'
+                                                    + '<td><a href="#" class="canva-open">' + canvas_list[i].name + '</a></td>'
+                                                    + '<td><a href="#" class="canva-open">' + canvas_list[i].UpdatedDate + '</a></td>'
+                                                    + '<td><input type="hidden" readonly value="' + canvas_list[i].id + '" name="canva_id" />'
+                                                    + '<a href="#" class="canva-delete"><i class="fa fa-times" aria-hidden="true"></i></a></td></tr>');
+        }
+
+        $load_modal.addClass('is-visible');
+    }).fail(function (data, status, xhr) {
+        if (data.status == 403) {
+            $form_modal.addClass('is-visible');
+            login_selected();
+        }
     });
+    
+  });
+
+  jQuery('#canvas-load-table').on("click", ".canva-open", function (e) {
+      e.preventDefault();
+      var canva_id = jQuery(e.target).closest('tr').find('input[name="canva_id"]').val();
+      jQuery.get('/User/LoadCanvas/' + canva_id, function (data, status, xhr) {
+          var jsonString = JSON.parse(data);
+          var JSONData = JSON.parse(jsonString.json_data);
+          jQuery('#canvas-id').val(jsonString.id);
+          $save_modal.find('#save-name').val(jsonString.name);
+          canvas.loadFromJSON(JSONData, canvas.renderAll.bind(canvas), function (o, object) { //o js json object, object is fabric object
+              if (object.type == 'GroupLiPolygon') {
+                  polWall = object;
+                  cart.deserialize(polWall.cart);
+                  recreateCart();
+              }
+          });
+          
+          $load_modal.removeClass('is-visible');
+      });
   });
 
   //Control part
@@ -1994,6 +2088,59 @@ jQuery(document).ready(function($){
   }
   });
 
+  jQuery(".object-control .product-container").on("click", ".add-to-wishlist", function (e) {
+      e.preventDefault();
+      var activeObj = canvas.getActiveObject();
+      if(activeObj == null && activeObj == undefined) return;
+      var pId = activeObj.pId;
+      if(pId != undefined)
+      {
+          jQuery.ajax({
+              url: '/User/AddWishlist/',
+              type: 'post',
+              dataType: 'json',
+              data: { id: pId }
+          })
+      .done(function (response, status, xhr) {
+          if(xhr.status == 202) {
+              UIkit.notify({
+                  message: '<i class="uk-icon-check"></i> Added to wishlist!',
+                  status: 'success',
+                  timeout: 2000,
+                  pos: 'top-center'
+              });
+              addToWishListTab(activeObj);
+          }
+          else if (xhr.status == 204) {
+              UIkit.notify({
+                  message: '<i class="uk-icon-check"></i> Sản phẩm đã tồn tại trong Wishlist!',
+                  status: 'warning',
+                  timeout: 2000,
+                  pos: 'top-center'
+              });
+          }
+      })
+      .fail(function (response, status, xhr) {
+          if (xhr.status == 403) {
+              $form_modal.addClass('is-visible');
+              login_selected();
+          }
+          else {
+              UIkit.notify({
+                  message: '<i class="uk-icon-check"></i> Oops! Something wrong;!',
+                  status: 'error',
+                  timeout: 2000,
+                  pos: 'top-center'
+              });
+          }
+      })
+      .always(function () {
+          console.log("complete");
+      });
+
+      }
+  });
+
 
   //Track history
   var pushHistory = function() {
@@ -2034,11 +2181,75 @@ jQuery(document).ready(function($){
                  + '{{productTitle}}'
                  + '</h3>'
                  + '<p class="product-quantity">'
-                 + '{{productPrice}} <span class="text-right">x {{productQuantity}}</span>'
+                 + '{{productPrice}} <span class="text-right p-quantity">x {{productQuantity}}</span>'
+                 + '<span class="p-total">{{productTotal}}</span>'
                  + '</p>'
                  + '</div>'
                  + '</div>'
                  + '</div>';
+    
+  var wishlistDiv = '<div class="product" id="cart-product-{{productId}}" data-pid="{{productId}}">'
+               + '<div class="row">'
+               + '<div class="product-image col-md-4">'
+               + '<a href="#" '
+               + 'class="product-link svg-item" '
+               + 'data-name="{{productTitle}}" '
+               + 'data-pid="{{productId}}" '
+               + 'data-init="{{productInitScale}}" '
+               + 'data-pid="{{productId}}" data-svg="{{productSvg}}" '
+               + 'data-can-scale="{{productScale}}">'
+               + '<img '
+               + 'class="img-responsive svg-item" src="{{productImg}}" '
+               + 'data-image="{{productImg}}" '
+               + 'data-name="{{productTitle}}" '
+               + 'data-init="{{productInitScale}}" '
+               + 'data-pid="{{productId}}" data-svg="{{productSvg}}" '
+               + 'data-can-scale="{{productScale}}"'
+               + 'data-zData="{{productZdata}}" ' 
+               + 'data-price="{{productPrice}}"'
+               + ' /></a>'
+               + '</div>'
+               + '<div class="product-detail col-md-8">'
+               + '<a href="#" '
+               + 'class="product-link svg-item" '
+               + 'data-name="{{productTitle}}" '
+               + 'data-pid="{{productId}}" '
+               + 'data-init="{{productInitScale}}" '
+               + 'data-pid="{{productId}}" data-svg="{{productSvg}}" '
+               + 'data-can-scale="{{productScale}}">'
+               + '<h3 class="product-title">'
+               + '{{productTitle}}'
+               + '</h3></a>'
+               + '<a href="#" class="uk-button wishlist-remove">Xóa</a>'
+               + '</div>'
+               + '</div>'
+               + '</div>';
+
+    var calculateSubTotal = function (cart) {
+        var subTotalDiv = '<p><span class="sub-total-title">Tổng cộng:</span>'
+                        + '<span class="sub-total-value">' + String(cart.calcTotal()).addCommas().curencyPostfix("đ") + '</span>'
+                        + '</p>';
+        if (jQuery('.sub-total').length == 0) {
+            jQuery("#furnitures .cart .cart").append('<div class="sub-total">' + subTotalDiv + '</div>');
+        }
+        else {
+            jQuery("#furnitures .cart .cart").children('.sub-total').remove();
+            jQuery("#furnitures .cart .cart").append('<div class="sub-total">' + subTotalDiv + '</div>');
+            
+        }
+    }
+
+    var addToWishListTab = function (obj) {
+        var insertDiv = wishlistDiv.replace(/{{productId}}/g, obj.pId)
+                                      .replace(/{{productImg}}/g, obj.realImage)
+                                      .replace(/{{productTitle}}/g, obj.ProName)
+                                      .replace(/{{productInitScale}}/g, obj.initScale)
+                                      .replace(/{{productSvg}}/g, obj.srcSVG)
+                                      .replace(/{{productScale}}/g, "")
+                                      .replace(/{{productZdata}}/g, obj.zData)
+                                      .replace(/{{productPrice}}/g,obj.price);
+        jQuery("#furnitures .wishlist .wishlist").append(insertDiv);
+    }
 
     var addItemToCart = function (obj) {
         var product = new Product({
@@ -2051,7 +2262,9 @@ jQuery(document).ready(function($){
         if(cart.checkProduct(product))
         {
             cart.addProduct(product);
-            jQuery("#furnitures .cart .cart #cart-product-"+product.Id).find(".product-quantity span").text('x'+cart.getProduct(product.Id).Quantity);
+            jQuery("#furnitures .cart .cart #cart-product-" + product.Id).find(".product-quantity span.p-quantity").text('x' + cart.getProduct(product.Id).Quantity);
+            jQuery("#furnitures .cart .cart #cart-product-" + product.Id).find(".product-quantity span.p-total")
+                .text(String(cart.getProduct(product.Id).Quantity * cart.getProduct(product.Id).Price).addCommas().curencyPostfix("đ"));
         }
         else
         {
@@ -2060,9 +2273,11 @@ jQuery(document).ready(function($){
                                       .replace(/{{productImg}}/g, product.ImgUrl)
                                       .replace(/{{productTitle}}/g, product.Name)
                                       .replace(/{{productPrice}}/g, String(product.Price).addCommas().curencyPostfix("đ"))
-                                      .replace(/{{productQuantity}}/g, product.Quantity);
+                                      .replace(/{{productQuantity}}/g, product.Quantity)
+                                      .replace(/{{productTotal}}/g, String(parseInt(product.Quantity) * parseInt(product.Price)).addCommas().curencyPostfix("đ"));
             jQuery("#furnitures .cart .cart").append(insertDiv);
         }
+        calculateSubTotal(cart);
     }
 
     var minusItemFromCart = function (obj) {
@@ -2076,6 +2291,7 @@ jQuery(document).ready(function($){
             cart.deleteProduct(product);
             jQuery("#furnitures .cart .cart #cart-product-" + product.Id).remove();
         }
+        calculateSubTotal(cart);
     }
 
     var recreateCart = function () {
@@ -2087,9 +2303,11 @@ jQuery(document).ready(function($){
                                      .replace(/{{productImg}}/g, product.ImgUrl)
                                      .replace(/{{productTitle}}/g, product.Name)
                                      .replace(/{{productPrice}}/g, String(product.Price).addCommas().curencyPostfix("đ"))
-                                     .replace(/{{productQuantity}}/g, product.Quantity);
+                                     .replace(/{{productQuantity}}/g, product.Quantity)
+                                     .replace(/{{productTotal}}/g, String(parseInt(product.Quantity) * parseInt(product.Price)).addCommas().curencyPostfix("đ"));
             jQuery("#furnitures .cart .cart").append(insertDiv);
         }
+        calculateSubTotal(cart);
     }
 
     //Modal
@@ -2217,60 +2435,11 @@ jQuery(document).ready(function($){
         
         jQuery(this).addClass('loading');
         jQuery.post('/Account/AjaxLogin', { model: $form_login.find('form').serialize() }, function (data, status, xhr) {
-            var jsdaa = JSON.stringify(
-              canvas.toJSON(
-                [
-                  'isLock',
-                  'srcSVG',
-                  'hexCode',
-                  'pathToFill',
-                  'left',
-                  'top',
-                  'strokeWidth',
-                  'strokeLineCap',
-                  'fill',
-                  'hasControls',
-                  'hasBorders',
-                  'lockMovementY',
-                  'lockMovementX',
-                  'perPixelTargetFind',
-                  'padding'
-                ]
-              ));
-            jQuery.post('/User/SaveCanvas', { data: jsdaa }, function (response, status, xhr) {
-                if (status = 202) {
-                    UIkit.notify({
-                        message: '<i class="uk-icon-check"></i> Saved!',
-                        status: 'success',
-                        timeout: 2000,
-                        pos: 'top-center'
-                    });
-                }
-                else {
-                    UIkit.notify({
-                        message: '<i class="uk-icon-check"></i> Oops! Something wrong;!',
-                        status: 'error',
-                        timeout: 2000,
-                        pos: 'top-center'
-                    });
-                }
-                $form_modal.removeClass('is-visible');
-            }).fail(function (data, status, xhr) {
-                if (data.status == 403) {
-                    UIkit.notify({
-                        message: '<i class="uk-icon-check"></i> Oops! Something wrong;!',
-                        status: 'error',
-                        timeout: 2000,
-                        pos: 'top-center'
-                    });
-                }
-            }).done(function () {
-                
-            });
+            $save_modal.addClass('is-visible');
+            $form_modal.removeClass('is-visible');
         }).fail(function(){
     
         }).done(function (data, status, xhr) {
-            
             jQuery(this).removeClass('loading');
         });
     });
@@ -2568,6 +2737,15 @@ Cart.clone = function (cart) {
     }
     return clone;
 }
+
+Cart.prototype.calcTotal = function () {
+    total = 0;
+    for (var i = this.cartData.length - 1; i >= 0; i--) {
+        total += this.cartData[i].Quantity * this.cartData[i].Price;
+    }
+    return total;
+}
+
 
 //Product Class
 var Product = function (data) {
