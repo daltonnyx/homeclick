@@ -682,3 +682,9 @@ Hides the projectSidebar at `48em`, but modify this based on your app's needs.
         border-radius: 0px;
 
     }
+
+    @media only screen and (max-width: 767px) and (min-width: 320px) {
+        #sidebar {
+            margin-bottom: 2px;
+        }
+    }

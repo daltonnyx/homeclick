@@ -93,7 +93,7 @@
                             <li class="nav-submenu-item nav-item" data-menu="ProjectMap">@Html.ActionLink("Bản đồ", "Map", "Project")</li>
                             @foreach (var category in categories.Where(o => o.Category_typeId == (int)Homeclick.Models.CategoryTypes.ProjectType).ToList())
                             {
-                                <li class="nav-submenu-item category-link" data-category="@category.Id"><a href="@url/Project/@category.Id">@category.name</a></li>
+                                <li class="nav-submenu-item category-link" data-category="@category.Id"><a href="@Url.Action("Index", "Project", new { category_id = category.Id})">@category.name</a></li>
                             }
                         </ul>
                     </li>

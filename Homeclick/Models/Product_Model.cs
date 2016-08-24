@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -102,7 +103,15 @@ namespace Homeclick.Models
 
         }
 
+        [NotMapped]
+        public ICollection<Category> Categories
+        {
+            get
+            {
+                var categories = ModelHelper.getParents<Category>("Category", "Product", this.Id);
+                return categories;
+            }
+       }
 
-    
     }
 }

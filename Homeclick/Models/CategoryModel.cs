@@ -28,6 +28,14 @@ namespace Homeclick.Models
             return child;
         }
 
+        public IList<Product> Products
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         public Category_detail getDetail(string name)
         {
             return null;
@@ -44,36 +52,10 @@ namespace Homeclick.Models
             return detail.value;
         }
 
-        public IList<Product> getProducts()
-        {
-            return this.Products.ToList();
-        }
-
         public IList<T> getItems<T>() where T: class
         {
             var posts = ModelHelper.GetObjectListByCategory<T>(this.Id);
             return posts;
-        }
-
-        public IList<Category> getDescendantCategories()
-        {
-            IList<Category> descendant = new List<Category>();
-            string descendantType = "material";
-            if(this.Category_type.name == "model")
-            {
-                descendantType = "typology";
-            }
-
-
-            descendant = (from cat in db.Categories
-                          where (
-                            from product in cat.Products
-                            where (from cat2 in product.Categories
-                                   where cat2.Id == this.Id
-                                   select cat2).Count<Category>() > 0
-                            select product).Count<Product>() > 0 && cat.Category_type.name == descendantType
-                          select cat).ToList<Category>();
-            return descendant;
         }
 
         public IList<Category> getDescendantCategories(CategoryTypes categoryType)

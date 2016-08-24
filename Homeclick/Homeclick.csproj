@@ -202,100 +202,24 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Canva.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Cart.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\CategoriesLink.cs" />
-    <Compile Include="Models\Category.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\CategoryModel.cs" />
-    <Compile Include="Models\Category_detail.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Category_type.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\City.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Color.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ColorViewModel.cs" />
     <Compile Include="Models\ContextExtension.cs" />
-    <Compile Include="Models\Customer.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Customer_type.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CustomSecurityRole.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Department.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Detail_Product.cs" />
     <Compile Include="Models\Feedback.cs" />
-    <Compile Include="Models\Floor.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\FloorModel.cs" />
     <Compile Include="Models\Giohang.cs" />
-    <Compile Include="Models\Homeclick.Context.cs">
-      <DependentUpon>Homeclick.Context.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Models\Homeclick.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Models\Homeclick.Designer.cs">
-      <DependentUpon>Homeclick.edmx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Include="Models\IdentifyUser.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ModelHelper.cs" />
-    <Compile Include="Models\Post.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Post_detail.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Helper\ModelHelper.cs" />
     <Compile Include="Models\Post_Model.cs" />
-    <Compile Include="Models\Product.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ProductsLayoutsLink.cs" />
-    <Compile Include="Models\Product_detail.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Product_Model.cs" />
-    <Compile Include="Models\Product_type.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Project.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ProjectItem.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ProjectLayout_Collection.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ProjectViewModel.cs" />
-    <Compile Include="Models\CollectionViewModel.cs" />
     <Compile Include="Models\Room.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CollectionViewModel.cs" />
     <Compile Include="Models\State.cs">
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
@@ -306,9 +230,29 @@
       <DependentUpon>Homeclick.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserStore.cs" />
-    <Compile Include="Models\Wishlist.cs">
-      <DependentUpon>Homeclick.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Web\Canva.cs" />
+    <Compile Include="Models\Web\Cart.cs" />
+    <Compile Include="Models\Web\Category.cs" />
+    <Compile Include="Models\Web\Category_detail.cs" />
+    <Compile Include="Models\Web\Category_type.cs" />
+    <Compile Include="Models\Web\City.cs" />
+    <Compile Include="Models\Web\Color.cs" />
+    <Compile Include="Models\Web\Department.cs" />
+    <Compile Include="Models\Web\Floor.cs" />
+    <Compile Include="Models\Web\Post.cs" />
+    <Compile Include="Models\Web\Post_detail.cs" />
+    <Compile Include="Models\Web\Product.cs" />
+    <Compile Include="Models\Web\Product_detail.cs" />
+    <Compile Include="Models\Web\Product_type.cs" />
+    <Compile Include="Models\Web\Project.cs" />
+    <Compile Include="Models\Web\ProjectItem.cs" />
+    <Compile Include="Models\Web\ProjectLayout_Collection.cs" />
+    <Compile Include="Models\Web\Room.cs" />
+    <Compile Include="Models\Web\State.cs" />
+    <Compile Include="Models\Web\Tag.cs" />
+    <Compile Include="Models\Web\User.cs" />
+    <Compile Include="Models\Web\vinabits_homeclickEntities.cs" />
+    <Compile Include="Models\Web\Wishlist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.Designer.cs" />
     <Compile Include="Startup.cs" />
@@ -346,7 +290,6 @@
     <Content Include="Content\libs\font-awesome\css\font-awesome.css" />
     <Content Include="Content\libs\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.svg" />
-    <Content Include="fonts\Stylesheet.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -354,16 +297,10 @@
     <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\libs\font-awesome\fonts\FontAwesome.otf" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\fonts\universi.ttf" />
     <Content Include="Content\fonts\universi.eot" />
-    <Content Include="homeclick\Upload\Images\assets\Thumbs.db" />
-    <Content Include="homeclick\Upload\Images\Icons\Thumbs.db" />
-    <Content Include="homeclick\Upload\Images\Products\Thumbs.db" />
-    <Content Include="homeclick\Upload\Images\Projects\Products\Thumbs.db" />
-    <Content Include="homeclick\Upload\Images\Thumbs.db" />
     <Content Include="Content\fonts\arial.eot" />
     <Content Include="Content\fonts\arial.otf" />
     <Content Include="Content\fonts\arial.ttf" />
@@ -400,217 +337,6 @@
     <Content Include="Content\Thumbs.db" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="homeclick\Upload\Images\accessories.png" />
-    <Content Include="homeclick\Upload\Images\assets\bg_design.png" />
-    <Content Include="homeclick\Upload\Images\assets\bosuutap.png" />
-    <Content Include="homeclick\Upload\Images\assets\design-icon-01.png" />
-    <Content Include="homeclick\Upload\Images\assets\design-icon-02.png" />
-    <Content Include="homeclick\Upload\Images\assets\design-icon-03.png" />
-    <Content Include="homeclick\Upload\Images\assets\design-icon-04.png" />
-    <Content Include="homeclick\Upload\Images\assets\en.gif" />
-    <Content Include="homeclick\Upload\Images\assets\icon-email.png" />
-    <Content Include="homeclick\Upload\Images\assets\icon-location.png" />
-    <Content Include="homeclick\Upload\Images\assets\icon-phone.png" />
-    <Content Include="homeclick\Upload\Images\assets\icon-search.png" />
-    <Content Include="homeclick\Upload\Images\assets\icon-shoppingcart.png" />
-    <Content Include="homeclick\Upload\Images\assets\icon-slider-content.png" />
-    <Content Include="homeclick\Upload\Images\assets\icon_loop.png" />
-    <Content Include="homeclick\Upload\Images\assets\icon_mouse.png" />
-    <Content Include="homeclick\Upload\Images\assets\logo-footer %282%29.png" />
-    <Content Include="homeclick\Upload\Images\assets\logo-footer.png" />
-    <Content Include="homeclick\Upload\Images\assets\logo.png" />
-    <Content Include="homeclick\Upload\Images\assets\slider-logo.png" />
-    <Content Include="homeclick\Upload\Images\assets\stripe.png" />
-    <Content Include="homeclick\Upload\Images\assets\tich.png" />
-    <Content Include="homeclick\Upload\Images\assets\tuthietke.png" />
-    <Content Include="homeclick\Upload\Images\assets\vi_vn.gif" />
-    <Content Include="homeclick\Upload\Images\bancs.png" />
-    <Content Include="homeclick\Upload\Images\beforekeotha.png" />
-    <Content Include="homeclick\Upload\Images\bench.png" />
-    <Content Include="homeclick\Upload\Images\bg_blog_detail.jpg" />
-    <Content Include="homeclick\Upload\Images\bg_contact.jpg" />
-    <Content Include="homeclick\Upload\Images\bg_sidebar.jpg" />
-    <Content Include="homeclick\Upload\Images\bg_tuthietkeyou.png" />
-    <Content Include="homeclick\Upload\Images\bistro-tables.png" />
-    <Content Include="homeclick\Upload\Images\blog1.jpg" />
-    <Content Include="homeclick\Upload\Images\blog2.jpg" />
-    <Content Include="homeclick\Upload\Images\blog3.jpg" />
-    <Content Include="homeclick\Upload\Images\blog4.jpg" />
-    <Content Include="homeclick\Upload\Images\bosutap.png" />
-    <Content Include="homeclick\Upload\Images\cabinet.png" />
-    <Content Include="homeclick\Upload\Images\canthietke01.jpg" />
-    <Content Include="homeclick\Upload\Images\canthietke02.jpg" />
-    <Content Include="homeclick\Upload\Images\Categories\Bedroom.png" />
-    <Content Include="homeclick\Upload\Images\Categories\diningkichen.png" />
-    <Content Include="homeclick\Upload\Images\Categories\kidroom.png" />
-    <Content Include="homeclick\Upload\Images\Categories\liblaryEntertainment.png" />
-    <Content Include="homeclick\Upload\Images\Categories\livingroom.png" />
-    <Content Include="homeclick\Upload\Images\chair01.png" />
-    <Content Include="homeclick\Upload\Images\chairs.png" />
-    <Content Include="homeclick\Upload\Images\chiphi_item01.png" />
-    <Content Include="homeclick\Upload\Images\clone.png" />
-    <Content Include="homeclick\Upload\Images\coffe-tables.png" />
-    <Content Include="homeclick\Upload\Images\delete.png" />
-    <Content Include="homeclick\Upload\Images\desk-chairs.png" />
-    <Content Include="homeclick\Upload\Images\desks.png" />
-    <Content Include="homeclick\Upload\Images\footer-background %282%29.png" />
-    <Content Include="homeclick\Upload\Images\footer-background.png" />
-    <Content Include="homeclick\Upload\Images\goTop_arrow.png" />
-    <Content Include="homeclick\Upload\Images\group.png" />
-    <Content Include="homeclick\Upload\Images\hight-tables.png" />
-    <Content Include="homeclick\Upload\Images\icon %282%29.png" />
-    <Content Include="homeclick\Upload\Images\icon-contact.png" />
-    <Content Include="homeclick\Upload\Images\icon-contact1.png" />
-    <Content Include="homeclick\Upload\Images\icon.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Accessories.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Armchair.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Artwork.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Bebside_table.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Bed.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Bench.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Book_case.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Chair.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Coffee_table.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Console_table.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Decoration.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Deco_cusshion.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Desk.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Dinning_chair.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Dinning_table.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Display_cabinet.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Hanger.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Kid_chair.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Kid_table.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Lamp.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Love_Seat.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Medicine_box.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Mirro_box.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Note_board.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Pouf.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Rug.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Shoe_racks.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Side_table.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Sofa.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Sofa_bed.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Stool.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Tent.png" />
-    <Content Include="homeclick\Upload\Images\Icons\TV_Cabinet.png" />
-    <Content Include="homeclick\Upload\Images\Icons\Wardrobe.png" />
-    <Content Include="homeclick\Upload\Images\keotha.png" />
-    <Content Include="homeclick\Upload\Images\lamp.png" />
-    <Content Include="homeclick\Upload\Images\lock.png" />
-    <Content Include="homeclick\Upload\Images\logo %282%29.png" />
-    <Content Include="homeclick\Upload\Images\logo.png" />
-    <Content Include="homeclick\Upload\Images\lounghe.png" />
-    <Content Include="homeclick\Upload\Images\pans %282%29.png" />
-    <Content Include="homeclick\Upload\Images\pans.png" />
-    <Content Include="homeclick\Upload\Images\planning.png" />
-    <Content Include="homeclick\Upload\Images\pointer %282%29.png" />
-    <Content Include="homeclick\Upload\Images\pointer.png" />
-    <Content Include="homeclick\Upload\Images\power_2.png" />
-    <Content Include="homeclick\Upload\Images\Products\bc02-nho-nhat.jpg" />
-    <Content Include="homeclick\Upload\Images\Products\Ottu_sofa_01.jpg" />
-    <Content Include="homeclick\Upload\Images\Products\Square_table.jpg" />
-    <Content Include="homeclick\Upload\Images\product_01_lager.png" />
-    <Content Include="homeclick\Upload\Images\product_01_medium.png" />
-    <Content Include="homeclick\Upload\Images\product_01_small.png" />
-    <Content Include="homeclick\Upload\Images\product_02_lager.png" />
-    <Content Include="homeclick\Upload\Images\product_02_medium.png" />
-    <Content Include="homeclick\Upload\Images\product_02_small.png" />
-    <Content Include="homeclick\Upload\Images\product_03_lager.png" />
-    <Content Include="homeclick\Upload\Images\product_03_medium.png" />
-    <Content Include="homeclick\Upload\Images\product_03_small.png" />
-    <Content Include="homeclick\Upload\Images\product_04_lager.png" />
-    <Content Include="homeclick\Upload\Images\product_04_medium.png" />
-    <Content Include="homeclick\Upload\Images\product_04_small.png" />
-    <Content Include="homeclick\Upload\Images\product_05_lager.png" />
-    <Content Include="homeclick\Upload\Images\product_05_medium.png" />
-    <Content Include="homeclick\Upload\Images\product_05_small.png" />
-    <Content Include="homeclick\Upload\Images\product_06_lager.png" />
-    <Content Include="homeclick\Upload\Images\product_06_medium.png" />
-    <Content Include="homeclick\Upload\Images\product_06_small.png" />
-    <Content Include="homeclick\Upload\Images\product_07_lager.png" />
-    <Content Include="homeclick\Upload\Images\product_07_medium.png" />
-    <Content Include="homeclick\Upload\Images\product_07_small.png" />
-    <Content Include="homeclick\Upload\Images\product_08_lager.png" />
-    <Content Include="homeclick\Upload\Images\product_08_medium.png" />
-    <Content Include="homeclick\Upload\Images\product_08_small.png" />
-    <Content Include="homeclick\Upload\Images\product_09_lager.png" />
-    <Content Include="homeclick\Upload\Images\product_09_medium.png" />
-    <Content Include="homeclick\Upload\Images\product_09_small.png" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\1.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\2.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\3.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\4.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\b1.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\b2.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\b3.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\b4.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\b5.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\b6.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\c1.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\c2.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\c3.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\c4.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\d1.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\d2.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\d3.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Collections\d4.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Layouts\Layout1.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Layouts\Layout2.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Layouts\Layout3.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Layouts\Layout4.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Products\pg01.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Products\pg02.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Products\pg03.jpg" />
-    <Content Include="homeclick\Upload\Images\Projects\Products\pg04.jpg" />
-    <Content Include="homeclick\Upload\Images\remove.png" />
-    <Content Include="homeclick\Upload\Images\rotate.png" />
-    <Content Include="homeclick\Upload\Images\rotateleft.png" />
-    <Content Include="homeclick\Upload\Images\rotateright.png" />
-    <Content Include="homeclick\Upload\Images\ruler %282%29.png" />
-    <Content Include="homeclick\Upload\Images\ruler.png" />
-    <Content Include="homeclick\Upload\Images\seperator1 %282%29.png" />
-    <Content Include="homeclick\Upload\Images\seperator1.png" />
-    <Content Include="homeclick\Upload\Images\slider_01.jpg" />
-    <Content Include="homeclick\Upload\Images\slider_02.jpg" />
-    <Content Include="homeclick\Upload\Images\slider_03.jpg" />
-    <Content Include="homeclick\Upload\Images\slider_04.jpg" />
-    <Content Include="homeclick\Upload\Images\slider_design_01.jpg" />
-    <Content Include="homeclick\Upload\Images\Snap3.jpg" />
-    <Content Include="homeclick\Upload\Images\sofa.png" />
-    <Content Include="homeclick\Upload\Images\stool.png" />
-    <Content Include="homeclick\Upload\Images\stools.png" />
-    <Content Include="homeclick\Upload\Images\storage.png" />
-    <Content Include="homeclick\Upload\Images\table.png" />
-    <Content Include="homeclick\Upload\Images\tables.png" />
-    <Content Include="homeclick\Upload\Images\thietke01.png" />
-    <Content Include="homeclick\Upload\Images\thietke02.png" />
-    <Content Include="homeclick\Upload\Images\thietke04.png" />
-    <Content Include="homeclick\Upload\Images\thietke05.png" />
-    <Content Include="homeclick\Upload\Images\thietke06.png" />
-    <Content Include="homeclick\Upload\Images\thietke07.png" />
-    <Content Include="homeclick\Upload\Images\thietke08.png" />
-    <Content Include="homeclick\Upload\Images\thietke09.png" />
-    <Content Include="homeclick\Upload\Images\thietke31.png" />
-    <Content Include="homeclick\Upload\Images\thietkemau.png" />
-    <Content Include="homeclick\Upload\Images\ungroup.png" />
-    <Content Include="homeclick\Upload\Images\unlock.png" />
-    <Content Include="homeclick\Upload\Images\zoom %282%29.png" />
-    <Content Include="homeclick\Upload\Images\zoom.png" />
-    <Content Include="Models\Homeclick.Context.tt">
-      <DependentUpon>Homeclick.edmx</DependentUpon>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Homeclick.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Homeclick.edmx.diagram">
-      <DependentUpon>Homeclick.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\Homeclick.tt">
-      <DependentUpon>Homeclick.edmx</DependentUpon>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Homeclick.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\canvas.nocache.js" />
@@ -658,6 +384,7 @@
     <Content Include="Scripts\Plugins\fancyBox\jquery.fancybox.pack.js" />
     <Content Include="Scripts\Plugins\fancyBox\jquery.mousewheel-3.0.6.pack.js" />
     <Content Include="Scripts\Plugins\ImageMap\mapify\jquery.mapify.css" />
+    <Content Include="Scripts\Plugins\ImageMap\mapify\mapify - Copy.js" />
     <Content Include="Scripts\Plugins\ImageMap\mapify\mapify.js" />
     <Content Include="Scripts\Plugins\jlinq\jlinq.jquery.js" />
     <Content Include="Scripts\Plugins\jlinq\jlinq.js" />
@@ -719,6 +446,7 @@
     <Content Include="Scripts\wall.draw.js" />
     <Content Include="Scripts\zoom_product.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="SVGTEST.html" />
     <Content Include="Upload\Images\accessories.png" />
     <Content Include="Upload\Images\assets\bosuutap.png" />
     <Content Include="Upload\Images\assets\drop.svg" />
@@ -945,6 +673,9 @@
     <Content Include="Upload\Images\unlock.png" />
     <Content Include="Upload\Images\zoom %282%29.png" />
     <Content Include="Upload\Images\zoom.png" />
+    <Content Include="Upload\svgEx.svg">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -980,20 +711,14 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\SanPham\Index.cshtml" />
-    <Content Include="Views\SanPham\ListProduct.cshtml" />
-    <Content Include="Views\SanPham\ListCategory.cshtml" />
-    <Content Include="Views\SanPham\SliderSanPham.cshtml" />
     <Content Include="Views\Category\Models.cshtml" />
     <Content Include="Views\Category\ListOfRooms.cshtml" />
-    <Content Include="Views\Shared\Layout_CatModel.cshtml" />
     <Content Include="Views\Category\Typologies.cshtml" />
     <Content Include="Views\Category\Typology.cshtml" />
     <Content Include="Views\SanPham\FilterProduct.cshtml" />
     <Content Include="Views\Collection\Detail.cshtml" />
-    <Content Include="Views\SanPham\Detail.cshtml" />
     <Content Include="Views\Design\DesignSliderPartial.cshtml" />
     <Content Include="Views\Design\Index.cshtml" />
-    <Content Include="Views\Shared\_Layout_Blog.cshtml" />
     <Content Include="Views\Category\Model.cshtml" />
     <Content Include="Views\Category\Filter.cshtml" />
     <Content Include="Views\Category\Sidebar.cshtml" />
@@ -1023,17 +748,12 @@
     <Content Include="Views\Collection\Category.cshtml" />
     <Content Include="Views\Collection\_Sidebar.cshtml" />
     <Content Include="Views\Collection\_Slider.cshtml" />
-    <Content Include="Views\Home\Sidebar.cshtml%28old%29" />
     <Content Include="Views\Home\SidebarOfModel.cshtml" />
     <Content Include="Views\Home\_Slider.cshtml" />
     <Content Include="Views\Post\Category.cshtml" />
     <Content Include="Views\Post\Details.cshtml" />
     <Content Include="Views\Post\Index.cshtml" />
     <None Include="Views\Post\Sidebar.cshtml" />
-    <Content Include="Views\Shared\Layout_html.cshtml" />
-    <Content Include="Views\Shared\_Layout_Cat.cshtml" />
-    <Content Include="Views\SanPham\Sidebar.cshtml" />
-    <Content Include="Views\Shared\_Layout_Project.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\SanPham\CanvasList.cshtml" />
     <Content Include="Views\SanPham\_CanvasList.cshtml" />
@@ -1045,15 +765,11 @@
     <Content Include="Views\Project\_Slider.cshtml" />
     <Content Include="Views\Project\_Thumbnail.cshtml" />
     <Content Include="Views\Project\_ProductsTable.cshtml" />
-    <Content Include="Views\Shared\_LayoutAlltypologieschild.cshtml" />
-    <Content Include="Views\Shared\Layout_BoSuuTap.cshtml" />
     <Content Include="Views\SanPham\AjaxProductDetail.cshtml" />
     <Content Include="Views\Project\_ProductsGrid.cshtml" />
     <Content Include="Views\Project\_Projects.cshtml" />
     <Content Include="Views\Project\Map.cshtml" />
     <Content Include="Views\Project\_ProjectsFilter.cshtml" />
-    <Content Include="Views\Shared\_Layout_Product.cshtml" />
-    <Content Include="Views\SanPham\ProductGrid.cshtml" />
     <Content Include="Views\Project\Sidebar_Landing.cshtml" />
     <Content Include="Views\Project\Category.cshtml" />
     <Content Include="Views\SanPham\Category.cshtml" />
@@ -1077,19 +793,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="Models\Homeclick.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Homeclick.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource.resx" />

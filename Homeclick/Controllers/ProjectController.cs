@@ -18,7 +18,7 @@ namespace Homeclick.Controllers
             }
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? category_id)
         {
             var viewModel = db.Projects.Where(o => o.LockedOut == false);
             return View(viewModel);
@@ -33,7 +33,7 @@ namespace Homeclick.Controllers
         {
             ViewBag.MetaKeyword = "homeclick";
             ViewBag.MetaDescription = "project";
-            var types = db.Categories.Where(o => o.parent_id == 28);
+            var types = db.Categories.Where(o => o.ParentCategoryId == 28);
             var cities = db.Cities.ToList();
 
             ViewBag.ProjectTypes = types;

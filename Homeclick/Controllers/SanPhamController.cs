@@ -44,7 +44,7 @@ namespace Homeclick.Controllers
             if(type_id != null)
             {
                 products = (from product in products
-                            where product.Product_type.Id == type_id && product.status == 1
+                            where product.status == 1
                             select product).ToList<Product>();
             }
             return PartialView(products);
@@ -67,7 +67,8 @@ namespace Homeclick.Controllers
 
         public List<Product> Filter(int? model_id = null, int? typo_id = null, int? mate_id = null)
         {
-            var products = db.Products.AsQueryable();
+            var temp = db.Products.ToList();
+            var products = temp.AsQueryable();
             if (model_id != null)
             {
                 products = from p in products
@@ -160,29 +161,10 @@ namespace Homeclick.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public ActionResult FilterProduct(int page = 1)
-        {
-            string[] models = Request.Form.GetValues("Categories[Models][]");
-            string[] typologies = Request.Form.GetValues("Categories[Typologies][]");
-            var products = db.Products.AsQueryable();
-            if(models != null && models.Count<string>() > 0)
-            products = from product in products
-                           where product.Categories.Where(c => models.Contains<string>(c.Id.ToString())).Count<Category>() > 0
-                           select product;
-            if(typologies != null && typologies.Count<string>() > 0)
-            products = from product in products
-                       where product.Categories.Where(c => typologies.Contains<string>(c.Id.ToString())).Count<Category>() > 0
-                       select product;
-            ViewBag.Title = "Sản phẩm";
-            return PartialView(products.OrderBy<Product, string>(c => c.name).ToPagedList(page, 6));
-        }
-
         public ViewResult Product_Detail(int? id)
         {
             var product = db.Products.Find(id);
             ViewBag.Title = product.name;
-            ViewBag.url = "http://demo.vinabits.com.vn/homeclick/admin";
             return View(product);
         }
 

@@ -50,8 +50,7 @@
 }
 
 @section scripts {
-    <script src="~/Scripts/Plugins/noUiSlider/nouislider.min.js"></script>
-    <script src="~/Scripts/Plugins/mixitup/jquery.mixitup.js"></script>
+    <script src="~/Scripts/Plugins/noUiSlider/nouislider.js"></script>
     <script src="~/Scripts/Plugins/jlinq/jlinq.js"></script>
     <script src="~/Scripts/Plugins/panigation/panigation.min.js"></script>
     <script type="text/javascript">
@@ -250,8 +249,8 @@
                 }
 
                 currentTypo.addClass('active');
-                getProducts(currentModelId, currentTypoId);
-                getMetarials(currentModelId, currentTypoId);
+                getProducts(currentModelId, parseInt(currentTypoId));
+                getMetarials(currentModelId, parseInt(currentTypoId));
             }
 
             $('.typo-link > a').bind('click', function (event) {

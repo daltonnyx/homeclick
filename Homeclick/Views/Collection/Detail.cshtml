@@ -33,12 +33,11 @@
         </div>
 
         <div class="widget clearfix">
-
             @if (Model.LayoutId != null)
             {
                 <span>Bộ sưu tập nằm trong dự án <strong>@Model.Layout.Project.Name</strong></span>
                 <div class="Collection-button">
-                    <a href="/Project/Details/@Model.Layout.Project.Id">Xem dự án</a>
+                    <a href="@Url.Action("Details","Project", new { category_id = Model.Layout.Project.CategoryId, project_id = Model.Layout.ProjectId })">Xem dự án</a>
                 </div>
             }
         </div>
@@ -56,8 +55,6 @@
 
             @Html.Partial("../Project/_ProductsGrid", products)
         </section>
-
-
     </div>
     <div class="col-xs-12" style="margin-top: 15px;">
         <button class="add-to-cart btn bg pull-right"><i class="fa fa-plus" aria-hidden="true"></i> Thêm vào giỏ</button>

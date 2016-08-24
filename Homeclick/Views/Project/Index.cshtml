@@ -171,13 +171,16 @@
     }
 
     var container = $('#projectsGrid');
-    var category_id = '-1';
+    var category_id = '@Request.Params["category_id"]';
 
     $('.category-link').bind('click', function () {
-        $('.category-link').removeClass('active');
-        $(this).addClass('active');
         category_id = $(this).data('category');
+        var catLinks = $('.category-link');
+        catLinks.removeClass('active');
+        catLinks = catLinks.filter('[data-category=' + category_id + ']');
+        catLinks.addClass('active');
         selectChanged();
+        event.preventDefault();
     });
 
     jQuery(document).ready(function ($) {

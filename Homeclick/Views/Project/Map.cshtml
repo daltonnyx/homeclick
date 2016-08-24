@@ -68,6 +68,7 @@
             padding: 10px;
             margin-bottom: 0px;
         }
+
     </style>
 
 }
@@ -79,26 +80,6 @@
     <script type='text/javascript' src="~/Scripts/Plugins/Map/markerclustererplus/src/markerclusterer.min.js"></script>
 
     <script>
-
-        $.extend({
-            getJsonFromUrl: function (url, urlData) {
-                var result = null;
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    data: urlData,
-                    dataType: "json",
-                    async: false,
-                    success: function (jsonResult) {
-                        result = jsonResult;
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        alert('Failed to retrieve data.');
-                    }
-                })
-                return result;
-            }
-        });
 
         (function ($) {
             $.fn.toggleAtrr = function (atrr) {
@@ -165,11 +146,12 @@
             selectChanged(currentJsonData);
         });
 
-        var selectedCategory = $('.category-link').first();
-        $('.category-link').bind('click', function () {
+        var selectedCategory = $('.category-list .category-link').first();
+        $('.category-link').bind('click', function (event) {
             if (selectedCategory) {
                 $(selectedCategory).removeClass('active');
             }
+
             selectedCategory = this;
             $(selectedCategory).addClass('active');
 
@@ -177,6 +159,7 @@
 
             currentJsonData = category != -1 ? filterByField(jsonData, 'type', category) : jsonData;
             selectChanged(currentJsonData);
+            event.preventDefault();
         });
 
         function selectChanged(data) {
@@ -212,11 +195,8 @@
                 var manageradiorel = $('input[name="a"]:checked').val();
                 result = filterByField(result, manageradiorel, filterTextBoxVal)
             }
-
             showMarkers(result);
         }
-
-
 
         var category_id = '@Request.RequestContext.RouteData.Values["category_id"]'
         jQuery(document).ready(function ($) {
