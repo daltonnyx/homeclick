@@ -89,7 +89,7 @@
 				
 				var fakeImageMap = $(imageMap).prev(".mapify-img");
 				
-				$(imageMap).before('<svg class="mapify-svg" width="' + mapWidth + '" height="' + mapHeight + '" viewBox="0 0 ' + mapWidth + ' ' + mapHeight + ' "></svg>');
+				$(imageMap).before('<svg class="mapify-svg" width="'+mapWidth+'" height="'+mapHeight+'"></svg>');
 				
 				mapSVG = $(imageMap).prev(".mapify-svg");
 				
@@ -117,8 +117,7 @@
 							polygon.setAttribute("fill", "none");
 					mapSVG.append(polygon);
 				});
-
-
+				
 				$(imageMap).wrap(function() {
 				  return '<div class="mapify-imgHolder"></div>';
 				}).css("opacity",0);
@@ -192,14 +191,8 @@
 				
 					// Now it's time to draw our SVG with the area coordinates
 					
-					drawHilight(elem, imageMap, mapSVG, settings.hoverClass);
-
-					//test
-					var objData = $(elem).data('obj');
-
-					var s = mapSVG.find('#delta');
-					mapSVG.append(s);
-
+					drawHilight(elem,imageMap,mapSVG,settings.hoverClass);
+					
 					e.preventDefault();
 				
 				}).bind("mouseout.mapify",function(){
@@ -289,19 +282,10 @@
 				    
 				    }
 				});
-
-				atest();
-				function atest(){
-				    var svgdata = $(imageMap).data('svg');
-				    var svgFile = document.getElementById(svgdata);
-				    var svgDoc = svgFile.contentDocument;
-
-				    svgDoc.querySelectorAll('circle').forEach(function (el) {
-				        mapSVG.append(el);
-				    });
-				}
-
+				
 				console.log("mapified");
+				
+				
 
 				function renderPopOver(popOver, elem){
 				
@@ -540,21 +524,7 @@
 	    polygon.data('toggle', true);
 	}
 
-	function ImagePrecent(image) {
-	    var oH = $(image).attr('width');
-	    var nH = $(image).height();
-	    return nH/oH;
-	}
-
-	function remapZones(zones, imageMap) {
-	    //test
-	    if (mapSVG) {
-	        var svgDoc = mapSVG.find('circle');
-	        svgDoc.attr('transform', 'scale(' + ImagePrecent(imageMap) + ')');
-	    }
-
-
-
+	function remapZones(zones, imageMap){
 		zones.each(function(){
 									   
 			var coords = $(this).attr("data-coords").split(',');

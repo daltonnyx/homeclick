@@ -64,24 +64,6 @@ namespace Homeclick.Controllers
             return posts;
         }
 
-        [HttpPost]
-        public ActionResult FilterP(int page = 1)
-        {
-            string[] models = Request.Form.GetValues("Categories[Models][]");
-            string[] typologies = Request.Form.GetValues("Categories[Typologies][]");
-            var post = db.Posts.AsQueryable();
-            if (models != null && models.Count<string>() > 0)
-                post = from post1 in post
-                       where post1.Categories.Where(c => models.Contains<string>(c.Id.ToString())).Count<Category>() > 0
-                       select post1;
-            if (typologies != null && typologies.Count<string>() > 0)
-                post = from post1 in post
-                       where post1.Categories.Where(c => typologies.Contains<string>(c.Id.ToString())).Count<Category>() > 0
-                       select post1;
-            ViewBag.Title = "Bài viết";
-            return PartialView(post.OrderBy<Post, string>(c => c.title).ToPagedList(page, 6));
-        }
-
         public ActionResult Sidebar()
         {
             IList<Category> rooms = db.Categories.Where<Category>(c => c.Category_type.name == "collection").ToList();

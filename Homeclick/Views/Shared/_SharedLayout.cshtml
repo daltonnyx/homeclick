@@ -39,7 +39,6 @@
     </div>
 
     <script>
-      
         var menu = '@ViewContext.RouteData.Values["controller"]@ViewContext.RouteData.Values["action"]';
         var currentMenu = $('.nav-item').filter('[data-menu="' + menu + '"]');
         var parentMenu = currentMenu.parents('li');

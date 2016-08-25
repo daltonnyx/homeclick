@@ -8,6 +8,15 @@
     <div class="title-page title-feature">
         <h1 class="">@ViewBag.Title</h1>
     </div>
+    <div class="order clearfix" style="height:42px; margin-bottom:10px;">
+        <div class="result-search">
+
+        </div>
+        <select id="select-order">
+            <option value="ASC">Giá thấp đến cao</option>
+            <option value="DES">Giá cao đến thấp</option>
+        </select>
+    </div>
     <div class="content-product-feature">
         <div class="feature-items row">
 
@@ -104,6 +113,11 @@
         var currentTypoId = '@Request.Params["typo_id"]';
         var currentCategory = null;
         var currentTypo = null;
+        var pageSize = 16;
+
+        $('#select-order').bind('change', function(){
+            showProducts(filter(currentTypoData));
+        });
 
         function filter(sourceData) {
             var minmax = $(snapValues).data('value'),
@@ -142,7 +156,10 @@
         }
 
         function showProducts(data) {
-            $('#panigation').toggle(data.length > 0);
+            data = jlinq.from(data).sort(($('#select-order').val() == 'ASC')? 'value' : '-value').select();
+
+            $('#panigation').toggle(data.length > pageSize);
+            $('#select-order').toggle(data.length > 0);
 
             var container = $('.feature-items');
             var h = container.height();
@@ -150,19 +167,20 @@
             container.children().fadeOut('fast');
             $(this).delay('250').queue(function () {
                 if (data.length == 0) {
-                    container.html('<span style="font-size: 20px; padding:0 7px; line-height: 42px;">Không tìm thấy sản phẩm nào...</span>');
+                    $('.result-search').html('<span style="font-size: 20px; padding:0 7px; line-height: 42px;">Không tìm thấy sản phẩm nào...</span>');
                 }
                 else {
+                    $('.result-search').html('<span style="font-size: 20px; padding:0 7px; line-height: 42px;">' + data.length + ' sản phẩm</span>');
+
                     $('#panigation').pagination({
                         dataSource: data,
-                        pageSize: 30,
+                        pageSize: pageSize,
                         autoHidePrevious: true,
                         autoHideNext: true,
                         callback: function (pagidata, pagination) {
-
                             container.html('');
                             for (var i = 0; i < pagidata.length; i++) {
-                                var item = '<div class="item-product col-xs-6 col-md-4"">' +
+                                var item = '<div class="item-product col-xs-6 col-md-4 col-lg-3"">' +
                                                 '<div class="image">' +
                                                     '<a href="@Url.Action("Product_Detail","SanPham")' + '/' + pagidata[i].id + '"><img src="' + '@url' + '/' + pagidata[i].image + '" alt="" /></a>' +
                                                 '</div>' +
@@ -241,8 +259,8 @@
                 }
 
                 currentTypo.addClass('active');
-                getProducts(currentCategoryId, currentTypoId);
-                getMetarials(currentCategoryId, currentTypoId);
+                getProducts(currentCategoryId, parseInt(currentTypoId));
+                getMetarials(currentCategoryId, parseInt(currentTypoId));
             }
 
             $('.typo-link > a').bind('click', function (event) {
