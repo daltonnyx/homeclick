@@ -16,6 +16,7 @@ namespace Homeclick
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            Areas.Manager.ManagerBundlesConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
 }

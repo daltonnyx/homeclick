@@ -108,9 +108,9 @@ namespace Homeclick.Controllers
                 var details = arrayItem["Product_detail"] as Dictionary<string, object>;
 
                 var materialList = new List<object>();
-                var materials = ModelHelper.GetProductCategories(CategoryTypes.Material, item.Id);
+                var materials = item.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Material);
 
-                var typo = ModelHelper.GetProductCategories(CategoryTypes.Typology, item.Id).FirstOrDefault();
+                var typo = item.Categories.FirstOrDefault(o => o.Category_typeId == (int)CategoryTypes.Typology);
 
                 foreach (var material in materials)
                 {

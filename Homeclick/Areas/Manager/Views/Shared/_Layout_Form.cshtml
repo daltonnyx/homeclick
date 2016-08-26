@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    @Styles.Render("~/Content/manager/css")
+    @RenderSection("links", required: false)
+    <link rel="stylesheet" href="~/Areas/Manager/Content/Themes/FLATY/flaty.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/Themes/FLATY/flaty-responsive.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/Themes/Admin.css" />
+    @RenderSection("Styles", required: false)
+
+    @Scripts.Render("~/bundles/manager/jquery")
+    @Scripts.Render("~/bundles/manager/bootstrap")
+    @Scripts.Render("~/bundles/manager/flaty")
+</head>
+<body>
+    <header class="header">
+        @Html.Partial("_navbar")
+    </header>
+
+    <main id="main-container" class="container">
+        @Html.Partial("_sidebar")
+        <div id="main-content">
+            <div class="page-title">
+                <div>
+                    <h1><i class="fa fa-file-o"></i> @ViewBag.Title</h1>
+                    <h4>@ViewBag.Description</h4>
+                </div>
+            </div>
+            <div id="breadcrumbs">
+                <ul class="breadcrumb">
+                    @RenderSection("breadcrumb", required: false)
+                </ul>
+            </div>
+            <div class="box">
+                <div class="box-title">
+                    <h3><i class="fa fa-bars"></i> @ViewBag.FormName</h3>
+                </div>
+                <div class="box-content">
+                    @RenderBody()
+                </div>
+            </div>
+            @if (IsSectionDefined("ActionLinks"))
+            {
+                @RenderSection("ActionLinks")
+            }
+            else
+            {
+                <div>
+                    @Html.ActionLink("Back to list", "List")
+                </div>
+            }
+         </div>
+    </main>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

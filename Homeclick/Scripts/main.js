@@ -36,36 +36,34 @@
 
         //--------------slider home--------------//
 
-        if(jQuery().owlCarousel != undefined) {
+        $("#gallery_01").owlCarousel({// slider home
+            items: 4,
+            //transitionStyle : "owl-fade-in",
+            slideSpeed: 300,
+            paginationSpeed: 400,
+            itemsDesktop: [1199, 3],
+            itemsDesktopSmall: [979, 3],
+            itemsTablet: [767, 2],
+            itemsMobile: false,
+            navigation: true,
+            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
+        });
 
-            $("#gallery_01").owlCarousel({// slider home
-                items: 4,
-                //transitionStyle : "owl-fade-in",
-                slideSpeed: 300,
-                paginationSpeed: 400,
-                itemsDesktop: [1199, 3],
-                itemsDesktopSmall: [979, 3],
-                itemsTablet: [767, 2],
-                itemsMobile: false,
-                navigation: true,
-                navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
-            });
+        $("#thietkemau-slider").owlCarousel({
 
-            $("#thietkemau-slider").owlCarousel({
+            navigation: true, // Show next and prev buttons
+            slideSpeed: 300,
+            paginationSpeed: 400,
+            pagination: true,
 
-                navigation: true, // Show next and prev buttons
-                slideSpeed: 300,
-                paginationSpeed: 400,
-                pagination: true,
+            items: 1,
+            itemsDesktop: false,
+            itemsDesktopSmall: false,
+            itemsTablet: false,
+            itemsMobile: false,
+            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
+        });
 
-                items: 1,
-                itemsDesktop: false,
-                itemsDesktopSmall: false,
-                itemsTablet: false,
-                itemsMobile: false,
-                navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
-            });
-        }
        
 
 
@@ -203,14 +201,13 @@ $(window).resize(function(){
 $(document).ready(function ($) {
     sidebarWidth = $('#sidebar').width();
     $('.sidebar-box').width(sidebarWidth);
-    if (jQuery().affix != undefined) {
-        $(".list-category").affix({
-            offset: {
-                top: $("#header").height() + 22,
-                bottom: $("#footer").height() + 40
-            }
-        });
-    }
+
+    $(".list-category").affix({
+        offset: {
+            top: $("#header").height() + 22,
+            bottom: $("#footer").height() + 40
+        }
+    });
 
     if (typeof $.prototype.masonry != 'undefined') {
         $(".masonry-wrapper").masonry({

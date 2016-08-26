@@ -35,7 +35,7 @@ namespace Homeclick
                     "~/Content/site.css",
                     "~/Content/responsive.css",
                     "~/Content/fonts/fonts.css",
-                    "~/Content/libs/font-awesome/css/font-awesome.min.css",
+                    "~/Content/font-awesome/css/font-awesome.min.css",
                     "~/Scripts/plugins/owlCarousel/assets/owl.carousel.css",
                     "~/Scripts/plugins/owlCarousel/assets/owl.carousel.theme.css",
                     "~/Scripts/plugins/ResponsiveMenu/flaunt/menu.css"

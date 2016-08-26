@@ -1,0 +1,83 @@
+﻿@using VCMS.Lib.Models
+@using VCMS.Lib.Resources
+
+@model CreateUserViewModel
+
+@{
+    ViewBag.Title = "Users";
+    ViewBag.Description = "Create a new account";
+    ViewBag.FormName = "Simple form";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout_Form.cshtml";
+    var roles = ViewData["Roles"] as string[];
+}
+
+@using (Html.BeginForm("Create", "Users", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Roles, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10 ">
+            <div class="form-control-custom">
+                <select name="Roles" data-placeholder="Select one or more..." class="form-control chosen" multiple="multiple" tabindex="-1" style="display: none;">
+                    <option value=""> </option>
+                    @foreach (var role in roles)
+                    {
+                        <option>@role</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="@Strings.Create" />
+        </div>
+    </div>
+}
+
+@section breadcrumb {
+    @{
+        var viewName = Html.ViewContext.RouteData.GetRequiredString("action");
+    }
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+@section links {
+    <link rel="stylesheet" href="~/Areas/Manager/Content/Themes/FLATY/Chosen.min.css" />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Areas/Manager/Content/Themes/FLATY/chosen.jquery.js"></script>
+}

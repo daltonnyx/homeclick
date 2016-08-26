@@ -1,0 +1,29 @@
+﻿@using VCMS.Lib.Resources;
+@model VCMS.Lib.Models.LockoutViewModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="~/Areas/Manager/Content/Font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/Themes/FLATY/Bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/Themes/FLATY/flaty.css" />
+</head>
+
+<body class="error-page">
+    <div class="error-wrapper">
+        <h4>Account was Locked!<span><i class="fa fa-lock" aria-hidden="true"></i></span></h4>
+        <p><b>@Model.UserName</b> has been locked until <b>@Model.EndLockoutDate.ToString()</b>
+        <br>You can login again after the lockout time above as expired.</p>
+        <hr>
+        <p class="clearfix">
+            <a href="javascript:history.back()" class="pull-left">← Back to previous page</a>
+        </p>
+    </div>
+</body>
+</html>
