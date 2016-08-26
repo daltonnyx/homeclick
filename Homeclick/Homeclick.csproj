@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Homeclick</RootNamespace>
     <AssemblyName>Homeclick</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -31,7 +31,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -40,7 +39,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
@@ -180,11 +178,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_LocalResources\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Areas\Manager\Bundles.cs" />
+    <Compile Include="Areas\Manager\ManagerAreaRegistration.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
@@ -203,19 +206,22 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ViewModel\AccountViewModels.cs" />
     <Compile Include="Models\CategoriesLink.cs" />
-    <Compile Include="Models\CategoryModel.cs" />
-    <Compile Include="Models\ColorViewModel.cs" />
+    <Compile Include="Models\Extends\Category.cs" />
+    <Compile Include="Models\ViewModel\ColorViewModel.cs" />
     <Compile Include="Models\ContextExtension.cs" />
     <Compile Include="Models\Feedback.cs" />
-    <Compile Include="Models\FloorModel.cs" />
+    <Compile Include="Models\Extends\Floor.cs" />
     <Compile Include="Models\Giohang.cs" />
     <Compile Include="Models\IdentifyUser.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Helper\ModelHelper.cs" />
-    <Compile Include="Models\Post_Model.cs" />
+    <Compile Include="Models\Extends\Post.cs" />
     <Compile Include="Models\ProductsLayoutsLink.cs" />
+    <Compile Include="Models\Extends\Product.cs" />
+    <Compile Include="Models\ViewModel\ProjectViewModel.cs" />
+    <Compile Include="Models\ViewModel\CollectionViewModel.cs" />
     <Compile Include="Models\Product_Model.cs" />
     <Compile Include="Models\ProjectViewModel.cs" />
     <Compile Include="Models\CollectionViewModel.cs" />
@@ -244,10 +250,40 @@
     <Compile Include="Models\Web\vinabits_homeclickEntities.cs" />
     <Compile Include="Models\Web\Wishlist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource.Designer.cs" />
-    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Manager\Content\Themes\Images\man.png" />
+    <Content Include="Areas\Manager\Content\Themes\Images\woman.png" />
+    <Content Include="Areas\Manager\Content\Themes\Admin.css" />
+    <Content Include="Areas\Manager\Content\Themes\Datatables\dataTables.bootstrap.css" />
+    <Content Include="Areas\Manager\Content\Themes\Datatables\dataTables.bootstrap.js" />
+    <Content Include="Areas\Manager\Content\Themes\Datatables\dataTables.responsive.js" />
+    <Content Include="Areas\Manager\Content\Themes\Datatables\jquery.dataTables.css" />
+    <Content Include="Areas\Manager\Content\Themes\Datatables\jquery.dataTables.js" />
+    <Content Include="Areas\Manager\Content\Themes\Datatables\responsive.bootstrap.css" />
+    <Content Include="Areas\Manager\Content\Themes\Datatables\responsive.bootstrap.js" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\bootstrap-datepicker.css" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\bootstrap-datepicker.js" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\bootstrap-fileupload.css" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\bootstrap-fileupload.min.js" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\Bootstrap.min.css" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\chosen-sprite.png" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\chosen.jquery.js" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\chosen.jquery.min.js" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\Chosen.min.css" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\flaty-responsive.css" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\flaty.css" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\flaty.demo.js" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\flaty.js" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\jquery-validation\Dist\additional-methods.min.js" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\jquery-validation\Dist\jquery.validate.min.js" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\jquery.bootstrap.wizard.js" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\jquery.cookies.js" />
+    <Content Include="Areas\Manager\Content\Themes\FLATY\jquery.slimscroll.min.js" />
+    <Content Include="Areas\Manager\Content\Themes\Images\sort_asc.png" />
+    <Content Include="Areas\Manager\Content\Themes\Images\sort_both.png" />
+    <Content Include="Areas\Manager\Content\Themes\Images\sort_desc.png" />
+    <Content Include="Areas\Manager\Content\Themes\Login\login.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -277,16 +313,17 @@
     <Content Include="Content\theme.css" />
     <Content Include="Content\uikit.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="Content\libs\font-awesome\css\font-awesome.css" />
-    <Content Include="Content\libs\font-awesome\css\font-awesome.min.css" />
-    <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\libs\font-awesome\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\libs\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\fonts\universi.ttf" />
@@ -325,14 +362,40 @@
     <Content Include="Content\fonts\UTM AvoItalic.ttf" />
     <Content Include="Content\fonts\UTM Soraya.ttf" />
     <Content Include="Content\Thumbs.db" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Areas\Manager\Views\web.config" />
+    <Content Include="Areas\Manager\Views\Shared\Error.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\_Layout_Form.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\_navbar.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\_sidebar.cshtml" />
+    <Content Include="Areas\Manager\Views\Account\Lockout.cshtml" />
+    <Content Include="Areas\Manager\Views\Account\Login.cshtml" />
+    <Content Include="Areas\Manager\Views\Account\Register.cshtml" />
+    <Content Include="Areas\Manager\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Manager\Views\Roles\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\Roles\Delete.cshtml" />
+    <Content Include="Areas\Manager\Views\Roles\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Roles\List.cshtml" />
+    <Content Include="Areas\Manager\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Manager\Views\Users\ChangePassword.cshtml" />
+    <Content Include="Areas\Manager\Views\Users\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\Users\Delete.cshtml" />
+    <Content Include="Areas\Manager\Views\Users\Details.cshtml" />
+    <Content Include="Areas\Manager\Views\Users\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Users\List.cshtml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\canvas.nocache.js" />
-    <Content Include="Scripts\fabric.js" />
     <Content Include="Scripts\fabric.min.js" />
     <Content Include="Scripts\groupLiPolygon.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.elevatezoom.js" />
@@ -342,6 +405,7 @@
     <Content Include="Scripts\jquery.taggd.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -350,11 +414,11 @@
     <Content Include="Scripts\lipolygon.class.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\masonry.pkgd.min.js" />
-    <Content Include="Scripts\measureLine.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\notify.min.js" />
     <Content Include="Scripts\owl.carousel.min.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\Plugins\easyTabs\jquery.easytabs.js" />
     <Content Include="Scripts\Plugins\easyTabs\jquery.easytabs.min.js" />
     <Content Include="Scripts\Plugins\easyTabs\jquery.hashchange.min.js" />
@@ -436,7 +500,6 @@
     <Content Include="Scripts\wall.draw.js" />
     <Content Include="Scripts\zoom_product.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="SVGTEST.html" />
     <Content Include="Upload\Images\accessories.png" />
     <Content Include="Upload\Images\assets\bosuutap.png" />
     <Content Include="Upload\Images\assets\drop.svg" />
@@ -701,17 +764,11 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\SanPham\Index.cshtml" />
-    <Content Include="Views\Category\Models.cshtml" />
-    <Content Include="Views\Category\ListOfRooms.cshtml" />
     <Content Include="Views\Category\Typologies.cshtml" />
-    <Content Include="Views\Category\Typology.cshtml" />
     <Content Include="Views\SanPham\FilterProduct.cshtml" />
     <Content Include="Views\Collection\Detail.cshtml" />
     <Content Include="Views\Design\DesignSliderPartial.cshtml" />
     <Content Include="Views\Design\Index.cshtml" />
-    <Content Include="Views\Category\Model.cshtml" />
-    <Content Include="Views\Category\Filter.cshtml" />
-    <Content Include="Views\Category\Sidebar.cshtml" />
     <Content Include="Views\Design\Design.cshtml" />
     <Content Include="Views\Design\Departments.cshtml" />
     <Content Include="Views\Design\Floors.cshtml" />
@@ -772,10 +829,11 @@
     <Content Include="Views\Project\_Sidebar_Details.cshtml" />
     <Content Include="Views\Shared\_SharedLayout.cshtml" />
     <Content Include="Views\Shared\_SharedLayout_NoSidebar.cshtml" />
-    <Content Include="Views\User\LoadWishlists.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Manager\Controllers\" />
+    <Folder Include="Areas\Manager\Models\" />
     <Folder Include="Scripts\Plugins\ResponsiveMenu\" />
     <Folder Include="Scripts\Plugins\shareThis\" />
     <Folder Include="Upload\Images\assets\Colors\" />
@@ -791,7 +849,16 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resource.resx" />
+    <EmbeddedResource Include="App_LocalResources\Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VCMS.Lib\VCMS.Lib.csproj">
+      <Project>{d653a7e6-0af7-44f3-9567-c89f2a35867a}</Project>
+      <Name>VCMS.Lib</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

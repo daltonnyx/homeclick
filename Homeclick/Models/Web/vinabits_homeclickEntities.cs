@@ -50,10 +50,6 @@ namespace Homeclick.Models
                 .HasForeignKey(c => c.CategoryId)
                 .WillCascadeOnDelete();
 
-            modelBuilder.Entity<Category>()
-                .HasMany(e => e.Category1)
-                .WithOptional(e => e.Category2)
-                .HasForeignKey(e => e.ParentCategoryId);
 
             modelBuilder.Entity<Department>()
                 .HasMany(e => e.Department1)
@@ -69,11 +65,6 @@ namespace Homeclick.Models
                 .HasMany(e => e.Post1)
                 .WithOptional(e => e.Post2)
                 .HasForeignKey(e => e.PostParentId);
-
-            modelBuilder.Entity<Product>()
-                .HasMany(e => e.Product_detail)
-                .WithOptional(e => e.Product)
-                .WillCascadeOnDelete();
 
             modelBuilder.Entity<Project>()
                 .Property(e => e.Apartments)
@@ -129,5 +120,6 @@ namespace Homeclick.Models
                 .WithOptional(e => e.User1)
                 .HasForeignKey(e => e.UpdatedBy);
         }
+
     }
 }

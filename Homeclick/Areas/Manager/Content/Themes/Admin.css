@@ -1,0 +1,28 @@
+﻿.form-control, .form-control-custom {
+    max-width:350px;
+}
+
+.form-control-custom {
+    border:none;
+    padding:0;
+}
+
+.zero-margin {
+    margin: 0;
+}
+
+    table#DataTable > tbody > tr > td:last-child {
+        text-align:end;
+    }
+        table#DataTable > tbody > tr > td:last-child > div {
+            display:inline-block; 
+            min-width:100px;
+        }
+
+        table#DataTable > thead > tr > th:last-child {
+            width:100px;
+        }
+
+        .table-action {
+            float:right;
+        }

@@ -4,6 +4,7 @@ namespace Homeclick.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.ModelConfiguration;
     using System.Data.Entity.Spatial;
 
     [Table("Category")]
@@ -13,9 +14,11 @@ namespace Homeclick.Models
         public Category()
         {
             Category_detail = new HashSet<Category_detail>();
-            Category1 = new HashSet<Category>();
+            CategoryParents = new HashSet<Category>();
+            CategoryChildren = new HashSet<Category>();
             Projects = new HashSet<Project>();
             ProjectItems = new HashSet<ProjectItem>();
+            Products = new HashSet<Product>();
         }
 
         public int Id { get; set; }
@@ -31,21 +34,37 @@ namespace Homeclick.Models
 
         public int? Category_typeId { get; set; }
 
-        public virtual Category_type Category_type { get; set; }
+        public virtual Category_type Category_type { get; private set; }
 
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Category_detail> Category_detail { get; set; }
+        public virtual ICollection<Category_detail> Category_detail { get; private set; }
 
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Category> Category1 { get; set; }
+        public virtual ICollection<Category> CategoryParents { get; private set; }
+        public virtual ICollection<Category> CategoryChildren { get; private set; }
 
-        [ForeignKey("ParentCategoryId")]
-        public virtual Category Category2 { get; set; }
+        public virtual ICollection<Project> Projects { get; private set; }
 
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<ProjectItem> ProjectItems { get; private set; }
 
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectItem> ProjectItems { get; set; }
+        public virtual ICollection<Product> Products { get; private set; }
+    }
+
+    public class CategoryEntityConfiguration : EntityTypeConfiguration<Category>
+    {
+        public CategoryEntityConfiguration()
+        {
+            this.HasMany(e => e.Category_detail)
+                .WithOptional(e => e.Category)
+                .WillCascadeOnDelete();
+
+            //Parents
+            this.HasMany(e => e.CategoryParents)
+                .WithMany(e => e.CategoryChildren)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ChildId");
+                    cs.MapRightKey("ParentId");
+                    cs.ToTable("Category_Category_Link");
+                });
+        }
     }
 }

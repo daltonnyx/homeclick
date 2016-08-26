@@ -1,0 +1,44 @@
+﻿<div id="sidebar" class="navbar-collapse collapse">
+    <!-- BEGIN Navlist -->
+    <ul class="nav nav-list" style="height: auto; overflow: hidden; width: auto;">
+        <!-- BEGIN Search Form -->
+        <li>
+            <form target="#" method="GET" class="search-form">
+                <span class="search-pan">
+                    <button type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <input type="text" name="search" placeholder="Search ..." autocomplete="off">
+                </span>
+            </form>
+        </li>
+        <!-- END Search Form -->
+        <li data-page="Dashboard">
+            <a href="@Url.Action("Index","Dashboard")">
+                <i class="fa fa-dashboard"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#" class="dropdown-toggle">
+                <i class="fa fa-desktop"></i>
+                <span>System</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+
+            <!-- BEGIN Submenu -->
+            <ul class="submenu">
+                <li data-page="Users"><a href="@Url.Action("List","Users")">Users</a></li>
+                <li data-page="Roles"><a href="@Url.Action("List","Roles")">Roles</a></li>
+            </ul>
+            <!-- END Submenu -->
+        </li>
+    </ul>
+    <!-- END Navlist -->
+    <!-- BEGIN Sidebar Collapse Button -->
+    <div id="sidebar-collapse" class="visible-lg">
+        <i class="fa fa-angle-double-left"></i>
+    </div>
+    <!-- END Sidebar Collapse Button -->
+</div>

@@ -12,7 +12,7 @@
     <div class="typologies clearfix">
         @foreach (var item in Model)
         {
-            var categories = ModelHelper.getParents<Category>(typeof(Category).Name, typeof(Category).Name, item.Id);
+            var categories = item.CategoryParents.ToList();
             var models = "";
             for (var j = 0; j < categories.Count; j++)
             {

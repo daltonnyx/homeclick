@@ -1,0 +1,115 @@
+﻿@using VCMS.Lib.Resources
+@using VCMS.Lib.Models
+@model VCMS.Lib.Models.UserViewModel
+
+@{
+    ViewBag.Title = "Users";
+    ViewBag.FormName = "Edit";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout_Form.cshtml";
+    var roles = ViewData["Roles"] as string[];
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal" ng-app>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Lockout, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Lockout, new { htmlAttributes = new { @ng_model = "checked", ng_init = "checked=" + Model.Lockout.ToString().ToLower() } })
+                    @Html.ValidationMessageFor(model => model.Lockout, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LockoutEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LockoutEndDate, new { htmlAttributes = new { @class = "form-control date-picker", @ng_disabled = "!checked" } })
+                @Html.ValidationMessageFor(model => model.LockoutEndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Roles, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="form-control-custom">
+                    <select name="Roles" data-placeholder="Select one or more..." class="form-control chosen" multiple="multiple" tabindex="-1" style="display: none;">
+                        <option value=""> </option>
+                        @foreach (var role in roles)
+                        {
+                            var selected = "";
+                            foreach (var userRole in Model.Roles)
+                            {
+                                if (role == userRole)
+                                {
+                                    selected = "selected";
+                                    break;
+                                }
+                            }
+                            <option @selected>@role</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section breadcrumb {
+    @{
+        var viewName = Html.ViewContext.RouteData.GetRequiredString("action");
+    }
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+@section links {
+    <link rel="stylesheet" href="~/Areas/Manager/content/Themes/FLATY/Chosen.min.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/Themes/FLATY/bootstrap-datepicker.css" />
+    }
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Areas/Manager/Content/Themes/FLATY/chosen.jquery.js"></script>
+    <script src="~/Areas/Manager/Content/Themes/FLATY/bootstrap-datepicker.js"></script>
+    }
