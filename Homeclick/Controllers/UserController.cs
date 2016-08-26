@@ -30,7 +30,7 @@ namespace Homeclick.Controllers
                     User user = db.Users.Find(Convert.ToInt32(User.Identity.GetUserId()));
                     Canva canvas = db.Canvas.Create();
                     canvas.User = user;
-                    canvas.name = name;
+                    canvas.Name = name;
                     canvas.UpdatedDate = DateTime.Now;
                     canvas.json_data = jsonData;
                     db.Canvas.Add(canvas);
@@ -41,7 +41,7 @@ namespace Homeclick.Controllers
                 else
                 {
                     Canva canvas = db.Canvas.Find(id);
-                    canvas.name = name;
+                    canvas.Name = name;
                     canvas.json_data = data;
                     canvas.UpdatedDate = DateTime.Now;
                     db.SaveChanges();
@@ -64,7 +64,7 @@ namespace Homeclick.Controllers
                 {
                     //load action goes here
                     User user = db.Users.Find(Convert.ToInt32(User.Identity.GetUserId()));
-                    IList<object> canvas = db.Canvas.Where(c => c.User.ID == user.ID).Select(c => new { id = c.Id, name = c.name, UpdatedDate = c.UpdatedDate }).ToList<dynamic>()
+                    IList<object> canvas = db.Canvas.Where(c => c.User.ID == user.ID).Select(c => new { id = c.Id, Name = c.Name, UpdatedDate = c.UpdatedDate }).ToList<dynamic>()
                         //Convert date to string
                         .Select(o => new { id = o.id, name = o.name, UpdatedDate = o.UpdatedDate.ToString("dd-MM-yyyy")}).ToList<object>();
                     
@@ -92,7 +92,7 @@ namespace Homeclick.Controllers
                 }
                 else
                 {
-                    var jsdata = new { id = canva.Id, json_data = canva.json_data, name = canva.name };
+                    var jsdata = new { id = canva.Id, json_data = canva.json_data, name = canva.Name };
                     Response.StatusCode = 200;
                     return Content(jsonSerializer.Serialize(jsdata));
                 }

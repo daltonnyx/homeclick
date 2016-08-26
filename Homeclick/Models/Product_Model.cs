@@ -104,7 +104,7 @@ namespace Homeclick.Models
         }
 
         [NotMapped]
-        public ICollection<Category> Categories
+        public IList<Category> Categories
         {
             get
             {

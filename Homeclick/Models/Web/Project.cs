@@ -87,6 +87,8 @@ namespace Homeclick.Models
         [StringLength(50)]
         public string MapLocation { get; set; }
 
+
+        [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
 
         public virtual City City { get; set; }

@@ -46,6 +46,8 @@ namespace Homeclick.Models
 
         public int? ParentId { get; set; }
 
+
+        [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
 
         public virtual Project Project { get; set; }
