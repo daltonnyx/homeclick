@@ -3,9 +3,9 @@ using VCMS.Lib.Common;
 
 namespace VCMS.Lib.Controllers
 {
-    public class PagesController : BaseController
+    public class DashboardController : BaseController
     {
-        public ActionResult Dashboard()
+        public ActionResult Index()
         {
             return View();
         }

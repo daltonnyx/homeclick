@@ -369,7 +369,7 @@
     <Content Include="Areas\Manager\Views\Account\Lockout.cshtml" />
     <Content Include="Areas\Manager\Views\Account\Login.cshtml" />
     <Content Include="Areas\Manager\Views\Account\Register.cshtml" />
-    <Content Include="Areas\Manager\Views\Pages\Dashboard.cshtml" />
+    <Content Include="Areas\Manager\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Manager\Views\Roles\Create.cshtml" />
     <Content Include="Areas\Manager\Views\Roles\Delete.cshtml" />
     <Content Include="Areas\Manager\Views\Roles\Edit.cshtml" />

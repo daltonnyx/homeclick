@@ -99,7 +99,7 @@
     <Compile Include="Controllers\Cores\BaseController.cs" />
     <Compile Include="Controllers\Cores\ManageController.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
-    <Compile Include="Controllers\Cores\PagesController.cs" />
+    <Compile Include="Controllers\Cores\DashboardController.cs" />
     <Compile Include="Controllers\Cores\RolesController.cs" />
     <Compile Include="Controllers\Cores\UserManageController.cs" />
     <Compile Include="Controllers\Cores\UsersController.cs" />

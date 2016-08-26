@@ -74,7 +74,7 @@ namespace VCMS.Lib.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, false, false);
-                    return RedirectToAction("Dashboard","Pages");
+                    return RedirectToAction("Index", "Dashboard");
                 }
                 AddErrors(result);
             }
