@@ -118,6 +118,7 @@
     <Compile Include="Models\Core\ManageViewModels.cs" />
     <Compile Include="Common\JDataTables.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\Core\File.cs" />
     <Compile Include="Models\ViewModels\LockoutViewModel.cs" />
     <Compile Include="Models\ViewModels\RoleViewModel.cs" />
     <Compile Include="Models\ViewModels\CreateUserViewModel.cs" />

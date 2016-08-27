@@ -29,15 +29,6 @@ namespace Homeclick.Models
             return child;
         }
 
-        [NotMapped]
-        public IList<Product> Products
-        {
-            get
-            {
-                return null;
-            }
-        }
-
         public Category_detail getDetail(string name)
         {
             return null;
