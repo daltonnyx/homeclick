@@ -12,12 +12,12 @@ namespace Homeclick.Areas.Manager
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
                 "Manager_default",
                 "Manager/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional },
+                new { contoller = "Dashboard" , action = "Index", id = "" },
                 new[] {"VCMS.Lib.Controllers"}
             );
         }
