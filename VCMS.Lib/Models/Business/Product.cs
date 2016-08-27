@@ -44,7 +44,7 @@ namespace VCMS.Lib.Models.Business
 
         public virtual ICollection<Category> Categories { get; set; }
     }
-
+    /*
     public class ProductEntityConfiguration : EntityTypeConfiguration<Product>
     {
         public ProductEntityConfiguration()
@@ -63,4 +63,5 @@ namespace VCMS.Lib.Models.Business
                 });
         }
     }
+    */
 }

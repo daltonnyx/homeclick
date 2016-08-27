@@ -96,6 +96,7 @@
   <ItemGroup>
     <Compile Include="Common\AuthorizationService.cs" />
     <Compile Include="Controllers\Business\ProductColorsController.cs" />
+    <Compile Include="Controllers\Cores\FileManagerController.cs" />
     <Compile Include="Models\Business\Category.cs" />
     <Compile Include="Controllers\Cores\AccountController.cs" />
     <Compile Include="Controllers\Cores\BaseController.cs" />
