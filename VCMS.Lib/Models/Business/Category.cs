@@ -10,7 +10,6 @@ namespace VCMS.Lib.Models.Business
     [Table("Category")]
     public partial class Category
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Category()
         {
             Category_detail = new HashSet<Category_detail>();
@@ -35,13 +34,14 @@ namespace VCMS.Lib.Models.Business
         public virtual ICollection<Category_detail> Category_detail { get; private set; }
 
         public virtual ICollection<Category> CategoryParents { get; private set; }
+
         public virtual ICollection<Category> CategoryChildren { get; private set; }
 
         public virtual ICollection<Product> Products { get; private set; }
 
         public virtual ICollection<File> Files { get; set; }
     }
-
+    /*
     public class CategoryEntityConfiguration : EntityTypeConfiguration<Category>
     {
         public CategoryEntityConfiguration()
@@ -50,9 +50,9 @@ namespace VCMS.Lib.Models.Business
                 .WithOptional(e => e.Category)
                 .WillCascadeOnDelete();
 
-            this.HasMany(e => e.Category1)
-            .WithOptional(e => e.Category2)
-            .HasForeignKey(e => e.ParentCategoryId);
+            this.HasMany(e => e.Files)
+                .WithOptional(e => e.FileType)
+                .HasForeignKey(e => e.FileTypeId);
 
             //Parents
             this.HasMany(e => e.CategoryParents)
@@ -64,5 +64,5 @@ namespace VCMS.Lib.Models.Business
                     cs.ToTable("Category_Category_Link");
                 });
         }
-    }
+    }        */
 }

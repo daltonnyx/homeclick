@@ -21,7 +21,6 @@ namespace VCMS.Lib.Models
 
         public long? Size { get; set; }
 
-        [ForeignKey("FileTypeId")]
         public virtual Category FileType { get; set; }
 
         [ForeignKey("CreateUserId")]
