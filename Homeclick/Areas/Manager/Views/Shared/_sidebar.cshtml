@@ -29,8 +29,22 @@
 
             <!-- BEGIN Submenu -->
             <ul class="submenu">
-                <li data-page="Users"><a href="@Url.Action("List","Users")">Users</a></li>
-                <li data-page="Roles"><a href="@Url.Action("List","Roles")">Roles</a></li>
+                <li data-page="users"><a href="@Url.Action("List","Users")">Users</a></li>
+                <li data-page="roles"><a href="@Url.Action("List","Roles")">Roles</a></li>
+            </ul>
+            <!-- END Submenu -->
+        </li>
+
+        <li>
+            <a class="dropdown-toggle">
+                <i class="fa fa-square-o"></i>
+                <span>Products</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+
+            <!-- BEGIN Submenu -->
+            <ul class="submenu">
+                <li data-page="productcolors"><a href="@Url.Action("Index","ProductColors")">Colors</a></li>
             </ul>
             <!-- END Submenu -->
         </li>

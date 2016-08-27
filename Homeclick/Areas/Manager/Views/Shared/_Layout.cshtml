@@ -40,7 +40,7 @@
     
     @RenderSection("scripts", required: false)
     <script>
-        var currentActive = "@Html.ViewContext.RouteData.GetRequiredString("controller")";
+        var currentActive = "@Html.ViewContext.RouteData.GetRequiredString("controller").ToLower()";
         $(function () {
             var sidebarListItems = $('#sidebar').find('li');
             var active = sidebarListItems.filter('[data-page="' + currentActive + '"]');

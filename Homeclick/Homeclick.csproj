@@ -381,6 +381,11 @@
     <Content Include="Areas\Manager\Views\Users\Details.cshtml" />
     <Content Include="Areas\Manager\Views\Users\Edit.cshtml" />
     <Content Include="Areas\Manager\Views\Users\List.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductColors\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductColors\Delete.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductColors\Details.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductColors\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductColors\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
