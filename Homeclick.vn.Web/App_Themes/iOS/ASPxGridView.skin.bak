@@ -1,0 +1,33 @@
+<%@ Register assembly="DevExpress.Data.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data" TagPrefix="dx" %>
+<%@ Register assembly="DevExpress.Web.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web" tagprefix="dx" %>
+<%@ Register assembly="DevExpress.Web.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web" tagprefix="dx" %>
+<%@ Register assembly="DevExpress.Web.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web" tagprefix="dx" %>
+
+<dx:ASPxGridView runat="server" CssFilePath="~/App_Themes/iOS/{0}/styles.css" CssPostfix="iOS">
+    <Images SpriteCssFilePath="~/App_Themes/iOS/{0}/sprite.css" >
+    </Images>
+    <Styles>
+        <LoadingPanel ImageSpacing="5px" />
+    </Styles>
+    <SettingsPager CurrentPageNumberFormat="{0}">
+    </SettingsPager>
+    <Settings GridLines="Horizontal"/>
+    <SettingsPopup>
+        <HeaderFilter MinWidth="250" MinHeight="250" />
+        <CustomizationWindow Width="200" />
+    </SettingsPopup>
+</dx:ASPxGridView>
+
+<dx:ASPxGridView runat="server" CssFilePath="~/App_Themes/iOS/{0}/styles.css" CssPostfix="iOS" SkinID="Switch">
+    <Images SpriteCssFilePath="~/App_Themes/iOS/{0}/sprite.css" />
+    <SettingsPager CurrentPageNumberFormat="{0}" />
+    <ImagesEditors>
+        <CheckBoxChecked SpriteProperties-CssClass="dxEditors_edtCheckBoxSwitchOn_iOS" />
+        <CheckBoxUnchecked  SpriteProperties-CssClass="dxEditors_edtCheckBoxSwitchOff_iOS" />
+    </ImagesEditors>
+    <StylesEditors>
+        <CheckBoxFocused CssClass="dxeSwitchFocused_iOS" />
+        <CheckBox CssClass="dxeSwitch_iOS" />
+    </StylesEditors>
+</dx:ASPxGridView>
+

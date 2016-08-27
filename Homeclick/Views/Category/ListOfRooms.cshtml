@@ -1,0 +1,26 @@
+﻿@using Homeclick.Models;
+@model IList<Category>
+
+
+<div class="list-category models sidebar">
+    <h3 class="title-sidebar title-cate-sidebar">Models</h3>
+    <ul class="nav">
+        @foreach (Category item in Model)
+        {
+            <li class="model-link filter" data-filter=".model-@item.Id" data-content="@item.Id">
+               <a href="#model-@item.Id">@item.name</a>
+            </li>
+        }
+    </ul>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $(".list-category").affix({
+            offset: {
+                top: $("#header").height(),
+                bottom: $("#footer").height() + 40
+            }
+        });
+    });
+</script>

@@ -1,0 +1,1975 @@
+/* -- ValidationSummary -- */
+.dxvsValidationSummary_Aqua
+{
+	font: 12px Tahoma, Geneva, sans-serif;
+	color: Red;
+}
+.dxvsValidationSummary_Aqua td.dxvsRC_Aqua
+{
+	vertical-align: top;
+	padding: 2px 5px 4px 6px;
+}
+.dxvsValidationSummary_Aqua .dxvsE_Aqua
+{
+}
+.dxvsValidationSummary_Aqua table.dxvsHT_Aqua
+{
+	width: 100%;
+}
+.dxvsValidationSummary_Aqua td.dxvsH_Aqua
+{
+	padding: 2px 0;
+}
+.dxvsValidationSummary_Aqua a.dxvsHL_Aqua,
+.dxvsValidationSummary_Aqua a.dxvsHL_Aqua:visited
+{
+	color: red;
+}
+.dxvsValidationSummary_Aqua a.dxvsHL_Aqua
+{
+	text-decoration: none;
+	border-bottom: 1px dashed #f70;
+}
+.dxvsValidationSummary_Aqua a.dxvsHL_Aqua:hover
+{
+	color: #f70;
+}
+.dxvsValidationSummary_Aqua table.dxvsT_Aqua
+{
+}
+.dxvsValidationSummary_Aqua tr.dxvsE_Aqua
+{
+}
+.dxvsValidationSummary_Aqua td.dxvsETC_Aqua
+{
+	padding: 2px 0;
+}
+.dxvsValidationSummary_Aqua ul.dxvsL_Aqua
+{
+}
+.dxvsValidationSummary_Aqua ol.dxvsL_Aqua
+{
+}
+.dxvsValidationSummary_Aqua li.dxvsE_Aqua
+{
+	padding: 2px 0;
+}
+
+/* TrackBar */
+.dxeTrackBar_Aqua
+{
+    font: 12px Tahoma, Geneva, sans-serif;
+	user-select: none;
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	visibility:hidden;
+}
+
+.dxeDisabled_Aqua .dxeTBHSys a,
+.dxeDisabled_Aqua .dxeTBVSys a
+{
+    cursor: default;
+}
+
+.dxeTBBarHighlight_Aqua
+{
+	font-size: 0;
+}
+
+.dxeTBScale_Aqua,
+.dxeTBTrack_Aqua,
+.dxeTBBarHighlight_Aqua
+{
+	cursor: pointer;
+}
+
+.dxeTBScale_Aqua
+{
+	z-index: 1;
+}
+.dxeTBSecondaryDH_Aqua,
+.dxeTBMainDH_Aqua
+{
+	z-index: 4;
+}
+
+.dxeTrackBar_Aqua.dxeTBHSys
+{
+	width: 170px;
+	height: 53px;
+}
+.dxeTrackBar_Aqua.dxeTBVSys
+{
+	height: 170px;
+	width: 53px;
+}
+.dxeTrackBar_Aqua.dxeTBBScaleSys.dxeTBVSys
+{
+	width: 76px;
+}
+.dxeTrackBar_Aqua.dxeTBBScaleSys.dxeTBHSys
+{	
+	height: 76px;
+}
+
+.dxeTBTrack_Aqua
+{
+	z-index: 2;
+	position: absolute;
+}
+
+.dxeTBTrack_Aqua, .dxeTBBarHighlight_Aqua 
+{
+	border-style: solid;
+	border-color: #A3C0E8;
+}
+
+.dxeTBHSys .dxeTBTrack_Aqua, .dxeTBHSys .dxeTBBarHighlight_Aqua 
+{
+	border-width: 0px 1px 0px 1px;
+}
+.dxeTBVSys .dxeTBTrack_Aqua, .dxeTBVSys .dxeTBBarHighlight_Aqua 
+{
+	border-width: 1px 0px 1px 0px;
+}
+
+.dxeTBHSys .dxeTBTrack_Aqua
+{
+	background-image:  url('edtTrackBarTrackH.gif');
+}
+.dxeTBVSys .dxeTBTrack_Aqua
+{
+	background-image:  url('edtTrackBarTrackV.gif');
+}
+
+.dxeTBHSys .dxeTBTrack_Aqua, 
+.dxeTBHSys .dxeTBBarHighlight_Aqua
+{
+	height: 6px;
+}
+.dxeTBVSys .dxeTBTrack_Aqua, 
+.dxeTBVSys .dxeTBBarHighlight_Aqua
+{
+	width: 6px;
+}
+
+.dxeTBHSys .dxeTBMainDH_Aqua,
+.dxeTBHSys .dxeTBSecondaryDH_Aqua
+{	
+	top: -10px;
+	width: 13px;
+	height: 26px;
+}
+.dxeTBVSys .dxeTBMainDH_Aqua,
+.dxeTBVSys .dxeTBSecondaryDH_Aqua
+{
+	left: -10px;
+	width: 26px;
+	height: 13px;
+}
+
+.dxeTBVSys .dxeTBRBScaleSys .dxeTBTrack_Aqua,
+.dxeTBVSys .dxeTBTrack_Aqua
+{
+	left: 12px;
+}
+.dxeTBVSys .dxeTBLTScaleSys .dxeTBTrack_Aqua
+{
+	right: 12px;
+	left: auto;
+}
+.dxeTBHSys .dxeTBLTScaleSys .dxeTBTrack_Aqua
+{
+	bottom: 12px;
+	top: auto;
+}
+.dxeTBHSys .dxeTBRBScaleSys .dxeTBTrack_Aqua,
+.dxeTBHSys .dxeTBTrack_Aqua
+{
+	top: 12px;
+}
+
+.dxeTBBarHighlight_Aqua
+{
+	left: 0px;
+	top: 0px;
+	position:absolute;
+	z-index: 3;
+}
+
+.dxeTBHSys .dxeTBBarHighlight_Aqua
+{
+	background-image:  url('edtTrackBarBarHighlightH.gif');
+}
+.dxeTBVSys .dxeTBBarHighlight_Aqua
+{
+	background-image:  url('edtTrackBarBarHighlightV.gif');
+}
+
+.dxeTBRBLabel_Aqua,
+.dxeTBLTLabel_Aqua
+{
+	font-size: 0.91em;
+	text-align: center;
+	cursor: default;
+}
+.dxeTBSmallTickSys .dxeTBRBLabel_Aqua,
+.dxeTBSmallTickSys .dxeTBLTLabel_Aqua,
+.dxeTBLargeTickSys .dxeTBRBLabel_Aqua,
+.dxeTBLargeTickSys .dxeTBLTLabel_Aqua
+{	
+	position: absolute;
+}
+
+.dxeTBHSys .dxeTBRBLabel_Aqua,
+.dxeTBHSys .dxeTBLTLabel_Aqua
+{
+	width: 100%;
+}
+
+.dxeTBIncBtn_Aqua,
+.dxeTBDecBtn_Aqua
+{
+}
+
+.dxeTBVSys .dxeTBRBLabel_Aqua,
+.dxeTBVSys .dxeTBLTLabel_Aqua
+{
+	padding-top: 2px;
+}
+.dxeTBHSys .dxeTBBScaleSys .dxeTBRBLabel_Aqua
+{
+	margin-left: -4px;
+}
+.dxeTBVSys .dxeTBRBScaleSys .dxeTBRBLabel_Aqua,
+.dxeTBVSys .dxeTBBScaleSys .dxeTBLTLabel_Aqua
+{
+	right: 0px;
+}
+.dxeTBVSys .dxeTBLTScaleSys .dxeTBLTLabel_Aqua,
+.dxeTBVSys .dxeTBBScaleSys .dxeTBRBLabel_Aqua
+{
+	left: 0px;
+}
+.dxeTBHSys .dxeTBRBScaleSys .dxeTBRBLabel_Aqua,
+.dxeTBHSys .dxeTBBScaleSys .dxeTBLTLabel_Aqua
+{
+	bottom: 0px;
+}
+.dxeTBHSys .dxeTBLTScaleSys .dxeTBLTLabel_Aqua,
+.dxeTBHSys .dxeTBBScaleSys .dxeTBRBLabel_Aqua
+{
+	top: 0px;
+}
+
+.dxeTBHSys .dxeTBItem_Aqua .dxeTBRBLabel_Aqua,
+.dxeTBHSys .dxeTBItem_Aqua .dxeTBLTLabel_Aqua
+{
+	display: inline-block;
+	margin-left: 0px!important;
+}
+.dxeTBHSys .dxeTBRBScaleSys .dxeTBItem_Aqua .dxeTBRBLabel_Aqua
+{
+	padding-top: 12px;
+}
+.dxeTBHSys .dxeTBLTScaleSys .dxeTBItem_Aqua .dxeTBLTLabel_Aqua
+{
+	margin-top: 8px;
+}
+.dxeTBVSys .dxeTBRBScaleSys .dxeTBItem_Aqua .dxeTBRBLabel_Aqua 
+{
+	margin-left: 5px;
+}
+
+.dxeTBSelectedItem_Aqua .dxeTBRBLabel_Aqua,
+.dxeTBSelectedItem_Aqua .dxeTBLTLabel_Aqua,
+.dxeTBSelectedTick_Aqua .dxeTBRBLabel_Aqua,
+.dxeTBSelectedTick_Aqua .dxeTBLTLabel_Aqua
+{
+	color: #FFBD69;
+}
+.dxeDisabled_Aqua .dxeTBSelectedItem_Aqua .dxeTBRBLabel_Aqua,
+.dxeDisabled_Aqua .dxeTBSelectedItem_Aqua .dxeTBLTLabel_Aqua,
+.dxeDisabled_Aqua .dxeTBSelectedTick_Aqua .dxeTBRBLabel_Aqua,
+.dxeDisabled_Aqua .dxeTBSelectedTick_Aqua .dxeTBLTLabel_Aqua 
+{
+	color: #FFDEB4;
+}
+
+.dxeTBRBLabel_Aqua,
+.dxeTBLTLabel_Aqua,
+.dxeTBItem_Aqua
+{
+	color: #A3C0E8;
+}
+
+.dxeDisabled_Aqua .dxeTBRBLabel_Aqua,
+.dxeDisabled_Aqua .dxeTBLTLabel_Aqua,
+.dxeDisabled_Aqua .dxeTBItem_Aqua
+{
+	color: #D1DFF3;
+}
+
+.dxeTBVSys .dxeTBLTScaleSys .dxeTBItem_Aqua
+{
+	text-align: left;
+}
+
+.dxeTBVSys .dxeTBRBScaleSys .dxeTBItem_Aqua
+{
+	text-align: right;
+}
+
+.dxeTBVSys .dxeTBBScaleSys .dxeTBItem_Aqua
+{
+	text-align: center;
+}
+
+.dxeTBHSys .dxeTBItem_Aqua
+{
+	background-image:  url('edtTrackBarLargeTickH.gif');
+}
+.dxeTBHSys .dxeTBBScaleSys .dxeTBItem_Aqua
+{
+	background-image:  url('edtTrackBarDoubleSmallTickH.gif');
+}
+.dxeTBVSys .dxeTBItem_Aqua 
+{
+	background-image:  url('edtTrackBarLargeTickV.gif');
+}
+.dxeTBVSys .dxeTBBScaleSys .dxeTBItem_Aqua
+{
+	background-image:  url('edtTrackBarDoubleSmallTickV.gif');
+}
+
+.dxeTBHSys .dxeTBLargeTick_Aqua
+{
+	background-image:  url('edtTrackBarLargeTickH.gif');
+}
+.dxeTBVSys .dxeTBLargeTick_Aqua
+{
+	background-image: url('edtTrackBarLargeTickV.gif');
+}
+.dxeTBHSys .dxeTBSmallTick_Aqua
+{
+	background-image: url('edtTrackBarSmallTickH.gif');
+}
+.dxeTBVSys .dxeTBSmallTick_Aqua
+{
+	background-image: url('edtTrackBarSmallTickV.gif');
+}
+.dxeTBHSys .dxeTBBScaleSys .dxeTBLargeTick_Aqua
+{
+	background-image: url('edtTrackBarDoubleLargeTickH.gif');
+}
+.dxeTBVSys .dxeTBBScaleSys .dxeTBLargeTick_Aqua
+{
+	background-image: url('edtTrackBarDoubleLargeTickV.gif');
+}
+.dxeTBHSys .dxeTBBScaleSys .dxeTBSmallTick_Aqua
+{
+	background-image: url('edtTrackBarDoubleSmallTickH.gif');
+}
+.dxeTBVSys .dxeTBBScaleSys .dxeTBSmallTick_Aqua
+{
+	background-image: url('edtTrackBarDoubleSmallTickV.gif');
+}
+
+.dxeTBVSys .dxeTBIncBtn_Aqua,
+.dxeTBVSys .dxeReversedDirectionSys .dxeTBDecBtn_Aqua
+{
+	bottom: 0px;
+	top: auto;
+}
+.dxeTBVSys .dxeTBDecBtn_Aqua,
+.dxeTBVSys .dxeReversedDirectionSys .dxeTBIncBtn_Aqua
+{
+	top: 0px;
+	bottom: auto;
+}
+.dxeTBHSys .dxeTBDecBtn_Aqua, 
+.dxeTBHSys .dxeReversedDirectionSys .dxeTBIncBtn_Aqua
+{
+	left: 0px;
+	right: auto;
+}
+.dxeTBHSys .dxeTBIncBtn_Aqua,
+.dxeTBHSys .dxeReversedDirectionSys .dxeTBDecBtn_Aqua
+{
+	right: 0px;
+	left: auto;
+}
+.dxeTBVSys .dxeTBBScaleSys .dxeTBDecBtn_Aqua,
+.dxeTBVSys .dxeTBBScaleSys .dxeTBIncBtn_Aqua
+{
+	margin-left: -10px;
+	left: 50%;
+}
+.dxeTBHSys .dxeTBBScaleSys .dxeTBDecBtn_Aqua,
+.dxeTBHSys .dxeTBBScaleSys .dxeTBIncBtn_Aqua
+{
+	margin-top: -10px;
+	top: 50%;
+}
+.dxeTBVSys .dxeTBBScaleSys .dxeTBTrack_Aqua
+{ 
+	margin-left: -3px;
+	left: 50%;
+}
+.dxeTBHSys .dxeTBBScaleSys .dxeTBTrack_Aqua
+{ 
+	margin-top: -3px;
+	top: 50%;
+}
+
+.dxeTBVSys .dxeTBLTScaleSys .dxeTBDecBtn_Aqua,
+.dxeTBVSys .dxeTBLTScaleSys .dxeTBIncBtn_Aqua
+{
+	right: 5px;
+	left: auto;
+}
+.dxeTBHSys .dxeTBLTScaleSys .dxeTBDecBtn_Aqua,
+.dxeTBHSys .dxeTBLTScaleSys .dxeTBIncBtn_Aqua
+{
+	bottom: 5px;
+	top: auto;
+}
+.dxeTBVSys .dxeTBRBScaleSys .dxeTBDecBtn_Aqua,
+.dxeTBVSys .dxeTBRBScaleSys .dxeTBIncBtn_Aqua,
+.dxeTBVSys .dxeTBDecBtn_Aqua,
+.dxeTBVSys .dxeTBIncBtn_Aqua
+{
+	left: 5px;
+}
+.dxeTBHSys .dxeTBRBScaleSys .dxeTBDecBtn_Aqua,
+.dxeTBHSys .dxeTBRBScaleSys .dxeTBIncBtn_Aqua,
+.dxeTBHSys .dxeTBDecBtn_Aqua,
+.dxeTBHSys .dxeTBIncBtn_Aqua
+{
+	top: 5px;
+}
+
+.dxeHelpText_Aqua,
+.dxeTBValueToolTip_Aqua
+{
+    font: 12px Tahoma, Geneva, sans-serif;
+}
+div.dxeHelpText_Aqua,
+.dxeTBValueToolTip_Aqua
+{
+	padding: 3px 8px 4px 8px;
+    display: inline;
+    position:absolute;
+    border-radius: 3px;
+    z-index: 41998;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 1px 3px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.1) 0 1px 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #98B7E5;
+    background: #E0EDFF;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#E0EDFF', endColorstr='#D1E4FE');
+	background: -webkit-gradient(linear, left top, left bottom, from(#E0EDFF), to(#D1E4FE));
+	background: -moz-linear-gradient(top,  #E0EDFF,  #D1E4FE);
+}
+td.dxeHelpText_Aqua {
+    visibility: visible;
+    color: #9F9F9F;
+}
+td.dxeHelpText_Aqua label {
+    font-size: 0.91em;
+}
+td.dxeHelpText_Aqua.dxeHHelpTextSys {
+    padding: 0 6px;
+}
+td.dxeHelpText_Aqua.dxeVHelpTextSys {
+    padding: 2px 0;
+}
+
+/* InternalCheckBox */
+.dxeIRBFocused_Aqua
+{
+    outline: 1px dotted #f5b666;
+}
+.dxeIRadioButton_Aqua
+{
+}
+.dxlpLoadingPanel_Aqua,
+.dxlpLoadingPanelWithContent_Aqua 
+{
+	font: 12px Tahoma, Geneva, sans-serif;
+	color: #2C4D79;
+	background-color: White;
+	border: 1px solid #67A2C6;
+}
+.dxlpLoadingPanel_Aqua  td.dx,
+.dxlpLoadingPanelWithContent_Aqua td.dx
+{
+	white-space: nowrap;
+	text-align: center;
+	padding: 10px 20px 8px;
+}
+.dxeButtonEditSys .dxic .dxeLoadingDiv_Aqua
+{
+	opacity: 1!important;
+	filter: alpha(opacity=100)!important;
+}
+
+.dxeButtonEditSys .dxic .dxeLoadingPanel_Aqua
+{
+    background-color: transparent!important;
+	border: none!important;
+}
+
+.dxeButtonEditSys .dxic .dxeLoadingPanel_Aqua td.dx
+{
+	white-space: nowrap;
+	text-align: center;
+    padding: 0px!important;
+}
+
+.dxeButtonEditSys .dxic .dxeLoadingPanel_Aqua td.dx > img
+{
+	height: 15px;
+    width: auto;
+    margin-bottom: 0px!important;
+    vertical-align: middle;
+}
+
+.dxeButtonEditSys .dxic .dxeLoadingPanel_Aqua td.dx > span
+{
+	display: none;
+}
+
+.dxeBase_Aqua
+{
+	font: 12px Tahoma, Geneva, sans-serif;
+}
+/* -- ErrorFrame -- */
+.dxeErrorCell_Aqua
+{
+	font: 12px Tahoma, Geneva, sans-serif;
+	color: Red;
+    border-color: black;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+.dxeErrorFrame_Aqua
+{
+}
+.dxeErrorFrameWithoutError_Aqua
+{
+	border: 1px solid Red;
+}
+.dxeErrorFrameWithoutError_Aqua .dxeControlsCell_Aqua,
+.dxeErrorFrameWithoutError_Aqua.dxeControlsCell_Aqua
+{
+	padding: 2px;
+}
+.dxeEditArea_Aqua
+{
+	border: 1px solid #A0A0A0;
+}
+body input.dxeEditArea_Aqua /*Bootstrap correction*/
+{
+    color: black;
+}
+
+/* -- Buttons -- */
+.dxeButtonEditButton_Aqua,
+.dxeCalendarButton_Aqua,
+.dxeSpinIncButton_Aqua,
+.dxeSpinDecButton_Aqua,
+.dxeSpinLargeIncButton_Aqua,
+.dxeSpinLargeDecButton_Aqua,
+.dxeColorEditButton_Aqua
+{
+	vertical-align: Middle;
+	border: 1px Solid #A3C0E8;
+	cursor: pointer;
+	text-align: center;
+	white-space: nowrap;
+} 
+.dxeButtonEditButton_Aqua
+{
+	padding: 0px 2px;
+}
+.dxeSpinLargeIncButton_Aqua,
+.dxeSpinLargeDecButton_Aqua,
+.dxeSpinIncButton_Aqua,
+.dxeSpinDecButton_Aqua
+{
+	padding: 0px 4px;
+}
+.dxeButtonEditButton_Aqua,
+.dxeSpinLargeIncButton_Aqua,
+.dxeSpinLargeDecButton_Aqua
+{
+	background: #DBEBFF url('edtDropDownBack.gif') repeat-x;
+}
+.dxeSpinIncButton_Aqua
+{
+	background: #DBEBFF url('edtSpinIncBtnBack.gif') repeat-x top;
+	border-bottom: 0;
+}
+.dxeSpinDecButton_Aqua
+{
+	background: #DBEBFF url('edtSpinDecBtnBack.gif') repeat-x top;
+}
+
+.dxeCalendarButton_Aqua,
+.dxeColorEditButton_Aqua
+{
+	color: #2C4D79;
+	cursor: default;
+	vertical-align: middle;
+	border: 1px solid #A3C0E8;
+	background: #C8DFFF url('edtButtonBack.gif') repeat-x top;
+	padding: 3px 11px 4px;
+	min-width: 37px;
+}
+
+
+.dxeButtonEditButton_Aqua.dxeButtonEditClearButton_Aqua,
+.dxeButtonEditButton_Aqua.dxeButtonEditClearButton_Aqua:hover
+{
+    background: none;
+    border-width: 0;
+    padding-bottom: 1px;
+    padding-top: 2px;
+}
+
+.dxeButtonEditClearButton_Aqua img
+{
+    vertical-align: baseline;
+}
+
+/* -- Pressed -- */
+.dxeCalendarButtonPressed_Aqua,
+.dxeColorEditButton_Aqua:active
+{
+	background: #FFB46D url('edtCalendarButtonPressedBack.gif') repeat-x top;
+	border: 1px Solid #CB9280;
+}
+.dxeButtonEditButtonPressed_Aqua,
+.dxeSpinIncButtonPressed_Aqua,
+.dxeSpinDecButtonPressed_Aqua,
+.dxeSpinLargeIncButtonPressed_Aqua, 
+.dxeSpinLargeDecButtonPressed_Aqua
+{
+	background: #FFB46D url('edtDropDownButtonPressedBack.gif') repeat-x top;
+	border: 1px Solid #CB9280;
+}
+.dxeSpinIncButtonPressed_Aqua
+{
+	background: #F8A04D url('edtSpinIncButtonPressedBack.gif') repeat-x top;
+	border: 1px Solid #AECAF0;
+	border-bottom: 0;
+}
+.dxeSpinDecButtonPressed_Aqua
+{
+	background: #F8A04D url('edtSpinDecButtonPressedBack.gif') repeat-x top;
+	border: 1px Solid #AECAF0;
+}
+/* -- Hover -- */
+.dxeButtonEditButtonHover_Aqua,
+.dxeSpinIncButtonHover_Aqua,
+.dxeSpinDecButtonHover_Aqua,
+.dxeSpinLargeIncButtonHover_Aqua,
+.dxeSpinLargeDecButtonHover_Aqua
+{
+	background: #FEDC75 url('edtDropDownButtonHoverBack.gif') repeat-x top;
+	border: 1px Solid #D6A886;
+}
+.dxeSpinIncButtonHover_Aqua
+{
+	background: #FFC68C url('edtSpinIncButtonHoverBack.gif') repeat-x top;
+	border: 1px Solid #AECAF0;
+	border-bottom: 0;
+}
+.dxeSpinDecButtonHover_Aqua
+{
+	background: #FFC68C url('edtSpinDecButtonHoverBack.gif') repeat-x top;
+	border: 1px Solid #AECAF0;
+}
+.dxeCalendarButtonHover_Aqua,
+.dxeColorEditButton_Aqua:hover
+{
+	background: #FEDC75 url('edtCalendarButtonHoverBack.gif') repeat-x top;
+	border: 1px Solid #D6A886;
+	color: #7E3C31;
+}
+
+.dxeButtonEdit_Aqua
+{
+	background-color: White;
+	border: 1px Solid #AECAF0;
+    font: 12px Tahoma, Geneva, sans-serif;
+}
+
+.dxeButtonEdit_Aqua .dxeEditArea_Aqua
+{
+	background-color: White;
+}
+.dxeButtonEdit_Aqua .dxeIIC img
+{
+	padding-left: 3px;
+}
+.dxeTextBox_Aqua
+{
+	background-color: White;
+	border: 1px Solid #AECAF0;
+    font: 12px Tahoma, Geneva, sans-serif;
+}
+.dxeTextBox_Aqua .dxeEditArea_Aqua
+{
+	background-color: White;
+}
+.dxeRadioButtonList_Aqua,
+.dxeCheckBoxList_Aqua
+{
+	font: 12px Tahoma, Geneva, sans-serif;
+}
+
+.dxeCheckBoxList_Aqua .dxe > table,
+.dxeRadioButtonList_Aqua .dxe > table 
+{
+    width: 100%;
+}
+
+.dxeRadioButtonList_Aqua,
+.dxeCheckBoxList_Aqua
+{
+	border: 1px Solid #AECAF0;
+}
+.dxeRadioButtonList_Aqua td.dxe,
+.dxeCheckBoxList_Aqua td.dxe
+{
+	padding: 7px 5px 6px 11px;
+}
+.dxeRadioButtonList_Aqua[dir='rtl'] td.dxe,
+.dxeCheckBoxList_Aqua[dir='rtl'] td.dxe
+{
+	padding: 7px 11px 6px 5px;
+}
+
+/* -- Memo -- */
+.dxeMemo_Aqua
+{
+	background-color: White;
+	border: 1px Solid #AECAF0;
+    font: 12px Tahoma, Geneva, sans-serif;
+}
+.dxeMemoEditArea_Aqua
+{
+	background-color: White;
+	outline: none;
+}
+
+/* -- Hyperlink -- */
+.dxeHyperlink_Aqua
+{
+	font: 12px Tahoma, Geneva, sans-serif;
+	color: #5689C5;
+	text-decoration: underline;
+}
+a:hover.dxeHyperlink_Aqua
+{
+	color: #F39128;
+	text-decoration: underline;
+}
+a:visited.dxeHyperlink_Aqua
+{
+	color: #A1A1A1;
+	text-decoration: underline;
+}
+/* -- ListBox -- */
+.dxeListBox_Aqua
+{
+	background-color: White;
+	border: 1px Solid #AECAF0;
+	color: Black;
+	font: 12px Tahoma, Geneva, sans-serif;
+	height: 113px;
+	width: 70px;
+	color: Black;
+}
+.dxeListBox_Aqua div.dxlbd
+{
+	padding-top: 1px;
+	height: 112px;
+}
+.dxeListBoxItemRow_Aqua
+{
+	cursor: default;
+}
+.dxeListBoxItem_Aqua
+{
+	border-left: 1px Solid #FFFFFF;
+	border-right: 1px Solid #FFFFFF;
+	padding: 4px 2px 4px 4px;
+	white-space: nowrap;
+	text-align: left;
+}
+.dxeListBoxItem_Aqua em
+{
+	background: #FFE7A2 none repeat 0 0;
+	color: #333333;
+	font-weight: bold;
+	font-style: normal;
+}
+.dxeListBox_Aqua td.dxeI,
+.dxeListBox_Aqua td.dxeIM,
+.dxeListBox_Aqua .dxeHIC,
+.dxeListBox_Aqua td.dxeFTM,
+.dxeListBox_Aqua td.dxeTM,
+.dxeListBox_Aqua td.dxeC,
+.dxeListBox_Aqua td.dxeCM,
+.dxeListBox_Aqua td.dxeHCC,
+.dxeListBox_Aqua td.dxeMI,
+.dxeListBox_Aqua td.dxeMIM
+{
+	border-right-width: 0!important;
+}
+.dxeListBox_Aqua td.dxeIR,
+.dxeListBox_Aqua td.dxeIMR,
+.dxeListBox_Aqua .dxeHICR,
+.dxeListBox_Aqua td.dxeFTMR,
+.dxeListBox_Aqua td.dxeTMR,
+.dxeListBox_Aqua td.dxeCR,
+.dxeListBox_Aqua td.dxeCMR,
+.dxeListBox_Aqua td.dxeHCCR,
+.dxeListBox_Aqua td.dxeMIR,
+.dxeListBox_Aqua td.dxeMIMR
+{
+	border-left-width: 0!important;
+}
+.dxeListBox_Aqua td.dxeCM,
+.dxeListBox_Aqua td.dxeHCC,
+.dxeListBox_Aqua td.dxeCMR,
+.dxeListBox_Aqua td.dxeHCCR
+{
+	width: 31px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+.dxeListBox_Aqua td.dxeIM,
+.dxeListBox_Aqua td.dxeIMR
+{
+	width: 0;
+}
+.dxeListBox_Aqua td.dxeC
+{
+	padding-right: 3px!important;
+}
+.dxeListBox_Aqua td.dxeCR
+{
+	padding-left: 3px!important;
+}
+.dxeListBox_Aqua td.dxeC > span,
+.dxeListBox_Aqua td.dxeCM > span
+{
+    margin: 2px 2px 2px 3px;
+}
+.dxeListBox_Aqua td.dxeCR > span,
+.dxeListBox_Aqua td.dxeCMR > span
+{
+    margin: 2px 3px 2px 2px;
+}
+.dxeListBox_Aqua td.dxeT
+{
+	width: 100%;
+	padding-left: 0!important;
+}
+.dxeListBox_Aqua td.dxeTR
+{
+	width: 100%;
+	padding-right: 0!important;
+}
+.dxeListBox_Aqua td.dxeT,
+.dxeListBox_Aqua td.dxeMI
+{
+	border-left-width: 0!important;
+}
+.dxeListBox_Aqua td.dxeTR,
+.dxeListBox_Aqua td.dxeMIR
+{
+	border-right-width: 0!important;
+}
+.dxeListBox_Aqua td.dxeFTM,
+.dxeListBox_Aqua td.dxeTM,
+.dxeListBox_Aqua td.dxeLTM,
+.dxeListBox_Aqua .dxeHFC,
+.dxeListBox_Aqua .dxeHC,
+.dxeListBox_Aqua .dxeHLC,
+.dxeListBox_Aqua td.dxeFTMR,
+.dxeListBox_Aqua td.dxeTMR,
+.dxeListBox_Aqua td.dxeLTMR,
+.dxeListBox_Aqua .dxeHFCR,
+.dxeListBox_Aqua .dxeHCR,
+.dxeListBox_Aqua .dxeHLCR
+{
+	overflow: hidden;
+}
+.dxeListBox_Aqua td.dxeFTM,
+.dxeListBox_Aqua td.dxeTM,
+.dxeListBox_Aqua .dxeHFC,
+.dxeListBox_Aqua .dxeHC
+{
+	padding-right: 6px!important;
+}
+.dxeListBox_Aqua td.dxeFTMR,
+.dxeListBox_Aqua td.dxeTMR,
+.dxeListBox_Aqua .dxeHFCR,
+.dxeListBox_Aqua .dxeHCR
+{
+	padding-left: 6px!important;
+}
+.dxeListBox_Aqua td.dxeLTM,
+.dxeListBox_Aqua td.dxeTM, 
+.dxeListBox_Aqua .dxeHC,
+.dxeListBox_Aqua .dxeHLC
+{
+	padding-left: 6px!important;
+}
+.dxeListBox_Aqua td.dxeLTMR,
+.dxeListBox_Aqua td.dxeTMR, 
+.dxeListBox_Aqua .dxeHCR,
+.dxeListBox_Aqua .dxeHLCR
+{
+	padding-right: 6px!important;
+}
+/*Grid lines*/
+.dxeListBox_Aqua td.dxeTM,
+.dxeListBox_Aqua td.dxeLTM,
+.dxeListBox_Aqua td.dxeMIM
+{
+	border-left: 1px solid #BED6F6!important;
+}
+.dxeListBox_Aqua td.dxeTMR,
+.dxeListBox_Aqua td.dxeLTMR,
+.dxeListBox_Aqua td.dxeMIMR
+{
+	border-right: 1px solid #BED6F6!important;
+}
+.dxeListBox_Aqua td.dxeIM,
+.dxeListBox_Aqua td.dxeFTM,
+.dxeListBox_Aqua td.dxeTM,
+.dxeListBox_Aqua td.dxeLTM,
+.dxeListBox_Aqua td.dxeCM,
+.dxeListBox_Aqua td.dxeMIM,
+.dxeListBox_Aqua td.dxeIMR,
+.dxeListBox_Aqua td.dxeFTMR,
+.dxeListBox_Aqua td.dxeTMR,
+.dxeListBox_Aqua td.dxeLTMR,
+.dxeListBox_Aqua td.dxeCMR,
+.dxeListBox_Aqua td.dxeMIMR
+{
+	border-bottom: 1px solid #BED6F6;
+}
+
+.dxeListBoxItemSelected_Aqua     
+{
+	background-color: #FFBD69;
+}
+.dxeListBoxItemHover_Aqua        
+{
+	background-color: #FFE7A2;
+}
+.dxeListBoxItemSelected_Aqua em,
+.dxeListBoxItemHover_Aqua em
+{
+	background-image: none;
+}
+
+/*Header*/
+.dxeListBox_Aqua .dxeHD
+{
+	background: #E2F0FF url('lbHeaderBackground.gif') repeat-x top center;
+	border-bottom: 1px solid #AECAF0;
+}
+.dxeListBox_Aqua .dxeHFC,
+.dxeListBox_Aqua .dxeHIC,
+.dxeListBox_Aqua .dxeHC,
+.dxeListBox_Aqua .dxeHLC, 
+.dxeListBox_Aqua td.dxeHMIC,
+.dxeListBox_Aqua .dxeHFCR,
+.dxeListBox_Aqua .dxeHICR,
+.dxeListBox_Aqua .dxeHCR,
+.dxeListBox_Aqua .dxeHLCR, 
+.dxeListBox_Aqua td.dxeHMICR
+{
+	color: #283B56;
+	border-bottom-width: 0;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.dxeListBox_Aqua .dxeHC,
+.dxeListBox_Aqua .dxeHLC,
+.dxeListBox_Aqua td.dxeHMIC
+{
+	border-left: 1px solid #AECAF0;
+}
+.dxeListBox_Aqua .dxeHCR,
+.dxeListBox_Aqua .dxeHLCR,
+.dxeListBox_Aqua td.dxeHMICR
+{
+	border-right: 1px solid #AECAF0;
+	text-align: right;
+}
+.dxeListBox_Aqua .dxeHIC,
+.dxeListBox_Aqua .dxeHFC,
+.dxeListBox_Aqua .dxeHCC
+{
+	border-left: 1px solid #E2F0FF;
+}
+.dxeListBox_Aqua .dxeHICR,
+.dxeListBox_Aqua .dxeHFCR,
+.dxeListBox_Aqua .dxeHCCR
+{
+	border-right: 1px solid #E2F0FF;
+	text-align: right;
+}
+.dxeListBox_Aqua .dxeHFC,
+.dxeListBox_Aqua .dxeHC,
+.dxeListBox_Aqua .dxeHMIC
+{
+	border-right-width: 0;
+}
+.dxeListBox_Aqua .dxeHFCR,
+.dxeListBox_Aqua .dxeHCR,
+.dxeListBox_Aqua .dxeHMICR
+{
+	border-left-width: 0;
+	text-align: right;
+}
+.dxeListBox_Aqua .dxeHLC
+{
+	border-right: 1px solid #AECAF0;
+}
+.dxeListBox_Aqua .dxeHLCR
+{
+	border-left: 1px solid #AECAF0;
+	text-align: right;
+}
+
+/* -- Calendar -- */
+.dxeCalendar_Aqua
+{
+	color: #000000;
+    font: 12px Tahoma, Geneva, sans-serif;
+	border: 1px solid #A3C0E8;
+	background-color: #FFFFFF;
+	font-weight: normal;
+}
+.dxeCalendar_Aqua td.dxMonthGrid
+{
+	padding: 3px 22px 6px 21px;
+	cursor: default;
+	background-color: #FFFFFF;
+}
+.dxeCalendar_Aqua td.dxMonthGridWithWeekNumbers
+{
+	padding: 3px 19px 6px 7px;
+	cursor: default;
+	background-color: #FFFFFF;
+}
+.dxeCalendar_Aqua td.dxMonthGridWithWeekNumbersRtl
+{
+	padding: 3px 7px 6px 19px;
+	cursor: default;
+	background-color: #FFFFFF;
+}
+.dxeCalendarDayHeader_Aqua
+{
+	padding: 3px 5px 6px 6px;
+	border-bottom: 1px solid #cfcfcf;
+}
+.dxeCalendarWeekNumber_Aqua
+{
+	font-size: 0.75em;
+	text-align: right;
+	color: #8FBBE4;
+	padding: 3px 3px 2px 4px;
+}
+.dxeCalendarDay_Aqua
+{
+	text-align: center;
+	padding: 4px 8px 5px;
+}
+.dxeCalendarWeekend_Aqua        
+{
+	color: #c00000;
+}
+.dxeCalendarOtherMonth_Aqua     
+{
+	color: #888;
+}
+.dxeCalendarOutOfRange_Aqua     
+{
+	color: #d0d0d0;
+}
+.dxeCalendarDayDisabled_Aqua {
+	color: #eaedef!important;
+	background-color: #fbfeff;
+}
+.dxeCalendarToday_Aqua         
+{
+	color: #000000;
+	border: 1px solid #FFAB3F;
+}
+.dxeCalendarSelected_Aqua       
+{
+	color: #000000;
+	background-color: #FFE7A2;
+	border: 1px solid #FFBD69;
+}
+.dxeDayInRange.dxeCalendarSelected_Aqua
+{
+    border-color: transparent;
+}
+.dxeCalendarSelected_Aqua,     
+.dxeCalendarToday_Aqua         
+{
+	padding: 3px 7px 4px;
+}
+.dxeCalendarHeader_Aqua
+{
+	color: #ffffff;
+	background: #c7dfff url('edtCalendarHeaderBack.gif') repeat-x top;
+	border-bottom: 1px solid #A3C0E8;
+	padding: 3px;
+	margin: 10px;
+	font-weight: bold;
+}
+.dxeCalendarHeader_Aqua td.dxe
+{
+	color: #15428B;
+	text-align: center;
+	cursor: pointer;
+}
+.dxeCalendarHeader_Aqua .dxeCHS
+{
+    min-width: 1px;
+    *width: 1px;
+}
+.dxeCalendarFooter_Aqua
+{
+	background: #C7DFFF url('edtCalendarFooterBack.gif') repeat-x bottom;
+	padding: 11px 0px 8px;
+	border-top: 1px solid #A3C0E8;
+}
+.dxeCalendarFooter_Aqua .dxeCFS
+{
+    min-width: 16px;
+    *width: 16px;
+}
+.dxeCalendarFastNav_Aqua
+{
+	color: #000000;
+	background: #FFFFFF none;
+	border-top: 1px Solid #A3C0E8;
+	border-right: 1px Solid #A3C0E8;
+	border-bottom: 0px Solid #A3C0E8;
+	border-left: 1px Solid #A3C0E8;
+	padding: 12px 8px;
+}
+.dxeCalendarFastNavMonthArea_Aqua
+{
+	padding: 0px 9px;
+}
+.dxeCalendarFastNavYearArea_Aqua
+{
+    padding-top: 8px;
+}
+.dxeCalendarFastNavFooter_Aqua
+{
+	color: #000000;
+	background: #C7DFFF url('edtCalendarFooterBack.gif') repeat-x bottom center;
+	padding: 8px 0px;
+	border-right: 1px Solid #A3C0E8;
+	border-bottom: 1px Solid #A3C0E8;
+	border-left: 1px Solid #A3C0E8;
+	border-top: 1px Solid #AECAF0;
+}
+.dxeCalendarFastNavFooter_Aqua .dxeCFNFS
+{
+    min-width: 11px;
+}
+.dxeCalendarFastNavMonth_Aqua,
+.dxeCalendarFastNavYear_Aqua
+{
+	color: #000000;
+	padding: 3px 4px;
+	text-align: center;
+	cursor: pointer;
+	border: 1px Solid White;
+}
+.dxeCalendarFastNavMonth_Aqua
+{
+	padding: 5px;
+}
+.dxeCalendarFastNavMonthSelected_Aqua,
+.dxeCalendarFastNavYearSelected_Aqua
+{
+	color: #000000;
+	background-color: #FFBD69;
+	border: 1px Solid #FFAB3F;
+}
+
+.dxeCalendarFastNavMonthHover_Aqua,
+.dxeCalendarFastNavYearHover_Aqua
+{
+	color: #000000;
+	background: #FFE7A2 none;
+	padding: 2px 4px;
+	border: 1px Solid #FFBD69;
+}
+.dxeCalendarFastNavMonthHover_Aqua
+{
+	padding: 5px;
+}
+.dxeDateEditTimeEditCell_Aqua
+{
+    background-color: #FFFFFF;
+    padding: 4px 22px 14px;
+    width: 100px;
+}
+.dxeDateEditClockCell_Aqua
+{
+    background-color: #FFFFFF;
+    padding: 9px 9px 0;
+}
+.dxeCalendarFooter_Aqua.dxeDETSF
+{
+    padding-left: 11px;
+    padding-right: 11px;
+}
+/* Disabled */
+.dxeDisabled_Aqua,
+.dxeDisabled_Aqua td.dxe
+{
+	color: #A6A6A6;
+	cursor: default;
+}
+.dxeEditArea_Aqua.dxeDisabled_Aqua /*Bootstrap correction*/
+{
+    color: #A6A6A6;
+}
+a.dxeDisabled_Aqua, a.dxeDisabled_Aqua:hover
+{
+	color: #A6A6A6;
+}
+.dxeButtonDisabled_Aqua
+{
+	background: #F5F5F5 url('edtDropDownBackDis.gif') repeat-x center top;
+	border-color: #CFCFCF;
+	cursor: default;
+}
+/* -- Button -- */
+.dxbButton_Aqua
+{
+	color: #2C4D79;
+	font: 12px Tahoma, Geneva, sans-serif;
+	border: 1px solid #A3C0E8;
+	background: #E2F0FF url('edtButtonBack.gif') repeat-x top;
+	padding: 1px;
+}
+.dxbButtonHover_Aqua
+{
+	color: #7E3C31;
+	background: #FEDC75 url('edtButtonHoverBack.gif') repeat-x top;
+	border: 1px solid #D6A886;
+}
+.dxbButtonChecked_Aqua
+{
+	color: #7E3C31;
+	background: #FFB46D url('edtButtonCheckedBack.gif') repeat-x top;
+	border: 1px solid #CB9280;
+}
+.dxbButtonPressed_Aqua
+{
+	color: #7E3C31;
+	background: #FFB46D url('edtButtonPressedBack.gif') repeat-x top;
+	border: 1px solid #CB9280;
+}
+.dxbButton_Aqua div.dxb
+{
+	padding: 1px 9px 2px;
+	border-width: 0px;
+	border: 1px dotted transparent;
+}
+.dxbButton_Aqua div.dxbf
+{
+	border: 1px dotted #2C4D79;
+}
+/* Button Link */
+a.dxbButton_Aqua
+{
+    color: #5689C5;
+    text-decoration: underline;
+}
+a.dxbButton_Aqua:hover
+{
+	color: #F39128;
+}
+a.dxbButton_Aqua:visited
+{
+	color: #A1A1A1;
+}
+/* Disabled */
+.dxbDisabled_Aqua
+{
+	background: #F3F3F3 url('edtButtonBackDis.gif') repeat-x top;
+	border-color: #D2D2D2;
+}
+.dxbDisabled_Aqua,
+a.dxbButton_Aqua.dxbDisabled_Aqua
+{
+	color: #C3C3C3;
+	cursor: default;
+    text-decoration: none;
+}
+/* -- FilterControl -- */
+.dxfcControl_Aqua
+{
+	font: 12px Tahoma, Geneva, sans-serif;
+	color: Black;
+	padding: 0 1em;
+}
+.dxfcTable_Aqua
+{
+	border-collapse: separate!important;
+}
+.dxfcTable_Aqua td.dxfc
+{
+	padding: 0px 0px 0px 3px;
+}
+a.dxfcPropertyName_Aqua
+{
+	white-space: nowrap!important;
+	color: Blue!important;
+}
+a.dxfcGroupType_Aqua
+{
+	white-space: nowrap!important;
+	padding: 0px 3px!important;
+	color: Red!important;
+}
+a.dxfcOperation_Aqua
+{
+	white-space: nowrap!important;
+	color: Green!important;
+}
+a.dxfcValue_Aqua
+{
+	white-space: nowrap!important;
+	color: Gray!important;
+}
+.dxfcImageButton_Aqua
+{
+	cursor: pointer;
+}
+
+.dxeMaskHint_Aqua
+{
+	background: #ffffe1 none;
+	border: 1px solid black;
+	padding: 2px 5px 3px;
+	color: Black;
+	font: 12px Tahoma, Geneva, sans-serif;
+}
+
+.dxfcControl_Aqua ul.dxfc-tree,
+.dxfcControl_Aqua .dxfc-tree ul
+{
+    list-style-type: none;
+    margin: 0;
+    overflow-y: hidden;
+    padding: 0;
+}
+
+.dxfcControl_Aqua .dxfc-tree
+{
+    width: 100%;
+}
+
+.dxfcControl_Aqua .dxfc-subnd
+{
+    margin-left: 22px;
+}
+
+.dxfcControl_Aqua .dxfc > li > table
+{
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.dxfcControl_Aqua .dxfc-elb
+{
+    background: url('fcElbow.gif') no-repeat;
+    float: left;
+    height: 21px;
+    vertical-align: top;
+    width: 26px;
+    margin-right: 0.3em;
+}
+
+.dxfcControl_Aqua .dxfc-clr
+{
+    clear: both;
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+    width: 0;
+}
+
+.dxfcControl_Aqua .dxfc-nd
+{
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 24px;
+    outline: 0 none;
+    text-decoration: none;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.dxfcControl_Aqua .dxfc-nd > tbody > tr > td > a,
+.dxfcControl_Aqua .dxfc-nd > tbody > tr > td > span,
+.dxfcControl_Aqua .dxfc-nd > tbody > tr > td > img,
+.dxfcControl_Aqua .dxfc-editor
+{
+    vertical-align: middle;
+}
+
+.dxfcControl_Aqua .dxfc-nd > tbody > tr > td > a,
+.dxfcControl_Aqua .dxfc-nd > tbody > tr > td > td,
+.dxfcControl_Aqua .dxfc-nd > tbody > tr > td > span
+{
+    padding: 0 0.1ex;
+}
+
+.dxfcControl_Aqua .dxfc-nd > tbody > tr > td > a
+{
+    line-height: 24px;
+}
+
+.dxfcControl_Aqua .dxfc-ln
+{
+    background: url('fcLine.gif') repeat-y;
+    vertical-align: top;
+}
+/* -- ProgressBar -- */
+.dxeProgressBar_Aqua
+{
+	border: 1px Solid #A3C0E8;
+	background: #f0f0f0 url('edtProgressBack.gif') repeat-x;
+	font: 12px Tahoma, Geneva, sans-serif;
+	color: Black;
+    height: 25px;
+}
+.dxeProgressBar_Aqua .dxePBMainCell,
+.dxeProgressBar_Aqua td
+{
+	padding: 0;
+}
+.dxeProgressBarIndicator_Aqua
+{
+	background: #deedff url('edtProgressIndicatorBack.gif') repeat-x;
+}
+
+/* -- DropDownWindow -- */
+.dxpcDropDown_Aqua,
+.dxeDropDownWindow_Aqua
+{
+    font: 12px Tahoma, Geneva, sans-serif;
+}
+.dxeDropDownWindow_Aqua
+{
+	background-color: White;
+	border: 1px Solid #AECAF0;
+}
+
+/*----------------- ColorTable -----------------*/
+.dxeColorIndicator_Aqua
+{
+	border: 1px solid #AECAF0;
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+}
+.dxeItemPicker_Aqua
+{
+	background-color: #F9F9F9;
+	border: 1px solid #A3C0E8;
+}
+.dxeColorTable_Aqua td.dx,
+.dxeItemPicker_Aqua td.dx
+{
+	padding: 4px;
+}
+.dxeColorTableCell_Aqua,
+.dxeItemPickerCell_Aqua
+{
+	padding: 3px;
+	cursor: pointer;
+}
+.dxeColorTableCellDiv_Aqua
+{
+	border: 1px solid #808080;
+	width: 12px;
+	height: 12px;
+	font-size: 0;
+}
+.dxeColorTableCellSelected_Aqua
+{
+	padding: 2px!important;
+	background-color: #CBCBCB;
+	border: 1px solid #888888;
+}
+.dxeColorTableCellHover_Aqua,
+.dxeItemPickerCellHover_Aqua
+{
+	padding: 2px!important;
+}
+.dxeColorTableCellHover_Aqua
+{
+	background-color: #F2F2F2;
+	border: 1px solid #888888;
+}
+.dxeItemPickerCellHover_Aqua
+{
+	background-color: #FFE7A2;
+	border: 1px solid #FFBD69;
+}
+
+/* -- Invalid Style -- */
+.dxeInvalid_Aqua
+{
+}
+.dxeInvalid_Aqua .dxeEditArea_Aqua,
+.dxeInvalid_Aqua .dxeMemoEditArea_Aqua
+{
+}
+
+/* -- Focused Style -- */
+.dxeFocused_Aqua
+{
+	border: 1px solid #6e90be;
+}
+
+.dxeFocused_Aqua.dxeTrackBar_Aqua
+{	
+	border: 0px;
+}
+
+/* -- Null Text Style -- */
+.dxeNullText_Aqua .dxeEditArea_Aqua,
+.dxeNullText_Aqua .dxeMemoEditArea_Aqua
+{
+	color: #a6a6a6;
+}
+
+/* -- Captcha -- */
+.dxcaControl_Aqua 
+{
+	font: 12px Tahoma, Geneva, sans-serif;
+}
+
+.dxcaRefreshButton_Aqua
+{
+	text-decoration: none;
+	color: #5689c5;
+}
+
+.dxcaDisabledRefreshButton_Aqua
+{
+	color: #A6A6A6;
+}
+
+.dxcaRefreshButtonCell_Aqua
+{
+}
+
+.dxcaRefreshButtonText_Aqua
+{
+	text-decoration: underline;
+}
+
+.dxcaDisabledRefreshButtonText_Aqua
+{
+	text-decoration: none;
+}
+
+.dxcaTextBoxCell_Aqua,
+.dxcaTextBoxCellNoIndent_Aqua
+{
+}
+
+.dxcaTextBoxCellNoIndent_Aqua .dxeErrorCell_Aqua
+{
+	padding-left: 0px;
+	padding-top: 4px;
+	color: Red;
+}
+
+.dxcaTextBoxLabel_Aqua
+{
+	padding-bottom: 4px;
+	display: block;
+}
+
+.dxcaLoadingPanel_Aqua
+{
+	font: 12px Tahoma, Geneva, sans-serif;
+	color: #2C4D79;
+}   
+.dxlpLoadingPanel_Aqua .dxlp-loadingImage,
+.dxlpLoadingPanelWithContent_Aqua .dxlp-loadingImage,
+.dxcaLoadingPanel_Aqua .dxlp-loadingImage,
+.dxeImage_Aqua.dxe-loadingImage
+{
+	background-image: url('../Web/Loading.gif');
+	height:18px;
+	width:18px;
+}
+
+.dxcaLoadingPanel_Aqua td.dx
+{
+	white-space: nowrap;
+	text-align: center;
+	padding: 10px 20px 8px;
+}
+
+.dxpcLite_Aqua .dxHFBPS
+{
+    width: 10px;
+}
+
+.dxeTextBox_Aqua,
+.dxeButtonEdit_Aqua,
+.dxeIRadioButton_Aqua,
+.dxeRadioButtonList_Aqua,
+.dxeCheckBoxList_Aqua
+{
+    cursor: default;
+}
+
+/* Removes flicking in iOS Safari*/
+.dxeTrackBar_Aqua, 
+.dxeIRadioButton_Aqua, 
+.dxeButtonEdit_Aqua, 
+.dxeTextBox_Aqua, 
+.dxeRadioButtonList_Aqua, 
+.dxeCheckBoxList_Aqua, 
+.dxeMemo_Aqua, 
+.dxeListBox_Aqua, 
+.dxeCalendar_Aqua, 
+.dxeColorTable_Aqua
+{
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+/* ASPxCololrEdit */
+.dxcpParametersCellSys .dxcpWebColorInput_Aqua
+{
+	float: right;
+	margin-top: 40px;
+}
+.dxcpColorParameterMainDiv_Aqua
+{
+	padding: 0px 0 4px 9px;
+	width: 90px;
+	text-align: right;
+}
+.dxeCustomColorButton_Aqua
+{
+    padding-top: 2px;
+    padding-bottom: 2px;
+	margin: 3px 7px;
+	cursor: pointer;
+}
+.dxcpCurrentColor_Aqua, 
+.dxcpSavedColor_Aqua
+{
+	height: 35px;
+}
+.dxcpCurrentAndSaved_Aqua
+{
+	width: 65px;
+	margin: 34px 0px 0px auto;
+	cursor: pointer;
+}
+.dxeColorTablesMainDiv_Aqua,
+.dxeColorSelectorMainDiv_Aqua
+{
+	background-color: #FFFFFF;
+}
+.dxeColorSelectorMainDiv_Aqua
+{
+	padding: 7px;
+}
+.dxcpColorArea_Aqua,
+.dxcpHueAreaImage_Aqua,
+.dxcpCurrentAndSaved_Aqua,
+.dxeColorTablesMainDiv_Aqua,
+.dxeColorSelectorMainDiv_Aqua,
+.dxcpParametersCell_Aqua input
+{
+	border: 1px Solid #AECAF0;
+}
+.dxeButtonsPanelDiv_Aqua
+{
+	margin-top: 15px;
+	text-align: right;
+}
+.dxeButtonsPanelDiv_Aqua input
+{
+	min-width: 60px;
+	margin-left: 10px;
+}
+
+/* -- ASPxTokenBox -- */
+input.dxeTokenBoxInput_Aqua[type="text"] {
+	display: inline-block;
+	float: left;
+	width: 30px;
+	outline: none;
+	margin: 1px;
+	padding: 1px;
+}
+.dxeToken_Aqua {
+    border: 1px solid #a3c0e8;
+	border-radius: 2px;
+    display: inline-block;
+	float: left;
+	min-width: 30px;
+	margin-right: 1px;
+	margin-bottom: 1px;
+}
+.dxeTokenText_Aqua, .dxeTokenRemoveButton_Aqua {
+	display: block;
+	float: left;
+}
+.dxeTokenText_Aqua {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-left: 4px;
+}
+.dxeTokenRemoveButton_Aqua {
+	cursor: pointer;
+}
+.dxeToken_Aqua {
+	background: #e2f0ff url('edtTokenBoxTokenBackground.png') repeat-x top;
+}
+.dxFirefox input.dxeTokenBoxInput_Aqua[type="text"]
+{
+	padding: 0;
+	margin: 1px;
+}
+.dxFirefox .dxeTokenText_Aqua
+{
+	margin-top: -1px;
+	margin-bottom: -1px;
+}
+
+/* ASPxPictureEdit */
+.dxpePreviewContainer_Aqua
+{
+    position: relative;
+}
+.dxpeCommandPanel_Aqua
+{
+    background-color: #333333;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    height: 32px;
+    position: absolute;
+}
+.dxpeBottomCommandPanel_Aqua
+{
+    width: 100%;
+    bottom: 0;
+}
+
+.dxpeTopCommandPanel_Aqua
+{
+    width: 100%;      
+    top: 0;    
+}
+.dxpeCommandPanelDeleteButton_Aqua, 
+.dxpeCommandPanelOpenDialogButton_Aqua
+{    
+    cursor: pointer;
+    display: inline-block;
+}
+.dxpeCommandPanelButtonsWrapper_Aqua
+{
+    position: absolute;
+}
+.dxpeCommandPanelButtonsWrapperLeft_Aqua
+{
+    left: 0;
+}
+.dxpeCommandPanelButtonsWrapperCenter_Aqua
+{
+    left: 50%;
+    margin-left: -32px;
+}
+.dxpeCommandPanelButtonsWrapperRight_Aqua
+{
+    right: 0;
+}
+.dxpeCommandPanelDeleteButtonHover_Aqua,
+.dxpeCommandPanelDeleteButtonPressed_Aqua,
+.dxpeCommandPanelOpenDialogButtonHover_Aqua,
+.dxpeCommandPanelOpenDialogButtonPressed_Aqua
+{
+}
+.dxpeCommandPanelDeleteButtonDisabled_Aqua,
+.dxpeCommandPanelOpenDialogButtonDisabled_Aqua
+{
+}
+.dxpeDropZone_Aqua
+{
+    background-color: gray;
+}
+.dxpePlaceHolder_Aqua
+{
+    background-color: lightgray;
+    z-index: -1;
+}
+.dxpeTextPanelContainer_Aqua
+{
+    height: 100%;
+    font-size: 200%;
+    text-align: center;
+    width: 100%;
+}
+.dxpeTextPanel_Aqua
+{
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+/* Editor caption */
+.dxeCaptionCell_Aqua
+{
+    font: 12px Tahoma, Geneva, sans-serif;
+    white-space: nowrap;
+    line-height: 16px;
+    height: 100%;
+}
+.dxeRoot_Aqua
+{
+}
+.dxeCaption_Aqua
+{
+}
+.dxeCaptionCell_Aqua.dxeCaptionVATSys.dxeTextEditCTypeSys
+{
+    padding-top: 3px;
+}
+.dxeCaptionCell_Aqua.dxeCaptionVATSys.dxeCheckBoxCTypeSys
+{
+    padding-top: 3px;
+}
+.dxeCaptionCell_Aqua.dxeCaptionVATSys.dxeRadioButtonCTypeSys
+{
+    padding-top: 4px;
+}
+.dxeCaptionCell_Aqua.dxeCaptionVATSys.dxeCheckBoxListCTypeSys
+{
+    padding-top: 11px;
+}
+.dxeCaptionCell_Aqua.dxeCaptionVATSys.dxeRadioButtonListCTypeSys
+{
+    padding-top: 11px;
+}
+.dxeCaptionCell_Aqua.dxeCaptionVATSys.dxeListBoxCTypeSys
+{
+    padding-top: 5px;
+}
+.dxeCaptionCell_Aqua.dxeCaptionVATSys.dxeTrackBarCTypeSys
+{
+    padding-top: 6px;
+}
+.dxeCaptionCell_Aqua.dxeCaptionVATSys.dxeProgressBarCTypeSys
+{
+    padding-top: 4px;
+}
+.dxeCaptionCell_Aqua.dxeCaptionVATSys.dxeMemoCTypeSys
+{
+    padding-top: 3px;
+}
+.dxeCaptionCell_Aqua.dxeCaptionVATSys.dxeCustomCTypeSys
+{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.dxFirefox .dxeCaptionCell_Aqua.dxeCaptionVATSys.dxeListBoxCTypeSys
+{
+	padding-top: 6px;
+}
+.dxFirefox .dxeCaptionCell_Aqua.dxeCaptionVATSys.dxeProgressBarCTypeSys
+{
+    padding-top: 5px;
+}
+
+.dxWebKitFamily .dxeCaptionCell_Aqua.dxeCaptionVATSys.dxeListBoxCTypeSys
+{
+	padding-top: 6px;
+}
+
+/* Safari */
+.dxeCaptionCellSafariSys.dxeCaptionCell_Aqua.dxeCaptionVATSys.dxeListBoxCTypeSys
+{
+    padding-top: 5px;
+}
+
+.dxeRequiredMark_Aqua {
+    color: green;
+    font-style: normal;
+}
+
+.dxeOptionalMark_Aqua {
+    color: gray;
+    font-style: normal;
+}
+
+/* Out of range warning*/
+.dxeOutOfRWarn_Aqua {
+    font: 12px Tahoma, Geneva, sans-serif;
+    padding: 3px 8px 4px 8px;
+    display: none;
+    position: absolute;
+    background-color: white;
+    color: red;
+    border-radius: 3px;
+    z-index: 41998;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 1px 3px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.1) 0 1px 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #A8A8A8;
+}
+.dxeOutOfRWarnRight_Aqua {
+    margin-left: 10px;
+}
+.dxeOutOfRWarnBottom_Aqua {
+    margin-top: 10px;
+}

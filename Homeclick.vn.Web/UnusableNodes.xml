@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Views Id="Views">
+    <DetailView Id="Floor_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="Rooms_Group" Direction="Vertical" RelativeSize="62.450592885375492">
+            <LayoutItem Id="Rooms" SizeConstraintsType="Default" RelativeSize="100" />
+          </LayoutGroup>
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Floor">
+              <LayoutGroup Id="Floor_col2">
+                <LayoutItem Id="Department" SizeConstraintsType="Default" Index="1" RelativeSize="63.636363636363633" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="Product_DetailView">
+      <Layout Id="Layout">
+        <LayoutGroup Id="Main">
+          <LayoutGroup Id="SimpleEditors">
+            <LayoutGroup Id="Product">
+              <LayoutGroup Id="Product_col2">
+                <LayoutItem Id="User" ViewItem="User" />
+                <LayoutItem Id="Product_type" ViewItem="Product_type" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs">
+            <LayoutGroup Id="Product_details" RelativeSize="100">
+              <LayoutItem Id="Product_details" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Categories" RelativeSize="100">
+              <LayoutItem Id="Categories" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Tags" RelativeSize="100">
+              <LayoutItem Id="Tags" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Carts" RelativeSize="100">
+              <LayoutItem Id="Carts" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Wishlists" RelativeSize="100">
+              <LayoutItem Id="Wishlists" SizeConstraintsType="Default" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+  </Views>
+</Application>

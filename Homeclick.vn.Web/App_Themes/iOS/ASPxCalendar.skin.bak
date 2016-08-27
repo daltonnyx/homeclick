@@ -1,0 +1,8 @@
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Data" Assembly="DevExpress.Data.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Web" Assembly="DevExpress.Web.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+
+<dx:ASPxCalendar runat="server" CssFilePath="~/App_Themes/iOS/{0}/styles.css" CssPostfix="iOS"	SpriteCssFilePath="~/App_Themes/iOS/{0}/sprite.css">
+	<LoadingPanelStyle ImageSpacing="5" />
+</dx:ASPxCalendar>
+
+

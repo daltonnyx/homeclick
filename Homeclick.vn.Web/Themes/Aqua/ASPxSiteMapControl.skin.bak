@@ -1,0 +1,43 @@
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Data" Assembly="DevExpress.Data.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Web" Assembly="DevExpress.Web.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+
+<dx:ASPxSiteMapControl runat="server" CssFilePath="{0}/styles.css" 
+    SpriteCssFilePath="{0}/sprite.css" CssPostfix="Aqua">
+    <DefaultLevelProperties ImageSpacing="10px" NodeSpacing="8px">
+        <ChildNodesPaddings PaddingBottom="0px" PaddingLeft="16px" PaddingTop="8px" />
+        <NodePaddings PaddingRight="60px" />
+        <CurrentNodeStyle Font-Bold="True">
+        </CurrentNodeStyle>
+    </DefaultLevelProperties>
+    <ColumnSeparatorStyle Width="8px">
+        <Paddings Padding="0px"/>
+    </ColumnSeparatorStyle>    
+    <LevelProperties>
+        <dx:LevelProperties NodeSpacing="20px" Font-Bold="False">
+            <NodePaddings PaddingLeft="7px" PaddingBottom="1px" />
+            <ChildNodesPaddings PaddingBottom="10px" PaddingLeft="12px" PaddingTop="17px" />
+        </dx:LevelProperties>        
+        <dx:LevelProperties>
+			<Image>
+				<SpriteProperties CssClass="dxWeb_smBullet_Aqua"></SpriteProperties>
+			</Image>
+        </dx:LevelProperties>
+        <dx:LevelProperties>
+			<Image>
+				<SpriteProperties CssClass="dxWeb_smBullet_Aqua"></SpriteProperties>
+			</Image>
+        </dx:LevelProperties>
+        <dx:LevelProperties>
+			<Image>
+				<SpriteProperties CssClass="dxWeb_smBullet_Aqua"></SpriteProperties>
+			</Image>		
+        </dx:LevelProperties>
+        <dx:LevelProperties>
+			<Image>
+				<SpriteProperties CssClass="dxWeb_smBullet_Aqua"></SpriteProperties>
+			</Image>		
+        </dx:LevelProperties>
+    </LevelProperties>
+</dx:ASPxSiteMapControl>
+
+

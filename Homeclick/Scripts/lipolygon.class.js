@@ -9,12 +9,14 @@ fabric.LiPolygon = fabric.util.createClass(fabric.Polygon,{ //Need to assign cla
   lineWidths: null, //Define separate width for each line,
   doors: null,
   points: null,
+  originalPoints: null,
   isClosed: true,
   minX: 0,
   minY: 0,
   initialize: function(points, options, lineWidths) {
     options = options || { };
-    this.points = points || [ ];
+    this.points = points || [];
+    this.originalPoints = JSON.parse(JSON.stringify(points)) || [];
     this.lineWidths = lineWidths || [ ];
     //this.pointColors = pointColors || [ ];
     this.doors = [];
@@ -169,8 +171,9 @@ fabric.LiPolygon = fabric.util.createClass(fabric.Polygon,{ //Need to assign cla
       this.callSuper('_setStrokeStyles',ctx);
   },
   toObject: function(propertiesToInclude){ // Keep fix this shit
-    return fabric.util.object.extend(this.callSuper('toObject',propertiesToInclude), {
-      lineWidths: this.get('lineWidths')
+      return fabric.util.object.extend(this.callSuper('toObject', propertiesToInclude), {
+        originalPoints: this.get('originalPoints'),
+        lineWidths: this.get('lineWidths')
     });
   },
   calcArea: function() {

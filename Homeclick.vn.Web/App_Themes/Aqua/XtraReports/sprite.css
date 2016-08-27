@@ -1,0 +1,195 @@
+.dxXtraReports_BtnFirstPage_Aqua,
+.dxXtraReports_BtnFirstPageDisabled_Aqua,
+.dxXtraReports_BtnLastPage_Aqua,
+.dxXtraReports_BtnLastPageDisabled_Aqua,
+.dxXtraReports_BtnNextPage_Aqua,
+.dxXtraReports_BtnNextPageDisabled_Aqua,
+.dxXtraReports_BtnPrevPage_Aqua,
+.dxXtraReports_BtnPrevPageDisabled_Aqua,
+.dxXtraReports_BtnPrint_Aqua,
+.dxXtraReports_BtnPrintDisabled_Aqua,
+.dxXtraReports_BtnPrintPage_Aqua,
+.dxXtraReports_BtnPrintPageDisabled_Aqua,
+.dxXtraReports_BtnSave_Aqua,
+.dxXtraReports_BtnSaveDisabled_Aqua,
+.dxXtraReports_BtnSaveWindow_Aqua,
+.dxXtraReports_BtnSaveWindowDisabled_Aqua,
+.dxXtraReports_BtnSearch_Aqua,
+.dxXtraReports_BtnSearchDisabled_Aqua,
+.dxXtraReports_PageBorder_blc_Aqua,
+.dxXtraReports_PageBorder_brc_Aqua,
+.dxXtraReports_PageBorder_tlc_Aqua,
+.dxXtraReports_PageBorder_trc_Aqua
+{
+    background-image: url('sprite.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+.dxXtraReports_BtnFirstPage_Aqua
+{
+    background-position: 0px 0px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnFirstPageDisabled_Aqua
+{
+    background-position: 0px -289px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnLastPage_Aqua
+{
+    background-position: 0px -85px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnLastPageDisabled_Aqua
+{
+    background-position: 0px -51px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnNextPage_Aqua
+{
+    background-position: 0px -255px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnNextPageDisabled_Aqua
+{
+    background-position: 0px -119px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnPrevPage_Aqua
+{
+    background-position: 0px -136px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnPrevPageDisabled_Aqua
+{
+    background-position: 0px -204px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnPrint_Aqua
+{
+    background-position: 0px -102px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnPrintDisabled_Aqua
+{
+    background-position: 0px -272px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnPrintPage_Aqua
+{
+    background-position: 0px -34px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnPrintPageDisabled_Aqua
+{
+    background-position: 0px -68px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnSave_Aqua
+{
+    background-position: 0px -170px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnSaveDisabled_Aqua
+{
+    background-position: 0px -187px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnSaveWindow_Aqua
+{
+    background-position: 0px -153px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnSaveWindowDisabled_Aqua
+{
+    background-position: 0px -221px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnSearch_Aqua
+{
+    background-position: 0px -17px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_BtnSearchDisabled_Aqua
+{
+    background-position: 0px -238px;
+    width: 16px;
+    height: 16px;
+}
+.dxXtraReports_PageBorder_blc_Aqua
+{
+    background-position: 0px -306px;
+    width: 10px;
+    height: 10px;
+}
+.dxXtraReports_PageBorder_brc_Aqua
+{
+    background-position: 0px -317px;
+    width: 10px;
+    height: 10px;
+}
+.dxXtraReports_PageBorder_tlc_Aqua
+{
+    background-position: 0px -328px;
+    width: 10px;
+    height: 10px;
+}
+.dxXtraReports_PageBorder_trc_Aqua
+{
+    background-position: 0px -339px;
+    width: 10px;
+    height: 10px;
+}
+.dxXtraReports_PageBorder_t_Aqua,
+.dxXtraReports_PageBorder_l_Aqua,
+.dxXtraReports_PageBorder_r_Aqua,
+.dxXtraReports_PageBorder_b_Aqua {
+    padding: 0px;
+    background-color: transparent;
+}
+
+.dxXtraReports_PageBorder_t_Aqua {
+    background-image: url('pageTopBorder.png');
+    background-repeat: repeat-x;
+    width: 1px;
+    height: 10px;
+}
+
+.dxXtraReports_PageBorder_l_Aqua {
+    background-image: url('pageLeftBorder.png');
+    background-repeat: repeat-y;
+    width: 10px;
+    height: 1px;
+}
+
+.dxXtraReports_PageBorder_r_Aqua {
+    background-image: url('pageRightBorder.png');
+    background-repeat: repeat-y;
+    width: 10px;
+    height: 1px;
+}
+
+.dxXtraReports_PageBorder_b_Aqua {
+    background-image: url('pageBottomBorder.png');
+    background-repeat: repeat-x;
+    width: 1px;
+    height: 10px;
+}
+

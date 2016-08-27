@@ -14,7 +14,8 @@ fabric.GroupLiPolygon = fabric.util.createClass(fabric.Group,{
 	    this.callSuper('initialize',this._objects, options);
 	},
 	toObject: function(propertiesToInclude){ // Keep fix this shit
-		propertiesToInclude.push('type');
+	    propertiesToInclude.push('type');
+	    propertiesToInclude.push('childOptions');
     return fabric.util.object.extend(this.callSuper('toObject',propertiesToInclude), {
 
     });
@@ -307,17 +308,18 @@ fabric.GroupLiPolygon.fromURL = function(url, options, callback) {
 
 		}
 		applyMatrixTransform(polyArr,[5.5840655,0,0,5.5840655,-1387.2827,-1681.9091]);
-		polWall = new fabric.GroupLiPolygon(polyArr,options,[0.00000001]);
+		polWall = new fabric.GroupLiPolygon(polyArr, options, [0.00000001]);
+		polWall.childOptions = options;
 		svgData.removeChild(boundary);
 		var xmlSerializer = new XMLSerializer();
 		fabric.loadSVGFromString(xmlSerializer.serializeToString(svgData),function(objects,options){
-			var obj = fabric.util.groupSVGElements(objects,options);
+		    var obj = fabric.util.groupSVGElements(objects, options);
 			 obj.scale(1).cloneAsImage(function(clone){
-				//polWall.add(obj);
+			        clone.origin = obj.toObject();
 					polWall.add(clone);
 					polWall._objects[polWall._objects.length - 1].set({
 						originX: "left",
-		        originY: "top",
+		                originY: "top",
 						left: clone.getWidth() / 2 * -1 - 8,
 						top: clone.getHeight() / 2 * -1 + 3
 					});
@@ -342,25 +344,34 @@ fabric.GroupLiPolygon.fromURL = function(url, options, callback) {
 	xhr.send();
 }
 
-fabric.GroupLiPolygon.fromObject = function(object){
+fabric.GroupLiPolygon.fromObject = function (object, callback) {
 		var pointArr = [];
 		var bg;
 		object.objects.forEach(function(el){
 			if(el.type == 'liPolygon')
-				pointArr.push(el.points);
-			else
-				bg = el;
+			    pointArr.push(el.originalPoints);
+			else {
+			    fabric.PathGroup.fromObject(el.origin, function (originBg) {
+			        originBg.scale(1).cloneAsImage(function (clone) {
+			            clone.origin = originBg.toObject();
+			            clone.set({
+			                originX: "left",
+			                originY: "top",
+			                left: clone.getWidth() / 2 * -1 - 8,
+			                top: clone.getHeight() / 2 * -1 + 3
+			            });
+			            bg = clone;
+			            if (pl != undefined && pl.type == "GroupLiPolygon")
+			                pl._objects.push(bg);
+			        });
+			    });
+			}
 		});
-
-    var pl = new fabric.GroupLiPolygon(pointArr, object.objects[0], [1]);
-		//pl.add(bg);
-		// pl._objects[pl._objects.length - 1].set({
-		// 	originX: "left",
-		// 	originY: "top",
-		// 	left: clone.getWidth() / 2 * -1 - 8,
-		// 	top: clone.getHeight() / 2 * -1 + 3
-		// });
+		var pl = new fabric.GroupLiPolygon(pointArr, object.childOptions, [1]);
+		pl.cart = object.cart;
 		return pl;
+        
+		
 };
 
 fabric.Canvas.getHistory = function(savedCanvas, canvas) {

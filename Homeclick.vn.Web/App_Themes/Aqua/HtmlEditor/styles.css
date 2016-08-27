@@ -1,0 +1,377 @@
+/* ----------------- Main ----------------- */
+/*Loading Panel*/
+.dxheLoadingDiv_Aqua
+{
+    background: white;
+    opacity: 0.85;
+    filter: alpha(opacity=85);
+}
+.dxheLoadingPanel_Aqua,
+.dxheLoadingPanelWithContent_Aqua 
+{
+	font: 12px Tahoma, Geneva, sans-serif;
+	color: #2C4D79;
+	background-color: White;
+	border: 1px solid #67A2C6;
+}
+.dxheLoadingPanel_Aqua  td.dx,
+.dxheLoadingPanelWithContent_Aqua td.dx
+{
+	white-space: nowrap;
+	text-align: center;
+	padding: 10px 20px 8px;
+}
+.dxheLoadingPanel_Aqua .dxlp-loadingImage,
+.dxheLoadingPanelWithContent_Aqua .dxlp-loadingImage
+{
+	background-image: url('../Web/Loading.gif');
+	height:18px;
+	width:18px;
+}
+
+.dxheControl_Aqua
+{
+    border: Solid 1px #A3C0E8;
+    font: 12px Tahoma, Geneva, sans-serif;
+}
+
+/* Area */
+.dxheContentArea_Aqua
+{
+    padding: 4px;
+	padding-bottom: 6px;
+    background-color: #BEDAFF;
+}
+.dxheErrorFrame_Aqua
+{
+    font: 12px Tahoma, Geneva, sans-serif;
+    color: #D00707;
+    background-color: #FBC7C7;
+    border-bottom: solid 1px #DEC0C0;
+}
+.dxheControl_Aqua .dxeMemo_Aqua .dxheErrorFrame_Aqua .dxhe,
+.dxheControl_Aqua.dxhe-rtl .dxeMemo_Aqua .dxheErrorFrame_Aqua .dxhe,
+.dxheErrorFrame_Aqua .dxhe {
+    padding: 5px;
+}
+.dxheControl_Aqua .dxeMemo_Aqua .dxheErrorFrame_Aqua .dxhe td,
+.dxheControl_Aqua.dxhe-rtl .dxeMemo_Aqua .dxheErrorFrame_Aqua .dxhe td,
+.dxheErrorFrame_Aqua .dxhe td {
+    padding: 0px;
+}
+.dxheErrorFrame_Aqua .dxheErrorFrameCloseButton_Aqua {
+    cursor: pointer;
+}
+.dxheViewArea_Aqua
+{
+    border: Solid 1px #A3C0E8;    
+}
+.dxheContentArea_Aqua td.dxheViewArea_Aqua {
+    line-height: 0;
+}
+
+.dxheDesignViewArea_Aqua,
+.dxhePreviewArea_Aqua 
+{
+    background-color: #FFFFFF;
+}
+.dxheControl_Aqua .dxheHtmlViewArea_Aqua,
+body.dxheDesignViewArea_Aqua,
+body.dxhePreviewArea_Aqua 
+{
+    margin: 0px;
+    background-image: none;
+    font-size: smaller;
+    font: 12px Arial, Helvetica, sans-serif;
+    background-color: #FFFFFF;
+}
+.dxheControl_Aqua .dxeMemo_Aqua.dxheHtmlViewArea_Aqua .dxeMemoEditArea_Aqua,
+body.dxheDesignViewArea_Aqua,
+body.dxhePreviewArea_Aqua
+{
+    padding: 15px 20px 0 20px;
+}
+.dxheControl_Aqua .dxeMemo_Aqua.dxheHtmlViewArea_Aqua td
+{
+    padding: 0 40px 0 0;
+}
+.dxheControl_Aqua.dxhe-rtl .dxheContentArea_Aqua .dxeMemo_Aqua.dxheHtmlViewArea_Aqua td
+{
+    padding: 0 0 0 40px;
+}
+.dxheControl_Aqua .dxeMemo_Aqua textarea 
+{
+	resize:none;
+}
+.dxheControl_Aqua td.dxheDesignViewArea_Aqua .dxm-main.dxmtb 
+{
+    border: 1px solid #A3C0E8;
+}
+.dxheControl_Aqua td.dxheDesignViewArea_Aqua
+{
+    position: relative;
+}
+td.dxheDesignViewArea_Aqua .dxmLite_Aqua {
+    position: absolute;
+    right: 0;
+    padding-top: 5px;
+    padding-right: 22px;
+}
+td.dxheDesignViewArea_Aqua .dxmLite_Aqua.dxm-rtl {
+    right: inherit;
+    padding-right: 0px;
+    padding-left: 5px;
+}
+.dxheViewArea_Aqua img.dxheAudio
+{
+	background-image: url('dxheAudio.png');
+}
+.dxheViewArea_Aqua img.dxheFlash
+{
+	background-image: url('dxheFlash.png');
+}
+.dxheViewArea_Aqua img.dxheVideo
+{
+	background-image: url('dxheVideo.png');
+}
+.dxheViewArea_Aqua img.dxheYoutube
+{
+	background-image: url('dxheYoutube.png');
+}
+.dxheViewArea_Aqua img.dxheNotSupported
+{
+	background-image: url('dxheNotSupported.png');
+}
+.dxheViewArea_Aqua img.dxheAudio,
+.dxheViewArea_Aqua img.dxheFlash,
+.dxheViewArea_Aqua img.dxheVideo,
+.dxheViewArea_Aqua img.dxheYoutube,
+.dxheViewArea_Aqua img.dxheNotSupported
+{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #cfcfcf;
+    border: 1px dotted #FFFFFF;
+    opacity: 0.8;
+}
+.dxheViewArea_Aqua .dxhePlaceholder 
+{
+    cursor: default;
+    white-space: nowrap;
+}
+.dxheViewArea_Aqua.dxheDesignViewArea_Aqua .dxheSelected
+{
+    background-color: #D6E7FE;
+}
+.dxhe-insertPlaceholder .dxeListBox_Aqua.dxeFocused_Aqua
+{
+    border: 1px solid #8BB6EF;
+}
+.dxpc-contentWrapper .dxflFormLayout_Aqua.dxhe-insertPlaceholder .dxflGroup_Aqua .dxflGroupBox_Aqua
+{
+    padding: 0 0 6px 0;
+    margin: 0;
+}
+.dxpc-contentWrapper .dxflFormLayout_Aqua.dxhe-insertPlaceholder .dxflGroup_Aqua .dxflGroupBox_Aqua .dxflListBoxItemSys
+{
+    padding-top: 0;
+}
+.dxhe-insertPlaceholder .dxflGroup_Aqua .dxhe-dialogLI.dxhe-dialogButtonsContainer
+{
+    padding-top: 10px;
+}
+.dxhe-insertPlaceholder .dxeListBox_Aqua,
+.dxhe-insertPlaceholder .dxeListBox_Aqua .dxlbd
+{
+    width: 220px;
+    height: 223px;
+}
+/* Element appearance in DesignView */
+body.dxheDesignViewArea_Aqua table.dxEmptyBorderTable,
+body.dxheDesignViewArea_Aqua table.dxEmptyBorderTable td {
+    border:1px dotted gray;
+}
+@media print 
+{
+	body.dxheDesignViewArea_Aqua table.dxEmptyBorderTable,
+	body.dxheDesignViewArea_Aqua table.dxEmptyBorderTable td {
+		border:0px;
+	}
+}
+body.dxheDesignViewArea_Aqua
+{
+    word-wrap: inherit;
+}
+body.dxheDesignViewArea_Aqua pre
+{
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+/* Status Bar */
+.dxheStatusBar_Aqua 
+{
+}
+.dxheStatusBarTab_Aqua 
+{    
+}
+.dxHtmlEditor_heSizeGrip_Aqua
+{
+    cursor: se-resize;
+}
+.dxHtmlEditor_heSizeGripRtl_Aqua
+{
+    cursor: ne-resize;
+}
+.dxheSizeGripContainer_Aqua 
+{
+    width: 100%;
+    text-align: right;
+    font-size: 0;
+    margin-top: -12px;
+}
+.dxheControl_Aqua.dxhe-rtl .dxheSizeGripContainer_Aqua
+{
+	text-align: left;
+}
+/* ----------------- Dialog Forms ----------------- */
+.dxpcLite_Aqua .dxheDlgFooter,
+.dxpcLite_Aqua .dxheCustomDialog_Aqua .dxhecd-Buttons
+{
+	background-color: #DBEBFF;
+	border-top: 1px #C1DBFA solid;
+	padding: 10px 11px;
+	text-align: right;
+}
+.dxpcLite_Aqua.dxRtl .dxheDlgFooter,
+.dxpcLite_Aqua.dxRtl .dxheCustomDialog_Aqua .dxhecd-Buttons
+{
+    text-align: left;
+}
+.dxpcLite_Aqua .dxheDlgFooterBtn
+{
+    width: 80px;
+    margin-left: 8px;
+}
+.dxpcLite_Aqua.dxRtl .dxheDlgFooterBtn
+{
+    margin-right: 8px;
+    margin-left: 0;
+}
+.dxpcLite_Aqua .dxheDlgPasteFromWordForm .dxheDlgPasteContainerCell td
+{
+	border: Solid 1px #AECAF0;
+}
+/*----------------- Toolbars -----------------*/
+.dxtbSpacing_Aqua
+{
+	height: 1px;
+}
+.dxtbControl_Aqua 
+{
+	color: black;
+	background-color: #AECAF0;
+    border-bottom: Solid 1px #A3C0E8;
+}
+.dxtbControl_Aqua td.dxmMenu_Aqua
+{
+	border: 0px;
+}
+.dxtbComboBoxMenuItem_Aqua
+{
+    padding: 3px 2px;
+}
+.dxheControl_Aqua .dxrControl_Aqua
+{
+    background-color: #BEDAFF;
+}
+.dxheControl_Aqua .dxrControl_Aqua .dxtcLite_Aqua .dxtc-stripContainer .dxtc-spacer,
+.dxheControl_Aqua .dxrControl_Aqua .dxtcLite_Aqua.dxtc-top .dxtc-leftIndent
+{
+    width: 3px;
+}
+.dxheControl_Aqua .dxrControl_Aqua .dxr-tabContent
+{
+    border-width: 0 0 1px 0;
+}
+.dxheControl_Aqua .dxrControl_Aqua .dxr-minBtn
+{
+    padding-right: 8px;
+}
+.dxheControl_Aqua .dxtbControl_Aqua.dxtbr_Aqua,
+.dxheControl_Aqua .dxrControl_Aqua .dxpc-mainDiv.dxr-minPopup
+{
+    border: 0;
+}
+
+/* Toolbars Lightweight Mode */
+.dxtbControl_Aqua .dxmLite_Aqua .dxm-main.dxmtb 
+{
+    border-width: 0px;
+}
+.dxmLite_Aqua .dxhetipControl_Aqua img
+{
+	vertical-align: top;
+}
+.dxtbControl_Aqua .dxm-horizontal.dxmtb .dxm-dropDownMode .dxtcbColorDiv_Aqua
+{
+    margin-bottom: -1px;
+}
+
+/* ToolbarColorButton */
+.dxtcbControl_Aqua { }
+.dxtcbColorDiv_Aqua
+{
+	width: 16px;
+	height: 4px;
+	font-size: 0;
+	background-color: Red;
+    margin-top: -3px;
+}
+
+/*----------------- RoundPanel -----------------*/
+.dxheRP.dxrpControl_Aqua .dxrpcontent
+{
+    padding: 11px !important;
+}
+
+
+/* InsertMediaDialogs */
+.dxflFormLayout_Aqua .dxhe-dialogSettings 
+{
+    width: 250px;
+    padding-left: 16px;
+}
+.dxflFormLayout_Aqua.dxhe-mediaDialog 
+{
+    width: 700px;
+}
+.dxflFormLayout_Aqua.dxhe-mediaDialog .dxic-control, 
+.dxflFormLayout_Aqua.dxhe-mediaDialog .dxhe-dialogSettings 
+{
+    height: 450px;
+}
+div.dxflFormLayout_Aqua.dxhe-dialog table.dxhe-dialogLG
+{
+    padding-left: 32px;
+    padding-right: 32px;
+}
+div.dxflFormLayout_Aqua.dxhe-dialog > table.dxhe-dialogLG.dxflGroupSys,
+div.dxflFormLayout_Aqua.dxhe-dialog .dxhe-dialogButtonsContainer  
+{
+    padding: 16px;
+}
+div.dxflFormLayout_Aqua.dxhe-mediaDialogStyleSettings > table.dxhe-dialogLG.dxflGroupSys,
+div.dxflFormLayout_Aqua.dxhe-mediaDialogMainSettings > table.dxhe-dialogLG.dxflGroupSys
+{
+    padding: 32px;
+}
+/* tag inspector */
+.dxheDesignViewArea_Aqua .dxhe-tiSelection 
+{
+    box-sizing: border-box;
+    position: absolute;
+    border: 1px solid #2255FF;
+    background-color: #0066FF;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+    opacity: 0.3;
+}

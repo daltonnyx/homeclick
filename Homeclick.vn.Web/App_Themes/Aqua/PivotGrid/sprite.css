@@ -1,0 +1,262 @@
+.dxPivotGrid_CTNAttribute,
+.dxPivotGrid_CTNCalculatedMeasure,
+.dxPivotGrid_CTNDimension,
+.dxPivotGrid_CTNFolderClosed,
+.dxPivotGrid_CTNFolderOpen,
+.dxPivotGrid_CTNHierarchy,
+.dxPivotGrid_CTNKpi,
+.dxPivotGrid_CTNMeasure,
+.dxPivotGrid_FLBottomPanelOnly1by4_Aqua,
+.dxPivotGrid_FLBottomPanelOnly2by2_Aqua,
+.dxPivotGrid_FLButton_Aqua,
+.dxPivotGrid_FLColumnAreaHeaders_Aqua,
+.dxPivotGrid_FLDataAreaHeaders_Aqua,
+.dxPivotGrid_FLFieldList_Aqua,
+.dxPivotGrid_FLFilterAreaHeaders_Aqua,
+.dxPivotGrid_FLRowAreaHeaders_Aqua,
+.dxPivotGrid_FLStackedDefault_Aqua,
+.dxPivotGrid_FLStackedSideBySide_Aqua,
+.dxPivotGrid_FLTopPanelOnly_Aqua,
+.dxPivotGrid_pgCollapsedButton_Aqua,
+.dxPivotGrid_pgCustomizationFormCloseButton_Aqua,
+.dxPivotGrid_pgDataHeaders_Aqua,
+.dxPivotGrid_pgDragArrowDown_Aqua,
+.dxPivotGrid_pgDragArrowLeft_Aqua,
+.dxPivotGrid_pgDragArrowRight_Aqua,
+.dxPivotGrid_pgDragArrowUp_Aqua,
+.dxPivotGrid_pgDragHideField_Aqua,
+.dxPivotGrid_pgExpandedButton_Aqua,
+.dxPivotGrid_pgFilterButton_Aqua,
+.dxPivotGrid_pgFilterButtonActive_Aqua,
+.dxPivotGrid_pgFilterResizer_Aqua,
+.dxPivotGrid_pgGroupSeparator_Aqua,
+.dxPivotGrid_pgPrefilterButton_Aqua,
+.dxPivotGrid_pgSortByColumn_Aqua,
+.dxPivotGrid_pgSortDownButton_Aqua,
+.dxPivotGrid_pgSortUpButton_Aqua
+{
+    background-image: url('sprite.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+.dxPivotGrid_CTNAttribute
+{
+    background-position: -77px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxPivotGrid_CTNCalculatedMeasure
+{
+    background-position: -51px -103px;
+    width: 16px;
+    height: 16px;
+}
+.dxPivotGrid_CTNDimension
+{
+    background-position: -68px -103px;
+    width: 16px;
+    height: 16px;
+}
+.dxPivotGrid_CTNFolderClosed
+{
+    background-position: -34px -86px;
+    width: 16px;
+    height: 16px;
+}
+.dxPivotGrid_CTNFolderOpen
+{
+    background-position: -17px -86px;
+    width: 16px;
+    height: 16px;
+}
+.dxPivotGrid_CTNHierarchy
+{
+    background-position: 0px -103px;
+    width: 16px;
+    height: 16px;
+}
+.dxPivotGrid_CTNKpi
+{
+    background-position: -51px -86px;
+    width: 16px;
+    height: 16px;
+}
+.dxPivotGrid_CTNMeasure
+{
+    background-position: -85px -86px;
+    width: 16px;
+    height: 16px;
+}
+.dxPivotGrid_FLBottomPanelOnly1by4_Aqua
+{
+    background-position: 0px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxPivotGrid_FLBottomPanelOnly2by2_Aqua
+{
+    background-position: -33px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxPivotGrid_FLButton_Aqua
+{
+    background-position: -34px -103px;
+    width: 16px;
+    height: 16px;
+}
+.dxPivotGrid_FLColumnAreaHeaders_Aqua
+{
+    background-position: -68px -86px;
+    width: 16px;
+    height: 16px;
+}
+.dxPivotGrid_FLDataAreaHeaders_Aqua
+{
+    background-position: -60px -66px;
+    width: 16px;
+    height: 16px;
+}
+.dxPivotGrid_FLFieldList_Aqua
+{
+    background-position: 0px -86px;
+    width: 16px;
+    height: 16px;
+}
+.dxPivotGrid_FLFilterAreaHeaders_Aqua
+{
+    background-position: -17px -103px;
+    width: 16px;
+    height: 16px;
+}
+.dxPivotGrid_FLRowAreaHeaders_Aqua
+{
+    background-position: -85px -103px;
+    width: 16px;
+    height: 16px;
+}
+.dxPivotGrid_FLStackedDefault_Aqua
+{
+    background-position: 0px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxPivotGrid_FLStackedSideBySide_Aqua
+{
+    background-position: -33px -33px;
+    width: 32px;
+    height: 32px;
+}
+.dxPivotGrid_FLTopPanelOnly_Aqua
+{
+    background-position: -66px 0px;
+    width: 32px;
+    height: 32px;
+}
+.dxPivotGrid_pgCollapsedButton_Aqua
+{
+    background-position: -89px -33px;
+    width: 15px;
+    height: 15px;
+}
+.dxPivotGrid_pgCustomizationFormCloseButton_Aqua
+{
+    background-position: -20px -66px;
+    width: 19px;
+    height: 19px;
+}
+.dxPivotGrid_pgDataHeaders_Aqua
+{
+    background-position: -68px -120px;
+    width: 12px;
+    height: 12px;
+}
+.dxPivotGrid_pgDragArrowDown_Aqua
+{
+    background-position: -77px -56px;
+    width: 11px;
+    height: 9px;
+}
+.dxPivotGrid_pgDragArrowLeft_Aqua
+{
+    background-position: -81px -120px;
+    width: 9px;
+    height: 11px;
+}
+.dxPivotGrid_pgDragArrowRight_Aqua
+{
+    background-position: -94px -66px;
+    width: 9px;
+    height: 11px;
+}
+.dxPivotGrid_pgDragArrowUp_Aqua
+{
+    background-position: -91px -120px;
+    width: 11px;
+    height: 9px;
+}
+.dxPivotGrid_pgDragHideField_Aqua
+{
+    background-position: -66px -33px;
+    width: 22px;
+    height: 22px;
+}
+.dxPivotGrid_pgExpandedButton_Aqua
+{
+    background-position: -89px -50px;
+    width: 15px;
+    height: 15px;
+}
+.dxPivotGrid_pgFilterButton_Aqua
+{
+    background-position: 0px -66px;
+    width: 19px;
+    height: 19px;
+}
+.dxPivotGrid_pgFilterButtonActive_Aqua
+{
+    background-position: -40px -66px;
+    width: 19px;
+    height: 19px;
+}
+.dxPivotGrid_pgFilterResizer_Aqua
+{
+    background-position: -40px -120px;
+    width: 13px;
+    height: 13px;
+}
+.dxPivotGrid_pgGroupSeparator_Aqua
+{
+    background-position: -99px 0px;
+    width: 5px;
+    height: 1px;
+}
+.dxPivotGrid_pgPrefilterButton_Aqua
+{
+    background-position: -54px -120px;
+    width: 13px;
+    height: 13px;
+}
+.dxPivotGrid_pgSortByColumn_Aqua
+{
+    background-position: -24px -120px;
+    width: 15px;
+    height: 14px;
+}
+.dxPivotGrid_pgSortDownButton_Aqua
+{
+    background-position: -12px -120px;
+    width: 11px;
+    height: 15px;
+}
+.dxPivotGrid_pgSortUpButton_Aqua
+{
+    background-position: 0px -120px;
+    width: 11px;
+    height: 15px;
+}
+.dxPivotGrid_pgCustomizationFormCloseButton_Aqua,
+.dxPivotGrid_FLButton_Aqua
+{
+    display:block;
+}
