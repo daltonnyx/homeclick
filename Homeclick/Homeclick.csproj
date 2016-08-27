@@ -209,23 +209,17 @@
     <Compile Include="Models\ViewModel\AccountViewModels.cs" />
     <Compile Include="Models\CategoriesLink.cs" />
     <Compile Include="Models\Extends\Category.cs" />
+    <Compile Include="Models\ViewModel\CollectionViewModel.cs" />
     <Compile Include="Models\ViewModel\ColorViewModel.cs" />
     <Compile Include="Models\ContextExtension.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\Extends\Floor.cs" />
     <Compile Include="Models\Giohang.cs" />
-    <Compile Include="Models\IdentifyUser.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Helper\ModelHelper.cs" />
     <Compile Include="Models\Extends\Post.cs" />
     <Compile Include="Models\ProductsLayoutsLink.cs" />
     <Compile Include="Models\Extends\Product.cs" />
     <Compile Include="Models\ViewModel\ProjectViewModel.cs" />
-    <Compile Include="Models\ViewModel\CollectionViewModel.cs" />
-    <Compile Include="Models\Product_Model.cs" />
-    <Compile Include="Models\ProjectViewModel.cs" />
-    <Compile Include="Models\CollectionViewModel.cs" />
-    <Compile Include="Models\UserStore.cs" />
     <Compile Include="Models\Web\Canva.cs" />
     <Compile Include="Models\Web\Cart.cs" />
     <Compile Include="Models\Web\Category.cs" />
@@ -883,7 +877,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>8224</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1867/</IISUrl>
+          <IISUrl>http://localhost:1868/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

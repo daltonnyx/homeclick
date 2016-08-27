@@ -16,6 +16,7 @@ namespace VCMS.Lib.Models
             return new ApplicationDbContext();
         }
 
+        public virtual DbSet<File> Files { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Category_detail> Category_details { get; set; }
         public virtual DbSet<Category_type> Category_types { get; set; }
@@ -26,6 +27,9 @@ namespace VCMS.Lib.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Configurations.Add(new CategoryEntityConfiguration());
+            modelBuilder.Configurations.Add(new ProductEntityConfiguration());
         }
     }
 }

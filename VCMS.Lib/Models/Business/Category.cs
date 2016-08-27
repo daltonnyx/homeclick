@@ -28,8 +28,6 @@ namespace VCMS.Lib.Models.Business
 
         public int? Order { get; set; }
 
-        public int? ParentCategoryId { get; set; }
-
         public int? Category_typeId { get; set; }
 
         public virtual Category_type Category_type { get; private set; }
@@ -40,6 +38,8 @@ namespace VCMS.Lib.Models.Business
         public virtual ICollection<Category> CategoryChildren { get; private set; }
 
         public virtual ICollection<Product> Products { get; private set; }
+
+        public virtual ICollection<File> Files { get; set; }
     }
 
     public class CategoryEntityConfiguration : EntityTypeConfiguration<Category>
@@ -49,6 +49,10 @@ namespace VCMS.Lib.Models.Business
             this.HasMany(e => e.Category_detail)
                 .WithOptional(e => e.Category)
                 .WillCascadeOnDelete();
+
+            this.HasMany(e => e.Category1)
+            .WithOptional(e => e.Category2)
+            .HasForeignKey(e => e.ParentCategoryId);
 
             //Parents
             this.HasMany(e => e.CategoryParents)
