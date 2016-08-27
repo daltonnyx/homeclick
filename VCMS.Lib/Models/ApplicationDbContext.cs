@@ -16,6 +16,12 @@ namespace VCMS.Lib.Models
             return new ApplicationDbContext();
         }
 
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Category_detail> Category_details { get; set; }
+        public virtual DbSet<Category_type> Category_types { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Product_detail> Product_details { get; set; }
+        public virtual DbSet<Product_type> Product_types { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

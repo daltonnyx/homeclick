@@ -26,3 +26,13 @@
         .table-action {
             float:right;
         }
+
+        .list-thumb {
+            height:64px;
+            width:64px;
+        }
+
+        .list-thumb img{
+            height:auto;
+            width:100%;
+        }

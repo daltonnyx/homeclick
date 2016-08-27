@@ -95,6 +95,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\AuthorizationService.cs" />
+    <Compile Include="Controllers\Business\ProductColorsController.cs" />
+    <Compile Include="Models\Business\Category.cs" />
     <Compile Include="Controllers\Cores\AccountController.cs" />
     <Compile Include="Controllers\Cores\BaseController.cs" />
     <Compile Include="Controllers\Cores\ManageController.cs" />
@@ -104,6 +106,12 @@
     <Compile Include="Controllers\Cores\UserManageController.cs" />
     <Compile Include="Controllers\Cores\UsersController.cs" />
     <Compile Include="Models\Business\BaseBusinessModel.cs" />
+    <Compile Include="Models\Business\Category_detail.cs" />
+    <Compile Include="Models\Business\Category_type.cs" />
+    <Compile Include="Models\Business\Product.cs" />
+    <Compile Include="Models\Business\Product_detail.cs" />
+    <Compile Include="Models\Business\Product_type.cs" />
+    <Compile Include="Models\Business\ViewModels\ProductColorViewModel.cs" />
     <Compile Include="Models\Core\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Core\IdentityModels.cs" />
@@ -135,8 +143,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\Business\" />
-    <Folder Include="Models\Business\ViewModels\" />
     <Folder Include="Script\" />
   </ItemGroup>
   <ItemGroup>

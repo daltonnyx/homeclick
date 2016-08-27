@@ -115,6 +115,15 @@ namespace VCMS.Lib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Colour.
+        /// </summary>
+        public static string Colour {
+            get {
+                return ResourceManager.GetString("Colour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm password.
         /// </summary>
         public static string ConfirmPassword {
@@ -291,6 +300,15 @@ namespace VCMS.Lib.Resources {
         public static string Id {
             get {
                 return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string Image {
+            get {
+                return ResourceManager.GetString("Image", resourceCulture);
             }
         }
         
