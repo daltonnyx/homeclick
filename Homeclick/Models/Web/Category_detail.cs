@@ -22,6 +22,7 @@ namespace Homeclick.Models
 
         public int? type { get; set; }
 
+        [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
     }
 }

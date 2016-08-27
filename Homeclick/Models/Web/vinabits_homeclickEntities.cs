@@ -38,8 +38,17 @@ namespace Homeclick.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new ProductEntityConfiguration());
-            modelBuilder.Configurations.Add(new CategoryEntityConfiguration());
+            //modelBuilder.Entity<Category>()
+            //    .HasMany(e => e.Category_detail)
+            //    .WithOptional(e => e.Category)
+            //    .HasForeignKey(d => d.CategoryId)
+            //    .WillCascadeOnDelete();
+
+            modelBuilder.Entity<Category_detail>()
+                .HasOptional(c => c.Category)
+                .WithMany(c => c.Category_detail)
+                .HasForeignKey(c => c.CategoryId)
+                .WillCascadeOnDelete();
 
 
             modelBuilder.Entity<Department>()
@@ -61,10 +70,20 @@ namespace Homeclick.Models
                 .Property(e => e.Apartments)
                 .HasPrecision(10, 0);
 
+            modelBuilder.Entity<Project>()
+                .HasOptional(p => p.Category)
+                .WithMany(c => c.Projects)
+                .HasForeignKey(p => p.CategoryId);
+
             modelBuilder.Entity<ProjectItem>()
                 .HasMany(e => e.ProjectItem1)
                 .WithOptional(e => e.ProjectItem2)
                 .HasForeignKey(e => e.ParentId);
+
+            modelBuilder.Entity<ProjectItem>()
+                .HasOptional(p => p.Category)
+                .WithMany(c => c.ProjectItems)
+                .HasForeignKey(p => p.CategoryId);
 
             modelBuilder.Entity<ProjectItem>()
                 .HasMany(e => e.ProjectLayout_Collection)

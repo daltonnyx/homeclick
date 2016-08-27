@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -26,6 +27,15 @@ namespace Homeclick.Models
                 }
             }
             return child;
+        }
+
+        [NotMapped]
+        public IList<Product> Products
+        {
+            get
+            {
+                return null;
+            }
         }
 
         public Category_detail getDetail(string name)
