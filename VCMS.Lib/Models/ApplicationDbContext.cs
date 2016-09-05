@@ -16,6 +16,7 @@ namespace VCMS.Lib.Models
             return new ApplicationDbContext();
         }
 
+        public virtual DbSet<Product_Variant> Product_Variants { get; set; }
         public virtual DbSet<File> Files { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Category_detail> Category_details { get; set; }
@@ -61,8 +62,46 @@ namespace VCMS.Lib.Models
                     cs.MapRightKey("ParentId");
                     cs.ToTable("Category_Product_Link");
                 });
+
+            modelBuilder.Entity<Product>().HasMany(e => e.Product_Variants)
+                .WithMany(e => e.Products)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Product_Product_Variants_Link");
+                });
+
+            modelBuilder.Entity<Product>().HasMany(e => e.Files)
+                .WithMany(e => e.Products)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Product_Files_Link");
+                });
             //--------------------------------------
 
+            //Product Variant
+            //--------------------------------------
+            modelBuilder.Entity<Product_Variant>().HasMany(e => e.Children)
+                .WithMany(e => e.Parents)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Product_Variants_Product_Variants_Link");
+                });
+
+            modelBuilder.Entity<Product_Variant>().HasMany(e => e.Files)
+                .WithMany(e => e.Product_Variants)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Product_Variants_Files_Link");
+                });
+            //--------------------------------------
 
             //modelBuilder.Configurations.Add(new CategoryEntityConfiguration());
             //modelBuilder.Configurations.Add(new ProductEntityConfiguration());

@@ -294,4 +294,37 @@
   <data name="Image" xml:space="preserve">
     <value>Image</value>
   </data>
+  <data name="CreateTime" xml:space="preserve">
+    <value>Created time</value>
+  </data>
+  <data name="CreateUser" xml:space="preserve">
+    <value>Created by</value>
+  </data>
+  <data name="FileType" xml:space="preserve">
+    <value>File type</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="UpdateTime" xml:space="preserve">
+    <value>Updated time</value>
+  </data>
+  <data name="UpdateUser" xml:space="preserve">
+    <value>Updated by</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>File name</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="ContextType" xml:space="preserve">
+    <value>Context type</value>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
 </root>

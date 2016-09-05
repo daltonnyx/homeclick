@@ -28,5 +28,5 @@ namespace VCMS.Lib.Models.Business
         public virtual ICollection<Category> Categories { get; set; }
     }
 
-    public enum CategoryTypes { Material = 3, Model = 2, Typology = 1, LifeStype = 4, Collection = 5, Masonry = 15, Postcat = 16, ProjectType = 18, ProductColor = 19 }
+    public enum CategoryTypes { Material = 3, Model = 2, Typology = 1, LifeStype = 4, Collection = 5, Masonry = 15, Postcat = 16, ProjectType = 18, ProductColor = 19, FileImage = 20 }
 }

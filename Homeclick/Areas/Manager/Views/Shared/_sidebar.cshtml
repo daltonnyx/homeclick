@@ -44,7 +44,22 @@
 
             <!-- BEGIN Submenu -->
             <ul class="submenu">
-                <li data-page="productcolors"><a href="@Url.Action("Index","ProductColors")">Colors</a></li>
+                <li data-page="productmaterials"><a href="@Url.Action("List","ProductMaterials")">Materials</a></li>
+                <li data-page="productcolors"><a href="@Url.Action("List","ProductColors")">Colors</a></li>
+                <li data-page="products"><a href="@Url.Action("List","Products")">Products</a></li>
+            </ul>
+            <!-- END Submenu -->
+        </li>
+        <li>
+            <a class="dropdown-toggle">
+                <i class="fa fa-square-o"></i>
+                <span>Manager</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+
+            <!-- BEGIN Submenu -->
+            <ul class="submenu">
+                <li data-page="filemanager"><a href="@Url.Action("List","FileManager")">File Manager</a></li>
             </ul>
             <!-- END Submenu -->
         </li>

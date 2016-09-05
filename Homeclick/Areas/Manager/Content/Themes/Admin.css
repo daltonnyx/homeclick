@@ -1,4 +1,17 @@
-﻿.form-control, .form-control-custom {
+﻿.image-preview {
+      width: 100px;
+      height: 100px;
+      overflow:hidden;
+}
+.image-preview img {
+      height: 100%;
+      min-width: 100%;
+      left: 50%;
+      position: relative;
+      transform: translateX(-50%);
+}
+
+.form-control, .form-control-custom, .fileupload, .image-preview img {
     max-width:350px;
 }
 

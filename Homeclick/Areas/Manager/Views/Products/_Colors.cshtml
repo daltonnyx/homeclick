@@ -1,0 +1,6 @@
+﻿@model VCMS.Lib.Models.Product_Variant
+
+<div class="color">
+    <span>@Model.Parents.FirstOrDefault().Name - @Model.Name</span>
+    <input type="hidden" name="Colors" value="@Model.Id">
+</div>

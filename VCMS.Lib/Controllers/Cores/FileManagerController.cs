@@ -8,6 +8,10 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using VCMS.Lib.Models;
+using System.Linq.Expressions;
+using VCMS.Lib.Models.Business;
+using Microsoft.AspNet.Identity;
+using VCMS.Lib.Common;
 
 namespace VCMS.Lib.Controllers
 {
@@ -15,14 +19,13 @@ namespace VCMS.Lib.Controllers
     {
         
         // GET: Manager/FileController
-        public async Task<ActionResult> Index()
+        public ActionResult List()
         {
-            var files = db.Files.Include(f => f.CreateUser).Include(f => f.FileType).Include(f => f.UpdateUser);
-            return View(await files.ToListAsync());
+            return View();
         }
 
         // GET: Manager/FileController/Details/5
-        public async Task<ActionResult> Details(string id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -39,7 +42,7 @@ namespace VCMS.Lib.Controllers
         // GET: Manager/FileController/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new CreateFileViewModel());
         }
 
         // POST: Manager/FileController/Create
@@ -47,19 +50,19 @@ namespace VCMS.Lib.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,Description,Link,FileTypeId,Size,CreateUserId,CreateTime,UpdateUserId,UpdateTime")] File file)
+        public async Task<ActionResult> Create(CreateFileViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Files.Add(file);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                var uploadResult = await Common.Uploader.Upload(model, this);
+                if (uploadResult)
+                    return RedirectToAction("List");
             }
-            return View(file);
+            return View(model);
         }
 
         // GET: Manager/FileController/Edit/5
-        public async Task<ActionResult> Edit(string id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -112,7 +115,7 @@ namespace VCMS.Lib.Controllers
             File file = await db.Files.FindAsync(id);
             db.Files.Remove(file);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("List");
         }
 
         protected override void Dispose(bool disposing)
@@ -122,6 +125,52 @@ namespace VCMS.Lib.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public JsonResult DataHandler(DTParameters param)
+        {
+            try
+            {
+                //var imageTypeId = (int)CategoryTypes.FileImage;
+                var imageTypeId = 74;
+                var dtsource = db.Files.Where(o => o.FileTypeId == imageTypeId).Select(o => new FileViewModel
+                {
+                    Id = o.Id,
+                    Name = o.Name,
+                    Ext = o.Extension,
+                    FileType = o.FileType.Name,
+                    Size = o.Size.ToString(),
+                    CreateTime = o.CreateTime.ToString()
+                }).ToList();
+
+                List<String> columnSearch = new List<string>();
+
+                foreach (var col in param.Columns)
+                {
+                    columnSearch.Add(col.Search.Value);
+                }
+                var search = param.Search.Value;
+
+                Expression<Func<FileViewModel, bool>> pre = (p => (search == null || (p.Name != null && p.Name.ToLower().Contains(search.ToLower())))
+                && (columnSearch[0] == null || (p.Name != null && p.Name.ToLower().Contains(columnSearch[1].ToLower()))));
+
+                List<FileViewModel> data = new ResultSet().GetResult(pre, param.SortOrder, param.Start, param.Length, dtsource);
+
+                var jsonResult = new List<object>();
+                int count = new ResultSet().Count(pre, dtsource);
+                DTResult<FileViewModel> result = new DTResult<FileViewModel>
+                {
+                    draw = param.Draw,
+                    data = data,
+                    recordsFiltered = count,
+                    recordsTotal = count
+                };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message });
+            }
         }
     }
 }

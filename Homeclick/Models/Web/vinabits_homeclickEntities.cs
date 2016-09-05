@@ -19,7 +19,7 @@ namespace Homeclick.Models
         public virtual DbSet<Category_detail> Category_detail { get; set; }
         public virtual DbSet<Category_type> Category_type { get; set; }
         public virtual DbSet<City> Cities { get; set; }
-        public virtual DbSet<Color> Colors { get; set; }
+        //public virtual DbSet<Color> Colors { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Floor> Floors { get; set; }
         public virtual DbSet<Post> Posts { get; set; }

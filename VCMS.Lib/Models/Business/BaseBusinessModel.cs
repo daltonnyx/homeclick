@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VCMS.Lib.Resources;
 
 namespace VCMS.Lib.Models.Business
 {
@@ -12,10 +13,11 @@ namespace VCMS.Lib.Models.Business
         [Key]
         public int Id { get; set; }
 
+        [StringLength(128)]
+        [Display(Name = "Name", ResourceType = typeof(Strings))]
+        public string Name { get; set; }
+
         public string CreateUser { get; set; }
         public DateTime? CreateTime { get; set; }
-
-        public string UpdateUser { get; set; }
-        public DateTime? UpdateTime { get; set; }
     }
 }

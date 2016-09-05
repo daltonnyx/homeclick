@@ -20,8 +20,9 @@ namespace VCMS.Lib.Models.Business
 
         public int Id { get; set; }
 
+        [Column("name")]
         [StringLength(100)]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         public string description { get; set; }
 

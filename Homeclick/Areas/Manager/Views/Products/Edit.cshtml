@@ -1,0 +1,249 @@
+﻿@using VCMS.Lib.Models
+@model VCMS.Lib.Models.Business.CreateProductViewModel
+
+@{
+    ViewBag.Title = "File Manager";
+    ViewBag.FormName = "Create";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout_Form.cshtml";
+    var colors = ViewBag.Colors as IEnumerable<Product_Variant>;
+    var categories = ViewBag.Categories as IEnumerable<VCMS.Lib.Models.Business.Category>;
+}
+
+@if (ViewData["Success"] != null && (bool)ViewData["Success"])
+{
+    <div class="alert alert-success">
+        <button class="close" data-dismiss="alert">×</button>
+        <strong>Success!</strong> The product has been added.
+    </div>
+}
+@using (Html.BeginForm("Create","Products", FormMethod.Post, htmlAttributes : new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Category</label>
+            <div class="col-md-10">
+                <div class="form-control-custom">
+                    <select name="Category" data-placeholder="Select a category" class="form-control chosen-with-diselect" tabindex="-1" id="category" style="display: none;">
+                        @foreach (var category in categories)
+                        {
+                            <option @Html.Raw((category.Id == Model.TypologyTypeId) ? "selected value='@category.Id'" : "value='@category.Id'")>@category.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Color</label>
+            <div class="col-md-10">
+                <div class="form-control-custom">
+                    <select  data-placeholder="Select a color" class="form-control chosen-with-diselect" tabindex="-1" id="selColor" style="display: none;">
+                        <option value=""> </option>
+                        @foreach (var color in colors)
+                        {
+                            if (Model.Colors.Contains("color"))
+                            {
+
+                            }
+                            <option @Html.Raw(Model.Colors.Contains("color") ? " disabled='disabled' value='@color.Id'" : "value='@color.Id'") >@color.Parents.FirstOrDefault().Name - @color.Name</option>
+                        }
+                    </select>
+                    <button id="addColorButton" class="btn btn-link"><i class="fa fa-plus" aria-hidden="true"></i> Add...</button>
+                </div>
+                <div id="colorField" class="form-control-custom">
+                    @foreach (var color in Model.IColors)
+                    {
+                        <div class="color">
+                                <span>@color.Name</span>
+                                <input type="hidden" name="Colors" value="@color.Id">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>    
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Images</label>
+            <div class="col-md-10">
+                <div class="form-control-custom">
+                    <span class="btn btn-success fileinput-button">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>Select files...</span>
+                        <!-- The file input field used as target for the file upload widget -->
+                        <input id="fileupload" type="file" name="files" multiple>
+                    </span>
+                    <br>
+                    <br>
+                    <!-- The global progress bar -->
+                    <div id="progress" class="progress">
+                        <div class="progress-bar progress-bar-success"></div>
+                    </div>
+                    <!-- The container for the uploaded files -->
+                    <div id="files" class="files">
+                        @foreach (var image in Model.IImages)
+                        {
+                            <p>
+                                @image.Id + @image.Extension
+                                <input type="hidden" name="Images" value="@image.Id">
+                            </p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>  
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Statu, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Statu, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.ValidationMessageFor(model => model.Statu, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Warranty, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Warranty, new { htmlAttributes = new { @class = "form-control", Type = "number" } })
+                @Html.ValidationMessageFor(model => model.Warranty, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", Type = "number" } })
+                @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Weight, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MadeIn, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MadeIn, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MadeIn, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div  class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+    @section Styles {
+        <link href="~/Areas/Manager/Content/Themes/FLATY/bootstrap-fileupload.css" rel="stylesheet" />
+        <link href="~/Areas/Manager/Content/Themes/FLATY/Chosen.min.css" rel="stylesheet" />
+
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/dark-hive/jquery-ui.css" id="theme">
+        <link href="~/Areas/Manager/Content/Plugins/jQueryFileUpload/css/jquery.fileupload.css" rel="stylesheet" />
+        <link href="~/Areas/Manager/Content/Plugins/jQueryFileUpload/css/jquery.fileupload-ui.css" rel="stylesheet" />
+
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+
+        <script src="~/Areas/Manager/Content/Themes/FLATY/bootstrap-fileupload.min.js"></script>
+        <script src="~/Areas/Manager/Content/Themes/FLATY/chosen.jquery.min.js"></script>
+
+        <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/vendor/jquery.ui.widget.js"></script>
+        <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/jquery.iframe-transport.js"></script>
+        <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/jquery.fileupload.js"></script>
+
+        <script>
+            var colorRemove = function () {
+                var v = $(this).find('input').val();
+                var s = $('#selColor option').filter('[value="' + v + '"]').prop("disabled", false);
+                if (s) {
+                    $("#selColor").trigger("chosen:updated");
+                }
+                s.prop("disabled", false);
+                $(this).remove();
+            };
+
+            $('#addColorButton').bind('click', function (event) {
+                var selected = $('#selColor :selected');
+                var b = selected.is(":disabled");
+                if (selected.val() && !b) {
+
+                    selected.prop('disabled', true);
+                    $("#selColor").trigger("chosen:updated");
+
+                    var a = '<div class="color">' +
+                                '<span>' + selected.text() + '</span>' +
+                                '<input type="hidden" name="Colors" value="' + selected.val() + '">' +
+                            '</div>';
+                    $('#colorField').append(a);
+                    $('.color').bind('click', colorRemove);
+                }
+                event.preventDefault()
+            });
+
+        </script>
+
+        <script>
+            $(function () {
+                'use strict';
+                // Change this to the location of your server-side upload handler:
+                var url = '@Url.Action("Upload","FileUpload")';
+                $('#fileupload').fileupload({
+                    url: url,
+                    dataType: 'json',
+                    done: function (e, data) {
+                        $.each(data.result, function (index, file) {
+                            $('<p/>').append('<input type="hidden" name="Images" value="' + file.newFileName + '">' + file.oldFileName).appendTo('#files');
+                        });
+                    },
+                    progressall: function (e, data) {
+                        var progress = parseInt(data.loaded / data.total * 100, 10);
+                        $('#progress .progress-bar').css(
+                            'width',
+                            progress + '%'
+                        );
+                    }
+                }).prop('disabled', !$.support.fileInput)
+                    .parent().addClass($.support.fileInput ? undefined : 'disabled');
+            });
+        </script>
+    }

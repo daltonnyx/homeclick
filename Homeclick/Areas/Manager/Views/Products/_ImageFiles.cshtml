@@ -1,0 +1,33 @@
+﻿@model VCMS.Lib.Models.File
+@{ 
+    var selectedColor = ViewBag.SelectedColor;
+    var colors = ViewBag.Colors as IEnumerable<VCMS.Lib.Models.Product_Variant>;
+}
+    <div class="clearfix image-file">
+        <div class="image-preview pull-left">
+            <img src="@Url.GetImageUploadFolder()@Model.Id@Model.Extension">
+        </div>
+        <div class="pull-left controls">
+            <label class="radio">
+                <input type="radio" name="PreviewImage" value="@Model.Id" /> Is preview image
+            </label>
+            <label class="radio">
+                <a href="#" class="delete-image-btn" data-fileName="@Model.Id"><i class="fa fa-times" aria-hidden="true"> Delete</i></a>
+            </label>
+            <label class="radio">
+                <select class="form-control sc" name="ImageFiles[@Model.Id]" data-placeholder="Choose a Category">
+                    @foreach (var color in colors)
+                    {
+                        if (color.Id == selectedColor)
+                        {
+                            <option selected value="@color.Id">@color.Parents.FirstOrDefault() - @color.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@color.Id">@color.Parents.FirstOrDefault() - @color.Name</option>
+                        }
+                    }
+                </select>
+            </label>
+        </div>
+    </div>

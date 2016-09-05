@@ -14,6 +14,8 @@ namespace VCMS.Lib.Models.Business
         {
             Product_detail = new HashSet<Product_detail>();
             Categories = new HashSet<Category>();
+            Product_Variants = new HashSet<Product_Variant>();
+            Files = new HashSet<File>();
         }
 
         public int Id { get; set; }
@@ -23,15 +25,8 @@ namespace VCMS.Lib.Models.Business
 
         public string content { get; set; }
 
-        public DateTime? created_date { get; set; }
-
-        public DateTime? updated_date { get; set; }
-
-        public short? status { get; set; }
-
-        public int? author_id { get; set; }
-
-        public int? UserId { get; set; }
+        [Column("status")]
+        public bool Status { get; set; }
 
         public bool? featured { get; set; }
 
@@ -40,11 +35,23 @@ namespace VCMS.Lib.Models.Business
 
         public string excerpt { get; set; }
 
+        public string CreateUserId { get; set; }
+
+        public DateTime CreateTime { get; set; }
+
         public virtual ICollection<Product_detail> Product_detail { get; set; }
 
         public virtual ICollection<Category> Categories { get; set; }
+
+        public virtual ICollection<Product_Variant> Product_Variants { get; set; }
+
+        public virtual ICollection<File> Files { get; set; }
+
+        [ForeignKey("CreateUserId")]
+        public virtual ApplicationUser CreateUser { get; set; }
     }
-    /*
+    /*5205555.
+     * 6
     public class ProductEntityConfiguration : EntityTypeConfiguration<Product>
     {
         public ProductEntityConfiguration()

@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Homeclick</RootNamespace>
     <AssemblyName>Homeclick</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -22,6 +24,8 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +35,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -63,6 +68,10 @@
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -182,6 +191,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
+      <CustomToolNamespace>Resource</CustomToolNamespace>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -226,7 +236,6 @@
     <Compile Include="Models\Web\Category_detail.cs" />
     <Compile Include="Models\Web\Category_type.cs" />
     <Compile Include="Models\Web\City.cs" />
-    <Compile Include="Models\Web\Color.cs" />
     <Compile Include="Models\Web\Department.cs" />
     <Compile Include="Models\Web\Floor.cs" />
     <Compile Include="Models\Web\Post.cs" />
@@ -246,6 +255,31 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Manager\Content\Plugins\jquery-ui-1.9.2.min_.js" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\css\demo-ie8.css" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\css\demo.css" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\css\jquery.fileupload-noscript.css" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\css\jquery.fileupload-ui-noscript.css" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\css\jquery.fileupload-ui.css" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\css\jquery.fileupload.css" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\css\style.css" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\img\loading.gif" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\img\progressbar.gif" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\js\app.js" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\js\cors\jquery.postmessage-transport.js" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\js\cors\jquery.xdr-transport.js" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\js\jquery.fileupload-angular.js" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\js\jquery.fileupload-audio.js" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\js\jquery.fileupload-image.js" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\js\jquery.fileupload-jquery-ui.js" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\js\jquery.fileupload-process.js" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\js\jquery.fileupload-ui.js" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\js\jquery.fileupload-validate.js" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\js\jquery.fileupload-video.js" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\js\jquery.fileupload.js" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\js\jquery.iframe-transport.js" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\js\main.js" />
+    <Content Include="Areas\Manager\Content\Plugins\jQueryFileUpload\js\vendor\jquery.ui.widget.js" />
     <Content Include="Areas\Manager\Content\Themes\Images\man.png" />
     <Content Include="Areas\Manager\Content\Themes\Images\woman.png" />
     <Content Include="Areas\Manager\Content\Themes\Admin.css" />
@@ -381,16 +415,23 @@
     <Content Include="Areas\Manager\Views\Users\Details.cshtml" />
     <Content Include="Areas\Manager\Views\Users\Edit.cshtml" />
     <Content Include="Areas\Manager\Views\Users\List.cshtml" />
+    <Content Include="Areas\Manager\Views\FileManager\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\FileManager\Delete.cshtml" />
+    <Content Include="Areas\Manager\Views\FileManager\Details.cshtml" />
+    <Content Include="Areas\Manager\Views\FileManager\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\FileManager\List.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductColors\List.cshtml" />
     <Content Include="Areas\Manager\Views\ProductColors\Create.cshtml" />
     <Content Include="Areas\Manager\Views\ProductColors\Delete.cshtml" />
-    <Content Include="Areas\Manager\Views\ProductColors\Details.cshtml" />
-    <Content Include="Areas\Manager\Views\ProductColors\Edit.cshtml" />
-    <Content Include="Areas\Manager\Views\ProductColors\Index.cshtml" />
-    <Content Include="Areas\Manager\Views\FileController\Create.cshtml" />
-    <Content Include="Areas\Manager\Views\FileController\Delete.cshtml" />
-    <Content Include="Areas\Manager\Views\FileController\Details.cshtml" />
-    <Content Include="Areas\Manager\Views\FileController\Edit.cshtml" />
-    <Content Include="Areas\Manager\Views\FileController\Index.cshtml" />
+    <Content Include="Areas\Manager\Views\Products\List.cshtml" />
+    <Content Include="Areas\Manager\Views\Products\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\Products\Delete.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductMaterials\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductMaterials\Delete.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductMaterials\List.cshtml" />
+    <Content Include="Areas\Manager\Views\Products\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Products\_ImageFiles.cshtml" />
+    <Content Include="Areas\Manager\Views\Products\_Colors.cshtml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -838,6 +879,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Manager\Controllers\" />
     <Folder Include="Areas\Manager\Models\" />
+    <Folder Include="Areas\Manager\Uploads\Images\" />
     <Folder Include="Scripts\Plugins\ResponsiveMenu\" />
     <Folder Include="Scripts\Plugins\shareThis\" />
     <Folder Include="Upload\Images\assets\Colors\" />
@@ -892,6 +934,13 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
