@@ -1,0 +1,54 @@
+﻿@using Homeclick.Models
+@model IList<Category>
+@{
+    Layout = "../Shared/Layout_CatModel.cshtml";
+}
+@{
+String url = "";
+}
+<div class="row">
+    @foreach (Category modelx in Model)
+    {
+
+        string[] models = modelx.getDetailValue("hinh_anh").ToString().Split(';');
+        int i = 0;
+        string modelId = modelx.Id.ToString();
+        if (models[0] != string.Empty)
+        {
+            <div class="room-models col-md-12" id="model-@modelId">
+                <h2 class=" ">@modelx.name</h2>
+                <div class="row">
+        
+                @foreach (string img in models)
+                {
+                    <div class="col-md-12">
+                        <div class="row">
+                            <img class="tag-image" src="@url/@img" id="image-@modelId-@i" alt="" />
+                        </div>
+                        @{i++;}
+                    </div>   
+                            }
+                    <script type="text/javascript">
+            @{
+                string script = modelx.getDetailValue("script").ToString();
+                var uscript = new HtmlString(script);
+                            }
+
+                        var options = {
+                            align: { x: "center", y: "center" },
+                            offset: { left: 0, top: -45 },
+                            handlers: {
+                                click: function (e, data) {
+                                    window.open('@Url.Action("Typology", "Category")' + '/' + data.id, "_self");
+                                },
+                                mouseenter: "show",
+                                mouseleave: "hide"
+                            }
+                        };
+                        @uscript
+                    </script>
+                </div>
+            </div>
+            }
+        }
+</div>

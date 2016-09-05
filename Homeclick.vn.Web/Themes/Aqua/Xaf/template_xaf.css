@@ -1,0 +1,237 @@
+/* Common */
+.TabsContainer 
+{
+	padding-right: 5px;
+	float:right;
+}
+.TabsContainer td
+{
+	text-align: left;
+}
+/* Actions in Detail View */
+.Layout .Item > .ACH .dxm-main
+{
+	padding-top: 0px !important;
+	padding-right: 0px !important;
+}
+/* Top */
+table.Top td.Logo {
+	padding: 10px 20px 10px 15px;
+}
+table.Top td.Security {
+	padding: 15px 10px 0px 20px;
+	text-align: right;
+	vertical-align: top;
+}
+table.Top td.Security td {
+	text-align: left;
+}
+table.Top td.Security div.Security {
+	display: inline;
+	float: right;
+}
+/* Action Container Panel */
+.ACPanel td td
+{
+	text-align: left;
+}	
+/* Round panel of VerticalToolsActionContainer */
+.ToolsActionContainerPanel
+{
+	margin: 15px;
+}
+.ToolsActionContainerPanel .dxrpcontent
+{
+    width: 100% !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.LeftPane {
+	padding-bottom: 15px;
+	overflow: hidden;
+}
+/* Main round panel*/
+table.MainContent tr.Header td.Header {
+	padding: 3px 10px 10px 10px;
+}
+table.MainContent tr.Content td.Content {
+	padding: 10px 15px 2px 15px;
+}
+table.MainContent td.ViewImage {
+	width: 32px;
+	padding: 0px 5px 0px 15px;
+}
+table.MainContent td.ViewHeader {
+}
+table.ViewHeader {
+	margin: 10px 0px 0px 0px;
+}
+.EditModeActions {
+	padding: 5px 15px 5px 10px;
+	border-bottom: #b6bdcc 1px solid;
+}
+.Content .EditModeActions {
+	padding: 5px 0px 5px 10px;
+	border-bottom: 0px;
+}
+/* TopToolBar */
+.ToolBar {
+	margin: 0px 0px 0px 0px;
+}
+/* Navigation Links*/
+.Links {
+	padding: 35px 40px 15px 40px !important;
+	line-height: 24px;
+}
+/* Footer */
+tr.Footer td.Right {
+	padding: 20px 10px 30px 0px;
+}
+div.Footer {
+	padding: 20px 10px 30px;
+}
+div.Header table {
+	margin: 0px 15px 0px 15px;
+}
+div.Header table td {
+	padding: 24px 0px 0px 0px;
+}
+/* Dialog */
+.Dialog {
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.Dialog .Layout
+{
+    padding-left: 0px;
+}
+.DialogContent.Content {
+    border-collapse: separate;
+    height: 100%;
+    padding-bottom: 30px;
+}
+.DialogContent .ContentCell {
+	vertical-align: top;
+	padding: 30px 50px 30px 50px
+}
+.Dialog .ViewImage img {
+	margin: 0px 5px 0px 0px;
+}
+.DockBottom
+{
+    border-collapse: separate;
+    margin-top: -30px;
+    padding-right: 50px;
+}
+.PopupSizeCalculated .Dialog 
+{
+    position :absolute;
+}
+/* Logon */
+.DialogContent.Content.LogonContent {
+	background-color: White;
+	height: 300px;
+    padding-bottom: 0px;
+}
+.Logon {
+	width: 500px;
+	text-align: left;
+}
+.LogonContentCell {
+}
+.LogonContentCell .Layout .NextColumn div.Item {
+	padding-left: 10px;
+}
+/* Error */
+.ErrorDetails {
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	font-size: 90%;
+}
+.TabsContainer .TemplatedItem {
+	padding: 0px 5px 0px 11px;
+}
+.TabsContainer .TemplatedItem .SingleChoiceActionItemLabel {
+	padding-left: 0px;
+}
+.TemplatedItem > table 
+{
+	border-collapse: separate !important;
+}
+/* NavigationBarActionContainer */
+.xafNavigationBarActionContainer
+{
+    margin-bottom: 3px;
+}
+/* Navigation Links (QuickAccessNavigationActionContainer) */
+.NavigationLinks a, .NavigationLinks a:hover, .NavigationLinks a:visited {
+	text-decoration: underline;
+	margin: 0px 6px;
+}
+.NestedFrameViewSite > .Layout {
+	padding: 0px;
+}
+.Layout > .NestedFrameControl > .NestedFrame > .ToolBarUpdatePanel + .NestedFrameViewSite > .ListViewItem,
+.Layout > .Item > .Item > tbody > tr > .NestedFrameControl > .NestedFrame > .ToolBarUpdatePanel + .NestedFrameViewSite > .ListViewItem {
+	padding: 0px !important;
+}
+.GroupContent > .NestedFrameControl > .NestedFrame > .ToolBarUpdatePanel + .NestedFrameViewSite > .ListViewItem 
+{
+	padding: 0px !important;
+}
+.LayoutTabContainer 
+{
+	padding: 12px !important;
+}
+.LayoutTabContainer > .Item > .NestedFrame > .NestedFrameViewSite > .Item {
+	padding-top: 0px !important;
+}
+.LayoutTabContainer > .Item > .NestedFrame > .ToolBar {
+	padding: 0px 5px 0px 5px !important;
+}
+.LayoutTabContainer > .NestedFrameControl {
+	padding: 0px !important;
+}
+.LayoutTabContainerWithNestedFrame {
+	padding: 0px !important;
+}
+.LayoutTabContainerWithNestedFrame > .Item > .NestedFrame > .NestedFrameViewSite > .Item {
+	padding: 0px !important;
+}
+.LayoutTabContainerWithNestedFrame  > .Item > .NestedFrame > .ToolBar {
+	padding: 0px !important;
+}
+.LayoutTabContainerWithNestedFrame > .Item > .NestedFrame > .NestedFrameViewSite > .Item > .GridView {
+	border-bottom: 0px;
+	border-right: 0px;
+	border-left: 0px;
+}
+.LayoutTabContainerWithNestedFrame > .Item > .NestedFrame > .NestedFrameViewSite.WithoutToolbar > .Item > .GridView {
+	border-top: 0px;
+}
+.Content > div > .Layout {
+	padding-top: 15px;
+}
+.Content > div > .Layout > .GroupHeader:first-child {
+	margin-top: 0px !important;
+}
+div.LeftPane > .ACV {
+	padding-top: 15px;
+}
+.RecordsNavigationContainer {
+	padding-right: 14px;
+}
+.DialogContent .HContainer {
+	display: table;
+}
+.NotificationsPopupWindowCustomization .DialogContent.Content {
+    padding-bottom: 0px;
+}
+.NotificationsPopupWindowCustomization .DialogContent .ContentCell {
+    padding-bottom: 0px;
+}
+/* Splitter */
+.HorizontalTemplate .dxsplLCC, .VerticalTemplate .dxsplLCC {
+	padding: 0px;
+}

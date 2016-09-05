@@ -1,0 +1,9 @@
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Data" Assembly="DevExpress.Data.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+<%@ Register TagPrefix="dx" Namespace="DevExpress.Web" Assembly="DevExpress.Web.v15.2, Version=15.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
+
+<dx:ASPxCheckBoxList runat="server" SpriteCssFilePath="~/App_Themes/iOS/{0}/sprite.css" CssPostfix="iOS" CssFilePath="~/App_Themes/iOS/{0}/styles.css" TextAlign="Left" TextSpacing="30px">
+    <CheckedImage SpriteProperties-CssClass="dxEditors_edtCheckBoxSwitchOn_iOS" SpriteProperties-DisabledCssClass="dxEditors_edtCheckBoxSwitchOnDisabled_iOS" />
+    <UncheckedImage SpriteProperties-CssClass="dxEditors_edtCheckBoxSwitchOff_iOS" SpriteProperties-DisabledCssClass="dxEditors_edtCheckBoxSwitchOffDisabled_iOS" />
+    <CheckBoxFocusedStyle CssClass="dxeSwitchFocused_iOS" />
+    <CheckBoxStyle CssClass="dxeSwitch_iOS" />
+</dx:ASPxCheckBoxList>

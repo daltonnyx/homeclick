@@ -1,0 +1,76 @@
+.dxTreeList_CollapsedButton_Aqua,
+.dxTreeList_CollapsedButtonRtl_Aqua,
+.dxTreeList_DragAndDropArrowDown_Aqua,
+.dxTreeList_DragAndDropArrowUp_Aqua,
+.dxTreeList_DragAndDropHide_Aqua,
+.dxTreeList_DragAndDropNode_Aqua,
+.dxTreeList_ExpandedButton_Aqua,
+.dxTreeList_ExpandedButtonRtl_Aqua,
+.dxTreeList_SortAsc_Aqua,
+.dxTreeList_SortDesc_Aqua
+{
+    background-image: url('sprite.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+.dxTreeList_CollapsedButton_Aqua
+{
+    background-position: -16px -23px;
+    width: 15px;
+    height: 15px;
+}
+.dxTreeList_CollapsedButtonRtl_Aqua
+{
+    background-position: 0px -39px;
+    width: 15px;
+    height: 15px;
+}
+.dxTreeList_DragAndDropArrowDown_Aqua
+{
+    background-position: 0px -55px;
+    width: 11px;
+    height: 9px;
+}
+.dxTreeList_DragAndDropArrowUp_Aqua
+{
+    background-position: -12px -55px;
+    width: 11px;
+    height: 9px;
+}
+.dxTreeList_DragAndDropHide_Aqua
+{
+    background-position: 0px 0px;
+    width: 22px;
+    height: 22px;
+}
+.dxTreeList_DragAndDropNode_Aqua
+{
+    background-position: -16px -39px;
+    width: 13px;
+    height: 13px;
+}
+.dxTreeList_ExpandedButton_Aqua
+{
+    background-position: 0px -23px;
+    width: 15px;
+    height: 15px;
+}
+.dxTreeList_ExpandedButtonRtl_Aqua
+{
+    background-position: -23px 0px;
+    width: 15px;
+    height: 15px;
+}
+.dxTreeList_SortAsc_Aqua
+{
+    background-position: -23px -17px;
+    width: 7px;
+    height: 5px;
+}
+.dxTreeList_SortDesc_Aqua
+{
+    background-position: -31px -17px;
+    width: 7px;
+    height: 5px;
+}
+

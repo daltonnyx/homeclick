@@ -1,0 +1,237 @@
+.ErrorMessage .ErrorImage {
+    width: 16px;
+}
+/* ParametrizedActionControl */
+.ParametrizedActionControl .Label, .ParametrizedActionControl .Editor, .ParametrizedActionControl .ControlCaption  {
+	vertical-align: middle;
+	padding: 0px;
+	border-collapse: separate;
+}
+.ParametrizedActionControl .ControlCaption {
+	padding-right : 5px;
+}
+.ParametrizedActionControl .EditorButton {
+	Padding:0px !important;
+}
+
+.Layout .Item .ACH .TemplatedItem {
+	padding-top:0px !important;
+    padding-bottom:0px !important;
+}
+.dxm-main.dxm-vertical .ParametrizedActionControl .ControlCaption {
+    padding-left: 1px !important;
+}
+.ParametrizedActionControl .Editor {
+	padding-left: 1px;
+	border-collapse: separate;
+}
+.ParametrizedActionControl .Editor div.dxb {
+	padding-top: 1px;
+	padding-bottom: 2px;
+}
+.ParametrizedActionControl .Editor div.dxbf {
+	padding-top: 0px;
+	padding-bottom: 1px;
+}
+.ParametrizedActionWithImage .Editor div.dxb {
+	padding: 0px 8px 1px 9px;
+}
+.ParametrizedActionWithImage .Editor div.dxbf {
+	padding: 0px 7px 0px 8px;
+}
+.ParametrizedActionControl .Editor div.dxb span {
+	white-space: nowrap;
+}
+.ParametrizedActionControl .dxeTextBox_xaf
+{
+	width: 130px;
+}
+.ParametrizedActionControl input[type=text]::-ms-clear,
+.dxm-main .dxm-item .TemplatedItem input[type=text]::-ms-clear {
+    display: none;
+}
+/* LookupButton */
+.xafLookupButton {
+	margin-left: 1px;
+}
+.xafLookupButton div.dxb{
+    padding-right:5px !important;
+    padding-left:5px !important;
+}
+.Layout {
+	padding-left: 32px;
+}
+.LayoutTabbedGroupContainer {
+	padding: 16px 5px 5px 5px;
+}
+/* Layout Group Header */
+.GroupHeader 
+{
+	width: 100%;
+	height: 27px;
+	margin: 20px 0px 5px 0px;
+}
+.GroupHeader .Image {
+    padding-left: 20px;
+}
+
+.GroupHeader .Label {
+    padding-left: 20px;
+}
+.GroupHeader:first-child
+{
+	margin: 0px 0px 5px 0px;
+}
+.GroupHeader td {
+}
+.NextColumn .GroupHeader td.L div {
+	width: 35px;
+}
+.GroupHeader td.R div {
+	width: 5px;
+	height: 27px;
+}
+/* Layout Group Content */
+.Layout table.GroupContent {
+	/*margin: 13px 0px 22px 0px;*/
+	width: 100%;
+}
+.Layout td.GroupContent {
+	vertical-align: top;
+}
+.Layout .WebEditorCell {
+	border-collapse: separate;
+	padding: 0px 0px 0px 0px;
+}
+.Layout .WebEditorCell a, .Layout .WebEditorCell a:hover, .Layout .WebEditorCell a:visited{
+	text-decoration: underline;
+}
+.Layout div.Item {
+	padding: 2px 5px 2px 5px;
+}
+.Layout .NextColumn div.Item {
+	padding: 2px 5px 2px 5px;
+}
+.Layout .LayoutTabContainer {
+	margin: 0px !important;
+}
+.Layout .HItem {
+	vertical-align: top;
+}
+.StaticText {
+}
+.Layout .haLeft 
+{
+	text-align: left !important;
+}
+.Layout .haRight 
+{
+	text-align: right !important;
+}
+.Layout .haCenter 
+{
+	text-align: center !important;
+}
+
+.Layout .vaTop
+{
+	vertical-align: top !important;
+}
+.Layout .vaCenter
+{
+	vertical-align: middle !important;
+}
+.Layout .vaBottom 
+{
+	vertical-align: bottom !important;
+}
+.Layout .Item .ACH 
+{
+	margin: 1px 0px;
+}
+.Layout .Item .ACH .ParametrizedActionControl 
+{
+	margin: 0px !important;
+}
+/* Grid */
+td.ActionCell 
+{
+	text-align: center;
+	white-space: nowrap;
+}
+td.ActionCell *
+{
+	white-space: nowrap;
+}
+.xafGridColumnChooser
+{
+	text-align: right;
+	padding: 3px;
+}
+.xafGridPageSizeChooserLabel
+{
+	padding: 3px;
+	white-space: nowrap;
+}
+/* Chart */
+.xafChartPanel label {
+	font-size: 85%;
+}
+.xafChartPanel .dxeMemoEditArea_xaf label {
+	font-size: 100%;
+}
+/* ActionContainerHolder */
+.ACH .TemplatedItem 
+{
+	padding: 0px 10px 0px 10px;
+}
+.ACH .dxm-item .TemplatedItem 
+{
+	padding: 1px 10px 0px 9px;
+}
+.ACV .dxm-main .TemplatedItem
+{
+    padding-left: 32px !important;
+}
+/* TreeList Node Template:
+   NavigationDataCellTemplate and ASPxTreeListDataCellTemplateImageDecorator */
+.TextCell
+{
+	padding-left: 5px;
+}
+.XafTreeNode .ImageCell 
+{
+	width: 16px;
+	vertical-align: top;
+}
+.XafTreeNode .TextCell 
+{
+	padding: 0px 5px;
+	font-size: 90%;
+}
+/* FileDataEdit */
+.XafFileDataAnchor
+{
+	white-space:nowrap;
+	margin-right: 5px;
+}
+/* DropDownSingleChoiceActionControlHorizontal */
+.SingleChoiceActionItemLabel
+{
+    padding-left: 9px;
+    padding-right: 5px;
+}
+.xafLookupEditor 
+{
+	border-collapse: separate;
+}
+/*B254142*/
+ .menuButtons .dxm-content
+{
+    min-width: 60px!important; 
+    text-align:center;
+}
+.TemplatedItem
+{
+	border-collapse:separate!important;
+}

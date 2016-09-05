@@ -1,0 +1,400 @@
+.dxcvControl_Aqua,
+.dxcvDisabled_Aqua
+{
+    border: 1px Solid #A3C0E8;
+    font: 12px Tahoma, Geneva, sans-serif;
+    background-color: #FFFFFF;
+    color: #4F4F4F;
+    cursor: default;
+}
+.dxcvDisabled_Aqua
+{
+    color: Gray;
+}
+.dxcvControl_Aqua a
+{
+    color: #3F66A0;
+}
+.dxcvControl_Aqua a:hover
+{
+    color: #F39128;
+}
+.dxcvDisabled_Aqua a
+{
+    color: Gray;
+}
+
+.dxcvLoadingPanel_Aqua,
+.dxcvLoadingPanelWithContent_Aqua 
+{
+    font: 12px Tahoma, Geneva, sans-serif;
+    color: #2C4D79;
+    background-color: White;
+    border: 1px solid #67A2C6;
+}
+.dxcvLoadingPanel_Aqua  td.dx,
+.dxcvLoadingPanelWithContent_Aqua td.dx
+{
+    white-space: nowrap;
+    text-align: center;
+    padding: 10px 20px 8px;
+}
+.dxcvLoadingPanel_Aqua .dxlp-loadingImage,
+.dxcvLoadingPanelWithContent_Aqua .dxlp-loadingImage,
+.dxcvLoadingPanelStatusBar_Aqua .dxlp-loadingImage
+{
+    background-image: url('../Web/Loading.gif');
+    height:18px;
+    width:18px;
+}
+.dxcvLoadingPanelStatusBar_Aqua
+{
+    background-color: transparent;
+}
+.dxcvLoadingPanelStatusBar_Aqua td
+{
+    white-space: nowrap;
+    text-align: center;
+    padding: 0px 2px;
+}
+
+.dxcvFilterPopupWindow_Aqua
+{
+    color: Black;
+    border: 1px solid #A3C0E8;
+}
+.dxcvFilterPopupItemsArea_Aqua
+{
+    color: Black;
+    background-color: #FFFFFF;
+}
+.dxcvFilterPopupButtonPanel_Aqua
+{
+    background-color: #ECF4FE;
+    border: 1px solid #AECAF0;
+    color: #2C4D79;
+}
+
+.dxcvFilterPopupItem_Aqua td.dxcv,
+.dxcvFilterPopupActiveItem_Aqua td.dxcv,
+.dxcvFilterPopupSelectedItem_Aqua td.dxcv
+{
+    padding: 3px 2px 4px 4px;
+    cursor: default;
+    white-space: nowrap;
+}
+.dxcvFilterPopupActiveItem_Aqua
+{
+    background-color: #FFE7A2;
+    color: Black;
+}
+.dxcvFilterPopupSelectedItem_Aqua
+{
+    color: Black;
+    background-color: #FFBD69;
+}
+
+.dxcvTable_Aqua
+{
+    background-color: #FFFFFF;
+    border-width: 0;
+    border-collapse: separate!important;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.dxcvHeader_Aqua
+{
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 5px;
+    border: 1px Solid #A3C0E8;
+    background: #E2F0FF url('cvHeaderBackground.gif') repeat-x top;
+    overflow: hidden;
+    font-weight: normal;
+    text-align: left;
+}
+
+.dxcvHeader_Aqua a,
+.dxcvHeader_Aqua a:hover
+{
+    color: #3F66A0;
+}
+
+.dxcvHeader_Aqua,
+.dxcvHeader_Aqua table
+{
+    color: #283B56;
+}
+.dxcvHeader_Aqua td
+{
+    white-space: nowrap;
+}
+
+.dxcvCustomization_Aqua,
+.dxcvPopupEditForm_Aqua
+{
+    padding: 0;
+    margin: 0;
+}
+
+.dxcvTitlePanel_Aqua,
+.dxcvTable_Aqua caption
+{
+    font-weight: normal;
+    padding: 5px 5px 6px;
+    text-align: center;
+    border-bottom: 1px Solid #A3C0E8;
+    color: #283B56;
+    background-color: #F7FAFF;
+}
+.dxcvStatusBar_Aqua
+{
+    border-top: 1px Solid #A3C0E8;
+    background-color: #EEF3FF;
+}
+.dxcvStatusBar_Aqua tr.dxcv
+{
+    height: 20px;
+}
+.dxcvStatusBar_Aqua tr.dxcv > td
+{
+    padding: 4px;
+}
+
+.dxcvCommandItem_Aqua
+{
+    padding: 2px 0px 2px 2px;
+}
+.dxcvCommandItem_Aqua a
+{
+    margin: 0px 3px 0px 0px;
+}
+
+.dxbButton_Aqua[class~="dxcvCommandItem_Aqua"]
+{
+    margin: 0px 2px -1px;
+}
+.dxbButton_Aqua[class~="dxcvCommandItem_Aqua"] .dxb
+{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+
+.dxcvFilterBar_Aqua
+{
+    border-top: 1px solid #A3C0E8;
+    background: #B7D7FF none;
+}
+.dxcvFilterBar_Aqua a
+{
+    color: #283B56;
+    text-decoration: underline;
+}
+.dxcvFilterBar_Aqua a:hover
+{
+    color: #F39128;
+}
+.dxcvFilterBarCheckBoxCell_Aqua
+{
+    padding: 0 7px 0 3px;
+}
+.dxcvFilterBarImageCell_Aqua
+{
+    padding: 0 1px 0 3px;
+    cursor: pointer;
+}
+.dxcvFilterBarExpressionCell_Aqua
+{
+    padding: 5px 5px 8px 0;
+    white-space: nowrap;
+}
+.dxcvFilterBarClearButtonCell_Aqua
+{
+    padding: 5px 6px 8px;
+}
+.dxcvFilterBuilderMainArea_Aqua
+{
+    background: white none;
+    padding: 6px 2px;
+} 
+.dxcvFilterBuilderButtonArea_Aqua
+{
+    background-color: #EEF3FF;
+    border-top: 1px solid #A3C0E8;
+    padding: 6px;
+    white-space: nowrap;
+}
+
+.dxcvPagerBottomPanel_Aqua, 
+.dxcvPagerTopPanel_Aqua
+{
+    padding-top: 4px;
+    padding-bottom: 4px;
+    background: #C6DEFF url('cvPagerBottomPanelBackground.gif') repeat-x;
+}
+.dxcvPagerTopPanel_Aqua
+{
+    border-bottom: 1px solid #A3C0E8;
+}
+.dxcvPagerBottomPanel_Aqua
+{
+    border-top: 1px solid #A3C0E8;
+}
+
+.dxcvControl_Aqua .dxpLite_Aqua,
+.dxcvDisabled_Aqua .dxpLite_Aqua
+{
+    padding: 6px 0;
+}
+
+.dxcvControl_Aqua .dxpSummary_Aqua,
+.dxcvControl_Aqua .dxpPageSizeItem_Aqua
+{
+    color: #283B56;
+}
+
+.dxcvControl_Aqua .dxpLite_Aqua .dx-summary,
+.dxcvControl_Aqua .dxpLite_Aqua .dxp-pageSizeItem
+{
+    color: #283B56;
+}
+
+.dxcvControl_Aqua .dxcvHFSAC
+{
+    padding: 10px 0 0 5px;
+}
+.dxcvControl_Aqua .dxcvHFSC
+{
+    padding: 10px 0 6px;
+}
+.dxcvControl_Aqua .dxcvHFSC div
+{
+    height: 1px;
+    background: #8BB6EF;
+}
+.dxcvControl_Aqua div[id$='DXEPLPC']
+{
+    height: 60px;
+}
+
+/* Removes flicking in iOS Safari*/
+.dxcvTable_Aqua
+{
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.dxcvSearchPanel_Aqua
+{
+    border-bottom: 1px solid #A3C0E8;
+    background: #ECF4FE;
+    padding: 10px 4px 10px 6px;
+}
+.dxcvSearchPanel_Aqua > table 
+{
+    width: 70%;
+    max-width: 450px;
+}
+.dxcvControl_Aqua .dxcvSearchPanel_Aqua .dxbButton_Aqua
+{
+    margin-left: 7px;
+    margin-right: 0;
+}
+*[dir="rtl"].dxcvControl_Aqua .dxcvSearchPanel_Aqua .dxbButton_Aqua {
+    margin-left: 0;
+    margin-right: 7px;
+}
+.dxcvControl_Aqua .dxcvHL
+{
+    background: #ffd83a;
+    color: #333333;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.dxcvControl_Aqua .dxcvSearchPanel_Aqua .dxbButton_Aqua
+{
+    font-size: 0.9em;
+    margin-top: -2px;
+    margin-bottom: -2px;
+}
+.dxcvControl_Aqua .dxcvSearchPanel_Aqua .dxbButton_Aqua .dxb
+{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+
+.dxcvCard_Aqua,
+.dxcvFlowCard_Aqua,
+.dxcvEmptyCard_Aqua
+{
+    width: 250px;
+    height: 180px;
+    vertical-align: top;
+}
+.dxcvCard_Aqua,
+.dxcvFlowCard_Aqua
+{
+    border: 1px solid #AECAF0;
+    background-color: #DBEBFF;
+    color: #212326;
+    outline: none;
+}
+.dxcvEmptyCard_Aqua
+{
+    border: 1px solid transparent;
+    background-color: transparent;
+}
+.dxcvFlowCard_Aqua
+{
+    display: inline-block;
+    margin: 20px 0 0 20px;
+    overflow: hidden;
+}
+.dxcvSelectedCard_Aqua,
+.dxcvFocusedCard_Aqua
+{
+    border-color: #D9A159;
+    outline: 3px solid #FFBD69;
+}
+.dxcvFocusedCard_Aqua
+{
+    background-color: White;
+}
+.dxcvCardHover_Aqua
+{
+    border-color: #D9C58A;
+    outline: 3px solid #FFE7A2;
+}
+
+.dxcvCard_Aqua .dxflCaption_Aqua,
+.dxcvFlowCard_Aqua .dxflCaption_Aqua
+{
+    color: #7F7F7F;
+}
+.dxcvCard_Aqua .dxcvViewLayout .dxflItem_Aqua,
+.dxcvFlowCard_Aqua .dxcvViewLayout .dxflItem_Aqua
+{
+    padding-top: 5px;
+    padding-bottom: 4px;
+}
+.dxcvCard_Aqua .dxcvViewLayout .dxflCommandItemSys,
+.dxcvFlowCard_Aqua .dxcvViewLayout .dxflCommandItemSys
+{
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.dxcvCustPanel_Aqua
+{
+    background: White;
+    padding: 15px 20px 0 15px;
+    text-align: right;
+}
+.dxcvControl_Aqua .dxcvSeparator_Aqua,
+.dxcvControl_Aqua .dxcvSeparator_Aqua div
+{
+    width: 20px;
+    height: 20px;
+}

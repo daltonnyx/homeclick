@@ -16,6 +16,7 @@ namespace VCMS.Lib.Common
                         new RouteValueDictionary(
                             new
                             {
+                                area = "Manager",
                                 controller = "Account",
                                 action = "Login",
                                 returnUrl = filterContext.HttpContext.Request.Url.GetComponents(UriComponents.PathAndQuery, UriFormat.SafeUnescaped)

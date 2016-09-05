@@ -1,0 +1,1472 @@
+.dxigControl_Aqua.dxTouchUI .dxWeb_igCloseButton_Aqua,
+.dxigControl_Aqua.dxTouchUI .dxWeb_igPauseButton_Aqua,
+.dxigControl_Aqua.dxTouchUI .dxWeb_igPlayButton_Aqua,
+.dxpc-collapseBtnChecked .dxWeb_pcCollapseButton_Aqua,
+.dxpc-maximizeBtnChecked .dxWeb_pcMaximizeButton_Aqua,
+.dxpc-pinBtnChecked .dxWeb_pcPinButton_Aqua,
+.dxp-hoverDropDownButton .dxWeb_pPopOut_Aqua,
+.dxpnl-btnHover .dxWeb_pnlExpand_Aqua,
+.dxpnl-btnHover .dxWeb_pnlExpandArrowBottom_Aqua,
+.dxpnl-btnHover .dxWeb_pnlExpandArrowLeft_Aqua,
+.dxpnl-btnHover .dxWeb_pnlExpandArrowRight_Aqua,
+.dxpnl-btnHover .dxWeb_pnlExpandArrowTop_Aqua,
+.dxpnl-btnPressed .dxWeb_pnlExpand_Aqua,
+.dxpnl-btnPressed .dxWeb_pnlExpandArrowBottom_Aqua,
+.dxpnl-btnPressed .dxWeb_pnlExpandArrowLeft_Aqua,
+.dxpnl-btnPressed .dxWeb_pnlExpandArrowRight_Aqua,
+.dxpnl-btnPressed .dxWeb_pnlExpandArrowTop_Aqua,
+.dxpnl-btnSelected .dxWeb_pnlExpand_Aqua,
+.dxpnl-btnSelected .dxWeb_pnlExpandArrowBottom_Aqua,
+.dxpnl-btnSelected .dxWeb_pnlExpandArrowLeft_Aqua,
+.dxpnl-btnSelected .dxWeb_pnlExpandArrowRight_Aqua,
+.dxpnl-btnSelected .dxWeb_pnlExpandArrowTop_Aqua,
+.dxpnl-btnSelected.dxpnl-btnHover .dxWeb_pnlExpand_Aqua,
+.dxpnl-btnSelected.dxpnl-btnHover .dxWeb_pnlExpandArrowBottom_Aqua,
+.dxpnl-btnSelected.dxpnl-btnHover .dxWeb_pnlExpandArrowLeft_Aqua,
+.dxpnl-btnSelected.dxpnl-btnHover .dxWeb_pnlExpandArrowRight_Aqua,
+.dxpnl-btnSelected.dxpnl-btnHover .dxWeb_pnlExpandArrowTop_Aqua,
+.dxpnl-btnSelected.dxpnl-btnPressed .dxWeb_pnlExpand_Aqua,
+.dxpnl-btnSelected.dxpnl-btnPressed .dxWeb_pnlExpandArrowBottom_Aqua,
+.dxpnl-btnSelected.dxpnl-btnPressed .dxWeb_pnlExpandArrowLeft_Aqua,
+.dxpnl-btnSelected.dxpnl-btnPressed .dxWeb_pnlExpandArrowRight_Aqua,
+.dxpnl-btnSelected.dxpnl-btnPressed .dxWeb_pnlExpandArrowTop_Aqua,
+.dxp-pressedDropDownButton .dxWeb_pPopOut_Aqua,
+.dxrpCollapsed .dxWeb_rpCollapseButton_Aqua,
+.dxWeb_edtCheckBoxChecked_Aqua,
+.dxWeb_edtCheckBoxCheckedDisabled_Aqua,
+.dxWeb_edtCheckBoxGrayed_Aqua,
+.dxWeb_edtCheckBoxGrayedDisabled_Aqua,
+.dxWeb_edtCheckBoxUnchecked_Aqua,
+.dxWeb_edtCheckBoxUncheckedDisabled_Aqua,
+.dxWeb_fmBreadCrumbsSeparatorArrow_Aqua,
+.dxWeb_fmBreadCrumbsUpButton_Aqua,
+.dxWeb_fmBreadCrumbsUpButtonDisabled_Aqua,
+.dxWeb_fmCopyButton_Aqua,
+.dxWeb_fmCopyButtonDisabled_Aqua,
+.dxWeb_fmCreateButton_Aqua,
+.dxWeb_fmCreateButtonDisabled_Aqua,
+.dxWeb_fmDeleteButton_Aqua,
+.dxWeb_fmDeleteButtonDisabled_Aqua,
+.dxWeb_fmDwnlButton_Aqua,
+.dxWeb_fmDwnlButtonDisabled_Aqua,
+.dxWeb_fmFolder_Aqua,
+.dxWeb_fmFolderLocked_Aqua,
+.dxWeb_fmGvHeaderFilter_Aqua,
+.dxWeb_fmGvHeaderFilterActive_Aqua,
+.dxWeb_fmMoveButton_Aqua,
+.dxWeb_fmMoveButtonDisabled_Aqua,
+.dxWeb_fmRefreshButton_Aqua,
+.dxWeb_fmRefreshButtonDisabled_Aqua,
+.dxWeb_fmRenameButton_Aqua,
+.dxWeb_fmRenameButtonDisabled_Aqua,
+.dxWeb_fmThumbnailCheck_Aqua,
+.dxWeb_fmUplButton_Aqua,
+.dxWeb_fmUplButtonDisabled_Aqua,
+.dxWeb_igCloseButton_Aqua,
+.dxWeb_igNavigationBarMarker_Aqua,
+.dxWeb_igNextButton_Aqua,
+.dxWeb_igNextButtonDisabled_Aqua,
+.dxWeb_igNextButtonHover_Aqua,
+.dxWeb_igNextButtonPressed_Aqua,
+.dxWeb_igPauseButton_Aqua,
+.dxWeb_igPlayButton_Aqua,
+.dxWeb_igPrevButton_Aqua,
+.dxWeb_igPrevButtonDisabled_Aqua,
+.dxWeb_igPrevButtonHover_Aqua,
+.dxWeb_igPrevButtonPressed_Aqua,
+.dxWeb_isDot_Aqua,
+.dxWeb_isDotDisabled_Aqua,
+.dxWeb_isDotPressed_Aqua,
+.dxWeb_isDotSelected_Aqua,
+.dxWeb_isNextBtnHor_Aqua,
+.dxWeb_isNextBtnHorDisabled_Aqua,
+.dxWeb_isNextBtnVert_Aqua,
+.dxWeb_isNextBtnVertDisabled_Aqua,
+.dxWeb_isNextPageBtnHor_Aqua,
+.dxWeb_isNextPageBtnHorDisabled_Aqua,
+.dxWeb_isNextPageBtnHorOutside_Aqua,
+.dxWeb_isNextPageBtnHorOutsideDisabled_Aqua,
+.dxWeb_isNextPageBtnVert_Aqua,
+.dxWeb_isNextPageBtnVertDisabled_Aqua,
+.dxWeb_isNextPageBtnVertOutside_Aqua,
+.dxWeb_isNextPageBtnVertOutsideDisabled_Aqua,
+.dxWeb_isPauseBtn_Aqua,
+.dxWeb_isPlayBtn_Aqua,
+.dxWeb_isPrevBtnHor_Aqua,
+.dxWeb_isPrevBtnHorDisabled_Aqua,
+.dxWeb_isPrevBtnVert_Aqua,
+.dxWeb_isPrevBtnVertDisabled_Aqua,
+.dxWeb_isPrevPageBtnHor_Aqua,
+.dxWeb_isPrevPageBtnHorDisabled_Aqua,
+.dxWeb_isPrevPageBtnHorOutside_Aqua,
+.dxWeb_isPrevPageBtnHorOutsideDisabled_Aqua,
+.dxWeb_isPrevPageBtnVert_Aqua,
+.dxWeb_isPrevPageBtnVertDisabled_Aqua,
+.dxWeb_isPrevPageBtnVertOutside_Aqua,
+.dxWeb_isPrevPageBtnVertOutsideDisabled_Aqua,
+.dxWeb_izEWCloseButton_Aqua,
+.dxWeb_izHint_Aqua,
+.dxWeb_mAdaptiveMenu_Aqua,
+.dxWeb_mHorizontalPopOut_Aqua,
+.dxWeb_mScrollDown_Aqua,
+.dxWeb_mScrollUp_Aqua,
+.dxWeb_mSubMenuItem_Aqua,
+.dxWeb_mSubMenuItemChecked_Aqua,
+.dxWeb_mVerticalPopOut_Aqua,
+.dxWeb_mVerticalPopOutRtl_Aqua,
+.dxWeb_nbCollapse_Aqua,
+.dxWeb_nbExpand_Aqua,
+.dxWeb_pAll_Aqua,
+.dxWeb_pAllDisabled_Aqua,
+.dxWeb_pcCloseButton_Aqua,
+.dxWeb_pcCollapseButton_Aqua,
+.dxWeb_pcMaximizeButton_Aqua,
+.dxWeb_pcPinButton_Aqua,
+.dxWeb_pcRefreshButton_Aqua,
+.dxWeb_pcSizeGrip_Aqua,
+.dxWeb_pcSizeGripRtl_Aqua,
+.dxWeb_pFirst_Aqua,
+.dxWeb_pFirstDisabled_Aqua,
+.dxWeb_pLast_Aqua,
+.dxWeb_pLastDisabled_Aqua,
+.dxWeb_pNext_Aqua,
+.dxWeb_pNextDisabled_Aqua,
+.dxWeb_pnlExpand_Aqua,
+.dxWeb_pnlExpandArrowBottom_Aqua,
+.dxWeb_pnlExpandArrowLeft_Aqua,
+.dxWeb_pnlExpandArrowRight_Aqua,
+.dxWeb_pnlExpandArrowTop_Aqua,
+.dxWeb_pPopOut_Aqua,
+.dxWeb_pPopOutDisabled_Aqua,
+.dxWeb_pPrev_Aqua,
+.dxWeb_pPrevDisabled_Aqua,
+.dxWeb_rDialogBoxLauncher_Aqua,
+.dxWeb_rDialogBoxLauncherDisabled_Aqua,
+.dxWeb_rDialogBoxLauncherHover_Aqua,
+.dxWeb_rDialogBoxLauncherPressed_Aqua,
+.dxWeb_rGlrDown_Aqua,
+.dxWeb_rGlrDownDisabled_Aqua,
+.dxWeb_rGlrPopOut_Aqua,
+.dxWeb_rGlrPopOutDisabled_Aqua,
+.dxWeb_rGlrUp_Aqua,
+.dxWeb_rGlrUpDisabled_Aqua,
+.dxWeb_rMinBtn_Aqua,
+.dxWeb_rMinBtn_Aqua.dxWeb_rMinBtnHover_Aqua,
+.dxWeb_rMinBtn_Aqua.dxWeb_rMinBtnPressed_Aqua,
+.dxWeb_rMinBtnChecked_Aqua.dxWeb_rMinBtn_Aqua,
+.dxWeb_rMinBtnChecked_Aqua.dxWeb_rMinBtnDisabled_Aqua,
+.dxWeb_rMinBtnChecked_Aqua.dxWeb_rMinBtnHover_Aqua,
+.dxWeb_rMinBtnChecked_Aqua.dxWeb_rMinBtnPressed_Aqua,
+.dxWeb_rMinBtnDisabled_Aqua,
+.dxWeb_rpCollapseButton_Aqua,
+.dxWeb_rPopOut_Aqua,
+.dxWeb_smBullet_Aqua,
+.dxWeb_splHCollapseBackwardButton_Aqua,
+.dxWeb_splHCollapseBackwardButtonHover_Aqua,
+.dxWeb_splHCollapseForwardButton_Aqua,
+.dxWeb_splHCollapseForwardButtonHover_Aqua,
+.dxWeb_splHSeparator_Aqua,
+.dxWeb_splHSeparatorHover_Aqua,
+.dxWeb_splVCollapseBackwardButton_Aqua,
+.dxWeb_splVCollapseBackwardButtonHover_Aqua,
+.dxWeb_splVCollapseForwardButton_Aqua,
+.dxWeb_splVCollapseForwardButtonHover_Aqua,
+.dxWeb_splVSeparator_Aqua,
+.dxWeb_splVSeparatorHover_Aqua,
+.dxWeb_tcScrollLeft_Aqua,
+.dxWeb_tcScrollLeftDisabled_Aqua,
+.dxWeb_tcScrollLeftHover_Aqua,
+.dxWeb_tcScrollLeftPressed_Aqua,
+.dxWeb_tcScrollRight_Aqua,
+.dxWeb_tcScrollRightDisabled_Aqua,
+.dxWeb_tcScrollRightHover_Aqua,
+.dxWeb_tcScrollRightPressed_Aqua,
+.dxWeb_tiBackToTop_Aqua,
+.dxWeb_tvColBtn_Aqua,
+.dxWeb_tvColBtnRtl_Aqua,
+.dxWeb_tvExpBtn_Aqua,
+.dxWeb_tvExpBtnRtl_Aqua,
+.dxWeb_ucClearButton_Aqua,
+.dxWeb_ucClearButtonDisabled_Aqua
+{
+    background-image: url('sprite.png');
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+.dxigControl_Aqua.dxTouchUI .dxWeb_igCloseButton_Aqua
+{
+    background-position: -24px -222px;
+    width: 23px;
+    height: 23px;
+}
+.dxigControl_Aqua.dxTouchUI .dxWeb_igPauseButton_Aqua
+{
+    background-position: -118px -132px;
+    width: 21px;
+    height: 25px;
+}
+.dxigControl_Aqua.dxTouchUI .dxWeb_igPlayButton_Aqua
+{
+    background-position: -140px -132px;
+    width: 21px;
+    height: 25px;
+}
+.dxpc-collapseBtnChecked .dxWeb_pcCollapseButton_Aqua
+{
+    background-position: -72px -394px;
+    width: 17px;
+    height: 16px;
+}
+.dxpc-maximizeBtnChecked .dxWeb_pcMaximizeButton_Aqua
+{
+    background-position: -36px -394px;
+    width: 17px;
+    height: 16px;
+}
+.dxpc-pinBtnChecked .dxWeb_pcPinButton_Aqua
+{
+    background-position: 0px -394px;
+    width: 17px;
+    height: 16px;
+}
+.dxp-hoverDropDownButton .dxWeb_pPopOut_Aqua
+{
+    background-position: -112px -475px;
+    width: 9px;
+    height: 7px;
+}
+.dxpnl-btnHover .dxWeb_pnlExpand_Aqua
+{
+    background-position: -72px -246px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnHover .dxWeb_pnlExpandArrowBottom_Aqua
+{
+    background-position: -72px -222px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnHover .dxWeb_pnlExpandArrowLeft_Aqua
+{
+    background-position: 0px -270px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnHover .dxWeb_pnlExpandArrowRight_Aqua
+{
+    background-position: -144px -222px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnHover .dxWeb_pnlExpandArrowTop_Aqua
+{
+    background-position: -96px -270px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnPressed .dxWeb_pnlExpand_Aqua
+{
+    background-position: -120px -198px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnPressed .dxWeb_pnlExpandArrowBottom_Aqua
+{
+    background-position: -48px -198px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnPressed .dxWeb_pnlExpandArrowLeft_Aqua
+{
+    background-position: -72px -270px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnPressed .dxWeb_pnlExpandArrowRight_Aqua
+{
+    background-position: -120px -222px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnPressed .dxWeb_pnlExpandArrowTop_Aqua
+{
+    background-position: -144px -198px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnSelected .dxWeb_pnlExpand_Aqua
+{
+    background-position: -96px -198px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnSelected .dxWeb_pnlExpandArrowBottom_Aqua
+{
+    background-position: -24px -270px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnSelected .dxWeb_pnlExpandArrowLeft_Aqua
+{
+    background-position: -96px -222px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnSelected .dxWeb_pnlExpandArrowRight_Aqua
+{
+    background-position: 0px -198px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnSelected .dxWeb_pnlExpandArrowTop_Aqua
+{
+    background-position: -128px -174px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnSelected.dxpnl-btnHover .dxWeb_pnlExpand_Aqua
+{
+    background-position: 0px -246px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnSelected.dxpnl-btnHover .dxWeb_pnlExpandArrowBottom_Aqua
+{
+    background-position: -48px -246px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnSelected.dxpnl-btnHover .dxWeb_pnlExpandArrowLeft_Aqua
+{
+    background-position: -120px -246px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnSelected.dxpnl-btnHover .dxWeb_pnlExpandArrowRight_Aqua
+{
+    background-position: -120px -270px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnSelected.dxpnl-btnHover .dxWeb_pnlExpandArrowTop_Aqua
+{
+    background-position: -152px -174px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnSelected.dxpnl-btnPressed .dxWeb_pnlExpand_Aqua
+{
+    background-position: 0px -222px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnSelected.dxpnl-btnPressed .dxWeb_pnlExpandArrowBottom_Aqua
+{
+    background-position: -48px -222px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnSelected.dxpnl-btnPressed .dxWeb_pnlExpandArrowLeft_Aqua
+{
+    background-position: -144px -270px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnSelected.dxpnl-btnPressed .dxWeb_pnlExpandArrowRight_Aqua
+{
+    background-position: -24px -246px;
+    width: 23px;
+    height: 23px;
+}
+.dxpnl-btnSelected.dxpnl-btnPressed .dxWeb_pnlExpandArrowTop_Aqua
+{
+    background-position: -48px -270px;
+    width: 23px;
+    height: 23px;
+}
+.dxp-pressedDropDownButton .dxWeb_pPopOut_Aqua
+{
+    background-position: -122px -475px;
+    width: 9px;
+    height: 7px;
+}
+.dxrpCollapsed .dxWeb_rpCollapseButton_Aqua
+{
+    background-position: 0px -376px;
+    width: 17px;
+    height: 17px;
+}
+.dxWeb_edtCheckBoxChecked_Aqua
+{
+    background-position: -48px -445px;
+    width: 15px;
+    height: 15px;
+}
+.dxWeb_edtCheckBoxCheckedDisabled_Aqua
+{
+    background-position: -16px -445px;
+    width: 15px;
+    height: 15px;
+}
+.dxWeb_edtCheckBoxGrayed_Aqua
+{
+    background-position: -64px -445px;
+    width: 15px;
+    height: 15px;
+}
+.dxWeb_edtCheckBoxGrayedDisabled_Aqua
+{
+    background-position: -160px -394px;
+    width: 15px;
+    height: 15px;
+}
+.dxWeb_edtCheckBoxUnchecked_Aqua
+{
+    background-position: -32px -445px;
+    width: 15px;
+    height: 15px;
+}
+.dxWeb_edtCheckBoxUncheckedDisabled_Aqua
+{
+    background-position: 0px -445px;
+    width: 15px;
+    height: 15px;
+}
+.dxWeb_fmBreadCrumbsSeparatorArrow_Aqua
+{
+    background-position: -138px -124px;
+    width: 4px;
+    height: 7px;
+}
+.dxWeb_fmBreadCrumbsUpButton_Aqua
+{
+    background-position: -119px -428px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmBreadCrumbsUpButtonDisabled_Aqua
+{
+    background-position: 0px -428px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmCopyButton_Aqua
+{
+    background-position: -153px -428px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmCopyButtonDisabled_Aqua
+{
+    background-position: -85px -411px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmCreateButton_Aqua
+{
+    background-position: -102px -411px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmCreateButtonDisabled_Aqua
+{
+    background-position: -68px -411px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmDeleteButton_Aqua
+{
+    background-position: -51px -428px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmDeleteButtonDisabled_Aqua
+{
+    background-position: -153px -411px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmDwnlButton_Aqua
+{
+    background-position: 0px -411px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmDwnlButtonDisabled_Aqua
+{
+    background-position: -119px -411px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmFolder_Aqua
+{
+    background-position: -34px -411px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmFolderLocked_Aqua
+{
+    background-position: -51px -411px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmGvHeaderFilter_Aqua
+{
+    background-position: 0px -336px;
+    width: 19px;
+    height: 19px;
+}
+.dxWeb_fmGvHeaderFilterActive_Aqua
+{
+    background-position: -100px -356px;
+    width: 19px;
+    height: 19px;
+}
+.dxWeb_fmMoveButton_Aqua
+{
+    background-position: -102px -428px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmMoveButtonDisabled_Aqua
+{
+    background-position: -136px -428px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmRefreshButton_Aqua
+{
+    background-position: -17px -428px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmRefreshButtonDisabled_Aqua
+{
+    background-position: -126px -394px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmRenameButton_Aqua
+{
+    background-position: -68px -428px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmRenameButtonDisabled_Aqua
+{
+    background-position: -136px -411px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmThumbnailCheck_Aqua
+{
+    background-position: -138px -104px;
+    width: 9px;
+    height: 8px;
+}
+.dxWeb_fmUplButton_Aqua
+{
+    background-position: -143px -394px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_fmUplButtonDisabled_Aqua
+{
+    background-position: -34px -428px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_igCloseButton_Aqua
+{
+    background-position: -14px -461px;
+    width: 13px;
+    height: 13px;
+}
+.dxWeb_igNavigationBarMarker_Aqua
+{
+    background-position: -129px -376px;
+    width: 20px;
+    height: 16px;
+}
+.dxWeb_igNextButton_Aqua
+{
+    background-position: -92px -66px;
+    width: 45px;
+    height: 65px;
+}
+.dxWeb_igNextButtonDisabled_Aqua
+{
+    background-position: -46px -66px;
+    width: 45px;
+    height: 65px;
+}
+.dxWeb_igNextButtonHover_Aqua
+{
+    background-position: -46px -132px;
+    width: 45px;
+    height: 65px;
+}
+.dxWeb_igNextButtonPressed_Aqua
+{
+    background-position: 0px 0px;
+    width: 45px;
+    height: 65px;
+}
+.dxWeb_igPauseButton_Aqua
+{
+    background-position: -160px -336px;
+    width: 12px;
+    height: 17px;
+}
+.dxWeb_igPlayButton_Aqua
+{
+    background-position: -116px -376px;
+    width: 12px;
+    height: 17px;
+}
+.dxWeb_igPrevButton_Aqua
+{
+    background-position: -46px 0px;
+    width: 45px;
+    height: 65px;
+}
+.dxWeb_igPrevButtonDisabled_Aqua
+{
+    background-position: 0px -132px;
+    width: 45px;
+    height: 65px;
+}
+.dxWeb_igPrevButtonHover_Aqua
+{
+    background-position: 0px -66px;
+    width: 45px;
+    height: 65px;
+}
+.dxWeb_igPrevButtonPressed_Aqua
+{
+    background-position: -92px 0px;
+    width: 45px;
+    height: 65px;
+}
+.dxWeb_isDot_Aqua
+{
+    background-position: -42px -461px;
+    width: 13px;
+    height: 13px;
+}
+.dxWeb_isDotDisabled_Aqua
+{
+    background-position: -70px -461px;
+    width: 13px;
+    height: 13px;
+}
+.dxWeb_isDotPressed_Aqua
+{
+    background-position: -56px -461px;
+    width: 13px;
+    height: 13px;
+}
+.dxWeb_isDotSelected_Aqua
+{
+    background-position: 0px -461px;
+    width: 13px;
+    height: 13px;
+}
+.dxWeb_isNextBtnHor_Aqua
+{
+    background-position: -138px 0px;
+    width: 18px;
+    height: 31px;
+}
+.dxWeb_isNextBtnHorDisabled_Aqua
+{
+    background-position: -138px -34px;
+    width: 18px;
+    height: 31px;
+}
+.dxWeb_isNextBtnVert_Aqua
+{
+    background-position: -120px -294px;
+    width: 29px;
+    height: 19px;
+}
+.dxWeb_isNextBtnVertDisabled_Aqua
+{
+    background-position: -60px -294px;
+    width: 29px;
+    height: 19px;
+}
+.dxWeb_isNextPageBtnHor_Aqua
+{
+    background-position: 0px -294px;
+    width: 14px;
+    height: 21px;
+}
+.dxWeb_isNextPageBtnHorDisabled_Aqua
+{
+    background-position: -15px -294px;
+    width: 14px;
+    height: 21px;
+}
+.dxWeb_isNextPageBtnHorOutside_Aqua
+{
+    background-position: -163px -103px;
+    width: 12px;
+    height: 28px;
+}
+.dxWeb_isNextPageBtnHorOutsideDisabled_Aqua
+{
+    background-position: -92px -132px;
+    width: 12px;
+    height: 28px;
+}
+.dxWeb_isNextPageBtnVert_Aqua
+{
+    background-position: -150px -159px;
+    width: 21px;
+    height: 14px;
+}
+.dxWeb_isNextPageBtnVertDisabled_Aqua
+{
+    background-position: -124px -445px;
+    width: 21px;
+    height: 14px;
+}
+.dxWeb_isNextPageBtnVertOutside_Aqua
+{
+    background-position: -113px -461px;
+    width: 28px;
+    height: 12px;
+}
+.dxWeb_isNextPageBtnVertOutsideDisabled_Aqua
+{
+    background-position: -92px -161px;
+    width: 28px;
+    height: 12px;
+}
+.dxWeb_isPauseBtn_Aqua
+{
+    background-position: -103px -376px;
+    width: 12px;
+    height: 17px;
+}
+.dxWeb_isPlayBtn_Aqua
+{
+    background-position: -90px -376px;
+    width: 12px;
+    height: 17px;
+}
+.dxWeb_isPrevBtnHor_Aqua
+{
+    background-position: -157px -34px;
+    width: 18px;
+    height: 31px;
+}
+.dxWeb_isPrevBtnHorDisabled_Aqua
+{
+    background-position: -157px 0px;
+    width: 18px;
+    height: 31px;
+}
+.dxWeb_isPrevBtnVert_Aqua
+{
+    background-position: -90px -294px;
+    width: 29px;
+    height: 19px;
+}
+.dxWeb_isPrevBtnVertDisabled_Aqua
+{
+    background-position: 0px -316px;
+    width: 29px;
+    height: 19px;
+}
+.dxWeb_isPrevPageBtnHor_Aqua
+{
+    background-position: -45px -294px;
+    width: 14px;
+    height: 21px;
+}
+.dxWeb_isPrevPageBtnHorDisabled_Aqua
+{
+    background-position: -30px -294px;
+    width: 14px;
+    height: 21px;
+}
+.dxWeb_isPrevPageBtnHorOutside_Aqua
+{
+    background-position: -105px -132px;
+    width: 12px;
+    height: 28px;
+}
+.dxWeb_isPrevPageBtnHorOutsideDisabled_Aqua
+{
+    background-position: -150px -103px;
+    width: 12px;
+    height: 28px;
+}
+.dxWeb_isPrevPageBtnVert_Aqua
+{
+    background-position: -102px -445px;
+    width: 21px;
+    height: 14px;
+}
+.dxWeb_isPrevPageBtnVertDisabled_Aqua
+{
+    background-position: -80px -445px;
+    width: 21px;
+    height: 14px;
+}
+.dxWeb_isPrevPageBtnVertOutside_Aqua
+{
+    background-position: -84px -461px;
+    width: 28px;
+    height: 12px;
+}
+.dxWeb_isPrevPageBtnVertOutsideDisabled_Aqua
+{
+    background-position: -121px -161px;
+    width: 28px;
+    height: 12px;
+}
+.dxWeb_izEWCloseButton_Aqua
+{
+    background-position: -138px -66px;
+    width: 25px;
+    height: 25px;
+}
+.dxWeb_izHint_Aqua
+{
+    background-position: -138px -356px;
+    width: 17px;
+    height: 17px;
+}
+.dxWeb_mAdaptiveMenu_Aqua
+{
+    background-position: -161px -475px;
+    width: 12px;
+    height: 4px;
+}
+.dxWeb_mHorizontalPopOut_Aqua
+{
+    background-position: -168px -214px;
+    width: 7px;
+    height: 7px;
+}
+.dxWeb_mScrollDown_Aqua
+{
+    background-position: -168px -246px;
+    width: 7px;
+    height: 5px;
+}
+.dxWeb_mScrollUp_Aqua
+{
+    background-position: -92px -174px;
+    width: 7px;
+    height: 5px;
+}
+.dxWeb_mSubMenuItem_Aqua
+{
+    background-position: -161px -445px;
+    width: 14px;
+    height: 14px;
+}
+.dxWeb_mSubMenuItemChecked_Aqua
+{
+    background-position: -146px -445px;
+    width: 14px;
+    height: 14px;
+}
+.dxWeb_mVerticalPopOut_Aqua
+{
+    background-position: -164px -91px;
+    width: 11px;
+    height: 11px;
+}
+.dxWeb_mVerticalPopOutRtl_Aqua
+{
+    background-position: -164px -66px;
+    width: 11px;
+    height: 11px;
+}
+.dxWeb_nbCollapse_Aqua
+{
+    background-position: -120px -356px;
+    width: 17px;
+    height: 17px;
+}
+.dxWeb_nbExpand_Aqua
+{
+    background-position: -156px -356px;
+    width: 17px;
+    height: 17px;
+}
+.dxWeb_pAll_Aqua
+{
+    background-position: -58px -316px;
+    width: 27px;
+    height: 19px;
+}
+.dxWeb_pAllDisabled_Aqua
+{
+    background-position: -30px -316px;
+    width: 27px;
+    height: 19px;
+}
+.dxWeb_pcCloseButton_Aqua
+{
+    background-position: -18px -394px;
+    width: 17px;
+    height: 16px;
+}
+.dxWeb_pcCollapseButton_Aqua
+{
+    background-position: -108px -394px;
+    width: 17px;
+    height: 16px;
+}
+.dxWeb_pcMaximizeButton_Aqua
+{
+    background-position: -54px -394px;
+    width: 17px;
+    height: 16px;
+}
+.dxWeb_pcPinButton_Aqua
+{
+    background-position: -90px -394px;
+    width: 17px;
+    height: 16px;
+}
+.dxWeb_pcRefreshButton_Aqua
+{
+    background-position: -150px -376px;
+    width: 17px;
+    height: 16px;
+}
+.dxWeb_pcSizeGrip_Aqua
+{
+    background-position: -155px -461px;
+    width: 12px;
+    height: 12px;
+}
+.dxWeb_pcSizeGripRtl_Aqua
+{
+    background-position: 0px -475px;
+    width: 12px;
+    height: 12px;
+}
+.dxWeb_pFirst_Aqua
+{
+    background-position: -134px -316px;
+    width: 23px;
+    height: 19px;
+}
+.dxWeb_pFirstDisabled_Aqua
+{
+    background-position: -86px -316px;
+    width: 23px;
+    height: 19px;
+}
+.dxWeb_pLast_Aqua
+{
+    background-position: -110px -316px;
+    width: 23px;
+    height: 19px;
+}
+.dxWeb_pLastDisabled_Aqua
+{
+    background-position: -150px -294px;
+    width: 23px;
+    height: 19px;
+}
+.dxWeb_pNext_Aqua
+{
+    background-position: -40px -336px;
+    width: 19px;
+    height: 19px;
+}
+.dxWeb_pNextDisabled_Aqua
+{
+    background-position: 0px -356px;
+    width: 19px;
+    height: 19px;
+}
+.dxWeb_pnlExpand_Aqua
+{
+    background-position: -72px -198px;
+    width: 23px;
+    height: 23px;
+}
+.dxWeb_pnlExpandArrowBottom_Aqua
+{
+    background-position: -144px -246px;
+    width: 23px;
+    height: 23px;
+}
+.dxWeb_pnlExpandArrowLeft_Aqua
+{
+    background-position: -96px -246px;
+    width: 23px;
+    height: 23px;
+}
+.dxWeb_pnlExpandArrowRight_Aqua
+{
+    background-position: -24px -198px;
+    width: 23px;
+    height: 23px;
+}
+.dxWeb_pnlExpandArrowTop_Aqua
+{
+    background-position: -104px -174px;
+    width: 23px;
+    height: 23px;
+}
+.dxWeb_pPopOut_Aqua
+{
+    background-position: -102px -475px;
+    width: 9px;
+    height: 7px;
+}
+.dxWeb_pPopOutDisabled_Aqua
+{
+    background-position: -132px -475px;
+    width: 9px;
+    height: 7px;
+}
+.dxWeb_pPrev_Aqua
+{
+    background-position: -20px -336px;
+    width: 19px;
+    height: 19px;
+}
+.dxWeb_pPrevDisabled_Aqua
+{
+    background-position: -60px -336px;
+    width: 19px;
+    height: 19px;
+}
+.dxWeb_rDialogBoxLauncher_Aqua
+{
+    background-position: -13px -475px;
+    width: 12px;
+    height: 12px;
+}
+.dxWeb_rDialogBoxLauncherDisabled_Aqua
+{
+    background-position: -142px -461px;
+    width: 12px;
+    height: 12px;
+}
+.dxWeb_rDialogBoxLauncherHover_Aqua
+{
+    background-position: -26px -475px;
+    width: 12px;
+    height: 12px;
+}
+.dxWeb_rDialogBoxLauncherPressed_Aqua
+{
+    background-position: -39px -475px;
+    width: 12px;
+    height: 12px;
+}
+.dxWeb_rGlrDown_Aqua
+{
+    background-position: -138px -92px;
+    width: 5px;
+    height: 3px;
+}
+.dxWeb_rGlrDownDisabled_Aqua
+{
+    background-position: -144px -92px;
+    width: 5px;
+    height: 3px;
+}
+.dxWeb_rGlrPopOut_Aqua
+{
+    background-position: -168px -258px;
+    width: 5px;
+    height: 5px;
+}
+.dxWeb_rGlrPopOutDisabled_Aqua
+{
+    background-position: -162px -153px;
+    width: 5px;
+    height: 5px;
+}
+.dxWeb_rGlrUp_Aqua
+{
+    background-position: -164px -78px;
+    width: 5px;
+    height: 3px;
+}
+.dxWeb_rGlrUpDisabled_Aqua
+{
+    background-position: -150px -92px;
+    width: 5px;
+    height: 3px;
+}
+.dxWeb_rMinBtn_Aqua
+{
+    background-position: -52px -475px;
+    width: 9px;
+    height: 8px;
+}
+.dxWeb_rMinBtn_Aqua.dxWeb_rMinBtnHover_Aqua
+{
+    background-position: -92px -475px;
+    width: 9px;
+    height: 8px;
+}
+.dxWeb_rMinBtn_Aqua.dxWeb_rMinBtnPressed_Aqua
+{
+    background-position: -72px -475px;
+    width: 9px;
+    height: 8px;
+}
+.dxWeb_rMinBtnChecked_Aqua.dxWeb_rMinBtn_Aqua
+{
+    background-position: -62px -475px;
+    width: 9px;
+    height: 8px;
+}
+.dxWeb_rMinBtnChecked_Aqua.dxWeb_rMinBtnDisabled_Aqua
+{
+    background-position: -164px -82px;
+    width: 9px;
+    height: 8px;
+}
+.dxWeb_rMinBtnChecked_Aqua.dxWeb_rMinBtnHover_Aqua
+{
+    background-position: -82px -475px;
+    width: 9px;
+    height: 8px;
+}
+.dxWeb_rMinBtnChecked_Aqua.dxWeb_rMinBtnPressed_Aqua
+{
+    background-position: -94px -189px;
+    width: 9px;
+    height: 8px;
+}
+.dxWeb_rMinBtnDisabled_Aqua
+{
+    background-position: -92px -180px;
+    width: 9px;
+    height: 8px;
+}
+.dxWeb_rpCollapseButton_Aqua
+{
+    background-position: -54px -376px;
+    width: 17px;
+    height: 17px;
+}
+.dxWeb_rPopOut_Aqua
+{
+    background-position: -168px -198px;
+    width: 7px;
+    height: 7px;
+}
+.dxWeb_smBullet_Aqua
+{
+    background-position: -170px -264px;
+    width: 5px;
+    height: 5px;
+}
+.dxWeb_splHCollapseBackwardButton_Aqua
+{
+    background-position: -168px -239px;
+    width: 7px;
+    height: 6px;
+}
+.dxWeb_splHCollapseBackwardButtonHover_Aqua
+{
+    background-position: -168px -207px;
+    width: 7px;
+    height: 6px;
+}
+.dxWeb_splHCollapseForwardButton_Aqua
+{
+    background-position: -168px -232px;
+    width: 7px;
+    height: 6px;
+}
+.dxWeb_splHCollapseForwardButtonHover_Aqua
+{
+    background-position: -168px -222px;
+    width: 7px;
+    height: 6px;
+}
+.dxWeb_splHSeparator_Aqua
+{
+    background-position: -142px -475px;
+    width: 18px;
+    height: 6px;
+}
+.dxWeb_splHSeparatorHover_Aqua
+{
+    background-position: -138px -96px;
+    width: 18px;
+    height: 6px;
+}
+.dxWeb_splVCollapseBackwardButton_Aqua
+{
+    background-position: -169px -132px;
+    width: 6px;
+    height: 7px;
+}
+.dxWeb_splVCollapseBackwardButtonHover_Aqua
+{
+    background-position: -169px -151px;
+    width: 6px;
+    height: 7px;
+}
+.dxWeb_splVCollapseForwardButton_Aqua
+{
+    background-position: -157px -95px;
+    width: 6px;
+    height: 7px;
+}
+.dxWeb_splVCollapseForwardButtonHover_Aqua
+{
+    background-position: -169px -143px;
+    width: 6px;
+    height: 7px;
+}
+.dxWeb_splVSeparator_Aqua
+{
+    background-position: -143px -113px;
+    width: 6px;
+    height: 18px;
+}
+.dxWeb_splVSeparatorHover_Aqua
+{
+    background-position: -162px -132px;
+    width: 6px;
+    height: 18px;
+}
+.dxWeb_tcScrollLeft_Aqua
+{
+    background-position: -80px -356px;
+    width: 19px;
+    height: 19px;
+}
+.dxWeb_tcScrollLeftDisabled_Aqua
+{
+    background-position: -20px -356px;
+    width: 19px;
+    height: 19px;
+}
+.dxWeb_tcScrollLeftHover_Aqua
+{
+    background-position: -40px -356px;
+    width: 19px;
+    height: 19px;
+}
+.dxWeb_tcScrollLeftPressed_Aqua
+{
+    background-position: -100px -336px;
+    width: 19px;
+    height: 19px;
+}
+.dxWeb_tcScrollRight_Aqua
+{
+    background-position: -120px -336px;
+    width: 19px;
+    height: 19px;
+}
+.dxWeb_tcScrollRightDisabled_Aqua
+{
+    background-position: -60px -356px;
+    width: 19px;
+    height: 19px;
+}
+.dxWeb_tcScrollRightHover_Aqua
+{
+    background-position: -80px -336px;
+    width: 19px;
+    height: 19px;
+}
+.dxWeb_tcScrollRightPressed_Aqua
+{
+    background-position: -140px -336px;
+    width: 19px;
+    height: 19px;
+}
+.dxWeb_tiBackToTop_Aqua
+{
+    background-position: -28px -461px;
+    width: 13px;
+    height: 13px;
+}
+.dxWeb_tvColBtn_Aqua
+{
+    background-position: -36px -376px;
+    width: 17px;
+    height: 17px;
+}
+.dxWeb_tvColBtnRtl_Aqua
+{
+    background-position: -72px -376px;
+    width: 17px;
+    height: 17px;
+}
+.dxWeb_tvExpBtn_Aqua
+{
+    background-position: -158px -316px;
+    width: 17px;
+    height: 17px;
+}
+.dxWeb_tvExpBtnRtl_Aqua
+{
+    background-position: -18px -376px;
+    width: 17px;
+    height: 17px;
+}
+.dxWeb_ucClearButton_Aqua
+{
+    background-position: -85px -428px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_ucClearButtonDisabled_Aqua
+{
+    background-position: -17px -411px;
+    width: 16px;
+    height: 16px;
+}
+.dxWeb_rpHeaderTopLeftCorner_Aqua,
+.dxWeb_rpHeaderTopRightCorner_Aqua,
+.dxWeb_rpHeaderBottomLeftCorner_Aqua,
+.dxWeb_rpHeaderBottomRightCorner_Aqua,
+.dxWeb_rpBottomLeftCorner_Aqua,
+.dxWeb_rpBottomRightCorner_Aqua,
+.dxWeb_rpTopLeftCorner_Aqua,
+.dxWeb_rpTopRightCorner_Aqua,
+.dxWeb_rpGroupBoxBottomLeftCorner_Aqua,
+.dxWeb_rpGroupBoxBottomRightCorner_Aqua,
+.dxWeb_rpGroupBoxTopLeftCorner_Aqua,
+.dxWeb_rpGroupBoxTopRightCorner_Aqua,
+.dxWeb_mHorizontalPopOut_Aqua,
+.dxWeb_mVerticalPopOut_Aqua,
+.dxWeb_mVerticalPopOutRtl_Aqua,
+.dxWeb_mSubMenuItem_Aqua,
+.dxWeb_mSubMenuItemChecked_Aqua,
+.dxWeb_mScrollUp_Aqua,
+.dxWeb_mScrollUpDisabled_Aqua,
+.dxWeb_mScrollDown_Aqua,
+.dxWeb_mScrollDownDisabled_Aqua,
+.dxWeb_tcScrollLeft_Aqua,
+.dxWeb_tcScrollRight_Aqua,
+.dxWeb_tcScrollLeftHover_Aqua,
+.dxWeb_tcScrollRightHover_Aqua,
+.dxWeb_tcScrollLeftPressed_Aqua,
+.dxWeb_tcScrollRightPressed_Aqua,
+.dxWeb_tcScrollLeftDisabled_Aqua,
+.dxWeb_tcScrollRightDisabled_Aqua,
+.dxWeb_nbCollapse_Aqua,
+.dxWeb_nbExpand_Aqua,
+.dxWeb_splVSeparator_Aqua,
+.dxWeb_splVSeparatorHover_Aqua,
+.dxWeb_splHSeparator_Aqua,
+.dxWeb_splHSeparatorHover_Aqua,
+.dxWeb_splVCollapseBackwardButton_Aqua,
+.dxWeb_splVCollapseBackwardButtonHover_Aqua,
+.dxWeb_splHCollapseBackwardButton_Aqua,
+.dxWeb_splHCollapseBackwardButtonHover_Aqua,
+.dxWeb_splVCollapseForwardButton_Aqua,
+.dxWeb_splVCollapseForwardButtonHover_Aqua,
+.dxWeb_splHCollapseForwardButton_Aqua,
+.dxWeb_splHCollapseForwardButtonHover_Aqua,
+.dxWeb_pcCloseButton_Aqua,
+.dxWeb_pcPinButton_Aqua,
+.dxWeb_pcRefreshButton_Aqua,
+.dxWeb_pcCollapseButton_Aqua,
+.dxWeb_pcMaximizeButton_Aqua,
+.dxWeb_pcSizeGrip_Aqua,
+.dxWeb_pcSizeGripRtl_Aqua,
+.dxWeb_pPopOut_Aqua,
+.dxWeb_pPopOutDisabled_Aqua,
+.dxWeb_pAll_Aqua,
+.dxWeb_pAllDisabled_Aqua,
+.dxWeb_pPrev_Aqua,
+.dxWeb_pPrevDisabled_Aqua,
+.dxWeb_pNext_Aqua,
+.dxWeb_pNextDisabled_Aqua,
+.dxWeb_pLast_Aqua,
+.dxWeb_pLastDisabled_Aqua,
+.dxWeb_pFirst_Aqua,
+.dxWeb_pFirstDisabled_Aqua,
+.dxWeb_tiBackToTop_Aqua,
+.dxWeb_smBullet_Aqua,
+.dxWeb_tvColBtn_Aqua,
+.dxWeb_tvColBtnRtl_Aqua,
+.dxWeb_tvExpBtn_Aqua,
+.dxWeb_tvExpBtnRtl_Aqua,
+.dxWeb_fmFolder_Aqua,
+.dxWeb_fmFolderLocked_Aqua,
+.dxWeb_fmCreateButton_Aqua,
+.dxWeb_fmMoveButton_Aqua,
+.dxWeb_fmRenameButton_Aqua,
+.dxWeb_fmDeleteButton_Aqua,
+.dxWeb_fmRefreshButton_Aqua,
+.dxWeb_fmDwnlButton_Aqua,
+.dxWeb_fmCreateButtonDisabled_Aqua,
+.dxWeb_fmMoveButtonDisabled_Aqua,
+.dxWeb_fmRenameButtonDisabled_Aqua,
+.dxWeb_fmDeleteButtonDisabled_Aqua,
+.dxWeb_fmRefreshButtonDisabled_Aqua,
+.dxWeb_fmDwnlButtonDisabled_Aqua,
+.dxWeb_ucClearButton_Aqua,
+.dxWeb_ucClearButtonDisabled_Aqua,
+.dxWeb_isPrevBtnHor_Aqua,
+.dxWeb_isNextBtnHor_Aqua,
+.dxWeb_isPrevBtnVert_Aqua,
+.dxWeb_isNextBtnVert_Aqua,
+.dxWeb_isPrevPageBtnHor_Aqua,
+.dxWeb_isPrevPageBtnHorOutside_Aqua,
+.dxWeb_isNextPageBtnHor_Aqua,
+.dxWeb_isNextPageBtnHorOutside_Aqua,
+.dxWeb_isPrevPageBtnVert_Aqua,
+.dxWeb_isPrevPageBtnVertOutside_Aqua,
+.dxWeb_isNextPageBtnVert_Aqua,
+.dxWeb_isNextPageBtnVertOutside_Aqua,
+.dxWeb_isPrevBtnHorDisabled_Aqua,
+.dxWeb_isNextBtnHorDisabled_Aqua,
+.dxWeb_isPrevBtnVertDisabled_Aqua,
+.dxWeb_isNextBtnVertDisabled_Aqua,
+.dxWeb_isPrevPageBtnHorDisabled_Aqua,
+.dxWeb_isPrevPageBtnHorOutsideDisabled_Aqua,
+.dxWeb_isNextPageBtnHorDisabled_Aqua,
+.dxWeb_isNextPageBtnHorOutsideDisabled_Aqua,
+.dxWeb_isPrevPageBtnVertDisabled_Aqua,
+.dxWeb_isPrevPageBtnVertOutsideDisabled_Aqua,
+.dxWeb_isNextPageBtnVertDisabled_Aqua,
+.dxWeb_isNextPageBtnVertOutsideDisabled_Aqua,
+.dxWeb_isDot_Aqua,
+.dxWeb_isDotDisabled_Aqua,
+.dxWeb_isDotSelected_Aqua,
+.dxWeb_fmGvHeaderFilter_Aqua,
+.dxWeb_fmGvHeaderFilterActive_Aqua,
+.dxWeb_fmThumbnailCheck_Aqua,
+.dxWeb_isPlayBtn_Aqua,
+.dxWeb_isPauseBtn_Aqua,
+.dxWeb_igCloseButton_Aqua,
+.dxWeb_igNextButton_Aqua,
+.dxWeb_igPrevButton_Aqua,
+.dxWeb_igPlayButton_Aqua,
+.dxWeb_igPauseButton_Aqua,
+.dxWeb_igNavigationBarMarker_Aqua
+ {
+    display:block;
+}
+.dxWeb_mScrollUp_Aqua, .dxWeb_mScrollDown_Aqua
+{
+	margin: auto;
+}
+.dxWeb_smBullet_Aqua,
+.dxWeb_tiBackToTop_Aqua,
+.dxWeb_fmGvHeaderFilter_Aqua,
+.dxWeb_fmGvHeaderFilterActive_Aqua
+{
+	display:inline;
+}
+
