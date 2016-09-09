@@ -103,6 +103,7 @@
     <Compile Include="Common\HtmlHelper.cs" />
     <Compile Include="Common\Uploader.cs" />
     <Compile Include="Common\UrlHelper.cs" />
+    <Compile Include="Controllers\Business\Product\FeatureProductsController.cs" />
     <Compile Include="Controllers\Business\Product\ProductMaterialsController.cs" />
     <Compile Include="Controllers\Business\Product\ProductsController.cs" />
     <Compile Include="Controllers\Cores\FileManagerController.cs" />
@@ -124,7 +125,9 @@
     <Compile Include="Models\Business\Product_detail.cs" />
     <Compile Include="Models\Business\Product_type.cs" />
     <Compile Include="Models\Business\ViewModels\ColorViewModel.cs" />
-    <Compile Include="Models\Business\ViewModels\CreateProductViewModel.cs" />
+    <Compile Include="Models\Business\ViewModels\ProductViewModel.cs" />
+    <Compile Include="Models\Business\ViewModels\Datatables\dt_product.cs" />
+    <Compile Include="Models\Business\ViewModels\FeatureProductViewModel.cs" />
     <Compile Include="Models\Core\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Core\IdentityModels.cs" />
@@ -133,11 +136,10 @@
     <Compile Include="Models\Core\BaseModel.cs" />
     <Compile Include="Models\Core\File.cs" />
     <Compile Include="Models\Business\Product_Variant.cs" />
-    <Compile Include="Models\Business\ViewModels\CreateProductVariantsViewModel.cs" />
+    <Compile Include="Models\Business\ViewModels\ProductVariantsViewModel.cs" />
     <Compile Include="Models\Core\ViewModels\FileViewModel.cs" />
     <Compile Include="Models\Core\ViewModels\LockoutViewModel.cs" />
     <Compile Include="Models\Core\ViewModels\CreateFileViewModel.cs" />
-    <Compile Include="Models\Business\ViewModels\ProductViewModel.cs" />
     <Compile Include="Models\Core\ViewModels\RoleViewModel.cs" />
     <Compile Include="Models\Core\ViewModels\CreateUserViewModel.cs" />
     <Compile Include="Models\Core\ViewModels\UserViewModel.cs" />

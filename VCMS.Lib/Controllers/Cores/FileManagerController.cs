@@ -54,7 +54,7 @@ namespace VCMS.Lib.Controllers
         {
             if (ModelState.IsValid)
             {
-                var uploadResult = await Common.Uploader.Upload(model, this);
+                var uploadResult = await Uploader.Upload(model, FileGroups.Other, this);
                 if (uploadResult)
                     return RedirectToAction("List");
             }
@@ -92,30 +92,16 @@ namespace VCMS.Lib.Controllers
             return View(file);
         }
 
-        // GET: Manager/FileController/Delete/5
-        public async Task<ActionResult> Delete(string id)
+        [HttpPost]
+        public void Delete(string id)
         {
-            if (id == null)
+            File file = db.Files.Find(id);
+            if (file != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Uploader.DeleteFile(file, this);
+                db.Files.Remove(file);
+                db.SaveChanges();
             }
-            File file = await db.Files.FindAsync(id);
-            if (file == null)
-            {
-                return HttpNotFound();
-            }
-            return View(file);
-        }
-
-        // POST: Manager/FileController/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(string id)
-        {
-            File file = await db.Files.FindAsync(id);
-            db.Files.Remove(file);
-            await db.SaveChangesAsync();
-            return RedirectToAction("List");
         }
 
         protected override void Dispose(bool disposing)
@@ -132,16 +118,23 @@ namespace VCMS.Lib.Controllers
             try
             {
                 //var imageTypeId = (int)CategoryTypes.FileImage;
-                var imageTypeId = 74;
-                var dtsource = db.Files.Where(o => o.FileTypeId == imageTypeId).Select(o => new FileViewModel
+                var files = db.Files;
+
+                var dtsource = new List<FileViewModel>();
+
+                foreach (var file in files)
                 {
-                    Id = o.Id,
-                    Name = o.Name,
-                    Ext = o.Extension,
-                    FileType = o.FileType.Name,
-                    Size = o.Size.ToString(),
-                    CreateTime = o.CreateTime.ToString()
-                }).ToList();
+                    dtsource.Add(new FileViewModel
+                    {
+                        Id = file.Id,
+                        Name = file.Id,
+                        Ext = file.Extension,
+                        FileType = file.FileType.ToString(),
+                        Size = file.Size.ToString(),
+                        CreateTime = file.CreateTime.ToString()
+                    });
+                }
+
 
                 List<String> columnSearch = new List<string>();
 

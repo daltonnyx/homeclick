@@ -6,6 +6,7 @@ namespace VCMS.Lib.Models.Business
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.ModelConfiguration;
     using System.Data.Entity.Spatial;
+    using System.Linq;
 
     [Table("Product")]
     public partial class Product
@@ -28,10 +29,11 @@ namespace VCMS.Lib.Models.Business
         [Column("status")]
         public bool Status { get; set; }
 
-        public bool? featured { get; set; }
+        [Column("featured")]
+        public bool Featured { get; set; }
 
-        [StringLength(100)]
-        public string image { get; set; }
+        [StringLength(128)]
+        public string ImageId { get; set; }
 
         public string excerpt { get; set; }
 
@@ -45,11 +47,36 @@ namespace VCMS.Lib.Models.Business
 
         public virtual ICollection<Product_Variant> Product_Variants { get; set; }
 
+        [ForeignKey("ImageId")]
+        public virtual File Image { get; set; }
+
         public virtual ICollection<File> Files { get; set; }
 
         [ForeignKey("CreateUserId")]
         public virtual ApplicationUser CreateUser { get; set; }
     }
+
+    public partial class Product
+    {
+        public Category Typology {
+            get
+            {
+                var typology = Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Typology).FirstOrDefault();
+                return typology;
+            }
+        }
+
+        public IEnumerable<Category> Rooms
+        {
+            get
+            {
+                var room = Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Model);
+                return room;
+            }
+        }
+    }
+
+
     /*5205555.
      * 6
     public class ProductEntityConfiguration : EntityTypeConfiguration<Product>

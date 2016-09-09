@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using VCMS.Lib.Common;
+using VCMS.Lib.Models;
 
 namespace VCMS.Lib.Controllers
 {
     public class FileUploadController : BaseController
     {
-        [HttpPost]
-        public async Task<ActionResult> Upload(IEnumerable<HttpPostedFileBase> files)
+        private async Task<List<object>> upload(IEnumerable<HttpPostedFileBase> files, FileGroups fileGroup)
         {
             var result = new List<object>();
             foreach (var file in files)
             {
-                var newFile = await Uploader.Upload(file, this);
+                var newFile = await Uploader.Upload(file, fileGroup, this);
                 if (newFile != null)
                 {
                     result.Add(new
@@ -29,6 +29,20 @@ namespace VCMS.Lib.Controllers
                     });
                 }
             }
+            return result;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UploadP(IEnumerable<HttpPostedFileBase> files)
+        {
+            var result = await upload(files, FileGroups.ProductImage);
+            return Json(result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UploadPV(IEnumerable<HttpPostedFileBase> files)
+        {
+            var result = await upload(files, FileGroups.ProductVariantImage);
             return Json(result);
         }
 

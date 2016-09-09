@@ -41,6 +41,8 @@ namespace VCMS.Lib.Models.Business
         public virtual ICollection<Product> Products { get; private set; }
 
         public virtual ICollection<File> Files { get; set; }
+
+        public virtual ICollection<Product_Variant> ProductVariants { get; set; }
     }
     /*
     public class CategoryEntityConfiguration : EntityTypeConfiguration<Category>

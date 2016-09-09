@@ -1,8 +1,7 @@
 ﻿@using VCMS.Lib.Resources
 
 @{
-    ViewBag.Title = "Product Colors";
-    var url = "";
+    ViewBag.Title = Strings.ProductColors;
 }
 <p>
     <a href="@Url.Action("Create")" class="btn btn-lime"><i class="fa fa-plus" aria-hidden="true"></i> @Strings.CreateNew</a>
@@ -45,7 +44,7 @@
 
     <script>
         var thumbImg = function (data, type, full, meta) {
-            return '<div class="list-thumb "><img src="' + '@url' + '/' + data + '"></div>';
+            return '<div class="list-thumb "><img src="' + '@Url.GetImageUploadFolder()' + data + '"></div>';
         }
 
         var simple_linkBtns = function (data, type, full, meta) {

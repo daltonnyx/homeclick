@@ -1,8 +1,9 @@
-﻿@model VCMS.Lib.Models.Color
+﻿@using VCMS.Lib.Resources
+@model VCMS.Lib.Models.Product_Variant
 
 @{
-    ViewBag.Title = "File Mamager";
-    ViewBag.FormName = "Delete";
+    ViewBag.Title = Strings.ProductMaterials;
+    ViewBag.FormName = Strings.Delete;
     Layout = "~/Areas/Manager/Views/Shared/_Layout_Form.cshtml";
 }
 
@@ -31,50 +32,6 @@
             </dd>
         }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-
-        <dd>
-            <div class="image-preview">
-                @Html.ImageFor(model => Url.GetBaseUrl() + model.Image)
-            </div>
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreateUser)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreateUser.UserName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreateTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreateTime)
-        </dd>
-        @if (Model.UpdateUser != null)
-        {
-            <dt>
-                @Html.DisplayNameFor(model => model.UpdateUser)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.UpdateUser.UserName)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.UpdateTime)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.UpdateTime)
-            </dd>
-        }
- 
         <dt>
         </dt>
 

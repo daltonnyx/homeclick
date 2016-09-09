@@ -156,13 +156,13 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Routing" />
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -426,12 +426,17 @@
     <Content Include="Areas\Manager\Views\Products\List.cshtml" />
     <Content Include="Areas\Manager\Views\Products\Create.cshtml" />
     <Content Include="Areas\Manager\Views\Products\Delete.cshtml" />
-    <Content Include="Areas\Manager\Views\ProductMaterials\Create.cshtml" />
-    <Content Include="Areas\Manager\Views\ProductMaterials\Delete.cshtml" />
-    <Content Include="Areas\Manager\Views\ProductMaterials\List.cshtml" />
     <Content Include="Areas\Manager\Views\Products\Edit.cshtml" />
     <Content Include="Areas\Manager\Views\Products\_ImageFiles.cshtml" />
     <Content Include="Areas\Manager\Views\Products\_Colors.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductColors\_ImageFile.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductColors\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductMaterials\List.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductMaterials\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductMaterials\Delete.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductMaterials\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\FeatureProducts\List.cshtml" />
+    <Content Include="Areas\Manager\Views\FeatureProducts\Add.cshtml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />

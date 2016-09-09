@@ -34,10 +34,6 @@ namespace VCMS.Lib.Models
                 .WithOptional(e => e.Category)
                 .WillCascadeOnDelete();
 
-            modelBuilder.Entity<Category>().HasMany(e => e.Files)
-                .WithOptional(e => e.FileType)
-                .HasForeignKey(e => e.FileTypeId);
-
             modelBuilder.Entity<Category>().HasMany(e => e.CategoryParents)
                 .WithMany(e => e.CategoryChildren)
                 .Map(cs =>
@@ -46,6 +42,7 @@ namespace VCMS.Lib.Models
                     cs.MapRightKey("ParentId");
                     cs.ToTable("Category_Category_Link");
                 });
+            
             //--------------------------------------
 
             //Product
@@ -58,9 +55,9 @@ namespace VCMS.Lib.Models
                 .WithMany(e => e.Products)
                 .Map(cs =>
                 {
-                    cs.MapLeftKey("ChildId");
-                    cs.MapRightKey("ParentId");
-                    cs.ToTable("Category_Product_Link");
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Product_Category_Link");
                 });
 
             modelBuilder.Entity<Product>().HasMany(e => e.Product_Variants)
@@ -84,16 +81,13 @@ namespace VCMS.Lib.Models
 
             //Product Variant
             //--------------------------------------
-            modelBuilder.Entity<Product_Variant>().HasMany(e => e.Children)
-                .WithMany(e => e.Parents)
-                .Map(cs =>
-                {
-                    cs.MapLeftKey("ParentId");
-                    cs.MapRightKey("ChildId");
-                    cs.ToTable("Product_Variants_Product_Variants_Link");
-                });
+            modelBuilder.Entity<Product_Variant>()
+                .HasMany(o => o.Children)
+                .WithOptional(o => o.Parent)
+                .HasForeignKey(o => o.ParentId);
 
-            modelBuilder.Entity<Product_Variant>().HasMany(e => e.Files)
+            modelBuilder.Entity<Product_Variant>()
+                .HasMany(e => e.Files)
                 .WithMany(e => e.Product_Variants)
                 .Map(cs =>
                 {
@@ -101,7 +95,30 @@ namespace VCMS.Lib.Models
                     cs.MapRightKey("ChildId");
                     cs.ToTable("Product_Variants_Files_Link");
                 });
+            modelBuilder.Entity<Product_Variant>()
+                .HasMany(e => e.Categories)
+                .WithMany(e => e.ProductVariants)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Product_Variants_Category_Link");
+                });
             //--------------------------------------
+
+            //Product Variant
+            //--------------------------------------
+            modelBuilder.Entity<File>()
+                .HasMany(e => e.Categories)
+                .WithMany(e => e.Files)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Files_Category_Link");
+                });
+            //--------------------------------------
+
 
             //modelBuilder.Configurations.Add(new CategoryEntityConfiguration());
             //modelBuilder.Configurations.Add(new ProductEntityConfiguration());

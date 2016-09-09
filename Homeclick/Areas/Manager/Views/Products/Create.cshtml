@@ -1,5 +1,5 @@
 ﻿@using VCMS.Lib.Models
-@model VCMS.Lib.Models.Business.CreateProductViewModel
+@model VCMS.Lib.Models.Business.ProductViewModel
 
 @{
     ViewBag.Title = "Products";
@@ -16,6 +16,7 @@
         <strong>Success!</strong> The product has been added.
     </div>
 }
+
 @using (Html.BeginForm("Create", "Products", FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -41,15 +42,19 @@
         </div>
 
         <div class="form-group">
-            <label class="col-md-2 control-label">Category</label>
+            @Html.LabelFor(model => model.RoomIds, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="form-control-custom">
-                    <select name="Category" data-placeholder="Select a category" class="form-control chosen-with-diselect" tabindex="-1" id="category" style="display: none;">
-                        @foreach (var category in categories)
-                        {
-                            <option value="@category.Id">@category.Name</option>
-                        }
-                    </select>
+                    @Html.DropDownListFor(model => model.RoomIds, ViewBag.Rooms as List<SelectListItem>, new { @class = "form-control chosen", multiple = "multiple", tabindex = "-1", style = "display: none;" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TypologyTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="form-control-custom">
+                    @Html.DropDownListFor(model => model.TypologyTypeId, new List<SelectListItem>(), new { @class = "form-control chosen-with-diselect", tabindex = "-1", style = "display: none;" })
                 </div>
             </div>
         </div>
@@ -64,11 +69,11 @@
                         {
                             if (Model?.Colors != null)
                             {
-                                <option @Html.Raw(Model.Colors.Contains(color.Id) ? " disabled='disabled' value='@color.Id'" : "value='@color.Id'")>@color.Parents.FirstOrDefault().Name - @color.Name</option>
+                                <option @Html.Raw(Model.Colors.Contains(color.Id) ? " disabled='disabled' value='@color.Id'" : "value='@color.Id'")>@color.Parent.Name - @color.Name</option>
                             }
                             else
                             {
-                                <option value="@color.Id")>@color.Parents.FirstOrDefault().Name - @color.Name</option>
+                                <option value="@color.Id">@color.Parent.Name - @color.Name</option>
                             }
                         }
                     </select>
@@ -108,7 +113,7 @@
                         { 
                             foreach (var imagefile in Model.ImageFiles)
                             {
-                                Html.RenderAction("_ImageFiles", new { fileId = imagefile.Key, colorId = imagefile.Value, colors = Model.Colors });
+                                Html.RenderAction("_ImageFiles", new { fileId = imagefile.Key, colorId = imagefile.Value, isSelected = false, colors = Model.Colors });
                             }
                         }
                     </div>
@@ -157,6 +162,16 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <label class="checkbox">
+                    @Html.CheckBoxFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                </label>
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
@@ -185,19 +200,16 @@
 
 
 @section Styles {
-    <link href="~/Areas/Manager/Content/Themes/FLATY/bootstrap-fileupload.css" rel="stylesheet" />
     <link href="~/Areas/Manager/Content/Themes/FLATY/Chosen.min.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/dark-hive/jquery-ui.css" id="theme">
     <link href="~/Areas/Manager/Content/Plugins/jQueryFileUpload/css/jquery.fileupload.css" rel="stylesheet" />
     <link href="~/Areas/Manager/Content/Plugins/jQueryFileUpload/css/jquery.fileupload-ui.css" rel="stylesheet" />
-
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
-    <script src="~/Areas/Manager/Content/Themes/FLATY/bootstrap-fileupload.min.js"></script>
     <script src="~/Areas/Manager/Content/Themes/FLATY/chosen.jquery.min.js"></script>
 
     <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/vendor/jquery.ui.widget.js"></script>
@@ -275,10 +287,19 @@
             return scids;
         }
 
+        function getSelectedRoomIds() {
+            var roomIds = [];
+            var selected = $('#RoomIds :selected');
+            for (var i = 0; i < selected.length; i++) {
+                roomIds.push(selected[i].value);
+            }
+            return roomIds;
+        };
+
         $(function () {
             'use strict';
             // Change this to the location of your server-side upload handler:
-            var url = '@Url.Action("Upload","FileUpload")';
+            var url = '@Url.Action("UploadP","FileUpload")';
             $('#fileupload').fileupload({
                 url: url,
                 dataType: 'json',
@@ -309,11 +330,35 @@
             }).prop('disabled', !$.support.fileInput)
                 .parent().addClass($.support.fileInput ? undefined : 'disabled');
 
-            $(function () {
-                $('.delete-image-btn').bind('click', function () {
+            $('.delete-image-btn').bind('click', function () {
                     deImg(this);
-                });
+            });
+
+
+            $('#RoomIds').chosen().change(function () {
+                $('#TypologyTypeId').empty();
+                var selected = $('#RoomIds :selected');
+                if (selected.length > 0) {
+                    var url = '@Url.Action("GetTypologies")';
+                    var roomIds = getSelectedRoomIds();
+                    $.ajax({
+                        traditional: true,
+                        url: url,
+                        data: { 'roomIds': roomIds },
+                        success: function (data) {
+                            for (var i = 0; i < data.length; i++) {
+                                var item = $('<option />').val(data[i].id).text(data[i].name).appendTo('#TypologyTypeId');
+                            }
+                            $("#TypologyTypeId").trigger("chosen:updated");
+                        }
+                    });
+                }
+                else {
+                    $("#TypologyTypeId").trigger("chosen:updated");
+                }
             });
         });
+
+
     </script>
 }

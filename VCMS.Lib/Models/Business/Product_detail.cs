@@ -27,4 +27,15 @@ namespace VCMS.Lib.Models.Business
 
         public virtual Product Product { get; set; }
     }
+
+    public static class ProductDetailTypes
+    {
+        public const string Size = "kich_thuoc";
+        public const string Warranty = "bao_hanh";
+
+        public const string Price = "gia";
+
+        public const string Weight = "nang";
+        public const string MadeIn = "xuat_xu";
+    }
 }

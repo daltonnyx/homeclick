@@ -8,9 +8,15 @@ namespace VCMS.Lib.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.ModelConfiguration;
     using System.Data.Entity.Spatial;
+    using System.Linq;
 
     public partial class File : BaseModel
     {
+        public File()
+        {
+            Categories = new HashSet<Category>();
+        }
+        
         [Display(Name = "FileName", ResourceType = typeof(Strings))]
         public string Name { get; set; }
 
@@ -18,7 +24,6 @@ namespace VCMS.Lib.Models
 
         public string Extension { get; set; }
 
-        public int? FileTypeId { get; set; }
 
         public long Size { get; set; }
 
@@ -27,14 +32,31 @@ namespace VCMS.Lib.Models
         public virtual ICollection<Product_Variant> Product_Variants { get; set; }
 
         [Display(Name = "FileType", ResourceType = typeof(Strings))]
-        public virtual Category FileType { get; set; }
-
-        [ForeignKey("CreateUserId")]
-        public virtual ApplicationUser CreateUser { get; set; }
-
-        [ForeignKey("UpdateUserId")]
-        public virtual ApplicationUser UpdateUser { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
     }
 
-    public enum FileTypes { Image = 74 }
+    public partial class File
+    {
+        public FileTypes FileType
+        {
+            get
+            {
+                var category = Categories.Where(o => o.Category_typeId == (int)CategoryTypes.FileType).FirstOrDefault();
+                switch(category.Id)
+                {
+                    case (int)FileTypes.Image:
+                        return FileTypes.Image;
+                    case (int)FileTypes.Other:
+                        return FileTypes.Other;
+                    default:
+                        return FileTypes.Default;
+                }
+            }
+        }
+    }
+
+
+    public enum FileTypes {Default = -1, Image = 74, Other = 75 }
+
+    public enum FileGroups { Default = -1, ProductImage = 78, ProductVariantImage = 79, Other = 80 }
 }

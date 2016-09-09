@@ -30,6 +30,26 @@
     </thead>
 </table>
 
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+            </div>
+            <div class="modal-body">
+                <p>Remove item from features?</p>
+                <input type="hidden" id="hiddenId" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary btn-yes">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section breadcrumb {
     @{
@@ -64,7 +84,7 @@
             return   '<div class="table-action">' +
                         '<a class="btn btn-sm show-tooltip" data-placement="top" data-original-title="Details" href="@Url.Action("Details")' + param + '" data-original-title="View"><i class="fa fa-search-plus"></i></a>' +
                         '<a class="btn btn-sm show-tooltip" data-placement="top" data-original-title="Edit" href="@Url.Action("Edit")' + param + '" data-original-title="Edit"><i class="fa fa-edit"></i></a>' +
-                        '<a class="btn btn-sm btn-danger show-tooltip" data-placement="top" data-original-title="Delete" href="@Url.Action("Delete")' + param + '" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>' +
+                        '<a class="btn btn-sm btn-danger show-tooltip" data-placement="top" data-original-title="Delete" href="#" data-toggle="modal" data-target="#deleteConfirmModal" data-id="' + data + '" ><i class="fa fa-trash-o"></i></a>' +
                     '</div>';
         }
 
@@ -76,7 +96,7 @@
         }
 
         var sizeRender = function (data, type, full, meta) {
-            var a = bytesToSize(data);  
+            var a = bytesToSize(data);
             return a;
         }
 
@@ -115,6 +135,24 @@
                 }
             });
 
+            $('#deleteConfirmModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var recipient = button.data('id') // Extract info from data-* attributes
+                // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                modal.find('.modal-body input').val(recipient)
+            })
+
+            $('#deleteConfirmModal').on('click', '.btn-yes', function (e) {
+                var $modalDiv = $(e.delegateTarget);
+                var input = $modalDiv.find('.modal-body input');
+                var id = input.val();
+                $.post('@Url.Action("Delete")' + '/' + id).then(function () {
+                    $modalDiv.modal('hide');
+                    $('#dataTable').DataTable().ajax.reload();
+                });
+            });
         });
     </script>
 }

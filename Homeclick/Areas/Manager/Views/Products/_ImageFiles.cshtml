@@ -9,7 +9,7 @@
         </div>
         <div class="pull-left controls">
             <label class="radio">
-                <input type="radio" name="PreviewImage" value="@Model.Id" /> Is preview image
+                <input type="radio" name="PreviewImage" @Html.Raw((ViewBag.Selected) ? "checked" : "" ) value="@Model.Id" /> Is preview image
             </label>
             <label class="radio">
                 <a href="#" class="delete-image-btn" data-fileName="@Model.Id"><i class="fa fa-times" aria-hidden="true"> Delete</i></a>
@@ -20,11 +20,11 @@
                     {
                         if (color.Id == selectedColor)
                         {
-                            <option selected value="@color.Id">@color.Parents.FirstOrDefault() - @color.Name</option>
+                            <option selected value="@color.Id">@color.Parent.Name - @color.Name</option>
                         }
                         else
                         {
-                            <option value="@color.Id">@color.Parents.FirstOrDefault() - @color.Name</option>
+                            <option value="@color.Id">@color.Parent.Name - @color.Name</option>
                         }
                     }
                 </select>

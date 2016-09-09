@@ -17,7 +17,7 @@ namespace Homeclick.Areas.Manager
             context.MapRoute(
                 "Manager_default",
                 "Manager/{controller}/{action}/{id}",
-                new { contoller = "Dashboard" , action = "Index", id = "" },
+                new { contoller = "Dashboard" , action = "Index", id = UrlParameter.Optional },
                 new[] {"VCMS.Lib.Controllers"}
             );
         }

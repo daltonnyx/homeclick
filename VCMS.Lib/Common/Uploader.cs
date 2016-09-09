@@ -12,7 +12,7 @@ namespace VCMS.Lib.Common
 {
     public static class Uploader
     {
-        public static async Task<bool> Upload(CreateFileViewModel model, Controller controller)
+        public static async Task<bool> Upload(CreateFileViewModel model, FileGroups fileGroup, Controller controller)
         {
             try
             {
@@ -33,28 +33,37 @@ namespace VCMS.Lib.Common
                         CreateTime = DateTime.Now,
                     };
                     var destinationFolder = "";
+
+                    var categoryG = await db.Categories.FindAsync((int)fileGroup);
+                    newFile.Categories.Add(categoryG);
+
                     if (fileExt == ".png" || fileExt == ".jpg")
                     {
-                        newFile.FileTypeId = (int)FileTypes.Image;
+                        var categoryT = await db.Categories.FindAsync((int)FileTypes.Image);
+                        newFile.Categories.Add(categoryT);
                         destinationFolder = Properties.Resources.UploadFolder_Image;
                     }
                     else
+                    {
+                        var categoryT = await db.Categories.FindAsync((int)FileTypes.Other);
+                        newFile.Categories.Add(categoryT);
                         destinationFolder = Properties.Resources.UploadFolder_Other;
+                    }
 
                     db.Files.Add(newFile);
                     await db.SaveChangesAsync();
                     var newPath = System.IO.Path.Combine(controller.Server.MapPath("~/" + destinationFolder), newFileName + fileExt);
                     model.File.SaveAs(newPath);
+                    return true;
                 }
             }
             catch (Exception)
             {
                 return false;
             }
-            return true;
         }
 
-        public static async Task<File> Upload(HttpPostedFileBase file, Controller controller)
+        public static async Task<File> Upload(HttpPostedFileBase file, FileGroups fileGroup, Controller controller)
         {
             try
             {
@@ -73,13 +82,22 @@ namespace VCMS.Lib.Common
                         CreateTime = DateTime.Now,
                     };
                     var destinationFolder = "";
+
+                    var categoryG = await db.Categories.FindAsync((int)fileGroup);
+                    newFile.Categories.Add(categoryG);
+
                     if (fileExt == ".png" || fileExt == ".jpg")
                     {
-                        newFile.FileTypeId = (int)FileTypes.Image;
+                        var categoryT = await db.Categories.FindAsync((int)FileTypes.Image);
+                        newFile.Categories.Add(categoryT);
                         destinationFolder = Properties.Resources.UploadFolder_Image;
                     }
                     else
+                    {
+                        var categoryT = await db.Categories.FindAsync((int)FileTypes.Other);
+                        newFile.Categories.Add(categoryT);
                         destinationFolder = Properties.Resources.UploadFolder_Other;
+                    }
 
                     db.Files.Add(newFile);
                     await db.SaveChangesAsync();
@@ -93,6 +111,19 @@ namespace VCMS.Lib.Common
             {
                 return null;
             }
+        }
+
+        public static void DeleteFile(File file, Controller controller)
+        {
+            var destinationFolder = "";
+            if (file.Extension == ".png" || file.Extension == ".jpg")
+                destinationFolder = Properties.Resources.UploadFolder_Image;
+            else
+                destinationFolder = Properties.Resources.UploadFolder_Other;
+
+            string fullPath = controller.Request.MapPath("~/" + destinationFolder + "//" + file.Id + file.Extension);
+            if (System.IO.File.Exists(fullPath))
+                System.IO.File.Delete(fullPath);
         }
     }
 }

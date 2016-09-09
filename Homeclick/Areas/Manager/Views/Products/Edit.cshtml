@@ -1,29 +1,21 @@
 ﻿@using VCMS.Lib.Models
-@model VCMS.Lib.Models.Business.CreateProductViewModel
+@model VCMS.Lib.Models.Business.ProductViewModel
 
 @{
-    ViewBag.Title = "File Manager";
+    ViewBag.Title = "Products";
     ViewBag.FormName = "Create";
     Layout = "~/Areas/Manager/Views/Shared/_Layout_Form.cshtml";
     var colors = ViewBag.Colors as IEnumerable<Product_Variant>;
     var categories = ViewBag.Categories as IEnumerable<VCMS.Lib.Models.Business.Category>;
 }
 
-@if (ViewData["Success"] != null && (bool)ViewData["Success"])
-{
-    <div class="alert alert-success">
-        <button class="close" data-dismiss="alert">×</button>
-        <strong>Success!</strong> The product has been added.
-    </div>
-}
-@using (Html.BeginForm("Create","Products", FormMethod.Post, htmlAttributes : new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -42,15 +34,19 @@
         </div>
 
         <div class="form-group">
-            <label class="col-md-2 control-label">Category</label>
+            @Html.LabelFor(model => model.RoomIds, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="form-control-custom">
-                    <select name="Category" data-placeholder="Select a category" class="form-control chosen-with-diselect" tabindex="-1" id="category" style="display: none;">
-                        @foreach (var category in categories)
-                        {
-                            <option @Html.Raw((category.Id == Model.TypologyTypeId) ? "selected value='@category.Id'" : "value='@category.Id'")>@category.Name</option>
-                        }
-                    </select>
+                    @Html.ListBoxFor(model => model.RoomIds, ViewBag.Rooms as List<SelectListItem>, new { @class = "form-control chosen", multiple = "multiple", tabindex = "-1", style = "display: none;" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TypologyTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="form-control-custom">
+                    @Html.DropDownListFor(model => model.TypologyTypeId, ViewBag.Typologies as List<SelectListItem>, new { @class = "form-control chosen-with-diselect", tabindex = "-1", style = "display: none;" })
                 </div>
             </div>
         </div>
@@ -59,30 +55,33 @@
             <label class="col-md-2 control-label">Color</label>
             <div class="col-md-10">
                 <div class="form-control-custom">
-                    <select  data-placeholder="Select a color" class="form-control chosen-with-diselect" tabindex="-1" id="selColor" style="display: none;">
+                    <select data-placeholder="Select a color" class="form-control chosen-with-diselect" tabindex="-1" id="selColor" style="display: none;">
                         <option value=""> </option>
                         @foreach (var color in colors)
                         {
-                            if (Model.Colors.Contains("color"))
+                            if (Model?.Colors != null)
                             {
-
+                                <option @Html.Raw(Model.Colors.Contains(color.Id) ? "disabled='disabled'" + "value='" + color.Id +"'" : "value='" + color.Id + "'")>@color.Parent.Name - @color.Name</option>
                             }
-                            <option @Html.Raw(Model.Colors.Contains("color") ? " disabled='disabled' value='@color.Id'" : "value='@color.Id'") >@color.Parents.FirstOrDefault().Name - @color.Name</option>
+                            else
+                            {
+                                <option value="@color.Id">@color.Parent.Name - @color.Name</option>
+                            }
                         }
                     </select>
                     <button id="addColorButton" class="btn btn-link"><i class="fa fa-plus" aria-hidden="true"></i> Add...</button>
                 </div>
                 <div id="colorField" class="form-control-custom">
-                    @foreach (var color in Model.IColors)
+                    @if (Model?.Colors != null)
                     {
-                        <div class="color">
-                                <span>@color.Name</span>
-                                <input type="hidden" name="Colors" value="@color.Id">
-                        </div>
+                        foreach (var color in Model.Colors)
+                        {
+                            Html.RenderAction("_Colors", new { colorId = color });
+                        }
                     }
                 </div>
             </div>
-        </div>    
+        </div>
 
         <div class="form-group">
             <label class="col-md-2 control-label">Images</label>
@@ -102,23 +101,15 @@
                     </div>
                     <!-- The container for the uploaded files -->
                     <div id="files" class="files">
-                        @foreach (var image in Model.IImages)
+                        @if (Model?.ImageFiles != null)
                         {
-                            <p>
-                                @image.Id + @image.Extension
-                                <input type="hidden" name="Images" value="@image.Id">
-                            </p>
+                            foreach (var imagefile in Model.ImageFiles)
+                            {
+                                Html.RenderAction("_ImageFiles", new { fileId = imagefile.Key, colorId = imagefile.Value, isSelected = (imagefile.Key == Model.PreviewImage), colors = Model.Colors });
+                            }
                         }
                     </div>
                 </div>
-            </div>
-        </div>  
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Statu, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Statu, new { htmlAttributes = new { @class = "form-control"} })
-                @Html.ValidationMessageFor(model => model.Statu, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -162,88 +153,214 @@
             </div>
         </div>
 
-        <div  class="form-group">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <label class="checkbox">
+                    @Html.CheckBoxFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                </label>
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Done" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
-
-    @section Styles {
-        <link href="~/Areas/Manager/Content/Themes/FLATY/bootstrap-fileupload.css" rel="stylesheet" />
-        <link href="~/Areas/Manager/Content/Themes/FLATY/Chosen.min.css" rel="stylesheet" />
-
-        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/dark-hive/jquery-ui.css" id="theme">
-        <link href="~/Areas/Manager/Content/Plugins/jQueryFileUpload/css/jquery.fileupload.css" rel="stylesheet" />
-        <link href="~/Areas/Manager/Content/Plugins/jQueryFileUpload/css/jquery.fileupload-ui.css" rel="stylesheet" />
-
+@section breadcrumb {
+    @{
+        var viewName = Html.ViewContext.RouteData.GetRequiredString("action");
     }
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
 
-        <script src="~/Areas/Manager/Content/Themes/FLATY/bootstrap-fileupload.min.js"></script>
-        <script src="~/Areas/Manager/Content/Themes/FLATY/chosen.jquery.min.js"></script>
+@section Styles {
+    <link href="~/Areas/Manager/Content/Themes/FLATY/bootstrap-fileupload.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/Themes/FLATY/Chosen.min.css" rel="stylesheet" />
 
-        <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/vendor/jquery.ui.widget.js"></script>
-        <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/jquery.iframe-transport.js"></script>
-        <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/jquery.fileupload.js"></script>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/dark-hive/jquery-ui.css" id="theme">
+    <link href="~/Areas/Manager/Content/Plugins/jQueryFileUpload/css/jquery.fileupload.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/Plugins/jQueryFileUpload/css/jquery.fileupload-ui.css" rel="stylesheet" />
 
-        <script>
-            var colorRemove = function () {
-                var v = $(this).find('input').val();
-                var s = $('#selColor option').filter('[value="' + v + '"]').prop("disabled", false);
-                if (s) {
-                    $("#selColor").trigger("chosen:updated");
-                }
-                s.prop("disabled", false);
-                $(this).remove();
-            };
+}
 
-            $('#addColorButton').bind('click', function (event) {
-                var selected = $('#selColor :selected');
-                var b = selected.is(":disabled");
-                if (selected.val() && !b) {
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 
-                    selected.prop('disabled', true);
-                    $("#selColor").trigger("chosen:updated");
+    <script src="~/Areas/Manager/Content/Themes/FLATY/bootstrap-fileupload.min.js"></script>
+    <script src="~/Areas/Manager/Content/Themes/FLATY/chosen.jquery.min.js"></script>
 
-                    var a = '<div class="color">' +
-                                '<span>' + selected.text() + '</span>' +
-                                '<input type="hidden" name="Colors" value="' + selected.val() + '">' +
-                            '</div>';
-                    $('#colorField').append(a);
-                    $('.color').bind('click', colorRemove);
-                }
-                event.preventDefault()
+    <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/jquery.iframe-transport.js"></script>
+    <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/jquery.fileupload.js"></script>
+
+    <script>
+        var selectedColors = [];
+        var colorRemove = function () {
+            var v = $(this).find('input').val();
+            var s = $('#selColor option').filter('[value="' + v + '"]').prop("disabled", false);
+            if (s) {
+                $("#selColor").trigger("chosen:updated");
+            }
+            s.prop("disabled", false);
+            $(this).remove();
+
+            selectedColors = $.grep(selectedColors, function (d, i) {
+                return d.id != v;
             });
+            reif();
+        };
 
-        </script>
+        function reif() {
+            $('.sc').empty();
+            $.each(selectedColors, function (key, value) {
+                $('.sc').append($("<option/>").attr("value", value.id).text(value.text));
+            });
+        }
 
-        <script>
-            $(function () {
-                'use strict';
-                // Change this to the location of your server-side upload handler:
-                var url = '@Url.Action("Upload","FileUpload")';
-                $('#fileupload').fileupload({
-                    url: url,
-                    dataType: 'json',
-                    done: function (e, data) {
-                        $.each(data.result, function (index, file) {
-                            $('<p/>').append('<input type="hidden" name="Images" value="' + file.newFileName + '">' + file.oldFileName).appendTo('#files');
+        $('#addColorButton').bind('click', function (event) {
+            var selected = $('#selColor :selected');
+            var b = selected.is(":disabled");
+            if (selected.val() && !b) {
+
+                selected.prop('disabled', true);
+                $("#selColor").trigger("chosen:updated");
+
+                var a = '<div class="color">' +
+                            '<span>' + selected.text() + '</span>' +
+                            '<input type="hidden" name="Colors" value="' + selected.val() + '">' +
+                        '</div>';
+                $('#colorField').append(a);
+                $('.color').bind('click', colorRemove);
+
+                var obj = {};
+                obj['id'] = selected.val();
+                obj['text'] = selected.text();
+                selectedColors.push(obj);
+
+                reif();
+            }
+            event.preventDefault();
+        });
+
+        function deImg(a) {
+            var f = $(a).data('filename');
+            $.ajax({
+                url: '@Url.Action("DeleteFile", "FileUpload")',
+                data: { 'id': f },
+                traditional: true,
+                success: function () {
+                    var p = $(a).parents('.image-file');
+                    $(p).remove();
+                }
+            });
+            event.preventDefault();
+        };
+
+        function gscid() {
+            var scids = [];
+            for (var i = 0; i < selectedColors.length; i++) {
+                scids.push(selectedColors[i].id);
+            }
+            return scids;
+        }
+
+        function getSelectedRoomIds() {
+            var roomIds = [];
+            var selected = $('#RoomIds :selected');
+            for (var i = 0; i < selected.length; i++) {
+                roomIds.push(selected[i].value);
+            }
+            return roomIds;
+        };
+
+        $(function () {
+            'use strict';
+            // Change this to the location of your server-side upload handler:
+            var url = '@Url.Action("UploadP","FileUpload")';
+            $('#fileupload').fileupload({
+                url: url,
+                dataType: 'json',
+                done: function (e, data) {
+                    $.each(data.result, function (index, file) {
+                        var scids = gscid();
+                        $.ajax({
+                            traditional: true,
+                            url : '@Url.Action("_ImageFiles")',
+                            data: { 'fileId': file.newFileName, 'colorId': -1, 'colors': scids},
+                            success: function (data) {
+                                $('#files').append(data);
+                                $('.delete-image-btn').bind('click', function () {
+                                    deImg(this);
+                                });
+                                reif();
+                            }
                         });
-                    },
-                    progressall: function (e, data) {
-                        var progress = parseInt(data.loaded / data.total * 100, 10);
-                        $('#progress .progress-bar').css(
-                            'width',
-                            progress + '%'
-                        );
-                    }
-                }).prop('disabled', !$.support.fileInput)
-                    .parent().addClass($.support.fileInput ? undefined : 'disabled');
+                    });
+                },
+                progressall: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#progress .progress-bar').css(
+                        'width',
+                        progress + '%'
+                    );
+                }
+            }).prop('disabled', !$.support.fileInput)
+                .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+            var selected = $('#selColor :disabled');
+            for (var i = 0; i < selected.length; i++) {
+                var obj = {};
+                obj['id'] = $(selected[i]).val();
+                obj['text'] = $(selected[i]).text();
+                selectedColors.push(obj);
+            }
+
+            $(function () {
+                $('.delete-image-btn').bind('click', function () {
+                    deImg(this);
+                });
             });
-        </script>
-    }
+
+            $('#RoomIds').chosen().change(function () {
+                $('#TypologyTypeId').empty();
+                var selected = $('#RoomIds :selected');
+                if (selected.length > 0) {
+                    var url = '@Url.Action("GetTypologies")';
+                    var roomIds = getSelectedRoomIds();
+                    $.ajax({
+                        traditional: true,
+                        url: url,
+                        data: { 'roomIds': roomIds },
+                        success: function (data) {
+                            for (var i = 0; i < data.length; i++) {
+                                var item = $('<option />').val(data[i].id).text(data[i].name).appendTo('#TypologyTypeId');
+                            }
+                            $("#TypologyTypeId").trigger("chosen:updated");
+                        }
+                    });
+                }
+                else {
+                    $("#TypologyTypeId").trigger("chosen:updated");
+                }
+            });
+        });
+    </script>
+}

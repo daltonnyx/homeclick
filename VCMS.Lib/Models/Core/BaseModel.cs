@@ -37,5 +37,11 @@ namespace VCMS.Lib.Models
         public string UpdateUserId { get; set; }
 
         public DateTime? UpdateTime { get; set; }
+
+        [ForeignKey("CreateUserId")]
+        public virtual ApplicationUser CreateUser { get; set; }
+
+        [ForeignKey("UpdateUserId")]
+        public virtual ApplicationUser UpdateUser { get; set; }
     }
 }

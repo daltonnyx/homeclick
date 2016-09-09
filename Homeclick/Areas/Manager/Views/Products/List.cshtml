@@ -48,7 +48,8 @@
 
     <script>
         var thumbImg = function (data, type, full, meta) {
-            return '<div class="list-thumb "><img src="' + '@url' + '/' + data + '"></div>';
+            var fp = '@Url.GetImageUploadFolder()' + data;
+            return '<div class="list-thumb "><img src="' + fp + '"></div>';
         }
 
         var simple_linkBtns = function (data, type, full, meta) {
@@ -75,10 +76,10 @@
                 responsive: false,
 
                 "columns": [
-                   { "data": "Image", "render": thumbImg },
-                   { "data": "Name" },
-                   { "data": "Status" },
-                   { "data": "Id", "render": simple_linkBtns }],
+                   { "data": "img", "render": thumbImg },
+                   { "data": "name" },
+                   { "data": "status" },
+                   { "data": "id", "render": simple_linkBtns }],
 
                 "columnDefs": [{
                     "searchable": false,
