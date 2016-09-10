@@ -4194,3 +4194,28 @@ select {
 .result-search {
     float: left;
 }
+
+label.radio-image > input{ /* HIDE RADIO */
+  visibility: hidden; /* Makes input not-clickable */
+  position: absolute; /* Remove input from document flow */
+}
+label.radio-image > input + img{ /* IMAGE STYLES */
+  cursor:pointer;
+  border:2px solid transparent;
+}
+label.radio-image > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+  border:2px solid #f00;
+}
+
+.image-preview {
+      width: 75px;
+      height: 75px;
+      overflow:hidden;
+}
+.image-preview img {
+      height: 100%;
+      min-width: 100%;
+      left: 50%;
+      position: relative;
+      transform: translateX(-50%);
+}

@@ -1,4 +1,5 @@
-﻿@using Homeclick.Models;
+﻿@using VCMS.Lib.Models;
+@using VCMS.Lib.Models.Business;
 @model IEnumerable<Product>
 
 @{
@@ -13,17 +14,15 @@
     </div>
     <div class="content-product-feature col-md-12">
         <div class="feature-item row">
-            @foreach (Product item in Model)
+            @foreach (Product product in Model)
             {
-                String url = "http://demo.vinabits.com.vn/homeclick";
-                Dictionary<string, object> arrayItem = item.ToArray(item);
-                Dictionary<string, object> details = arrayItem["Product_detail"] as Dictionary<string, object>;
+                Dictionary<string, object> details = product.DetailsToDictionary();
                 <div class="item-product col-xs-6 col-md-3">
                     <div class="image">
-                        <a href="@Url.Action("Product_Detail","SanPham", new {@Id=@item.Id})"><img src="@url/@item.image" alt="" /></a>
+                        <a href="@Url.Action("Product_Detail","SanPham", new { Id = product.Id})"><img src="@Url.GetImageUploadFolder()@product.Image.FullFileName" alt="" /></a>
                     </div>
                     <div class="detail-item">
-                        <h3 class="title-item"><a href="@Url.Action("Product_Detail","SanPham", new {@Id=@item.Id})">@item.name</a></h3>
+                        <h3 class="title-item"><a href="@Url.Action("Product_Detail","SanPham", new { Id = product.Id})">@product.name</a></h3>
                         <p>@Convert.ToInt32(details["gia"]).ToString("#,###", info.NumberFormat) vnđ</p>
                     </div>
                 </div>

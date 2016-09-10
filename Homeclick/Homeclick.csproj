@@ -437,6 +437,9 @@
     <Content Include="Areas\Manager\Views\ProductMaterials\Edit.cshtml" />
     <Content Include="Areas\Manager\Views\FeatureProducts\List.cshtml" />
     <Content Include="Areas\Manager\Views\FeatureProducts\Add.cshtml" />
+    <Content Include="Areas\Manager\Views\Rooms\Index.cshtml" />
+    <Content Include="Areas\Manager\Views\Rooms\Add.cshtml" />
+    <Content Include="Areas\Manager\Views\CategoryTypes\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />

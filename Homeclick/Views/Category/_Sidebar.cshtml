@@ -1,5 +1,5 @@
-﻿@using Homeclick.Models;
-@model IList<Category>
+﻿@using VCMS.Lib.Models.Business;
+@model IEnumerable<Category>
 
 <div class="sidebar-box">
     <div class="box">
@@ -11,10 +11,10 @@
         </div>
         <div class="box-content clearfix">
             <ul class="category-list">
-                @foreach (Category item in Model)
+                @foreach (var category in Model)
                 {
-                    <li class="model-link filter" data-filter=".model-@item.Id" data-content="@item.Id">
-                        <a href="#model-@item.Id">@item.name</a>
+                    <li class="model-link filter" data-filter=".model-@category.Id" data-content="@category.Id">
+                        <a href="#model-@category.Id">@category.Name</a>
                     </li>
                 }
             </ul>

@@ -1,4 +1,12 @@
-﻿<div id="sidebar" class="navbar-collapse collapse">
+﻿@using VCMS.Lib.Controllers
+@using VCMS.Lib.Models.Business
+@{
+    var controller = ViewContext.Controller as BaseController;
+    var db = controller.GetDbContext();
+}
+
+
+<div id="sidebar" class="navbar-collapse collapse">
     <!-- BEGIN Navlist -->
     <ul class="nav nav-list" style="height: auto; overflow: hidden; width: auto;">
         <!-- BEGIN Search Form -->
@@ -14,7 +22,7 @@
         </li>
         <!-- END Search Form -->
         <li data-page="Dashboard">
-            <a href="@Url.Action("Index","Dashboard")">
+            <a href="@Url.Action("Index", "Dashboard")">
                 <i class="fa fa-dashboard"></i>
                 <span>Dashboard</span>
             </a>
@@ -29,8 +37,8 @@
 
             <!-- BEGIN Submenu a-->
             <ul class="submenu">
-                <li data-page="users"><a href="@Url.Action("List","Users")">Users</a></li>
-                <li data-page="roles"><a href="@Url.Action("List","Roles")">Roles</a></li>
+                <li data-page="users"><a href="@Url.Action("List", "Users")">Users</a></li>
+                <li data-page="roles"><a href="@Url.Action("List", "Roles")">Roles</a></li>
             </ul>
             <!-- END Submenu -->
         </li>
@@ -44,12 +52,51 @@
 
             <!-- BEGIN Submenu -->
             <ul class="submenu">
-                <li data-page="productmaterials"><a href="@Url.Action("List","ProductMaterials")">Materials</a></li>
-                <li data-page="productcolors"><a href="@Url.Action("List","ProductColors")">Colors</a></li>
-                <li data-page="products"><a href="@Url.Action("List","Products")">Products</a></li>
-                <li data-page="featureproducts"><a href="@Url.Action("List","FeatureProducts")">Feature</a></li>
+                <li data-page="productmaterials"><a href="@Url.Action("List", "ProductMaterials")">Materials</a></li>
+                <li data-page="productcolors"><a href="@Url.Action("List", "ProductColors")">Colors</a></li>
+                <li data-page="products"><a href="@Url.Action("List", "Products")">Products</a></li>
+                <li data-page="featureproducts"><a href="@Url.Action("List", "FeatureProducts")">Feature</a></li>
             </ul>
             <!-- END Submenu -->
+        </li>
+        <li>
+            <a class="dropdown-toggle">
+                <i class="fa fa-square-o"></i>
+                <span>Categories</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                <li>
+                    <span>Rooms</span>
+                    <ul>
+                        @{ var rooms = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Model);
+                            foreach (var room in rooms)
+                            {
+                                <li data-page="rooms-@room.Id">
+                                    <a href="@Url.Action("Index", "Rooms", new { id = room.Id })">@room.Name</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a class="dropdown-toggle">
+                <i class="fa fa-square-o"></i>
+                <span>Category Types</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                @{ var categoryTypes = db.Category_types;
+                    foreach (var categoryType in categoryTypes)
+                    {
+                        <li data-page="categorytypes-@categoryType.Id">
+                            <a href="@Url.Action("Index", "CategoryTypes", new { id = categoryType.Id })">@categoryType.Name</a>
+                        </li>
+                    }
+                }
+            </ul>
         </li>
         <li>
             <a class="dropdown-toggle">

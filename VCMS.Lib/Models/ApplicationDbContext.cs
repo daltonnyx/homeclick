@@ -20,7 +20,7 @@ namespace VCMS.Lib.Models
         public virtual DbSet<File> Files { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Category_detail> Category_details { get; set; }
-        public virtual DbSet<Category_type> Category_types { get; set; }
+        public virtual DbSet<Category_Type> Category_types { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Product_detail> Product_details { get; set; }
         public virtual DbSet<Product_type> Product_types { get; set; }
@@ -30,7 +30,7 @@ namespace VCMS.Lib.Models
             base.OnModelCreating(modelBuilder);
             //Category
             //--------------------------------------
-            modelBuilder.Entity<Category>().HasMany(e => e.Category_detail)
+            modelBuilder.Entity<Category>().HasMany(e => e.Category_details)
                 .WithOptional(e => e.Category)
                 .WillCascadeOnDelete();
 
@@ -41,15 +41,15 @@ namespace VCMS.Lib.Models
                     cs.MapLeftKey("ChildId");
                     cs.MapRightKey("ParentId");
                     cs.ToTable("Category_Category_Link");
-                });
-            
+                });    
             //--------------------------------------
 
             //Product
             //--------------------------------------
             modelBuilder.Entity<Product>().HasMany(e => e.Product_detail)
-                    .WithOptional(e => e.Product)
+                    .WithRequired(e => e.Product)
                     .WillCascadeOnDelete();
+
 
             modelBuilder.Entity<Product>().HasMany(e => e.Categories)
                 .WithMany(e => e.Products)

@@ -1,10 +1,10 @@
-﻿@using Homeclick.Models;
+﻿@using VCMS.Lib.Models.Business
 @model IEnumerable<Category>
 
 @{ 
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
-
 }
+
 <div class="sidebar">
     <div class="box">
         <div class="box-title">
@@ -18,8 +18,8 @@
                 @foreach (Category item in Model)
                 {
                     <li class="category-link" data-category="@item.Id">
-                        <a href="@Url.Action("Category",new { category_id = item.Id})">@item.name</a>
-                        @{ IList<Category> descendants = item.GetCategoryChilds(); }
+                        <a href="@Url.Action("Category",new { category_id = item.Id})">@item.Name</a>
+                        @{ IList<Category> descendants = item.GetDescendantCategories(CategoryTypes.Typology); }
 
                         <ul class="descendant-cat">
                             <li class="typo-link" data-category="@item.Id" data-typo="-1">
@@ -31,7 +31,7 @@
                                 {
                                     var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
                                     <li class="typo-link" data-category="@item.Id" data-typo="@des.Id">
-                                        <a href="#">@des.name</a>
+                                        <a href="#">@des.Name</a>
                                     </li>
                                 }
                             }

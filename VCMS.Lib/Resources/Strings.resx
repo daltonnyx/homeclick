@@ -357,4 +357,7 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="Rooms" xml:space="preserve">
+    <value>Rooms</value>
+  </data>
 </root>

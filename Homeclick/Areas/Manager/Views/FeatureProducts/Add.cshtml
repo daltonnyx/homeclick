@@ -7,6 +7,17 @@
     Layout = "~/Areas/Manager/Views/Shared/_Layout_Form.cshtml";
 }
 
+@if (ViewData["Success"] != null)
+{
+    if ((bool)ViewData["Success"])
+    {
+        <div class="alert alert-success">
+            <button class="close" data-dismiss="alert">×</button>
+            <strong>Success!</strong> The typology has been added.
+        </div>
+    }
+}
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -26,7 +37,6 @@
             </div>
         </div>
     </div>
-
 }
 
 @section breadcrumb {

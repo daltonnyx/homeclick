@@ -74,7 +74,6 @@ namespace Homeclick.Models
             return sortedList;
         }
 
-
         public string getActionLink()
         {
             string type = "Typology";

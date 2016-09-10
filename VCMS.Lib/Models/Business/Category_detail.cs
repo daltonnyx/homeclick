@@ -24,4 +24,9 @@ namespace VCMS.Lib.Models.Business
 
         public virtual Category Category { get; set; }
     }
+
+    public static class CategoryDetailTypes
+    {
+        public const string Icon = "Icon";
+    }
 }

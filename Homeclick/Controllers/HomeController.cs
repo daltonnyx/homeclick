@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Homeclick.Models;
 using PagedList;
 using PagedList.Mvc;
 using System.Collections;
 using System.Reflection;
+using VCMS.Lib.Common;
+using VCMS.Lib.Models;
+using VCMS.Lib.Models.Business;
 
 namespace Homeclick.Controllers
 {
     public class HomeController : Controller
     {
-        vinabits_homeclickEntities db = new vinabits_homeclickEntities();
+        ApplicationDbContext db = new ApplicationDbContext();
         
         public ActionResult Index()
         {
@@ -31,10 +33,10 @@ namespace Homeclick.Controllers
         public ActionResult Feature_Product()
         {
             IList<Product> products;
-            products = db.Products.Where(m => m.featured == true).ToList<Product>();
+            products = db.Products.Where(m => m.Featured == true).ToList<Product>();
             var max = products.Count;
             var rnd = new Random();
-            var random4Items = ModelHelper.PickRandom(products, 4);
+            var random4Items = Helper.PickRandom(products, 4);
             return View("Feature_Product", random4Items);
         }
         //Product Detail
@@ -64,15 +66,15 @@ namespace Homeclick.Controllers
             ViewBag.catId = RouteData.Values["id"];
             Dictionary<string, IList<Category>> blocks = new Dictionary<string, IList<Category>>();
             var queryModel = from category in db.Categories
-                             where category.Category_type.name == "model"
+                             where category.Category_type.Name == "model"
                              select category;
             blocks.Add("models",queryModel.ToList());
             var queryTypology = from category in db.Categories
-                                where category.Category_type.name == "typology"
+                                where category.Category_type.Name == "typology"
                                 select category;
             blocks.Add("typologies", queryTypology.ToList());
             var queryTypes = from category in db.Categories
-                             where category.Category_type.name == "vat_lieu"
+                             where category.Category_type.Name == "vat_lieu"
                              select category;
 
             blocks.Add("types", queryTypes.ToList());

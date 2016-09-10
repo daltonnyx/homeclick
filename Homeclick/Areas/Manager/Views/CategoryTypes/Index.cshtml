@@ -1,0 +1,138 @@
+﻿@using VCMS.Lib.Resources
+@using VCMS.Lib.Models.Business
+
+@model Category_Type
+@{
+    ViewBag.Title = Model.Name;
+    var Categories = ViewBag.Categories as IEnumerable<Category>;
+}
+
+<p>
+    <a href="@Url.Action("Create", new { id = Model.Id })" class="btn btn-lime"><i class="fa fa-plus" aria-hidden="true"></i> @Strings.Create</a>
+</p>
+<input type="hidden" name="roomId" value="@Model.Id" />
+<table id="dataTable" class="table table-striped table-hover fill-head" >
+    <thead>
+        <tr>
+            <th>
+                @Strings.Name
+            </th>
+            <th>
+                @Strings.Product
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Categories)
+        {
+            <tr class="typology-@category.Id">
+                <td>
+                    @category.Name
+                </td>
+                <td>
+                    @category.Products.Where(o => o.Rooms.FirstOrDefault(e => e.Id == Model.Id)?.Id == Model.Id).Count()
+                </td>
+                <td>
+                    <div class="table-action">
+                        <a class="btn btn-sm btn-primary show-tooltip" data-placement="top" data-original-title="Remove" href="#" data-toggle="modal" data-target="#deleteConfirmModal" data-id="@category.Id"><i class="fa fa-times"></i></a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+            </div>
+            <div class="modal-body">
+                <p>Remove typology from @Model.Name?</p>
+                <input type="hidden" id="hiddenId" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary btn-yes">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section breadcrumb {
+    @{
+        var viewName = Html.ViewContext.RouteData.GetRequiredString("action");
+    }
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>@ViewBag.Title</li>
+}
+
+@section styles {
+    @Styles.Render("~/bundles/manager/datatables/css")
+    }
+
+@section scripts {
+    @Scripts.Render("~/bundles/manager/datatables")
+
+    <script>
+        var simple_linkBtns = function (data, type, full, meta) {
+            var param = '?id=' + data;
+        }
+
+        var dataTable = null;
+        $(document).ready(function () {
+            var table = $('#dataTable');
+            dataTable = table.DataTable({
+                "autoWidth": false,
+                "responsive": false,
+                "iDisplayLength": 50,
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 2,
+                }],
+                "drawCallback": function (settings) {
+                    $('.show-tooltip').tooltip({ container: 'body', delay: { show: 500 } });
+                    $('.show-popover').popover();
+                }
+            });
+
+            $('#deleteConfirmModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var recipient = button.data('id');
+                var modal = $(this);
+                modal.find('.modal-body input').val(recipient);
+            })
+
+            $('#deleteConfirmModal').on('click', '.btn-yes', function (e) {
+                var $modalDiv = $(e.delegateTarget);
+                var input = $modalDiv.find('.modal-body input');
+                var typoId = input.val();
+                var url = '@Url.Action("Remove")';
+                $.ajax({
+                    url: url,
+                    data: { 'roomId': $('input[name="roomId"]').val(), 'typoId': typoId },
+                    success: function (data) {
+                        if (data > 0) {
+                            dataTable.rows('.typology-' + typoId)
+                                .remove()
+                                .draw();
+                            $modalDiv.modal('hide');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

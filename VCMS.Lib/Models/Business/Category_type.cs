@@ -6,21 +6,21 @@ namespace VCMS.Lib.Models.Business
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Category_type
+    public partial class Category_Type
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Category_type()
+        public Category_Type()
         {
             Categories = new HashSet<Category>();
         }
 
         public int Id { get; set; }
 
-        [StringLength(100)]
-        public string name { get; set; }
+        [StringLength(128)]
+        public string Name { get; set; }
 
-        [StringLength(100)]
-        public string caption { get; set; }
+        [StringLength(128)]
+        public string Caption { get; set; }
 
         public int? typeFor { get; set; }
 

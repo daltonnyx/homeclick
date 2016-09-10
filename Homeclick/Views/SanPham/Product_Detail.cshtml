@@ -1,34 +1,23 @@
-﻿@using Homeclick.Models;
+﻿@using VCMS.Lib.Common;
+@using VCMS.Lib.Models;
+@using VCMS.Lib.Models.Business;
+
 @model Product
 
 @{
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
     Layout = "~/Views/Shared/_SharedLayout_NoSidebar.cshtml";
-    var url = "";
-    var colors = ModelHelper.getChildren<Color>(typeof(Product).Name, typeof(Color).Name, Model.Id);
+    var iUrl = Url.GetImageUploadFolder();
+    var details = Model.DetailsToDictionary();
+    var materials = Model.Materials;   
 }
 
 <div class="single-product">
+    <input type="hidden" value="@Model.Id" id="modelId" />
     @{
-        Dictionary<string, object> arrayItem = Model.ToArray(Model);
-        Dictionary<string, object> details = arrayItem["Product_detail"] as Dictionary<string, object>;
-        var gallery = details["hinh_anh"].ToString().Split(';');
-        Array.Resize(ref gallery, gallery.Length - 1);
         <div class="image col-sm-5 col-md-4">
             <div class="elevatezoom-wrapper">
-                @{var image = @Model.image.Replace("\\", @"/");}
-                <img class="elevatezoom-img" src="@url/@gallery[0]" data-zoom-image="@url/@gallery[0]" />
-                <div id="elevatezoom-gallery">
-                    @foreach (var img in gallery)
-                    {
-                        image = @img.Replace("\\", @"/");
-                        <div class="elevatezoom-thumb">
-                            <a href="#" class="item" data-image="@url/@image" data-zoom-image="@url/@image">
-                                <img class="" src="@url/@image" />
-                            </a>
-                        </div>
-                    }
-                </div>
+
             </div>
         </div>
 
@@ -39,18 +28,26 @@
             </div>
 
             <div class="form-add-to-cart">
-                @using (Html.BeginForm("ThemSanPham", "GioHang", new { @Id = @Model.Id, @strUrl = Request.Url.ToString() }))
+                @using (Html.BeginForm("ThemSanPham", "GioHang", new { @Id = @Model.Id, @strUrl = Request.Url.ToString(), @class= "form-horizontal" }))
                 {
+                    <div class="form-group">
+                        <label class="control-label">Chất liệu</label>
+                        <div class="controls">
+                            @Html.DropDownList("material", materials.Select(o => new SelectListItem { Value = o.Id.ToString(), Text =o.Name}), new {@class= "form-control", style="width:150px;" })
+                        </div>
+                    </div>
                     <div class="colors-wrapper clearfix">
                         <div class="wrapper-title">
                             <label class="control-label">Màu sắc</label>
                         </div>
                         <div class="wrapper-content">
+                            @{ var colors = materials.FirstOrDefault().Children.Intersect(Model.Product_Variants);}
                             @foreach (var color in colors)
-                            {
-                                <div class="color-item">
-                                    <img src="@url/@color.Image" alt="@color.Name" />
-                                </div>
+                                {
+                                <label class="radio-image image-preview">
+                                    <input type="radio" name="colors" value="@color.Id" />
+                                    <img src="@iUrl@color.ImageFile.FullFileName" alt="@color.Name" />
+                                </label>
                             }
                         </div>
                     </div>
@@ -64,22 +61,33 @@
                             <span class="plus">+</span>
                         </div>
                         <div class="add-shop">
-                            <input class="input add-to-cart" type="submit" value="Đặt hàng" />
+                            @if (Model.Status)
+                            {
+                                <input class="input add-to-cart" type="submit" value="Đặt hàng" />
+                            }
+                            else
+                            {
+                                <input class="input add-to-cart" disabled type="submit" value="Hết hàng" />
+                            }
                         </div>
                     </div>
                 }
             </div>
             <hr />
+
             <div class="detail-product">
                 <h3 class="detail-product-title" hidden="hidden">Chi tiết</h3>
                 <div class="detail-product-content">
                     <h3>Chi tiết</h3>
                     @{var escaped = new HtmlString(Model.content);}
                     <p>@escaped</p>
-                    <p><span>Kích thước:</span>@details["kich_thuoc"]</p>
-                    <p><span>Bảo hành:</span>@details["bao_hanh"] Tháng</p>
+                    <p><span>Kích thước:</span>@details[ProductDetailTypes.Size]</p>
+                    <p><span>Trọng lượng:</span>@details[ProductDetailTypes.Weight] kg</p>
+                    <p><span>Bảo hành:</span>@details[ProductDetailTypes.Warranty] Tháng</p>
+                    <p><span>Xuất xứ:</span>@details[ProductDetailTypes.MadeIn]</p>
                 </div>
             </div>
+
             <ul class="product-social clearfix">
                 <li>
                     <a href="#">
@@ -138,7 +146,7 @@
 
         .zoomWrapper {
             border: 1px solid lightgray;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         #elevatezoom-gallery {
@@ -182,33 +190,78 @@
     <script type="text/javascript" src="~/Scripts/Plugins/fancyBox/jquery.fancybox.pack.js"></script>
 
     <script type="text/javascript">
-        $(".elevatezoom-img").elevateZoom(
-                  {
-                      gallery: 'elevatezoom-gallery',
-                      cursor: 'pointer',
-                      galleryActiveClass: "active",
-                      imageCrossfade: true,
-                      loadingIcon: "",
-                      constrainSize: 274,
-                      zoomType: "lens",
-                      containLensZoom: true,
-                      responsive: true,
-                      borderSize: 1
-                  });
 
-        $(".elevatezoom-img").bind("click", function (event) {
-            var ez = $('.zoom_img').data('elevateZoom');
-            ez.closeAll(); //NEW: This function force hides the lens, tint and window
-            $.fancybox(ez.getGalleryList());
-            event.preventDefault();
-        });
+        function colorChanged(a) {
+            $('.elevatezoom-wrapper').empty();
+            var url = '@Url.Action("GetImages")';
+            $.ajax({
+                url: url,
+                data: { 'variantId': a, 'productId': $('#modelId').val() },
+                success: function (data) {
+                    if (data.length > 0) {
+                        var iUrl = '@iUrl';
+                        var img = $('<img/>').addClass('elevatezoom-img')
+                            .attr('src', iUrl + data[0])
+                            .data('zoom-image', iUrl + data[0]).hide()
+                            .appendTo('.elevatezoom-wrapper').fadeIn('slow');
+                        var gallery = $('<div/>')
+                            .attr('id', "elevatezoom-gallery").hide()
+                            .appendTo('.elevatezoom-wrapper').fadeIn('slow');
 
-        var gallery = $('#elevatezoom-gallery');
-        gallery.slick({
-            infinite: true,
-            dots: false,
-            slidesToShow: 3,
-            slidesToScroll: 3
+                        for (var i = 0; i < data.length; i++) {
+                            var thumb = $('<div/>')
+                                .addClass('elevatezoom-thumb')
+                                .appendTo(gallery);
+                            var a = $('<a/>')
+                                .addClass('item')
+                                .attr('href', '#')
+                                .data('image', iUrl + data[i])
+                                .data('zoom-image', iUrl + data[i])
+                                .appendTo(thumb);
+                            var tImg = $('<img/>')
+                                .attr('src', iUrl + data[i])
+                                .appendTo(a);
+                        }
+
+                        img.elevateZoom(
+                          {
+                              gallery: 'elevatezoom-gallery',
+                              cursor: 'pointer',
+                              galleryActiveClass: "active",
+                              imageCrossfade: true,
+                              loadingIcon: "",
+                              constrainSize: 274,
+                              zoomType: "lens",
+                              containLensZoom: true,
+                              responsive: true,
+                              borderSize: 1
+                          });
+
+                        img.bind("click", function (event) {
+                            var ez = $(this).data('elevateZoom');
+                            ez.closeAll(); //NEW: This function force hides the lens, tint and window
+                            $.fancybox(ez.getGalleryList());
+                            event.preventDefault();
+                        });
+
+                        gallery.slick({
+                            infinite: true,
+                            dots: false,
+                            slidesToShow: 3,
+                            slidesToScroll: 3
+                        });
+                    }
+                }
+            })
+        };
+
+        $(function () {
+            $('input[type=radio][name=colors]').change(function () {
+                colorChanged(this.value);
+            });
+            var fc = $('input[type=radio][name=colors]').first();
+            fc.attr('checked', true);
+            colorChanged(fc.val());
         });
     </script>
 

@@ -7,6 +7,7 @@ namespace VCMS.Lib.Models.Business
     using System.Data.Entity.ModelConfiguration;
     using System.Data.Entity.Spatial;
     using System.Linq;
+    using System.Reflection;
 
     [Table("Product")]
     public partial class Product
@@ -73,6 +74,32 @@ namespace VCMS.Lib.Models.Business
                 var room = Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Model);
                 return room;
             }
+        }
+
+        public IEnumerable<Product_Variant> Materials
+        {
+            get
+            {
+                var materials = new List<Product_Variant>();
+                foreach (var item in Product_Variants)
+                {
+                    var material = item.Parent;
+                    if (!materials.Contains(material))
+                        materials.Add(material);
+                }
+                return materials;
+            }
+        }
+
+        public Dictionary<string, object> DetailsToDictionary()
+        {
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            foreach (var detail in Product_detail)
+            {
+                if (!dic.ContainsKey(detail.Name))
+                    dic.Add(detail.Name, detail.Value);
+            }
+            return dic;
         }
     }
 

@@ -275,7 +275,7 @@ namespace VCMS.Lib.Controllers
 
                 foreach (var item in dic)
                 {
-                    var detail = new Product_detail { name = item.Key, value = item.Value };
+                    var detail = new Product_detail { Name = item.Key, Value = item.Value };
                     detail.Product = model;
                     db.Product_details.Add(detail);
                 }
@@ -286,45 +286,45 @@ namespace VCMS.Lib.Controllers
                 foreach (var detail in model.Product_detail)
                 {
                     var newValue = "";
-                    switch (detail.name)
+                    switch (detail.Name)
                     {
                         case ProductDetailTypes.Price:
                             newValue = viewModel.Price;
-                            if (detail.value != newValue)
+                            if (detail.Value != newValue)
                             {
-                                detail.value = newValue;
+                                detail.Value = newValue;
                                 db.Entry(detail).State = System.Data.Entity.EntityState.Modified;
                             }
                             break;
                         case ProductDetailTypes.Size:
                             newValue = viewModel.Size;
-                            if (detail.value != newValue)
+                            if (detail.Value != newValue)
                             {
-                                detail.value = newValue;
+                                detail.Value = newValue;
                                 db.Entry(detail).State = System.Data.Entity.EntityState.Modified;
                             }
                             break;
                         case ProductDetailTypes.Warranty:
                             newValue = viewModel.Warranty;
-                            if (detail.value != newValue)
+                            if (detail.Value != newValue)
                             {
-                                detail.value = newValue;
+                                detail.Value = newValue;
                                 db.Entry(detail).State = System.Data.Entity.EntityState.Modified;
                             }
                             break;
                         case ProductDetailTypes.MadeIn:
                             newValue = viewModel.MadeIn;
-                            if (detail.value != newValue)
+                            if (detail.Value != newValue)
                             {
-                                detail.value = newValue;
+                                detail.Value = newValue;
                                 db.Entry(detail).State = System.Data.Entity.EntityState.Modified;
                             }
                             break;
                         case ProductDetailTypes.Weight:
                             newValue = viewModel.Weight;
-                            if (detail.value != newValue)
+                            if (detail.Value != newValue)
                             {
-                                detail.value = newValue;
+                                detail.Value = newValue;
                                 db.Entry(detail).State = System.Data.Entity.EntityState.Modified;
                             }
                             break;
@@ -501,22 +501,22 @@ namespace VCMS.Lib.Controllers
 
             foreach (var detail in model.Product_detail)
             {
-                switch (detail.name)
+                switch (detail.Name)
                 {
                     case ProductDetailTypes.Price:
-                        viewModel.Price = detail.value;
+                        viewModel.Price = detail.Value;
                         break;
                     case ProductDetailTypes.Size:
-                        viewModel.Size = detail.value;
+                        viewModel.Size = detail.Value;
                         break;
                     case ProductDetailTypes.Warranty:
-                        viewModel.Warranty = detail.value;
+                        viewModel.Warranty = detail.Value;
                         break;
                     case ProductDetailTypes.MadeIn:
-                        viewModel.MadeIn = detail.value;
+                        viewModel.MadeIn = detail.Value;
                         break;
                     case ProductDetailTypes.Weight:
-                        viewModel.Weight = detail.value;
+                        viewModel.Weight = detail.Value;
                         break;
                     default:
                         break;

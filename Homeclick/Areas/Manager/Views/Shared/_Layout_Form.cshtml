@@ -56,10 +56,14 @@
 
     @RenderSection("scripts", required: false)
     <script>
-        var currentActive = "@Html.ViewContext.RouteData.GetRequiredString("controller").ToLower()";
+        var cCtrler = "@Html.ViewContext.RouteData.GetRequiredString("controller").ToLower()";
+        var rprm = "@Html.ViewContext.RouteData.Values["id"].ToString().ToLower()";
         $(function () {
+            if (rprm != '') {
+                cCtrler = cCtrler + '-' + rprm;
+            }
             var sidebarListItems = $('#sidebar').find('li');
-            var active = sidebarListItems.filter('[data-page="' + currentActive + '"]');
+            var active = sidebarListItems.filter('[data-page="' + cCtrler + '"]');
             if (active) {
                 active.addClass("active");
                 var liParents = active.parents('li');

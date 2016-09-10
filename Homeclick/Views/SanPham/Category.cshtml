@@ -74,8 +74,8 @@
             connect: true,
             range: {
                 'min': 0,
-                '15%': 1500000,
-                '30%': 3000000,
+                '5%': 500000,
+                '20%': 2000000,
                 '45%': 4500000,
                 '60%': 6000000,
                 '75%': 7500000,
@@ -98,7 +98,7 @@
         snapSlider.noUiSlider.on('update', function (values, handle) {
             var val = parseInt(values[handle]);
             snapValues[handle].innerHTML = val.format(0, 3, '.') + ' vnđ';
-            $(snapValues[handle]).data('value', values);
+            $(snapValues[handle]).data('value', values[handle]);
 
             if (currentTypoData) {
                 showProducts(filter(currentTypoData));
@@ -109,7 +109,7 @@
         var currentTypoData = [];
         var currentCategoryData = [];
         var maxProductValue = 0;
-        var currentCategoryId = '@Request.Params["category_id"]';
+        var currentModelId = '@Request.Params["category_id"]';
         var currentTypoId = '@Request.Params["typo_id"]';
         var currentCategory = null;
         var currentTypo = null;
@@ -120,15 +120,15 @@
         });
 
         function filter(sourceData) {
-            var minmax = $(snapValues).data('value'),
-                data = [],
+            var data = [],
                 dataResult = [],
-                min = parseInt(minmax[0]),
-                max = parseInt(minmax[1]);
+                min = parseInt($(snapValues[0]).data('value')),
+                max = parseInt($(snapValues[1]).data('value'));
+
             if (min == max)
                 data = jlinq.from(sourceData).greater('value', min).select();
             else
-                data = jlinq.from(sourceData).greater('value', min).notGreater('value', max).select();
+                data = jlinq.from(sourceData).greaterEquals('value', min).lessEquals('value', max).select();
 
             var selectedMetarials = [];
             var checkers = $('.material-checker:checked');
@@ -182,7 +182,7 @@
                             for (var i = 0; i < pagidata.length; i++) {
                                 var item = '<div class="item-product col-xs-6 col-md-4 col-lg-3"">' +
                                                 '<div class="image">' +
-                                                    '<a href="@Url.Action("Product_Detail","SanPham")' + '/' + pagidata[i].id + '"><img src="' + '@url' + '/' + pagidata[i].image + '" alt="" /></a>' +
+                                                    '<a href="@Url.Action("Product_Detail","SanPham")' + '/' + pagidata[i].id + '"><img src="' + '@Url.GetImageUploadFolder()' + pagidata[i].image + '" alt="" /></a>' +
                                                 '</div>' +
                                                 '<div class="detail-item">' +
                                                     '<h3 class="title-item"><a href="@Url.Action("Product_Detail","SanPham")' + '/' + pagidata[i].id + '">' + pagidata[i].name + '</a></h3>' +
@@ -199,12 +199,12 @@
             });
         }
 
-        function getMetarials(category_id, category_id) {
+        function getMetarials(modelId, typoId) {
             url = '@Url.Action("GetMetarialsJson")';
             $.ajax({
                 type: "GET",
                 url: url,
-                data: { 'category_id': category_id, 'category_id': category_id },
+                data: { 'model_id': modelId , 'typo_id': typoId},
                 success: function (data) {
                     $('.material-list').empty();
                     for (var i = 0; i < data.length; i++) {
@@ -242,7 +242,7 @@
 
         $(document).ready(function () {
 
-            currentCategory = $('#sidebar .category-link').filter('[data-category="' + currentCategoryId + '"]').first();
+            currentCategory = $('#sidebar .category-link').filter('[data-category="' + currentModelId + '"]').first();
             if (!currentTypoId) {
                 currentTypoId = -1;
             }
@@ -252,15 +252,15 @@
                 currentCategory = $('#sidebar .nav').children().first();
 
             if (currentCategory) {
-                currentCategoryId = currentCategory.data('category');
+                currentModelId = currentCategory.data('category');
                 if (!currentTypo) {
                     currentTypo = currentCategory.children('.descendant-cat').children().first();
                     currentTypoId = activeChild.data('typo');
                 }
 
                 currentTypo.addClass('active');
-                getProducts(currentCategoryId, parseInt(currentTypoId));
-                getMetarials(currentCategoryId, parseInt(currentTypoId));
+                getProducts(currentModelId, parseInt(currentTypoId));
+                getMetarials(currentModelId, parseInt(currentTypoId));
             }
 
             $('.typo-link > a').bind('click', function (event) {
@@ -273,7 +273,7 @@
 
                 currentTypoData = refineProductsByTypo(currentCategoryData, currentTypoId);
                 showProducts(filter(currentTypoData));
-                getMetarials(currentCategoryId, currentTypoId);
+                getMetarials(currentModelId, currentTypoId);
                 event.preventDefault();
             });
         });

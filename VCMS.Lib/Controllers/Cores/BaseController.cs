@@ -12,5 +12,10 @@ namespace VCMS.Lib.Controllers
     public abstract class BaseController : Controller
     {
         protected ApplicationDbContext db = new ApplicationDbContext();
+
+        public ApplicationDbContext GetDbContext()
+        {
+            return db;
+        }
     }
 }

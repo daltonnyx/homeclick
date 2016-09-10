@@ -163,7 +163,7 @@
                             for (var i = 0; i < pagidata.length; i++) {
                                 var item = '<div class="item-product col-xs-6 col-md-4"">' +
                                                 '<div class="image">' +
-                                                    '<a href="@Url.Action("Product_Detail","SanPham")' + '/' + pagidata[i].id + '"><img src="' + '@url' + '/' + pagidata[i].image + '" alt="" /></a>' +
+                                                    '<a href="@Url.Action("Product_Detail","SanPham")' + '/' + pagidata[i].id + '"><img src="' + '@Url.GetImageUploadFolder()' + pagidata[i].image + '" alt="" /></a>' +
                                                 '</div>' +
                                                 '<div class="detail-item">' +
                                                     '<h3 class="title-item"><a href="@Url.Action("Product_Detail","SanPham")' + '/' + pagidata[i].id + '">' + pagidata[i].name + '</a></h3>' +

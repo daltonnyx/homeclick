@@ -49,5 +49,17 @@ namespace VCMS.Lib.Common
 
             return result;
         }
+
+        public static IEnumerable<T> PickRandom<T>(this IEnumerable<T> someTypes, int maxCount)
+        {
+            Random random = new Random(DateTime.Now.Millisecond);
+
+            Dictionary<double, T> randomSortTable = new Dictionary<double, T>();
+
+            foreach (T someType in someTypes)
+                randomSortTable[random.NextDouble()] = someType;
+
+            return randomSortTable.OrderBy(KVP => KVP.Key).Take(maxCount).Select(KVP => KVP.Value);
+        }
     }
 }

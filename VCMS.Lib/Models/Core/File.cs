@@ -53,6 +53,14 @@ namespace VCMS.Lib.Models
                 }
             }
         }
+
+        public string FullFileName
+        {
+            get
+            {
+                return Id + Extension;
+            }
+        }
     }
 
 

@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Homeclick.Models;
-using PagedList;
-using PagedList.Mvc;
 using System.Collections;
-using System.Reflection;
+using VCMS.Lib.Models;
+using VCMS.Lib.Models.Business;
 
 namespace Homeclick.Controllers
 {
-    public class SanPhamController : BaseController
+    public class SanPhamController : Controller
     {
-        public override CategoryTypes CategoryType { get { return CategoryTypes.Model; } }
+        public  CategoryTypes CategoryType { get { return CategoryTypes.Model; } }
+
+        public ApplicationDbContext db = new ApplicationDbContext();
+
+        public virtual ActionResult _Sidebar()
+        {
+            var categories = db.Categories.Where(c => c.Category_typeId == (int)CategoryType).ToList();
+            return PartialView(categories);
+        }
 
         public ActionResult Index()
         {
@@ -34,17 +40,17 @@ namespace Homeclick.Controllers
         public ActionResult CanvasList(int? cat_id, int? type_id)
         {
             IList<Product> products = (from product in db.Products
-                                       where product.status == 1
+                                       where product.Status == true
                                       select product).ToList<Product>();
 
             if(cat_id != null)
             {
-                products = db.Categories.Find(cat_id).Products.Where<Product>(p => p.status == 1).ToList<Product>();
+                products = db.Categories.Find(cat_id).Products.Where<Product>(p => p.Status == true).ToList<Product>();
             }
             if(type_id != null)
             {
                 products = (from product in products
-                            where product.status == 1
+                            where product.Status == true
                             select product).ToList<Product>();
             }
             return PartialView(products);
@@ -87,11 +93,28 @@ namespace Homeclick.Controllers
             }
             if (mate_id != null)
             {
-                products = from p in products
-                           where (from c in p.Categories
-                                  where c.Id == mate_id
-                                  select c).Count() > 0
-                           select p;
+                var tProducts = new List<Product>();
+                foreach (var product in products)
+                {
+                    foreach (var material in product.Materials)
+                    {
+                        var found = false;
+                        foreach (var category in material.Categories)
+                        {
+                            if (category.Id == mate_id)
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (found)
+                        {
+                            tProducts.Add(product);
+                            break;
+                        }
+                    }
+                }
+                products = products.Intersect(tProducts);
             }
 
             var list = products.OrderBy<Product, string>(p => p.name).ToList();
@@ -104,13 +127,13 @@ namespace Homeclick.Controllers
             var json = new List<object>();
             foreach (var item in list)
             {
-                var arrayItem = item.ToArray();
-                var details = arrayItem["Product_detail"] as Dictionary<string, object>;
+                var details = item.DetailsToDictionary();
+                var typo = item.Categories.FirstOrDefault(o => o.Category_typeId == (int)CategoryTypes.Typology);
 
                 var materialList = new List<object>();
-                var materials = item.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Material);
-
-                var typo = item.Categories.FirstOrDefault(o => o.Category_typeId == (int)CategoryTypes.Typology);
+                var tList = new List<Product>();
+                tList.Add(item);
+                var materials = GetCMaterialOfProducts(tList);
 
                 foreach (var material in materials)
                 {
@@ -124,7 +147,7 @@ namespace Homeclick.Controllers
                 {
                     id = item.Id,
                     name = item.name,
-                    image = item.image,
+                    image = item.Image.FullFileName,
                     value = Convert.ToInt32(details["gia"]),
                     materials = materialList,
                     typo = typo.Id
@@ -136,29 +159,45 @@ namespace Homeclick.Controllers
         /// <summary>
         /// taking all of the material relating to the category
         /// </summary>
-        /// <param name="category_id">Id of the category</param>
+        /// <param name="typo_id">Id of the category</param>
         /// <param name="model_id">If 'category_id' is -1 and 'model_id' has been set, this will getting materials contained in the model</param>
-        /// <returns></returns>
-        public JsonResult GetMetarialsJson(int category_id, int? model_id)
+        /// <returns></returns>       
+        public JsonResult GetMetarialsJson(int? model_id, int? typo_id)
         {
-            IList<Category> metarials;
-            var json = new List<object>();
-            var model = db.Categories.Find((category_id == -1 && model_id != null) ? model_id : category_id);
+            var resuilt = new List<object>();
+            var products = this.Filter(model_id, typo_id);
+            var cMaterials = GetCMaterialOfProducts(products);
 
-            if (model != null)
+            foreach (var cMaterial in cMaterials)
             {
-                metarials = model.getDescendantCategories(CategoryTypes.Material);
-                foreach (var metarial in metarials)
+                resuilt.Add(new
                 {
-                    json.Add(new
-                    {
-                        id = metarial.Id,
-                        name = metarial.name
-                    });
-                }
+                    id = cMaterial.Id,
+                    name = cMaterial.Name
+                });
             }
+            return Json(resuilt, JsonRequestBehavior.AllowGet);
+        }
 
-            return Json(json, JsonRequestBehavior.AllowGet);
+        private List<Category> GetCMaterialOfProducts(IEnumerable<Product> products)
+        {
+            var pMaterials = new List<Product_Variant>();
+            var cMaterials = new List<Category>();
+            foreach (var product in products)
+            {
+                pMaterials = pMaterials
+                    .Concat(product.Materials.ToList())
+                    .Distinct()
+                    .ToList();
+            }
+            foreach (var pMaterial in pMaterials)
+            {
+                cMaterials = cMaterials
+                    .Concat(pMaterial.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Material))
+                    .Distinct()
+                    .ToList();
+            }
+            return cMaterials;
         }
 
         public ViewResult Product_Detail(int? id)
@@ -172,6 +211,29 @@ namespace Homeclick.Controllers
         {
             var product = db.Products.Find(id);
             return PartialView(product);
+        }
+
+        public ActionResult GetImages(int? variantId, int? productId)
+        {
+            var result = new List<object>();
+            if (variantId != null && productId != null)
+            {
+                var product = db.Products.Find(productId);
+                if (product != null)
+                {
+                    var color = db.Product_Variants.Find(variantId);
+                    if (color != null)
+                    {
+                        var commonItem = product.Files.Intersect(color.Files);
+                        foreach (var item in commonItem)
+                        {
+                            result.Add(item.FullFileName);
+                        }
+                    }
+                }
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 	}
 }
