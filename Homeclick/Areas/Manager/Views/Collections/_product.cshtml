@@ -1,0 +1,18 @@
+﻿@model VCMS.Lib.Models.Business.Product
+@{ 
+    var quantity = ViewData["Quantity"] != null ? (int)ViewData["Quantity"] : 1;
+}
+<div class="product clearfix" data-id="@Model.Id">
+    <div class="image-preview-md pull-left">
+        <img src="@Url.GetImageUploadFolder()@Model.Image.FullFileName">
+    </div>
+    <div class="pull-left" style="padding-left: 5px;">
+        <p><strong>@Model.name</strong></p>
+        <p>
+            <span class="product-remove-btn">
+                <i class="fa fa-times"></i> Remove
+            </span>
+        </p>
+        <input class="form-control" type="number" name="products[@Model.Id]" value="@quantity" placeholder="Quantity">
+    </div>
+</div>

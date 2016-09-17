@@ -360,4 +360,10 @@
   <data name="Rooms" xml:space="preserve">
     <value>Rooms</value>
   </data>
+  <data name="CategoryTypes" xml:space="preserve">
+    <value>Category Types</value>
+  </data>
+  <data name="Collections" xml:space="preserve">
+    <value>Collections</value>
+  </data>
 </root>

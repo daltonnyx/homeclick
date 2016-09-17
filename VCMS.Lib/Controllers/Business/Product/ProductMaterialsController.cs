@@ -120,7 +120,7 @@ namespace VCMS.Lib.Controllers
                 VariantParent = model.ParentId,
             };
 
-            var cMaterials = model.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Material);
+            var cMaterials = model.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Material);
             var materials = new List<int>();
             foreach (var category in cMaterials)
             {
@@ -170,7 +170,7 @@ namespace VCMS.Lib.Controllers
         {
             get
             {
-                var categories = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Material)
+                var categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Material)
                     .Select(o => new SelectListItem { Text = o.Name, Value = (o.Id).ToString() }).ToList();
                 return categories;
             }

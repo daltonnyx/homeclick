@@ -155,7 +155,7 @@ namespace VCMS.Lib.Controllers
         {
             get
             {
-                var rooms = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Model)
+                var rooms = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Model)
                     .Select(o => new SelectListItem { Text = o.Name, Value = (o.Id).ToString() }).ToList();
                 return rooms;
             }
@@ -165,7 +165,7 @@ namespace VCMS.Lib.Controllers
         {
             get
             {
-                var rooms = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Typology)
+                var rooms = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Typology)
                     .Select(o => new SelectListItem { Text = o.Name, Value = (o.Id).ToString() }).ToList();
                 return rooms;
             }
@@ -221,9 +221,9 @@ namespace VCMS.Lib.Controllers
             foreach (var roomId in roomIds)
             {
                 var cRoom = db.Categories.Find(roomId);
-                if (cRoom?.Category_typeId == (int)CategoryTypes.Model)
+                if (cRoom?.Category_TypeId == (int)CategoryTypes.Model)
                 {
-                    var typologies = cRoom.CategoryChildren.Where(o => o.Category_typeId == (int)CategoryTypes.Typology);
+                    var typologies = cRoom.CategoryChildren.Where(o => o.Category_TypeId == (int)CategoryTypes.Typology);
                     typoLists.Add(typologies);
                 }
             }

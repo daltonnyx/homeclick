@@ -101,10 +101,13 @@
     <Compile Include="Common\AuthorizationService.cs" />
     <Compile Include="Common\Helper.cs" />
     <Compile Include="Common\HtmlHelper.cs" />
+    <Compile Include="Common\StringExtentsions.cs" />
     <Compile Include="Common\Uploader.cs" />
     <Compile Include="Common\UrlHelper.cs" />
     <Compile Include="Controllers\Business\Category\RoomsController.cs" />
-    <Compile Include="Controllers\Business\Category\CategoryTypesController.cs" />
+    <Compile Include="Controllers\Business\Category\CategoriesController.cs" />
+    <Compile Include="Controllers\Business\Collection\CollectionsController.cs" />
+    <Compile Include="Controllers\Business\Post\PostsController.cs" />
     <Compile Include="Controllers\Business\Product\FeatureProductsController.cs" />
     <Compile Include="Controllers\Business\Product\ProductMaterialsController.cs" />
     <Compile Include="Controllers\Business\Product\ProductsController.cs" />
@@ -123,10 +126,16 @@
     <Compile Include="Models\Business\BaseBusinessModel.cs" />
     <Compile Include="Models\Business\Category_detail.cs" />
     <Compile Include="Models\Business\Category_Type.cs" />
+    <Compile Include="Models\Business\Posts_Product.cs" />
     <Compile Include="Models\Business\Product.cs" />
     <Compile Include="Models\Business\Product_detail.cs" />
     <Compile Include="Models\Business\Product_type.cs" />
     <Compile Include="Models\Business\ViewModels\CategoryPCViewModel.cs" />
+    <Compile Include="Models\Business\ViewModels\CategoryTypeViewModel.cs" />
+    <Compile Include="Models\Business\ViewModels\Collections\CollectionViewModel.cs" />
+    <Compile Include="Models\Business\ViewModels\CategoryViewModel.cs" />
+    <Compile Include="Models\Business\ViewModels\PostViewModel.cs" />
+    <Compile Include="Models\Business\ViewModels\Datatables\dt_collection.cs" />
     <Compile Include="Models\Business\ViewModels\Product\ColorViewModel.cs" />
     <Compile Include="Models\Business\ViewModels\Datatables\dt_category.cs" />
     <Compile Include="Models\Business\ViewModels\Product\ProductViewModel.cs" />
@@ -147,6 +156,8 @@
     <Compile Include="Models\Core\ViewModels\RoleViewModel.cs" />
     <Compile Include="Models\Core\ViewModels\CreateUserViewModel.cs" />
     <Compile Include="Models\Core\ViewModels\UserViewModel.cs" />
+    <Compile Include="Models\Business\Post.cs" />
+    <Compile Include="Models\Business\Post_Details.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -177,6 +188,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\Test\" />
     <Folder Include="Script\" />
   </ItemGroup>
   <ItemGroup>

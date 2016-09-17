@@ -1,0 +1,12 @@
+﻿@model VCMS.Lib.Models.File
+
+    <div class="clearfix image-file" data-file-id="@Model.Id">
+        <div class="image-preview pull-left">
+            <img src="@Url.GetImageUploadFolder()@Model.Id@Model.Extension">
+        </div>
+        <div class="pull-left controls">
+            <label class="radio">
+                <a href="#" class="delete-image-btn"><i class="fa fa-times" aria-hidden="true"> Delete</i></a>
+            </label>
+        </div>
+    </div>

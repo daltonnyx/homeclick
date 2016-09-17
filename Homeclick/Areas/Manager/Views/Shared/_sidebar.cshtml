@@ -62,19 +62,40 @@
         <li>
             <a class="dropdown-toggle">
                 <i class="fa fa-square-o"></i>
-                <span>Categories</span>
+                <span>Models</span>
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">
+                @{ var rooms = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Model);
+                    foreach (var room in rooms)
+                    {
+                        <li data-page="rooms-@room.Id">
+                            <a href="@Url.Action("Index", "Rooms", new { id = room.Id })">@room.Name</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </li>
+        <li>
+            <a class="dropdown-toggle">
+                <i class="fa fa-square-o"></i>
+                <span>Collections</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                <li data-page="collections"><a href="@Url.Action("List", "collections")">All Collections</a></li>
                 <li>
-                    <span>Rooms</span>
+                    <span>Categories</span>
                     <ul>
-                        @{ var rooms = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Model);
-                            foreach (var room in rooms)
+                        @{ var cCollections = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+                            foreach (var cCollection in cCollections)
                             {
-                                <li data-page="rooms-@room.Id">
-                                    <a href="@Url.Action("Index", "Rooms", new { id = room.Id })">@room.Name</a>
-                                </li>
+                                if (cCollection.CategoryParents.Count == 0)
+                                {
+                                    <li data-page="collections-@cCollection.Id">
+                                        <a href="@Url.Action("Index", "collections", new { id = cCollection.Id })">@cCollection.Name</a>
+                                    </li>
+                                }
                             }
                         }
                     </ul>
@@ -84,18 +105,27 @@
         <li>
             <a class="dropdown-toggle">
                 <i class="fa fa-square-o"></i>
-                <span>Category Types</span>
+                <span>Categories</span>
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">
-                @{ var categoryTypes = db.Category_types;
-                    foreach (var categoryType in categoryTypes)
-                    {
-                        <li data-page="categorytypes-@categoryType.Id">
-                            <a href="@Url.Action("Index", "CategoryTypes", new { id = categoryType.Id })">@categoryType.Name</a>
-                        </li>
-                    }
-                }
+                <li data-page="categories">
+                    <a href="@Url.Action("List", "categories")">Types</a>
+                    <ul>
+                        @{ var categoryTypes = db.Category_types;
+                            foreach (var categoryType in categoryTypes)
+                            {
+                                <li data-page="categories-@categoryType.Id">
+                                    <a href="@Url.Action("Index", "Categories", new { id = categoryType.Id })">@categoryType.Name</a>
+                                    @if (true)
+	                                {
+
+	                                }
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
             </ul>
         </li>
         <li>

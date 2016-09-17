@@ -1,0 +1,15 @@
+﻿@model IEnumerable<VCMS.Lib.Models.Business.Category>
+
+<ul>
+    @foreach (var child in Model)
+    {
+        <li data-page="collections-@child.Id">
+            <a href="@Url.Action("Index", "collections", new { id = child.Id })">@child.Name</a>
+            @if (child.CategoryChildren.Count > 0)
+            {
+                @Html.Partial("_recursive_Categories", child.CategoryChildren);
+            }
+        </li>
+    }
+</ul>
+

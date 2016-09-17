@@ -3,16 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
 
-    @Styles.Render("~/content/manager/css")
-    <link rel="stylesheet" href="~/Areas/Manager/Content/Themes/FLATY/flaty.css" />
-    <link rel="stylesheet" href="~/Areas/Manager/Content/Themes/FLATY/flaty-responsive.css" />
+    @*-----------------CSS-----------------*@
+    @Styles.Render("~/bundles/manager/font-awesome/css")
+    @Styles.Render("~/bundles/manager/bootstrap/css")
+    @RenderSection("links", required: false)
     @RenderSection("Styles", required: false)
-
-    @Scripts.Render("~/bundles/manager/jquery")
-    @Scripts.Render("~/bundles/manager/bootstrap")
-    @Scripts.Render("~/bundles/manager/flaty")
+    @Styles.Render("~/bundles/manager/css")
 </head>
 <body>
     <header class="header">
@@ -36,7 +34,11 @@
             @RenderBody()
         </div>
     </main>
-    
+
+    @*-----------------JS------------------*@
+    @Scripts.Render("~/bundles/manager/jquery")
+    @Scripts.Render("~/bundles/manager/bootstrap")
+    @Scripts.Render("~/bundles/manager/flaty")
     @RenderSection("scripts", required: false)
     <script>
         var cCtrler = "@Html.ViewContext.RouteData.GetRequiredString("controller").ToLower()";

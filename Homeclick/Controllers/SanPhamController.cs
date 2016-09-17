@@ -17,7 +17,7 @@ namespace Homeclick.Controllers
 
         public virtual ActionResult _Sidebar()
         {
-            var categories = db.Categories.Where(c => c.Category_typeId == (int)CategoryType).ToList();
+            var categories = db.Categories.Where(c => c.Category_TypeId == (int)CategoryType).ToList();
             return PartialView(categories);
         }
 
@@ -128,7 +128,7 @@ namespace Homeclick.Controllers
             foreach (var item in list)
             {
                 var details = item.DetailsToDictionary();
-                var typo = item.Categories.FirstOrDefault(o => o.Category_typeId == (int)CategoryTypes.Typology);
+                var typo = item.Categories.FirstOrDefault(o => o.Category_TypeId == (int)CategoryTypes.Typology);
 
                 var materialList = new List<object>();
                 var tList = new List<Product>();
@@ -193,7 +193,7 @@ namespace Homeclick.Controllers
             foreach (var pMaterial in pMaterials)
             {
                 cMaterials = cMaterials
-                    .Concat(pMaterial.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Material))
+                    .Concat(pMaterial.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Material))
                     .Distinct()
                     .ToList();
             }

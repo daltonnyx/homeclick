@@ -142,6 +142,24 @@ namespace VCMS.Lib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category Types.
+        /// </summary>
+        public static string CategoryTypes {
+            get {
+                return ResourceManager.GetString("CategoryTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Collections.
+        /// </summary>
+        public static string Collections {
+            get {
+                return ResourceManager.GetString("Collections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Colour.
         /// </summary>
         public static string Colour {

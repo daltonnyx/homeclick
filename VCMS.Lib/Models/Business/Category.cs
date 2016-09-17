@@ -9,7 +9,7 @@ namespace VCMS.Lib.Models.Business
     using System.Linq;
 
     [Table("Category")]
-    public partial class Category
+    public partial class Category : BaseModel
     {
         public Category()
         {
@@ -19,31 +19,34 @@ namespace VCMS.Lib.Models.Business
             Products = new HashSet<Product>();
         }
 
-        public int Id { get; set; }
+        [Key]
+        public new int Id { get; set; }
 
         [Column("name")]
-        [StringLength(100)]
+        [StringLength(128)]
         public string Name { get; set; }
 
-        public string description { get; set; }
+        public string Description { get; set; }
 
         public int? Order { get; set; }
 
-        public int? Category_typeId { get; set; }
+        public int? Category_TypeId { get; set; }
 
-        public virtual Category_Type Category_type { get; private set; }
+        public virtual Category_Type Category_Type { get; set; }
 
-        public virtual ICollection<Category_detail> Category_details { get; private set; }
+        public virtual ICollection<Category_detail> Category_details { get; set; }
 
-        public virtual ICollection<Category> CategoryParents { get; private set; }
+        public virtual ICollection<Category> CategoryParents { get; set; }
 
-        public virtual ICollection<Category> CategoryChildren { get; private set; }
+        public virtual ICollection<Category> CategoryChildren { get; set; }
 
-        public virtual ICollection<Product> Products { get; private set; }
+        public virtual ICollection<Product> Products { get; set; }
 
         public virtual ICollection<File> Files { get; set; }
 
         public virtual ICollection<Product_Variant> ProductVariants { get; set; }
+
+        public virtual ICollection<Post> Posts { get; set; }
     }
 
     public partial class Category
@@ -61,7 +64,7 @@ namespace VCMS.Lib.Models.Business
                                 where (from cat2 in product.Categories
                                        where cat2.Id == this.Id
                                        select cat2).Count<Category>() > 0
-                                select product).Count<Product>() > 0 && cat.Category_type.Name == descendantType
+                                select product).Count<Product>() > 0 && cat.Category_Type.Name == descendantType
                               select cat).ToList<Category>();
                 return descendant;
             }

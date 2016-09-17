@@ -10,7 +10,7 @@ namespace VCMS.Lib.Models.Business
     using System.Reflection;
 
     [Table("Product")]
-    public partial class Product
+    public partial class Product : BaseModel
     {
         public Product()
         {
@@ -20,7 +20,8 @@ namespace VCMS.Lib.Models.Business
             Files = new HashSet<File>();
         }
 
-        public int Id { get; set; }
+        [Key]
+        public new int Id { get; set; }
 
         [StringLength(100)]
         public string name { get; set; }
@@ -38,10 +39,6 @@ namespace VCMS.Lib.Models.Business
 
         public string excerpt { get; set; }
 
-        public string CreateUserId { get; set; }
-
-        public DateTime CreateTime { get; set; }
-
         public virtual ICollection<Product_detail> Product_detail { get; set; }
 
         public virtual ICollection<Category> Categories { get; set; }
@@ -53,8 +50,7 @@ namespace VCMS.Lib.Models.Business
 
         public virtual ICollection<File> Files { get; set; }
 
-        [ForeignKey("CreateUserId")]
-        public virtual ApplicationUser CreateUser { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
     }
 
     public partial class Product
@@ -62,7 +58,7 @@ namespace VCMS.Lib.Models.Business
         public Category Typology {
             get
             {
-                var typology = Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Typology).FirstOrDefault();
+                var typology = Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Typology).FirstOrDefault();
                 return typology;
             }
         }
@@ -71,7 +67,7 @@ namespace VCMS.Lib.Models.Business
         {
             get
             {
-                var room = Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Model);
+                var room = Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Model);
                 return room;
             }
         }

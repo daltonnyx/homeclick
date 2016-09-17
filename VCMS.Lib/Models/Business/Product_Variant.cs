@@ -51,7 +51,7 @@ namespace VCMS.Lib.Models
         {
             get
             {
-                var categories = this.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.ProductVariant);
+                var categories = this.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.ProductVariant);
                 var type = ProductVarianTypes.Default;
                 if (categories.Count() > 0)
                 {

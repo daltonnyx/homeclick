@@ -1,9 +1,0 @@
-<%@ Register TagPrefix="dx" Namespace="DevExpress.Data" Assembly="DevExpress.Data.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
-<%@ Register TagPrefix="dx" Namespace="DevExpress.Web" Assembly="DevExpress.Web.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
-
-<dx:ASPxPopupMenu runat="server" CssFilePath="~/App_Themes/iOS/{0}/styles.css" SpriteCssFilePath="~/App_Themes/iOS/{0}/sprite.css" CssPostfix="iOS" ShowSubMenuShadow="false">
-    <RootItemSubMenuOffset FirstItemY="-11" LastItemY="-11" Y="-11" />
-    <ItemSubMenuOffset FirstItemY="-11" LastItemY="-11" Y="-11" />
-    <ItemStyle PopOutImageSpacing="0" DropDownButtonSpacing="6" ToolbarPopOutImageSpacing="0" ToolbarDropDownButtonSpacing="6" />
-    <SubMenuItemStyle PopOutImageSpacing="0" DropDownButtonSpacing="0" ToolbarPopOutImageSpacing="0" ToolbarDropDownButtonSpacing="0" />
-</dx:ASPxPopupMenu>

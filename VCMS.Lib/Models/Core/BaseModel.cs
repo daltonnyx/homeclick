@@ -28,20 +28,18 @@ namespace VCMS.Lib.Models
         [Key]
         public string Id { get; set; }
 
-        [StringLength(128)]
-        public string CreateUserId { get; set; }
-
         public DateTime? CreateTime { get; set; }
 
         [StringLength(128)]
-        public string UpdateUserId { get; set; }
-
-        public DateTime? UpdateTime { get; set; }
+        public string CreateUserId { get; set; }
 
         [ForeignKey("CreateUserId")]
         public virtual ApplicationUser CreateUser { get; set; }
 
-        [ForeignKey("UpdateUserId")]
-        public virtual ApplicationUser UpdateUser { get; set; }
+        //[StringLength(128)]
+        //public string UpdateUserId { get; set; }
+        //public DateTime? UpdateTime { get; set; }
+        //[ForeignKey("UpdateUserId")]
+        //public virtual ApplicationUser UpdateUser { get; set; }
     }
 }

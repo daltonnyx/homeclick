@@ -1,8 +1,9 @@
 ﻿@{
-    var db = new Homeclick.Models.vinabits_homeclickEntities();
+    var db = new VCMS.Lib.Models.ApplicationDbContext();
     var categories = db.Categories.ToList();
-    var url = "";
+
 }
+
 <header id="header" class="site-header">
     <div class="toolbar">
         <div class="container">
@@ -65,12 +66,12 @@
                             @*<li class="nav-submenu-item">@Html.ActionLink("All Spaces", "Models", "Category")</li>*@
                             <li class="nav-submenu-item" data-menu="___"><a href="#" >All Spaces</a></li>
                             @{
-                                var roomCategories = categories.Where(o => o.Category_typeId == (int)Homeclick.Models.CategoryTypes.Model).ToList();
+                                var roomCategories = categories.Where(o => o.Category_TypeId == (int)Homeclick.Models.CategoryTypes.Model).ToList();
                                 foreach (var category in roomCategories)
                                 {
                                     if (category.Id != 70)
                                     {
-                                        <li class="nav-submenu-item category-link" data-category="@category.Id">@Html.ActionLink(category.name, "Category", "SanPham", new { category_id = category.Id }, null)</li>
+                                        <li class="nav-submenu-item category-link" data-category="@category.Id">@Html.ActionLink(category.Name, "Category", "SanPham", new { category_id = category.Id }, null)</li>
                                     }
                                 }
                             }
@@ -80,9 +81,9 @@
                     <li class="nav-item" data-menu="CollectionIndex">
                         @Html.ActionLink("Bộ sưu tập", "Index", "Collection")
                         <ul class="nav-submenu">
-                            @foreach (var category in categories.Where(o => o.Category_typeId == (int)Homeclick.Models.CategoryTypes.Collection).ToList())
+                            @foreach (var category in categories.Where(o => o.Category_TypeId == (int)Homeclick.Models.CategoryTypes.Collection).ToList())
                             {
-                                <li class="nav-submenu-item category-link" data-category="@category.Id"><a href="@Url.Action("Category", "Collection", new { category_id = category.Id })">@category.name</a></li>
+                                <li class="nav-submenu-item category-link" data-category="@category.Id"><a href="@Url.Action("Category", "Collection", new { category_id = category.Id })">@category.Name</a></li>
                             }
                         </ul>
                     </li>
@@ -91,9 +92,9 @@
                         @Html.ActionLink("Dự án", "Index", "Project")
                         <ul class="nav-submenu">
                             <li class="nav-submenu-item nav-item" data-menu="ProjectMap">@Html.ActionLink("Bản đồ", "Map", "Project")</li>
-                            @foreach (var category in categories.Where(o => o.Category_typeId == (int)Homeclick.Models.CategoryTypes.ProjectType).ToList())
+                            @foreach (var category in categories.Where(o => o.Category_TypeId == (int)Homeclick.Models.CategoryTypes.ProjectType).ToList())
                             {
-                                <li class="nav-submenu-item category-link" data-category="@category.Id"><a href="@Url.Action("Index", "Project", new { category_id = category.Id})">@category.name</a></li>
+                                <li class="nav-submenu-item category-link" data-category="@category.Id"><a href="@Url.Action("Index", "Project", new { category_id = category.Id})">@category.Name</a></li>
                             }
                         </ul>
                     </li>
@@ -106,7 +107,7 @@
                     </li>
 
                     @{
-                        var blogCategories = categories.Where(o => o.Category_typeId == (int)Homeclick.Models.CategoryTypes.Postcat).ToList();
+                        var blogCategories = categories.Where(o => o.Category_TypeId == (int)Homeclick.Models.CategoryTypes.Postcat).ToList();
                         var firstBlogCategory = blogCategories.FirstOrDefault();
                     }
                     <li class="nav-item category-link" data-category="@firstBlogCategory.Id">
@@ -114,7 +115,7 @@
                         <ul class="nav-submenu">
                             @foreach (var category in blogCategories)
                             {
-                                <li class="nav-submenu-item category-link" data-category="@category.Id">@Html.ActionLink(category.name, "Category", "Post", new { id = category.Id }, new { hidefocus = "hidefocus" })</li>
+                                <li class="nav-submenu-item category-link" data-category="@category.Id">@Html.ActionLink(category.Name, "Category", "Post", new { id = category.Id }, new { hidefocus = "hidefocus" })</li>
                             }
                         </ul>
                     </li>

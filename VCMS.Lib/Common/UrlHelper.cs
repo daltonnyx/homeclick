@@ -7,15 +7,22 @@ namespace System.Web.Mvc
     {
         public static string GetBaseUrl(this UrlHelper helper)
         {
-            var request = HttpContext.Current.Request;
-            var appUrl = HttpRuntime.AppDomainAppVirtualPath;
+            try
+            {
+                var request = HttpContext.Current.Request;
+                var appUrl = HttpRuntime.AppDomainAppVirtualPath;
 
-            if (appUrl != "/")
-                appUrl = "/" + appUrl;
+                if (appUrl != "/")
+                    appUrl = "/" + appUrl + "/";
 
-            var baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
+                var baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
 
-            return baseUrl;
+                return baseUrl;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public static string GetImageUploadFolder(this UrlHelper helper)

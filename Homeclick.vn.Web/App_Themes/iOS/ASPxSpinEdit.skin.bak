@@ -1,9 +1,0 @@
-<%@ Register TagPrefix="dx" Namespace="DevExpress.Data" Assembly="DevExpress.Data.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
-<%@ Register TagPrefix="dx" Namespace="DevExpress.Web" Assembly="DevExpress.Web.v15.1, Version=15.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" %>
-
-<dx:ASPxSpinEdit runat="server" SpriteCssFilePath="~/App_Themes/iOS/{0}/sprite.css" CssFilePath="~/App_Themes/iOS/{0}/styles.css" CssPostfix="iOS" LargeIncrement="1">
-    <SpinButtons ShowIncrementButtons="False" ShowLargeIncrementButtons="True">
-    </SpinButtons>
-</dx:ASPxSpinEdit>
-
-

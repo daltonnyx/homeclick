@@ -16,6 +16,10 @@ namespace VCMS.Lib.Models
             return new ApplicationDbContext();
         }
 
+        public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<Post_Details> Post_Details { get; set; }
+        public virtual DbSet<Post_Product> Post_Products { get; set; }
+
         public virtual DbSet<Product_Variant> Product_Variants { get; set; }
         public virtual DbSet<File> Files { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
@@ -28,6 +32,12 @@ namespace VCMS.Lib.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            //Category
+            //--------------------------------------
+            modelBuilder.Entity<Category_Type>().HasMany(e => e.Categories)
+                .WithOptional(e => e.Category_Type)
+                .HasForeignKey(o => o.Category_TypeId);
+
             //Category
             //--------------------------------------
             modelBuilder.Entity<Category>().HasMany(e => e.Category_details)
@@ -106,7 +116,7 @@ namespace VCMS.Lib.Models
                 });
             //--------------------------------------
 
-            //Product Variant
+            //Files
             //--------------------------------------
             modelBuilder.Entity<File>()
                 .HasMany(e => e.Categories)
@@ -119,6 +129,38 @@ namespace VCMS.Lib.Models
                 });
             //--------------------------------------
 
+            //Post
+            //--------------------------------------
+            modelBuilder.Entity<Post>()
+                .HasMany(o => o.Post_Details)
+                .WithOptional(o => o.Post)
+                .HasForeignKey(o => o.PostId);
+
+            modelBuilder.Entity<Post>()
+                .HasMany(e => e.Post_Products)
+                .WithRequired(o => o.Post)
+                .HasForeignKey(o => o.PostId);
+
+            modelBuilder.Entity<Post>()
+                .HasMany(e => e.Categories)
+                .WithMany(e => e.Posts)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Posts_Category_Link");
+                });
+
+            modelBuilder.Entity<Post>()
+                .HasMany(e => e.Files)
+                .WithMany(e => e.Posts)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Posts_Files_Link");
+                });
+            //--------------------------------------
 
             //modelBuilder.Configurations.Add(new CategoryEntityConfiguration());
             //modelBuilder.Configurations.Add(new ProductEntityConfiguration());

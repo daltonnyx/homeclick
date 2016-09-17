@@ -27,6 +27,8 @@ namespace VCMS.Lib.Models
 
         public long Size { get; set; }
 
+        public virtual ICollection<Post> Posts { get; set; }
+
         public virtual ICollection<Product> Products { get; set; }
 
         public virtual ICollection<Product_Variant> Product_Variants { get; set; }
@@ -41,7 +43,7 @@ namespace VCMS.Lib.Models
         {
             get
             {
-                var category = Categories.Where(o => o.Category_typeId == (int)CategoryTypes.FileType).FirstOrDefault();
+                var category = Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.FileType).FirstOrDefault();
                 switch(category.Id)
                 {
                     case (int)FileTypes.Image:
