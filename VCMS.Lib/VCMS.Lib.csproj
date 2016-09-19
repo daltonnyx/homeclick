@@ -104,6 +104,7 @@
     <Compile Include="Common\StringExtentsions.cs" />
     <Compile Include="Common\Uploader.cs" />
     <Compile Include="Common\UrlHelper.cs" />
+    <Compile Include="Controllers\Business\Category\CategoryTypesController.cs" />
     <Compile Include="Controllers\Business\Category\RoomsController.cs" />
     <Compile Include="Controllers\Business\Category\CategoriesController.cs" />
     <Compile Include="Controllers\Business\Collection\CollectionsController.cs" />

@@ -200,17 +200,17 @@ namespace VCMS.Lib.Models
 
     public class ResultSet
     {
-        public List<T> GetResult<T>(System.Linq.Expressions.Expression<Func<T, bool>> pre, string sortOrder, int start, int length, List<T> dtResult) where T : class
+        public List<T> GetResult<T>(System.Linq.Expressions.Expression<Func<T, bool>> pre, string sortOrder, int start, int length, IEnumerable<T> dtResult) where T : class
         {
             return FilterResult(pre, dtResult).SortBy(sortOrder).Skip(start).Take(length).ToList();
         }
 
-        public int Count<T>(System.Linq.Expressions.Expression<Func<T, bool>> pre, List<T> dtResult) where T : class
+        public int Count<T>(System.Linq.Expressions.Expression<Func<T, bool>> pre, IEnumerable<T> dtResult) where T : class
         {
             return FilterResult(pre, dtResult).Count();
         }
 
-        private IQueryable<T> FilterResult<T>(System.Linq.Expressions.Expression<Func<T, bool>> pre, List<T> dtResult)
+        private IQueryable<T> FilterResult<T>(System.Linq.Expressions.Expression<Func<T, bool>> pre, IEnumerable<T> dtResult)
         {
             IQueryable<T> results = dtResult.AsQueryable();
             results = results.Where(pre);

@@ -52,29 +52,30 @@
 
             <!-- BEGIN Submenu -->
             <ul class="submenu">
-                <li data-page="productmaterials"><a href="@Url.Action("List", "ProductMaterials")">Materials</a></li>
-                <li data-page="productcolors"><a href="@Url.Action("List", "ProductColors")">Colors</a></li>
+                <li>
+                    <span>Variants</span>
+                    <ul>
+                        <li data-page="productmaterials"><a href="@Url.Action("List", "ProductMaterials")">Materials</a></li>
+                        <li data-page="productcolors"><a href="@Url.Action("List", "ProductColors")">Colors</a></li>
+                    </ul>
+                </li>
                 <li data-page="products"><a href="@Url.Action("List", "Products")">Products</a></li>
-                <li data-page="featureproducts"><a href="@Url.Action("List", "FeatureProducts")">Feature</a></li>
+                <li data-page="featureproducts"><a href="@Url.Action("List", "FeatureProducts")">Features</a></li>
+                <li>
+                    <span>Categories</span>
+                    <ul>
+                        @{ var rooms = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Model);
+                            foreach (var room in rooms)
+                            {
+                                <li data-page="rooms-@room.Id">
+                                    <a href="@Url.Action("Index", "Rooms", new { id = room.Id })">@room.Name</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
             </ul>
             <!-- END Submenu -->
-        </li>
-        <li>
-            <a class="dropdown-toggle">
-                <i class="fa fa-square-o"></i>
-                <span>Models</span>
-                <b class="arrow fa fa-angle-right"></b>
-            </a>
-            <ul class="submenu">
-                @{ var rooms = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Model);
-                    foreach (var room in rooms)
-                    {
-                        <li data-page="rooms-@room.Id">
-                            <a href="@Url.Action("Index", "Rooms", new { id = room.Id })">@room.Name</a>
-                        </li>
-                    }
-                }
-            </ul>
         </li>
         <li>
             <a class="dropdown-toggle">
@@ -110,17 +111,13 @@
             </a>
             <ul class="submenu">
                 <li data-page="categories">
-                    <a href="@Url.Action("List", "categories")">Types</a>
+                    <a href="@Url.Action("List", "CategoryTypes")">Types</a>
                     <ul>
                         @{ var categoryTypes = db.Category_types;
                             foreach (var categoryType in categoryTypes)
                             {
-                                <li data-page="categories-@categoryType.Id">
-                                    <a href="@Url.Action("Index", "Categories", new { id = categoryType.Id })">@categoryType.Name</a>
-                                    @if (true)
-	                                {
-
-	                                }
+                                <li data-page="categorytypes-@categoryType.Id">
+                                    <a href="@Url.Action("Index", "CategoryTypes", new { id = categoryType.Id })">@categoryType.Name</a>
                                 </li>
                             }
                         }

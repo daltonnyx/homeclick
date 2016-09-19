@@ -1,20 +1,22 @@
-﻿@model IEnumerable<Homeclick.Models.CollectionViewModel>
+﻿@using VCMS.Lib.Models
+@using VCMS.Lib.Models.Business
+@using VCMS.Lib.Common;
+
+@model IEnumerable<Post>
 @{ 
-    var baseLink = Request.RequestContext.RouteData.Values["Controller"];
-    var url = "";
 }
 <div class="grid-content clearfix">
     @foreach (var item in Model)
     {
-        item.link = Url.Action("Detail", new { category_id = item.categoryId, collection_id = item.id });
-        <div class="collection-item col-sm-4">
+        var link = Url.Action("Detail", new { category_id = item.Categories.Select(o => o.Id).FirstOrDefault(), collection_id = item.Id });
+        <div class="collection-item col-sm-6">
             <div class="collection-inner">
                 <div class="image">
-                    <a href="@item.link"><img src="@url/@item.image" alt="" /></a>
+                    <a href="@link"><img src="@Url.GetImageUploadFolder()@item.ImageFile.FullFileName" alt="" /></a>
                 </div>
                 <div class="collection-detail">
                     <span class="collection-name">
-                        <a href="@item.link">@item.name</a>
+                        <a href="@link">@item.Title</a>
                     </span>
                 </div>
             </div>

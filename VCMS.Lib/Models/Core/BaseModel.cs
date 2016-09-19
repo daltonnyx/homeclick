@@ -26,6 +26,7 @@ namespace VCMS.Lib.Models
         }
 
         [Key]
+        [StringLength(128)]
         public string Id { get; set; }
 
         public DateTime? CreateTime { get; set; }

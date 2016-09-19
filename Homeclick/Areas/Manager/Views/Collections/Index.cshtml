@@ -29,7 +29,7 @@
                 </td>
                 <td>
                     <div class="table-action">
-                        <a class="btn btn-sm btn-default show-tooltip" data-placement="top" data-original-title="Edit" href="@Url.Action("Edit", new { id = category.Category_TypeId, categoryId = category.Id })"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-sm btn-default show-tooltip" data-placement="top" data-original-title="Edit" href="@Url.Action("EditCategory", new { id = category.CategoryParents.FirstOrDefault().Id, categoryId = category.Id })"><i class="fa fa-edit"></i></a>
                         <a class="btn btn-sm btn-danger show-tooltip" data-placement="top" data-original-title="Delete" href="#" data-toggle="modal" data-target="#deleteConfirmModal" data-id="@category.Id"><i class="fa fa-trash"></i></a>
                     </div>
                 </td>

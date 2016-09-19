@@ -162,6 +162,11 @@ namespace VCMS.Lib.Models
                 });
             //--------------------------------------
 
+            modelBuilder.Entity<Post_Product>()
+                .HasRequired(o => o.Product)
+                .WithMany(o => o.Post_Products)
+                .HasForeignKey(o => o.ProductId);
+
             //modelBuilder.Configurations.Add(new CategoryEntityConfiguration());
             //modelBuilder.Configurations.Add(new ProductEntityConfiguration());
         }

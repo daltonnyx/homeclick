@@ -5,6 +5,7 @@ namespace VCMS.Lib.Models.Business
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Linq;
 
     [Table("Posts_Products")]
     public partial class Post_Product : BaseModel
@@ -18,9 +19,20 @@ namespace VCMS.Lib.Models.Business
 
         public int ProductId { get; set; }
 
-        [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }
 
         public virtual Post Post { get; set; }
+    }
+
+    public partial class Post_Product
+    {
+        public int TotalValue
+        {
+            get
+            {
+                var totalValue = int.Parse(Product.Product_detail.FirstOrDefault(o => o.Name == ProductDetailTypes.Price).Value) * Quantity;
+                return totalValue;
+            }
+        }
     }
 }

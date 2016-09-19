@@ -17,7 +17,8 @@ namespace Homeclick.Areas.Manager
             bundles.Add(new ScriptBundle("~/bundles/manager/flaty").Include(
                 "~/Areas/Manager/Content/lib/jquery-slimscroll/jquery.slimscroll.min.js",
                 "~/Areas/Manager/Content/lib/jquery-cookies/jquery.cookies.js",
-                "~/Areas/Manager/Content/js/flaty/flaty.js"
+                "~/Areas/Manager/Content/js/flaty/flaty.js",
+                "~/Areas/Manager/Content/js/admin.js"
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/manager/datatables").Include(

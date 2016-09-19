@@ -13,8 +13,10 @@ namespace VCMS.Lib.Models.Business
         [Required]
         public Dictionary<string,int> products { get; set; }   
 
-        public string[] imageFiles { get; set; }
+        public Dictionary<string, string> imageFiles { get; set; }
 
         public int? discountAmount { get; set; }
+
+        public List<int> danhmuc { get; set; }
     }
 }

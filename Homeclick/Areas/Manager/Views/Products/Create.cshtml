@@ -1,5 +1,6 @@
 ﻿@using VCMS.Lib.Models
-@model VCMS.Lib.Models.Business.ProductViewModel
+@using VCMS.Lib.Models.Business
+@model ProductViewModel
 
 @{
     ViewBag.Title = "Products";
@@ -165,6 +166,16 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.UnitType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="form-control-custom">
+                    @Html.DropDownListFor(model => model.UnitType, Enum.GetValues(typeof(UnitOfProduct)).Cast<UnitOfProduct>().Select(o => new SelectListItem { Value = ((int)o).ToString(), Text = o.ToString() }), new { @class = "form-control chosen" })
+                    @Html.ValidationMessageFor(model => model.UnitType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <label class="checkbox">
@@ -205,9 +216,8 @@
 @section Styles {
     <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/dark-hive/jquery-ui.css" id="theme">
-    <link href="~/Areas/Manager/Content/Plugins/jQueryFileUpload/css/jquery.fileupload.css" rel="stylesheet" />
-    <link href="~/Areas/Manager/Content/Plugins/jQueryFileUpload/css/jquery.fileupload-ui.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/lib/jQueryFileUpload/css/jquery.fileupload.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/lib/jQueryFileUpload/css/jquery.fileupload-ui.css" rel="stylesheet" />
 }
 
 @section Scripts {
@@ -215,9 +225,9 @@
 
     <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
 
-    <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/vendor/jquery.ui.widget.js"></script>
-    <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/jquery.iframe-transport.js"></script>
-    <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/jquery.fileupload.js"></script>
+    <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/jquery.iframe-transport.js"></script>
+    <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/jquery.fileupload.js"></script>
 
     <script>
         var selectedColors = [];

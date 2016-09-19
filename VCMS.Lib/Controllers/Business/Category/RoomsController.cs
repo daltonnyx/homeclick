@@ -31,7 +31,7 @@ namespace VCMS.Lib.Controllers
             return View(cRoom);
         }
 
-        public ActionResult Add(int? id)
+        public ActionResult Add(int? id, bool? success, string successObjectName)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -42,6 +42,8 @@ namespace VCMS.Lib.Controllers
  
             ViewBag.Typologies = GetDistinctCategories(category); ;
             ViewBag.CategoryParent = category;
+            ViewData["Success"] = success;
+            ViewData["SuccessObjectName"] = successObjectName;
             return View(new ParentChildViewModel { ParentId = category.Id });
         }
 
@@ -62,8 +64,8 @@ namespace VCMS.Lib.Controllers
                     {
                         parent.CategoryChildren.Add(child);
                         db.Entry(parent).State = System.Data.Entity.EntityState.Modified;
-                        db.SaveChanges();
-                        ViewData["Success"] = true;
+                        if (db.SaveChanges() > 0)
+                            return RedirectToAction("Add", new { id = parent.Id, success = true, successObjectName = child.Name });
                     }
                 }
             }

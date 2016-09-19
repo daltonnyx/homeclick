@@ -1,25 +1,42 @@
-﻿@model Dictionary<string, IEnumerable<Homeclick.Models.CollectionViewModel>>
+﻿@using VCMS.Lib.Models.Business
+@model Dictionary<string, IEnumerable<Post>>
 
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/_SharedLayout.cshtml";
-    var slides = ViewBag.Slides as IEnumerable<Homeclick.Models.CollectionViewModel>;
     var categoryValue = Request.RequestContext.RouteData.Values["category_id"];
 }
 
-@Html.Partial("_Slider", slides)
+@*Html.Partial("_Slider", slides)*@
 
 @foreach (var pair in Model)
 {
     var list = pair.Value;
-    <section role="grid">
+    <section>
         <div class="category-title">
             <span>
                 @pair.Key
             </span>
-            <a href="/BoSuuTap/@list.First().categoryId">Xem thêm >></a>
+            <a href="@Url.Action("Index", new { id = pair.Key})">Xem thêm >></a>
         </div>
-        @Html.Partial("_CollectionGrid", list)
+        <div class="grid-content clearfix">
+            @foreach (var item in pair.Value)
+            {
+                var link = Url.Action("Detail", new { category_id = pair.Key, collection_id = item.Id });
+                <div class="collection-item col-sm-4">
+                    <div class="collection-inner">
+                        <div class="image">
+                            <a href="@link"><img src="@Url.GetImageUploadFolder()@item.ImageFile.FullFileName" alt="" /></a>
+                        </div>
+                        <div class="collection-detail">
+                            <span class="collection-name">
+                                <a href="@link">@item.Title</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>    
     </section>
     <hr style="margin: 20px -15px;" />
 }

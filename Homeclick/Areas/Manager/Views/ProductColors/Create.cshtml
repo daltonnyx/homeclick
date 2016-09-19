@@ -93,17 +93,15 @@
 }
 
 @section Styles {
-    <link href="~/Areas/Manager/Content/Themes/FLATY/Chosen.min.css" rel="stylesheet" />
-    <link href="~/Areas/Manager/Content/Plugins/jQueryFileUpload/css/jquery.fileupload.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/lib/jQueryFileUpload/css/jquery.fileupload.css" rel="stylesheet" />
     }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Areas/Manager/Content/Themes/FLATY/chosen.jquery.min.js"></script>
-    <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/vendor/jquery.ui.widget.js"></script>
-    <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/jquery.iframe-transport.js"></script>
-    <script src="~/Areas/Manager/Content/Plugins/jQueryFileUpload/js/jquery.fileupload.js"></script>
-
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
+    <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/jquery.iframe-transport.js"></script>
+    <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/jquery.fileupload.js"></script>
     <script>
         function deImg(a) {
             var f = $(a).data('filename');

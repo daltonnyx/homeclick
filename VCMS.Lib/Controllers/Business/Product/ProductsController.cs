@@ -269,9 +269,13 @@ namespace VCMS.Lib.Controllers
                 if (viewModel.Price != null)
                     dic.Add(ProductDetailTypes.Price, viewModel.Price);
 
-                //price
+                //weight
                 if (viewModel.Weight != null)
                     dic.Add(ProductDetailTypes.Weight, viewModel.Weight);
+
+                //price
+                if (viewModel.UnitType != null)
+                    dic.Add(ProductDetailTypes.UnitType, viewModel.UnitType);
 
                 foreach (var item in dic)
                 {
@@ -322,6 +326,14 @@ namespace VCMS.Lib.Controllers
                             break;
                         case ProductDetailTypes.Weight:
                             newValue = viewModel.Weight;
+                            if (detail.Value != newValue)
+                            {
+                                detail.Value = newValue;
+                                db.Entry(detail).State = System.Data.Entity.EntityState.Modified;
+                            }
+                            break;
+                        case ProductDetailTypes.UnitType:
+                            newValue = viewModel.UnitType;
                             if (detail.Value != newValue)
                             {
                                 detail.Value = newValue;

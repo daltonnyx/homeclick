@@ -3,94 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Homeclick.Models;
 using PagedList;
+using VCMS.Lib.Models;
+using VCMS.Lib.Models.Business;
+using VCMS.Lib.Common;
 
 namespace Homeclick.Controllers
 {
-    public class CollectionController : BaseController
+    public class CollectionController : Controller
     {
-        public override CategoryTypes CategoryType { get { return CategoryTypes.Collection; } }
+        public CategoryTypes CategoryType { get { return CategoryTypes.Collection; } }
+        public ApplicationDbContext db = new ApplicationDbContext();
+
+        public virtual ActionResult _Sidebar()
+        {
+            var categories = db.Categories.Where(c => c.Category_TypeId == (int)CategoryType).ToList();
+            return PartialView(categories);
+        }
 
         public ActionResult Index()
         {
             var maxItem = 3;
-            var dic = new Dictionary<string, IEnumerable<CollectionViewModel>>();
-            var collectionCategories = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.Collection);
-            var allItem = new List<CollectionViewModel>();
-            foreach (var collectionCategory in collectionCategories)
+            var dic = new Dictionary<string, IEnumerable<Post>>();
+            var categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+            foreach (var category in categories)
             {
-                var collections = ModelHelper.GetObjectListByCategory<ProjectLayout_Collection>(collectionCategory.Id);
-                var randomItems = collections.PickRandom(maxItem);
-                var viewModel = new List<CollectionViewModel>();
-
-                foreach (var item in randomItems)
-                {
-                    var temp = item.ToViewModel();
-                    temp.categoryId = collectionCategory.Id;
-                    viewModel.Add(temp);
-                    allItem.Add(temp);
-                }
-                
-                dic.Add(collectionCategory.name, viewModel);
+                var posts = category.GetAllPost().PickRandom(maxItem);
+                dic.Add(category.Name, posts);
             }
-            ViewBag.Slides = allItem.PickRandom(5);
             return View(dic);
-        }
-
-        public ActionResult Detail(int category_id, int collection_id)
-        {
-            var collections = ModelHelper.GetObjectListByCategory<ProjectLayout_Collection>(category_id);
-            var othercollectionsPick5 = collections.PickRandom(5);
-            var otherCollectionViewModels = new List<CollectionViewModel>();
-            foreach (var collection in othercollectionsPick5)
-            {
-                var temp = collection.ToViewModel();
-                temp.categoryId = category_id;
-                otherCollectionViewModels.Add(temp);
-            }
-            ViewBag.OtherCollections = otherCollectionViewModels;
-
-            var query = string.Format("SELECT * FROM dbo.ProjectLayout_Collection_Product_Link WHERE ParentId = '{0}'", collection_id);
-            var tableItems = db.Database.SqlQuery<ProjectLayout_Collection_Product_Link>(query).ToList();
-            var products = new List<Product>();
-
-            foreach (var product in tableItems)
-            {
-                var temp_p = db.Products.Find(product.ChildId);
-                var temp_t = temp_p.ToArray();
-                var detail = temp_t["Product_detail"] as Dictionary<string, object>;
-
-                products.Add(temp_p);
-
-                product.ProductName = temp_p.name;
-                product.ProductValue = Convert.ToInt32(detail["gia"]);
-                product.TotalValue = product.Quantity * product.ProductValue;
-            }
-
-            ViewBag.Products = products;
-            ViewBag.TableItems = tableItems;
-
-            var model = db.ProjectLayout_Collections.Find(collection_id);
-            return PartialView(model);
         }
 
         public ActionResult Category(int category_id, int? page)
         {
-            int pageSize = 3;
+            int pageSize = 8;
             int pageNumber = (page ?? 1);
+            var category = db.Categories.Find(category_id);
+            var list = category.GetAllPost();
+            return View(list.ToPagedList(pageNumber, pageSize));
+        }
 
-            var list = ModelHelper.GetObjectListByCategory<ProjectLayout_Collection>(category_id);
-            var ViewModel = new List<CollectionViewModel>();
+        public ActionResult Detail(int category_id, int collection_id)
+        {
+            var category = db.Categories.Find(category_id);
+            var collection = db.Posts.Find(collection_id);
+            if (category == null || collection == null)
+                return HttpNotFound();
 
-            foreach (var item in list)
-            {
-                var temp = item.ToViewModel();
-                temp.categoryId = category_id;
-                ViewModel.Add(temp);
-            }
+            //some other collection
+            category.Posts.Remove(collection);
+            ViewBag.OtherCollections = category.Posts.PickRandom(3);
 
-            return View(ViewModel.ToPagedList(pageNumber, pageSize));
+            return PartialView(collection);
         }
     }
 }

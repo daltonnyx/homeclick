@@ -35,10 +35,12 @@ namespace VCMS.Lib.Controllers
             return View(category);
         }
 
-        public ActionResult Create(bool? success, int? successObjectName)
+        public ActionResult Create(bool? success, string successObjectName)
         {
-            ViewBag.Categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection && o.CategoryParents.Count > 0);
+            ViewBag.Categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
             ViewBag.Products = db.Products.Where(o => o.Status);
+            ViewData["Success"] = success;
+            ViewData["SuccessObjectName"] = successObjectName;
             return View(new CollectionViewModel());
         }
 
@@ -49,10 +51,45 @@ namespace VCMS.Lib.Controllers
             if (ModelState.IsValid)
             {
                 var model = ViewModelToModel(viewModel);
+                db.Posts.Add(model);
                 if (db.SaveChanges() > 0)
-                    RedirectToAction("Create", new { success = true, successObjectName = model.Title });
+                    return RedirectToAction("Create", new { success = true, successObjectName = model.Title });
             }
-            ViewBag.Categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection && o.CategoryParents.Count > 0);
+            ViewBag.Categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+            ViewBag.Products = db.Products.Where(o => o.Status);
+            return View(viewModel);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">Post collection id</param>
+        /// <returns></returns>
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var post = db.Posts.Find(id);
+            if (post == null)
+                return HttpNotFound();
+            var viewModel = ModelToViewModel(post);
+            ViewBag.Categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+            ViewBag.Products = db.Products.Where(o => o.Status);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(CollectionViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var model = ViewModelToModel(viewModel);
+                db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                if (db.SaveChanges() > 0)
+                    return RedirectToAction("List");
+            }
+            ViewBag.Categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
             ViewBag.Products = db.Products.Where(o => o.Status);
             return View(viewModel);
         }
@@ -90,57 +127,142 @@ namespace VCMS.Lib.Controllers
 
         public new CollectionViewModel ModelToViewModel(Post model)
         {
-            var viewModel = base.ModelToViewModel(model) as CollectionViewModel;
+            var viewModel = new CollectionViewModel
+            {
+                postId = model.Id,
+                title = model.Title,
+                excerpt = model.Excerpt,
+                htmlContent = model.Content,
+                previewImageId = model.ImageId,
+                previewImage = model.ImageFile.FullFileName,
+                categoryIds = model.Categories.Select(o => o.Id).ToArray(),
+                status = model.Status
+            };
             viewModel.products = model.Post_Products.ToDictionary(o => o.ProductId.ToString(), o => o.Quantity);
+            viewModel.imageFiles = model.Files.ToDictionary(o => o.Id, o => o.Extension);
             return viewModel;
         }
 
         public Post ViewModelToModel(CollectionViewModel viewModel)
         {
             var model = base.ViewModelToModel(viewModel);
-            var discountAmount = new Post_Details
+
+            var modelPost_Products = model.Post_Products.ToDictionary(o => o.ProductId.ToString(), o => o.Quantity);
+            var viewModelPost_Products = viewModel.products ?? new Dictionary<string, int>();
+
+            //Products
+            var except = modelPost_Products.Select(o => o.Key).Except(viewModelPost_Products.Select(o => o.Key));
+            foreach (var obj in except)
             {
-                Name = "discount_amount",
-                Value = viewModel.discountAmount != null ? viewModel.discountAmount.ToString() : "0",
-            };
-            model.Post_Details.Add(discountAmount);
-            foreach (var obj in viewModel.products)
+                var post_product = model.Post_Products.FirstOrDefault(o => o.ProductId == int.Parse(obj));
+                if (post_product != null)
+                    model.Post_Products.Remove(post_product);   
+            }
+
+            foreach (var obj in viewModelPost_Products)
             {
-                var product = db.Products.Find(obj.Key);
+                var product = db.Products.Find(int.Parse(obj.Key));
                 if (product != null)
                 {
-                    var post_product = new Post_Product
+                    var post_Product = model.Post_Products.FirstOrDefault(o => o.ProductId == product.Id);
+                    if (post_Product != null)
                     {
-                        ProductId = product.Id,
-                        Quantity = obj.Value
-                    };
-                    model.Post_Products.Add(post_product);
+                        if (post_Product.Quantity != obj.Value)
+                        {
+                            post_Product.Quantity = obj.Value;
+                            db.Entry(post_Product).State = System.Data.Entity.EntityState.Modified;
+                        }
+
+                    }
+                    else
+                    {
+                        var post_product = new Post_Product
+                        {
+                            ProductId = product.Id,
+                            Quantity = obj.Value
+                        };
+                        model.Post_Products.Add(post_product);
+                    }
                 }
             }
-            foreach (var fileId in viewModel.imageFiles)
+
+            //Files
+            var modelFiles = model.Files;
+            var viewModelFiles = viewModel.imageFiles?? new Dictionary<string, string>();
+            foreach (var modelFile in modelFiles)
             {
-                var file = db.Files.Find(fileId);
-                if (file != null)
+                var found = false;
+                foreach (var viewModelFile in viewModelFiles)
+                {
+                    if (modelFile.Id == viewModelFile.Key)
+                    {
+                        found = true;
+                        viewModelFiles.Remove(viewModelFile.Key);
+                        break;
+                    }
+                }
+                if (!found)
+                    model.Files.Remove(modelFile);
+            }
+
+            foreach (var imageFile in viewModelFiles)
+            {
+                var file = db.Files.Find(imageFile.Key);
+                if (file != null && !model.Files.Contains(file))
                     model.Files.Add(file);
             }
+
             return model;
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            var result = "";
+            var collection = db.Posts.Find(id);
+            if (collection != null)
+                try
+                {
+                    db.Files.Remove(collection.ImageFile);
+                    foreach (var file in collection.Files.ToList())
+                    {
+                        db.Files.Remove(file);
+                    }
+                    db.Posts.Remove(collection);
+                    db.SaveChanges();
+                    result = "Success";
+                }
+                catch (Exception ex)
+                {
+                    var sb = new StringBuilder();
+                    sb.AppendLine("Delete failure!");
+                    var innerException = ex.InnerException.InnerException;
+                    if (innerException as SqlException != null)
+                    {
+                        sb.AppendLine("Error code: " + ((ex.InnerException.InnerException) as SqlException).Number);
+                    }
+                    result = sb.ToString();
+                }
+            else
+                result = "Incorrect ID!";
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult DataHandler(DTParameters param)
         {
             try
             {
-                var posts = db.Posts;
-                var dtsource = new List<dt_collection>();
-                foreach (var post in posts)
+                var categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+                var posts = new List<Post>();
+                foreach (var category in categories)
                 {
-                    if (post.PostType == PostTypes.Collection)
-                        dtsource.Add(new dt_collection
-                        {
-                            id = post.Id,
-                            name = post.Title,
-                        });
+                    posts = posts.Union(category.GetAllPost()).ToList();
                 }
+
+                var dtsource = posts.Select(o => new dt_collection {
+                    id = o.Id,
+                    name = o.Title,
+                });
 
                 List<string> columnSearch = new List<string>();
 
@@ -172,6 +294,5 @@ namespace VCMS.Lib.Controllers
                 return Json(new { error = ex.Message });
             }
         }
-
     }
 }

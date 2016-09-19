@@ -256,6 +256,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Manager\Content\css\loading.css" />
+    <Content Include="Areas\Manager\Content\js\admin.js" />
     <Content Include="Areas\Manager\Content\lib\bootstrap\bootstrap.min.js" />
     <Content Include="Areas\Manager\Content\lib\froala-WYSIWYG-editor\css\froala_editor.css" />
     <Content Include="Areas\Manager\Content\lib\froala-WYSIWYG-editor\css\froala_editor.min.css" />
@@ -440,6 +441,17 @@
     <Content Include="Content\fonts\front-to-back.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\front-to-back.css" />
+    <Content Include="Content\js\homeclick.js" />
+    <Content Include="Content\lib\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\lib\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\lib\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\lib\owl-carousel\AjaxLoader.gif" />
+    <Content Include="Content\lib\owl-carousel\grabbing.png" />
+    <Content Include="Content\lib\owl-carousel\owl.carousel.css" />
+    <Content Include="Content\lib\owl-carousel\owl.carousel.js" />
+    <Content Include="Content\lib\owl-carousel\owl.carousel.min.js" />
+    <Content Include="Content\lib\owl-carousel\owl.theme.css" />
+    <Content Include="Content\lib\owl-carousel\owl.transitions.css" />
     <Content Include="Content\loading.gif" />
     <Content Include="Content\Nivo-slider.css" />
     <Content Include="Content\notify.min.css" />
@@ -596,11 +608,23 @@
     <Content Include="Areas\Manager\Content\lib\fonts\UTM Soraya.ttf" />
     <Content Include="Areas\Manager\Views\Collections\Index.cshtml" />
     <Content Include="Areas\Manager\Views\Collections\Create.cshtml" />
-    <Content Include="Areas\Manager\Views\Categories\CreateCategory.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\CreateCategory.cshtml" />
     <Content Include="Areas\Manager\Views\Shared\_recursive_Categories.cshtml" />
     <Content Include="Areas\Manager\Views\Collections\List.cshtml" />
     <Content Include="Areas\Manager\Views\Collections\_imageFile.cshtml" />
     <Content Include="Areas\Manager\Views\Collections\_product.cshtml" />
+    <Content Include="Areas\Manager\Views\Collections\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\CategoryTypes\CreateCategory.cshtml" />
+    <Content Include="Areas\Manager\Views\CategoryTypes\CreateType.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\EditCategory.cshtml" />
+    <Content Include="Areas\Manager\Views\CategoryTypes\EditType.cshtml" />
+    <Content Include="Areas\Manager\Views\CategoryTypes\Index.cshtml" />
+    <Content Include="Areas\Manager\Views\CategoryTypes\List.cshtml" />
+    <Content Include="Content\lib\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\lib\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\lib\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\lib\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\lib\font-awesome\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1003,17 +1027,19 @@
     <Content Include="Views\Collection\Sidebar.cshtml" />
     <Content Include="Views\Collection\List.cshtml" />
     <Content Include="Views\Collection\Slider.cshtml" />
-    <Content Include="Views\Collection\_CollectionGrid.cshtml" />
-    <Content Include="Views\Collection\_OtherCollections.cshtml" />
+    <Content Include="Views\Collection\_collectionGrid.cshtml" />
+    <Content Include="Views\Collection\_otherCollections.cshtml" />
     <Content Include="Views\Category\_Sidebar.cshtml" />
     <Content Include="Views\Collection\Category.cshtml" />
     <Content Include="Views\Collection\_Sidebar.cshtml" />
-    <Content Include="Views\Collection\_Slider.cshtml" />
+    <Content Include="Views\Collection\_slider.cshtml" />
     <Content Include="Views\Home\SidebarOfModel.cshtml" />
     <Content Include="Views\Home\_Slider.cshtml" />
     <Content Include="Views\Post\Category.cshtml" />
     <Content Include="Views\Post\Details.cshtml" />
     <Content Include="Views\Post\Index.cshtml" />
+    <Content Include="Views\Collection\_productsGrid.cshtml" />
+    <Content Include="Views\Collection\_productsTable.cshtml" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\SanPham\CanvasList.cshtml" />
@@ -1047,7 +1073,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Manager\Uploads\Images\" />
-    <Folder Include="Content\libs\" />
     <Folder Include="Scripts\Plugins\ResponsiveMenu\" />
     <Folder Include="Scripts\Plugins\shareThis\" />
     <Folder Include="Upload\Images\assets\Colors\" />

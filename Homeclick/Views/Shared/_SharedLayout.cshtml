@@ -1,21 +1,10 @@
-﻿@{
-    var url = "";
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
-    @if (IsSectionDefined("styles"))
-    {
-        @RenderSection("styles", false)
-    }
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/Scripts/jquery-1.11.3.min.js")
-    @Scripts.Render("~/bundles/bootstrap")
-
+    @RenderSection("styles", false)
 </head>
 <body>
     <div class="wapper">
@@ -35,35 +24,13 @@
                 </div>
             </div>
         </main>
-        @Html.Partial("_Footer");
+        @Html.Partial("_Footer")
     </div>
 
-    <script>
-        var menu = '@ViewContext.RouteData.Values["controller"]@ViewContext.RouteData.Values["action"]';
-        var currentMenu = $('.nav-item').filter('[data-menu="' + menu + '"]');
-        var parentMenu = currentMenu.parents('li');
-        currentMenu.addClass('active');
-        parentMenu.addClass('active')
-
-        //find current category and active it.
-        var selectedCategory = '@Request.Params["category_id"]';
-        if (!selectedCategory) {
-            selectedCategory = '-1';
-        }
-        var currentCat = $('.category-link').filter('[data-category="' + selectedCategory + '"]');
-        var parentCat = currentCat.parents('li');
-        parentCat.addClass('active');
-
-        var parentCatId = parentCat.data('category');
-        parentCat = $('.category-link').filter('[data-category="' + parentCatId + '"]');
-        currentCat.addClass('active');
-        parentCat.addClass('active');
-    </script>
-
-    @if (IsSectionDefined("scripts"))
-    {
-        @RenderSection("scripts", false)
-    }
+    @Scripts.Render("~/Scripts/jquery-1.11.3.min.js")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", false)
+    <script src="~/Content/js/homeclick.js"></script>
 </body>
 </html>
 

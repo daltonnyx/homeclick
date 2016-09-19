@@ -83,6 +83,20 @@ namespace VCMS.Lib.Models.Business
                 return details;
             }
         }
+
+
+
+        public List<Post> GetAllPost()
+        {
+            var posts = new List<Post>();
+            posts.AddRange(Posts);
+            foreach (var child in CategoryChildren)
+            {
+                posts.AddRange(child.GetAllPost());
+                posts = posts.Distinct().ToList();
+            }
+            return posts;
+        }
     }
 
     /*

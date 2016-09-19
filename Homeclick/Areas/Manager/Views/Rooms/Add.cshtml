@@ -12,7 +12,7 @@
 {
     <div class="alert alert-success">
         <button class="close" data-dismiss="alert">×</button>
-        <strong>Success!</strong> The item has been added.
+        <strong>Success!</strong> The <strong>@ViewData["SuccessObjectName"]</strong> has been added.
     </div>
 }
 
@@ -21,7 +21,7 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-horizontal">
-        @Html.HiddenFor(model => model.ParentId);
+        @Html.HiddenFor(model => model.ParentId)
         <div class="form-group">
             <label class="col-md-2 control-label" for="ProductId">Typology</label>
             <div class="col-md-10">
@@ -57,11 +57,17 @@
     <li class="active">@ViewBag.FormName</li>
 }
 
+@section ActionLinks {
+    <div>
+        @Html.ActionLink("Back to list", "Index", new { id = Model.ParentId})
+    </div>
+    }
+
 @section Styles {
-    <link href="~/Areas/Manager/Content/Themes/FLATY/Chosen.min.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Areas/Manager/Content/Themes/FLATY/chosen.jquery.min.js"></script>
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
 }

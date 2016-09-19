@@ -1,37 +1,27 @@
-﻿@using Homeclick.Models
-@using System.Collections.Generic
-@model ProjectLayout_Collection
-@{
-    ViewBag.Title = Model.Name;
-    Layout = "~/Views/Shared/_SharedLayout.cshtml";
-    var db = new vinabits_homeclickEntities();
-    var categories = ModelHelper.getParents<Category>(typeof(Category).Name, db.GetTableName<ProjectLayout_Collection>() , Model.Id);
-    var tableItems = ViewBag.TableItems as IEnumerable<ProjectLayout_Collection_Product_Link>;
-    var products = ViewBag.Products as IEnumerable<Product>;
-    var otherCollections = ViewBag.OtherCollections as IEnumerable<CollectionViewModel>;
-    var url = "";
-    var categoryValue = Request.RequestContext.RouteData.Values["category_id"];
+﻿@using VCMS.Lib.Models
+@using VCMS.Lib.Models.Business
 
+@model Post
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_SharedLayout.cshtml";
+    var categoryId = int.Parse(Request.Params["category_id"]);
 }
 <div class="row">
     <div class="col-xs-12">
-        <div class="details-title">
-            <span>@Model.Name</span>
-        </div>
-
-        <div class="meta-primary">
-            <span class="meta-categories label label-success">
-                @foreach (var cat in categories)
-            {
-                    <a class="meta-link" href="#">@cat.name</a>
-                    if (cat != categories)
-                    {
-                        Html.Raw(", ");
-                    }
+        <h1>@Model.Title</h1>
+        <div class="meta-primary m-b-15">
+            <ul>
+                @foreach (var category in Model.Categories)
+                {
+                    <li class="meta-categories label label-success m-r-2">
+                        <a class="meta-link" href="@Url.Action("Category", new { category_id = category.Id})">@category.Name</a>
+                    </li>
                 }
-            </span>
+            </ul>
         </div>
 
+        @*
         <div class="widget clearfix">
             @if (Model.LayoutId != null)
             {
@@ -41,36 +31,38 @@
                 </div>
             }
         </div>
-
-        <div class="" role="img">
-            <img src="@url/@Model.Image" />
+        *@
+        <div class="owl-carousel">
+            @foreach (var file in Model.Files)
+            {
+                <div class="item">
+                    <img src="@Url.GetImageUploadFolder()@file.FullFileName" title="@Model.Title" alt="@Model.Title">
+                </div>
+            }
         </div>
-
         <article class="collection-description">
-            @Html.Raw(Model.HtmlContent)
+            @Html.Raw(Model.Content)
         </article>
 
         <section class="col-xs-12 product-list-section list-show">
-            @Html.Partial("../Project/_ProductsTable", tableItems)
+            @Html.Partial("_productsTable", Model.Post_Products)
+            @Html.Partial("_productsGrid", Model.Post_Products.Select(o => o.Product))
+        </section>
+        <div class="clearfix" style="margin-top: 15px;">
+            <button class="add-to-cart btn bg pull-right"><i class="fa fa-plus" aria-hidden="true"></i> Thêm vào giỏ</button>
+        </div>
 
-            @Html.Partial("../Project/_ProductsGrid", products)
+        <hr style="width:100%;" />
+        <section>
+            <div class="category-title">
+                <span>
+                    Các bộ sưu tập khác
+                </span>
+                <a href="@Url.Action("Category", new { category_id = categoryId})">Xem thêm >></a>
+            </div>
+            @Html.Partial("_collectionGrid", ViewBag.OtherCollections as IEnumerable<Post>)
         </section>
     </div>
-    <div class="col-xs-12" style="margin-top: 15px;">
-        <button class="add-to-cart btn bg pull-right"><i class="fa fa-plus" aria-hidden="true"></i> Thêm vào giỏ</button>
-    </div>
-    <div class="col-xs-12">
-        <hr style="width:100%;" />
-    </div>
-    <section role="grid" class="col-xs-12">
-        <div class="category-title">
-            <span>
-                Các bộ sưu tập khác
-            </span>
-            <a href="/BoSuuTap/@otherCollections.First().categoryId">Xem thêm >></a>
-        </div>
-        @Html.Partial("_CollectionGrid", otherCollections)
-    </section>
 </div>
 
 
@@ -79,20 +71,14 @@
     <ul>
         <li><a href="@Url.Action("Index","Home")">Home</a></li>
         <li><a href="@Url.Action("Index","BoSuuTap")">Bộ sưu tập</a></li>
-        <li>@Model.Name</li>
+        <li>@Model.Title</li>
     </ul>
 }
 
 @section styles {
-    <style>
-    </style>
+    @Styles.Render("~/content/lib/owl-carousel/css")
 }
 
 @section scripts {
-    <script type="text/javascript">
-        $(window).load(function () {
-            $('.table-section-header').toggleClass("active-show");
-            $('.list-show .category-product-detail').slideToggle("slow");
-        });
-    </script>
+    @Scripts.Render("~/content/lib/owl-carousel/js")
 }

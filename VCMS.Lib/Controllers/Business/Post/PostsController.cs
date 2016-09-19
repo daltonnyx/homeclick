@@ -25,9 +25,9 @@ namespace VCMS.Lib.Controllers
                 title = model.Title,
                 excerpt = model.Excerpt,
                 htmlContent = model.Content,
-                previewImageId = model.Image,
-                PreviewImage = model.ImageFile.FullFileName,
-                categories = model.Categories.Select(o => o.Id).ToArray(),   
+                previewImageId = model.ImageId,
+                previewImage = model.ImageFile.FullFileName,
+                categoryIds = model.Categories.Select(o => o.Id).ToArray(),   
                 status = model.Status
             };
             return viewModel;
@@ -48,15 +48,33 @@ namespace VCMS.Lib.Controllers
             model.Title = viewModel.title;
             model.Excerpt = viewModel.excerpt;
             model.Content = viewModel.htmlContent;
-            model.Image = viewModel.previewImageId;
+            model.ImageId = viewModel.previewImageId;
             model.Status = viewModel.status;
             model.Featured = false;
             model.Alias = viewModel.title.ToUnsignString();
 
-            foreach (var categoryId in viewModel.categories)
+            //Categories
+            var viewModelCategoryIds = viewModel.categoryIds.ToList();
+            foreach (var modelRoom in model.Categories.ToList())
+            {
+                var found = false;
+                foreach (var roomId in viewModel.categoryIds)
+                {
+                    if (modelRoom.Id == roomId)
+                    {
+                        found = true;
+                        viewModelCategoryIds.Remove(roomId);
+                        break;
+                    }
+                }
+                if (!found)
+                    model.Categories.Remove(modelRoom);
+            }
+
+            foreach (var categoryId in viewModelCategoryIds)
             {
                 var category = db.Categories.Find(categoryId);
-                if (category != null)
+                if (category != null && !model.Categories.Contains(category))
                     model.Categories.Add(category);
             }
             return model;

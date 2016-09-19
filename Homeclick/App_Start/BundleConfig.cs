@@ -5,7 +5,23 @@ namespace Homeclick
 {
     public class BundleConfig
     {
-        // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
+
+        private static void RegisterCSS(BundleCollection bundles)
+        {
+            bundles.Add(new StyleBundle("~/Content/lib/owl-carousel/css").Include(
+                "~/Content/lib/owl-carousel/owl.carousel.css",
+                "~/Content/lib/owl-carousel/owl.theme.css",
+                "~/Content/lib/owl-carousel/owl.transitions.css"
+                ));
+        }
+
+        private static void RegisterJS(BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle("~/Content/lib/owl-carousel/js").Include(
+                "~/Content/lib/owl-carousel/owl.carousel.min.js"
+                ));
+        }
+
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
@@ -14,17 +30,16 @@ namespace Homeclick
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
+
+            RegisterCSS(bundles);
+            RegisterJS(bundles);
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                     "~/Scripts/bootstrap.js",
                     "~/Scripts/respond.js",
-                    "~/Scripts/plugins/owlCarousel/owl.carousel.min.js",
                     "~/Scripts/jquery.unobtrusive-ajax.js",
-                    "~/Scripts/main.js",
                     "~/Scripts/plugins/ResponsiveMenu/flaunt/flaunt.js",
                     "~/Scripts/respond.js"));
 
@@ -36,10 +51,10 @@ namespace Homeclick
                     "~/Content/responsive.css",
                     "~/Content/fonts/fonts.css",
                     "~/Content/font-awesome/css/font-awesome.min.css",
-                    "~/Scripts/plugins/owlCarousel/assets/owl.carousel.css",
-                    "~/Scripts/plugins/owlCarousel/assets/owl.carousel.theme.css",
                     "~/Scripts/plugins/ResponsiveMenu/flaunt/menu.css"
                       ));
+
+
         }
     }
 }

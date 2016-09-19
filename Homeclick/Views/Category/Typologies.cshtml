@@ -1,32 +1,32 @@
 ﻿@using VCMS.Lib.Models.Business;
-@model IList<Category>
+@model IEnumerable<Category>
 
 @{
     ViewBag.Title = "Typologies";
     Layout = "~/Views/Shared/_SharedLayout.cshtml";
-
-    var url = "";
 }
 
 <div class="all-tpologies">
     <div class="typologies clearfix">
         @foreach (var category in Model)
         {
-            var categories = category.CategoryParents.ToList();
-            var models = "";
-            for (var j = 0; j < categories.Count; j++)
+            if (category.Details.ContainsKey("icon"))
             {
-                models = models + "model-" + categories[j].Id;
-                if (j < categories.Count - 1)
+                var categories = category.CategoryParents.ToList();
+                var models = "";
+                for (var j = 0; j < categories.Count; j++)
                 {
-                    models = models + " ";
+                    models = models + "model-" + categories[j].Id;
+                    if (j < categories.Count - 1)
+                    {
+                        models = models + " ";
+                    }
                 }
+                <div class="col-xs-4 col-md-3 item-image-tp mix @models" data-myorder="@category.Order" data-type="@category.Id">
+                    <a class="typology-link" href="#"><img src="@Url.GetImageUploadFolder()@category.Details["icon"]" /></a>
+                    <span>@category.Name</span>
+                </div>
             }
-
-            <div class="col-xs-4 col-md-3 item-image-tp mix @models" data-myorder="@category.Order" data-type="@category.Id">
-                <a class="typology-link" href="#"><img src="@Url.GetImageUploadFolder()@category.Details["icon"]" /></a>
-                <span>@category.Name</span>
-            </div>
         }
     </div>
 

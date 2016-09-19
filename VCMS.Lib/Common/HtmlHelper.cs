@@ -50,6 +50,11 @@ namespace System.Web.Mvc
             return CustomDropdownList(htmlHelper, metadata, name, optionLabel, list, selectedValue, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
+        public static MvcHtmlString CustomDropdownList<TModel>(this HtmlHelper<TModel> htmlHelper, string name, IEnumerable<CustomSelectItem> list, string selectedValue = "", string optionLabel = "", object htmlAttributes = null)
+        {
+            return CustomDropdownList(htmlHelper, null, name, optionLabel, list, selectedValue, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
+        }
+
         private static MvcHtmlString CustomDropdownList(this HtmlHelper htmlHelper, ModelMetadata metadata, string name, string optionLabel, IEnumerable<CustomSelectItem> list, string selectedValue, IDictionary<string, object> htmlAttributes)
         {
             string fullName = htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
@@ -66,10 +71,16 @@ namespace System.Web.Mvc
             dropdown.MergeAttributes(htmlAttributes); //dropdown.MergeAttributes(new RouteValueDictionary(htmlAttributes));
             dropdown.MergeAttributes(htmlHelper.GetUnobtrusiveValidationAttributes(name, metadata));
 
+            //option label
+
+            var option = new TagBuilder("option");
+            option.SetInnerText(optionLabel);
+            dropdown.InnerHtml += option.ToString();
+
             foreach (var item in list)
             {
                 var optionHtmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(item.HtmlAttributes);
-                TagBuilder option = new TagBuilder("option");
+                 option = new TagBuilder("option");
                 option.Attributes.Add("value", item.Value);
                 option.MergeAttributes(optionHtmlAttributes);
                 option.SetInnerText(item.Text);

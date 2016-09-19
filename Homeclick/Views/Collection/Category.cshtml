@@ -1,21 +1,21 @@
-﻿@model PagedList.IPagedList<Homeclick.Models.CollectionViewModel>
+﻿@using VCMS.Lib.Models
+@using VCMS.Lib.Models.Business
+@using VCMS.Lib.Common;
+
+@model PagedList.IPagedList<Post>
 @using PagedList.Mvc;
 
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/_SharedLayout.cshtml";
-    var slides = Homeclick.Models.ModelHelper.PickRandom(Model, 5);
-    var categoryValue = Request.RequestContext.RouteData.Values["category_id"];
+    var categoryId = Request.Params["category_id"];
 }
 
-@Html.Partial("_Slider", slides)
-
-<section role="grid">
-    @Html.Partial("_CollectionGrid", Model)
+<section>
+    @Html.Partial("_collectionGrid", Model)
 </section>
 
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+@Html.PagedListPager(Model, page => Url.Action("Category", new { category_id = categoryId, page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
 @section breadcrumb {
     <ul>
@@ -30,6 +30,7 @@
 }
 
 @section scripts {
+    @*
     <script type="text/javascript">
 
         //slider home
@@ -69,4 +70,5 @@
             $('.list-show .category-product-detail').slideToggle("slow");
         });
     </script>
+    *@
 }

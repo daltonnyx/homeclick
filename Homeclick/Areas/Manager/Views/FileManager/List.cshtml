@@ -1,6 +1,7 @@
 ﻿@using VCMS.Lib.Resources
 @{
     ViewBag.Title = "File Manager";
+    var deleteMessage = "Delete this file?";
 }
 
 <p>
@@ -40,7 +41,7 @@
                 <h4 class="modal-title" id="exampleModalLabel">New message</h4>
             </div>
             <div class="modal-body">
-                <p>Remove item from features?</p>
+                <p>@deleteMessage</p>
                 <input type="hidden" id="hiddenId" />
             </div>
             <div class="modal-footer">
@@ -100,9 +101,9 @@
             return a;
         }
 
+        var table = $('#dataTable');
         $(document).ready(function () {
-            var dataTable = $('#dataTable');
-            var table = dataTable.DataTable({
+            var dataTable = table.DataTable({
                 "autoWidth": false,
                 "serverSide": true,
                 "ajax": {
@@ -142,15 +143,26 @@
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 var modal = $(this)
                 modal.find('.modal-body input').val(recipient)
-            })
+                $modalDiv.find('.modal-body p').empty().append(@deleteMessage);
+            });
 
             $('#deleteConfirmModal').on('click', '.btn-yes', function (e) {
                 var $modalDiv = $(e.delegateTarget);
                 var input = $modalDiv.find('.modal-body input');
-                var id = input.val();
-                $.post('@Url.Action("Delete")' + '/' + id).then(function () {
-                    $modalDiv.modal('hide');
-                    $('#dataTable').DataTable().ajax.reload();
+                var objId = input.val();
+                var url = '@Url.Action("Delete")';
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    data: { 'id': objId },
+                    success: function (data) {
+                        if (data === 'Success') {
+                            $modalDiv.modal('hide');
+                            table.DataTable().ajax.reload();
+                        }
+                        else
+                            $modalDiv.find('.modal-body p').empty().append(data);
+                    }
                 });
             });
         });

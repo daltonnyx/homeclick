@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = Strings.Collections;
+    var deleteMessage = "Delete this Collection?";
 }
 
 <p>
@@ -30,7 +31,7 @@
                 <h4 class="modal-title" id="exampleModalLabel">New message</h4>
             </div>
             <div class="modal-body">
-                <p>Delete Collection?</p>
+                <p>@deleteMessage</p>
                 <input type="hidden" id="hiddenId" />
             </div>
             <div class="modal-footer">
@@ -62,32 +63,12 @@
     @Scripts.Render("~/bundles/manager/datatables")
 
     <script>
-        var simple_linkBtns = function (data, type, full, meta) {
+       var simple_linkBtns = function (data, type, full, meta) {
             var param = '?id=' + data;
-            var div = $('<div/>').addClass('table-action');
-            var aC = $('<a/>').addClass('btn btn-sm show-tooltip')
-                .data('placement', 'top')
-                .data('original-title', 'Details')
-                .attr('href', '@Url.Action("Details")' + param)
-                .append('<i class="fa fa-search-plus"></i>')
-                .appendTo(div);
-            var aE = $('<a/>').addClass('btn btn-sm show-tooltip')
-                .data('placement', 'top')
-                .data('original-title', 'Edit')
-                .attr('href', '@Url.Action("Edit")' + param)
-                .append('<i class="fa fa-edit"></i>')
-                .appendTo(div);
-            var aE = $('<a/>').addClass('btn btn-sm btn-danger show-tooltip')
-                .data('placement', 'top')
-                .data('original-title', 'Delete')
-                .data('target', '#deleteConfirmModal')
-                .data('id', data)
-                .data('toggle','modal')
-                .attr('href', '#')
-                .append('<i class="fa fa-trash-o"></i>')
-                .appendTo(div);
-
-            return div;
+            return   '<div class="table-action">' +
+                        '<a class="btn btn-sm show-tooltip" data-placement="top" data-original-title="Edit" href="@Url.Action("Edit")' + param + '" data-original-title="Edit"><i class="fa fa-edit"></i></a>' +
+                        '<a class="btn btn-sm btn-danger show-tooltip" data-placement="top" data-original-title="Delete" href="#" data-toggle="modal" data-target="#deleteConfirmModal" data-id="' + data + '" ><i class="fa fa-trash-o"></i></a>' +
+                    '</div>';
         }
 
         $(document).ready(function () {
@@ -120,7 +101,7 @@
                 var button = $(event.relatedTarget);
                 var objId = button.data('id');
                 var modal = $(this);
-                modal.find('.modal-body p').text('Detele this item?');
+                modal.find('.modal-body p').text('@deleteMessage');
                 modal.find('.modal-body input').val(objId);
             });
 

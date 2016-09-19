@@ -39,6 +39,8 @@ namespace VCMS.Lib.Models.Business
 
         public string MadeIn { get; set; }
 
+        public string UnitType { get; set; }
+
         [Required]
         public int[] RoomIds { get; set; }
 

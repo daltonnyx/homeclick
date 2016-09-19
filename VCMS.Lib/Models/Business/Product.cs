@@ -50,7 +50,7 @@ namespace VCMS.Lib.Models.Business
 
         public virtual ICollection<File> Files { get; set; }
 
-        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Post_Product> Post_Products { get; set; }
     }
 
     public partial class Product
@@ -99,6 +99,7 @@ namespace VCMS.Lib.Models.Business
         }
     }
 
+    public enum UnitOfProduct { Default, Meter, SquareMeter }
 
     /*5205555.
      * 6

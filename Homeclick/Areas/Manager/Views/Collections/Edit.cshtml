@@ -1,0 +1,442 @@
+﻿@using VCMS.Lib.Resources
+@using VCMS.Lib.Models
+@using VCMS.Lib.Models.Business
+@model CollectionViewModel
+
+@{
+    ViewBag.Title = Strings.Collections;
+    ViewBag.FormName = "Create a new category";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout_Form.cshtml";
+    var cSelectListItems = new List<SelectListItem>();
+    var cSelectListGroups = new List<SelectListGroup>();
+    foreach (var category in ViewBag.Categories as IEnumerable<Category>)
+    {
+        var selectListGroup = new SelectListGroup
+        {
+            Name = category.Name
+        };
+        cSelectListGroups.Add(selectListGroup);
+        foreach (var child in category.CategoryChildren)
+        {
+            var selectListItem = new SelectListItem
+            {
+                Group = cSelectListGroups.FirstOrDefault(o => o.Name == category.Name),
+                Value = child.Id.ToString(),
+                Text = child.Name,
+            };
+            cSelectListItems.Add(selectListItem);
+        }
+    }
+    var products = ViewBag.Products as IEnumerable<Product>;
+    var pSelectListItems = new List<CustomSelectItem>();
+    foreach (var product in products)
+    {
+        if (!Model.categoryIds.Contains(product.Id))
+        {
+            var customSelectItem = new CustomSelectItem
+            {
+                Value = product.Id.ToString(),
+                Text = product.name,
+                HtmlAttributes = new { data_image = product.Image.Id + product.Image.Extension }
+            };
+            pSelectListItems.Add(customSelectItem);
+        }
+    }
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.HiddenFor(m => m.postId);
+        <div class="form-group">
+            @Html.LabelFor(m => m.title, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.categoryIds, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                <div class="form-control-custom">
+                    @Html.ListBoxFor(o => o.categoryIds, cSelectListItems, new { @class = "form-control chosen", multiple = "multiple", tabindex = "-1", style = "display: none;" })
+                    @Html.ValidationMessageFor(m => m.categoryIds, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.products, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                <div class="form-control-custom">
+                    @Html.CustomDropdownList("p", pSelectListItems, null, "", htmlAttributes: new { id = "productChosen", data_placeholder = "Choose a product...", @class = "form-control chosen", tabindex = "-1", style = "display: none;" })
+                    <div class="clearfix">
+                        <button id="addProductButton" class="btn disabled btn-link pull-left"><i class="fa fa-plus" aria-hidden="true"></i> Add...</button>
+                        <div id="productLoadProgress" class="cssload-container" style="display:none;">
+                            <div class="cssload-speeding-wheel-sm"></div>
+                        </div>
+                    </div>
+                    <div id="products" @Html.Raw(Model.products == null ? "style='display:none'" : "")>
+                        @if (Model.products != null)
+                        {
+                            foreach (var obj in Model.products)
+                            {
+                                Html.RenderAction("_product", new { id = obj.Key, quantity = obj.Value });
+                            }
+                        }
+                    </div>
+                    @Html.ValidationMessageFor(m => m.products, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.previewImageId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                <div class="form-control-custom file-upload">
+                    <div class="file-upload-new img-thumbnail" @Html.Raw(Model?.previewImageId != null ? "style='display:none'" : "")>
+                        <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                    </div>
+                    @if (Model?.previewImageId != null)
+                    {
+                        <div class="file-upload-result img-thumbnail">
+                            <img src="@Url.GetImageUploadFolder()@Model.previewImage">
+                            <input name="PreviewImage" type="hidden" value="@Model.previewImage">
+                            <input name="previewImageId" type="hidden" value="@Model.previewImageId">
+                        </div>
+                    }
+                    <div class="clearfix">
+                        <span class="btn btn-success fileinput-button pull-left">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>Select file...</span>
+                            <input id="fileupload" type="file" name="files" accept="image/*">
+                        </span>
+
+                        <span class="btn pull-left file-remove-btn" @Html.Raw(Model?.previewImageId != null ? "" : "style='display:none'")>
+                            Remove
+                        </span>
+
+                        <div id="fileuploadProgress" class="cssload-container" style="display:none">
+                            <div class="cssload-speeding-wheel"></div>
+                        </div>
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(m => m.previewImageId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Images</label>
+            <div class="col-md-10">
+                <div class="form-control-custom">
+                    <div class="clearfix" style="margin-bottom:10px;">
+                        <span class="btn btn-success fileinput-button pull-left">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>Select files...</span>
+                            <input id="fileuploads" type="file" name="files" accept="image/jpg,image/png,image/jpeg,image/gif" multiple>
+                        </span>
+
+                        <div id="filesuploadProgress" class="cssload-container" style="display:none">
+                            <div class="cssload-speeding-wheel"></div>
+                        </div>
+                    </div>
+
+                    <div id="files" class="files">
+                        @if (Model?.imageFiles != null)
+                        {
+                            foreach (var imagefile in Model.imageFiles)
+                            {
+                                Html.RenderAction("_imageFile", new { id = imagefile.Key });
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.excerpt, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                <div class="form-control-custom">
+                    @Html.TextBoxFor(m => m.excerpt, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.excerpt, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.htmlContent, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10 ">
+                @Html.TextAreaFor(m => m.htmlContent, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.htmlContent, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.status, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                <div class="form-control-custom">
+                    @Html.EditorFor(m => m.status, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="@Strings.Done" />
+            </div>
+        </div>
+    </div>
+}
+
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Index","Dashboard")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+@section Styles {
+    <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/css/loading.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/lib/jQueryFileUpload/css/jquery.fileupload.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/lib/jQueryFileUpload/css/jquery.fileupload-ui.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/css/froala_editor.min.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/css/froala_style.min.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/css/plugins/image.min.css" />
+}
+
+@section Scripts {
+
+
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
+
+    <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/jquery.iframe-transport.js"></script>
+    <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/jquery.fileupload.js"></script>
+    <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/jquery.fileupload-process.js"></script>
+    <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/jquery.fileupload-validate.js"></script>
+
+    <script src="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/js/froala_editor.min.js"></script>
+    <script src="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/js/plugins/image.min.js"></script>
+    <!-- Include Code Mirror. -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
+
+    <script>
+        //----------------------------------------------------
+        var chosen = $("#productChosen");
+        chosen.bind('change', function(){
+            if (chosen.val()) {
+                $('#addProductButton').removeClass('disabled');
+            }
+        });
+        var productRemove = function() {
+            var containtDiv = $('#products');
+            var p = $(this).parents('.product');
+            var v = p.data('id');
+            var opt = chosen.children('option').filter('[value="' + v + '"]');
+            p.remove();
+            if (containtDiv.children().length == 0)
+                containtDiv.hide();
+            showChosenOption(chosen, opt)
+        }
+
+        $('#addProductButton').bind('click', function (event) {
+            event.preventDefault();
+            var selected = $('#productChosen :selected');
+            if (selected.val() && !selected.is(":disabled")) {
+                var containtDiv = $('#products');
+                $.ajax({
+                    url: '@Url.Action("_product")',
+                    data: {'id' : selected.val()},
+                    beforeSend: function(){
+                        $('#productLoadProgress').fadeIn('fast');
+                    },
+                    success: function(data){
+                        var product = $(data);
+                        product.appendTo(containtDiv);
+                        if (!containtDiv.is(':visible')) {
+                            containtDiv.fadeIn('fast');
+                        }
+                        product.find('span.product-remove-btn').bind('click', productRemove);
+                        if (hideChosenOption(chosen, selected)) {
+                            $('#addProductButton').addClass('disabled');
+                        }
+                    },
+                    complete: function(){
+                        $('#productLoadProgress').fadeOut('fast');
+                    },
+                })
+            }
+        });
+
+        $('.product-remove-btn').bind('click', productRemove);
+        //----------------------------------------------------
+
+        //Multi upload----------------------------------------
+        $('#fileuploads').fileupload({
+            url: '@Url.Action("Uploads", "FileUpload")',
+            dataType: 'json',
+            formData: { fileGroup: @Convert.ToInt32(FileGroups.Other) },
+            maxFileSize: 999000,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            done: function (e, data) {
+                $.each(data.result, function (index, file) {
+                    $.ajax({
+                        traditional: true,
+                        url: '@Url.Action("_imageFile")',
+                        data: { 'id': file.newFileName },
+                        success: function (data) {
+                            $('#files').append(data);
+                            $('.delete-image-btn').bind('click', imageDelete);
+                            $('#filesuploadProgress').fadeOut('fast');
+                        }
+                    });
+                });
+            },
+            always: function(e, data){
+                $('#filesuploadProgress').fadeOut('fast');
+            },
+            progressall: function (e, data) {
+                $('#filesuploadProgress').fadeIn('fast');
+            }
+        }).bind('fileuploadprocessfail', function (e, data) {
+            alert(data.files[data.index].error);
+        });
+
+        var imageDelete = function () {
+            var p = $(this).parents('.image-file')
+            var f = p.data('file-id');
+            $.ajax({
+                url: '@Url.Action("Delete", "FileManager")',
+                type: 'DELETE',
+                data: { 'id': f },
+                traditional: true,
+                success: function () {
+                    $(p).remove();
+                }
+            });
+            event.preventDefault();
+        };
+
+        $('.delete-image-btn').bind('click', imageDelete);
+        //-------------------------------------------------
+
+
+        //Single upload
+        //-------------------------------------------------
+        $('#fileupload').fileupload({
+            url:'@Url.Action("Uploads", "FileUpload")',
+            dataType: 'json',
+            formData: { fileGroup: @Convert.ToInt32(FileGroups.Other) },
+            maxFileSize: 999000,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            done: function (e, data) {
+                $.each(data.result, function (index, file) {
+                    var a = $('.file-upload-result input').val();
+                    if (a){
+                        $.ajax({
+                            url: '@Url.Action("DeleteFile", "FileUpload")',
+                            data: { 'id': a },
+                            traditional: true,
+                            success: function () {
+                                $('.file-upload-result').remove();
+                                $('.file-upload-new').fadeIn('fast');
+                                $('.file-remove-btn').hide();
+                                addImg(file);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        addImg(file);
+                    }
+                });
+            },
+            always: function(e, data){
+                $('#fileuploadProgress').fadeOut('fast');
+            },
+            progressall: function (e, data) {
+                $('#fileuploadProgress').fadeIn('fast');
+            }
+        }).bind('fileuploadprocessfail', function (e, data) {
+            alert(data.files[data.index].error);
+        });;
+
+        $('.file-remove-btn').bind('click', function(){
+            var a = $('.file-upload-result input').val();
+            if (a) deImg(a);
+        })
+
+        function addImg(file) {
+            $('.file-upload-new').hide();
+            $('.file-remove-btn').show();
+            var div = $('<div/>').hide()
+                .addClass('file-upload-result')
+                .addClass(' img-thumbnail')
+            var img = $('<img/>')
+                .attr('src', '@Url.GetImageUploadFolder()' + file.newFileName + file.ext)
+                .appendTo(div);
+            var inp = $('<input/>')
+                .attr('name','previewImageId')
+                .attr('type','hidden')
+                .val(file.newFileName)
+                .appendTo(div);
+            div.prependTo('.file-upload').fadeIn('fast');
+        }
+
+        function deImg(f) {
+            $.ajax({
+                url: '@Url.Action("Delete", "FileManager")',
+                type: 'DELETE',
+                data: { 'id': f },
+                traditional: true,
+                success: function () {
+                    $('.file-upload-result').remove();
+                    $('.file-upload-new').fadeIn('fast');
+                    $('.file-remove-btn').hide();
+                }
+            });
+            event.preventDefault();
+        };
+        //-------------------------------------------------
+
+        //Editor
+        $('#htmlContent').froalaEditor({
+            imageUploadURL: '@Url.Action("Upload","FileUpload")',
+            imageUploadParams: {
+                fileGroup: '@Convert.ToInt32(FileGroups.Other)'
+            }
+        }).on('froalaEditor.image.removed', function (e, editor, $img) {
+            $.ajax({
+                method: "POST",
+                url: '@Url.Action("DeleteFileByPath", "FileUpload")',
+                data: {
+                    src: $img.attr('src')
+                }
+            })
+            .done (function (data) {
+                console.log ('image was deleted');
+            })
+            .fail (function () {
+                console.log ('image delete problem');
+            })
+        });
+    </script>
+
+
+}

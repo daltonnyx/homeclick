@@ -12,6 +12,8 @@ using System.Linq.Expressions;
 using VCMS.Lib.Models.Business;
 using Microsoft.AspNet.Identity;
 using VCMS.Lib.Common;
+using System.Text;
+using System.Data.SqlClient;
 
 namespace VCMS.Lib.Controllers
 {
@@ -92,16 +94,34 @@ namespace VCMS.Lib.Controllers
             return View(file);
         }
 
-        [HttpPost]
-        public void Delete(string id)
+        [HttpDelete]
+        public JsonResult Delete(string id)
         {
-            File file = db.Files.Find(id);
+            var result = "";
+            var file = db.Files.Find(id);
             if (file != null)
-            {
-                Uploader.DeleteFile(file, this);
-                db.Files.Remove(file);
-                db.SaveChanges();
-            }
+                try
+                {
+                    db.Files.Remove(file);
+                    Uploader.DeleteFile(file, this);
+                    db.SaveChanges();
+                    result = "Success";
+                }
+                catch (Exception ex)
+                {
+                    var sb = new StringBuilder();
+                    sb.AppendLine("Delete failure!");
+                    var innerException = ex.InnerException.InnerException;
+                    if (innerException as SqlException != null)
+                    {
+                        sb.AppendLine("Error code: " + ((ex.InnerException.InnerException) as SqlException).Number);
+                    }
+                    result = sb.ToString();
+                }
+            else
+                result = "Incorrect ID!";
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

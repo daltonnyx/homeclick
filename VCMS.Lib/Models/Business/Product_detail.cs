@@ -1,4 +1,4 @@
-namespace VCMS.Lib.Models.Business
+﻿namespace VCMS.Lib.Models.Business
 {
     using System;
     using System.Collections.Generic;
@@ -35,5 +35,7 @@ namespace VCMS.Lib.Models.Business
         public const string Price = "gia";
         public const string Weight = "nang";
         public const string MadeIn = "xuat_xu";
+        //đơn vị tính
+        public const string UnitType = "dvt";
     }
 }

@@ -17,12 +17,12 @@ namespace VCMS.Lib.Models.Business
         public string title { get; set; }
 
         [Required]
-        public int[] categories { get; set; }
+        public int[] categoryIds { get; set; }
 
         [Required]
         public string previewImageId { get; set; }
 
-        public string PreviewImage { get; set; }
+        public string previewImage { get; set; }
 
         [Required]
         public string excerpt { get; set; }

@@ -33,13 +33,13 @@ namespace VCMS.Lib.Models.Business
         public bool Featured { get; set; }
 
         [StringLength(128)]
-        public string Image { get; set; }
+        public string ImageId { get; set; }
 
         public string Excerpt { get; set; }
 
         public DateTime? PostDate { get; set; }
 
-        [ForeignKey("Image")]
+        [ForeignKey("ImageId")]
         public virtual File ImageFile { get; set; }
 
         public virtual ICollection<Post_Details> Post_Details { get; set; }
@@ -71,5 +71,5 @@ namespace VCMS.Lib.Models.Business
         }
     }
 
-    public enum PostTypes { Default = -1, Collection, Blog}
+    public enum PostTypes { Default = -1, Collection = 5, Blog = 26}
 }
