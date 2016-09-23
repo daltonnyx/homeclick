@@ -71,59 +71,26 @@ namespace Homeclick.Controllers
             return View(listproduct);
         }
 
-        public List<Product> Filter(int? model_id = null, int? typo_id = null, int? mate_id = null)
+        public List<Product> FilterByCategory(string[] args)
         {
-            var temp = db.Products.ToList();
-            var products = temp.AsQueryable();
-            if (model_id != null)
+            var products = db.Products.ToList();
+            foreach (var arg in args)
             {
-                products = from p in products
-                           where (from c in p.Categories
-                                  where c.Id == model_id
-                                  select c).Count() > 0
-                           select p;
+                int number;
+                if (int.TryParse(arg,out number))
+                    products = products.Where(o => o.Categories.Select(e => e.Id).ToList().Contains(number)).ToList();
             }
-            if (typo_id != null && typo_id > 0)
-            {
-                products = from p in products
-                           where (from c in p.Categories
-                                  where c.Id == typo_id
-                                  select c).Count() > 0
-                           select p;
-            }
-            if (mate_id != null)
-            {
-                var tProducts = new List<Product>();
-                foreach (var product in products)
-                {
-                    foreach (var material in product.Materials)
-                    {
-                        var found = false;
-                        foreach (var category in material.Categories)
-                        {
-                            if (category.Id == mate_id)
-                            {
-                                found = true;
-                                break;
-                            }
-                        }
-                        if (found)
-                        {
-                            tProducts.Add(product);
-                            break;
-                        }
-                    }
-                }
-                products = products.Intersect(tProducts);
-            }
-
-            var list = products.OrderBy<Product, string>(p => p.name).ToList();
-            return list;
+            return products;
         }
 
-        public JsonResult ProductsJson(int? category_id = null, int? typo_id = null, int? mate_id = null)
+        /// <summary>
+        /// Get product via ajax call
+        /// </summary>
+        /// <param name="ids">categories id</param>
+        /// <returns></returns>
+        public JsonResult ProductsJson(string[] ids)
         {
-            var list = this.Filter(category_id, typo_id, mate_id);
+            var list = this.FilterByCategory(ids);
             var json = new List<object>();
             foreach (var item in list)
             {
@@ -162,10 +129,10 @@ namespace Homeclick.Controllers
         /// <param name="typo_id">Id of the category</param>
         /// <param name="model_id">If 'category_id' is -1 and 'model_id' has been set, this will getting materials contained in the model</param>
         /// <returns></returns>       
-        public JsonResult GetMetarialsJson(int? model_id, int? typo_id)
+        public JsonResult GetMetarialsJson(string[] ids)
         {
             var resuilt = new List<object>();
-            var products = this.Filter(model_id, typo_id);
+            var products = this.FilterByCategory(ids);
             var cMaterials = GetCMaterialOfProducts(products);
 
             foreach (var cMaterial in cMaterials)

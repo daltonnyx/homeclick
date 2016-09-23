@@ -1,0 +1,30 @@
+﻿@using VCMS.Lib.Models.Business
+@model IEnumerable<Category>
+@{
+    var categoryId = int.Parse(Request.Params["category_id"] ?? "-1");
+}
+<ul class="nav">
+    @foreach (Category item in Model)
+    {
+        var children = item.CategoryChildren;
+
+        <li class="@Html.Raw(children.Select(o=> o.Id).Contains(categoryId) || item.Id == categoryId ? "active" : "")" data-category="@item.Id">
+            <a href="@Url.Action("Category",new { category_id = item.Id})">@item.Name</a>
+
+            <ul class="descendant-cat">
+                @if (children.Count() > 0)
+                {
+                    foreach (var child in children)
+                    {
+                        <li class="@Html.Raw(categoryId == child.Id ? "active" : "")">
+                            <a href="@Url.Action("Category", new { category_id = child.Id})">@child.Name</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </li>
+    }
+</ul>
+
+
+

@@ -24,11 +24,11 @@
         <div class="sumary col-sm-7 col-md-8">
             <h3 class="single-product-title">@Model.name</h3>
             <div class="sg-prince">
-                <div class="number-prince">@Convert.ToInt32(details["gia"]).ToString("#,###", info.NumberFormat) vnđ</div>
+                <div class="number-prince">@Convert.ToInt32(details[ProductDetailTypes.Price]).ToString("#,###", info.NumberFormat) vnđ</div>
             </div>
 
             <div class="form-add-to-cart">
-                @using (Html.BeginForm("ThemSanPham", "GioHang", new { @Id = @Model.Id, @strUrl = Request.Url.ToString(), @class= "form-horizontal" }))
+                @using (Html.BeginForm("AddItemToCard", "Cart", new { @Id = @Model.Id, @returnUrl = Request.Url.ToString(), @class= "form-horizontal" }))
                 {
                     <div class="form-group">
                         <label class="control-label">Chất liệu</label>
@@ -43,9 +43,9 @@
                         <div class="wrapper-content">
                             @{ var colors = materials.FirstOrDefault().Children.Intersect(Model.Product_Variants);}
                             @foreach (var color in colors)
-                                {
+                            {
                                 <label class="radio-image image-preview">
-                                    <input type="radio" name="colors" value="@color.Id" />
+                                    <input type="radio" name="@ProductVarianTypes.Color.ToString()" value="@color.Id" />
                                     <img src="@iUrl@color.ImageFile.FullFileName" alt="@color.Name" />
                                 </label>
                             }
@@ -57,7 +57,7 @@
                         </div>
                         <div class="quantity wrapper-content">
                             <span class="minus">-</span>
-                            <input type="text" step="1" min="0" value="1" title="Qty" class="qty" size="4" name="txtqty">
+                            <input type="number" step="1" min="0" value="1" title="Qty" class="qty" size="4" name="quantity">
                             <span class="plus">+</span>
                         </div>
                         <div class="add-shop">
@@ -67,7 +67,7 @@
                             }
                             else
                             {
-                                <input class="input add-to-cart" disabled type="submit" value="Hết hàng" />
+                                <input class="input add-to-cart" disabled="disabled" type="submit" value="Hết hàng" />
                             }
                         </div>
                     </div>
@@ -256,10 +256,11 @@
         };
 
         $(function () {
-            $('input[type=radio][name=colors]').change(function () {
+            $('input[type=radio][name=@ProductVarianTypes.Color.ToString()]').change(function () {
                 colorChanged(this.value);
             });
-            var fc = $('input[type=radio][name=colors]').first();
+
+            var fc = $('input[type=radio][name=@ProductVarianTypes.Color.ToString()]').first();
             fc.attr('checked', true);
             colorChanged(fc.val());
         });

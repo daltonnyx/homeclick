@@ -1,0 +1,15 @@
+﻿
+@using Homeclick.Models
+@model List<Giohang>
+
+<div class="item-cart">
+    <span><strong>@ViewBag.Soluong</strong> items</span>
+</div>
+<div class="prince-cart">
+    $<span><strong>@ViewBag.Tongtien</strong></span>
+</div>
+<div class="checkout-cart">
+    <a href="@Url.Action("Index", "Cart")">@ViewBag.Empty</a>
+</div>
+
+

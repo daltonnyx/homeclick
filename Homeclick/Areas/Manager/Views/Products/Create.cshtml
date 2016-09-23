@@ -7,7 +7,7 @@
     ViewBag.FormName = "Create";
     Layout = "~/Areas/Manager/Views/Shared/_Layout_Form.cshtml";
     var colors = ViewBag.Colors as IEnumerable<Product_Variant>;
-    var categories = ViewBag.Categories as IEnumerable<VCMS.Lib.Models.Business.Category>;
+    var categories = ViewBag.Categories as IEnumerable<Category>;
 }
 
 @if (ViewData["Success"] != null)
@@ -21,7 +21,7 @@
     }
 }
 
-@using (Html.BeginForm("Create", "Products", FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
@@ -94,30 +94,63 @@
                 </div>
             </div>
         </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.previewImageId, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                <div class="form-control-custom file-upload">
+                    <div class="file-upload-new img-thumbnail" @Html.Raw(Model?.previewImageId != null ? "style='display:none'" : "")>
+                        <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                    </div>
+                    @if (Model?.previewImageId != null)
+                    {
+                        <div class="file-upload-result img-thumbnail">
+                            <img src="@Url.GetImageUploadFolder()@Model.previewImage">
+                            <input name="PreviewImage" type="hidden" value="@Model.previewImage">
+                            <input name="previewImageId" type="hidden" value="@Model.previewImageId">
+                        </div>
+                    }
+                    <div class="clearfix">
+                        <span class="btn btn-success fileinput-button pull-left">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>Select file...</span>
+                            <input id="fileupload" type="file" name="files" accept="image/*">
+                        </span>
+
+                        <span class="btn pull-left file-remove-btn" @Html.Raw(Model?.previewImageId != null ? "" : "style='display:none'")>
+                            Remove
+                        </span>
+
+                        <div id="fileuploadProgress" class="cssload-container" style="display:none">
+                            <div class="cssload-speeding-wheel"></div>
+                        </div>
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(m => m.previewImageId, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
-            <label class="col-md-2 control-label">Images</label>
+            @Html.LabelFor(m => m.imageFiles, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 <div class="form-control-custom">
-                    <span class="btn btn-success fileinput-button">
-                        <i class="glyphicon glyphicon-plus"></i>
-                        <span>Select files...</span>
-                        <!-- The file input field used as target for the file upload widget -->
-                        <input id="fileupload" type="file" name="files" multiple>
-                    </span>
-                    <br>
-                    <br>
-                    <!-- The global progress bar -->
-                    <div id="progress" class="progress">
-                        <div class="progress-bar progress-bar-success"></div>
+                    <div class="clearfix" style="margin-bottom:10px;">
+                        <span class="btn btn-success fileinput-button pull-left">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>Select files...</span>
+                            <input id="fileuploads" type="file" name="files" accept="image/jpg,image/png,image/jpeg,image/gif" multiple>
+                        </span>
+
+                        <div id="filesuploadProgress" class="cssload-container" style="display:none">
+                            <div class="cssload-speeding-wheel"></div>
+                        </div>
                     </div>
-                    <!-- The container for the uploaded files -->
+
                     <div id="files" class="files">
-                        @if (Model?.ImageFiles != null)
-                        { 
-                            foreach (var imagefile in Model.ImageFiles)
+                        @if (Model?.imageFiles != null)
+                        {
+                            foreach (var imagefile in Model.imageFiles)
                             {
-                                Html.RenderAction("_ImageFiles", new { fileId = imagefile.Key, colorId = imagefile.Value, isSelected = false, colors = Model.Colors });
+                                Html.RenderAction("_imageFile", new { id = imagefile.Key, colorId = imagefile.Value, colors = Model.Colors });
                             }
                         }
                     </div>
@@ -215,6 +248,7 @@
 
 @section Styles {
     <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/css/loading.css" rel="stylesheet" />
 
     <link href="~/Areas/Manager/Content/lib/jQueryFileUpload/css/jquery.fileupload.css" rel="stylesheet" />
     <link href="~/Areas/Manager/Content/lib/jQueryFileUpload/css/jquery.fileupload-ui.css" rel="stylesheet" />
@@ -278,20 +312,6 @@
             event.preventDefault();
         });
 
-        function deImg(a) {
-            var f = $(a).data('filename');
-            $.ajax({
-                url: '@Url.Action("DeleteFile", "FileUpload")',
-                data: { 'id': f },
-                traditional: true,
-                success: function () {
-                    var p = $(a).parents('.image-file');
-                    $(p).remove();
-                }
-            });
-            event.preventDefault();
-        };
-
         function gscid() {
             var scids = [];
             for (var i = 0; i < selectedColors.length; i++) {
@@ -310,44 +330,7 @@
         };
 
         $(function () {
-            'use strict';
-            // Change this to the location of your server-side upload handler:
-            var url = '@Url.Action("UploadP","FileUpload")';
-            $('#fileupload').fileupload({
-                url: url,
-                dataType: 'json',
-                done: function (e, data) {
-                    $.each(data.result, function (index, file) {
-                        var scids = gscid();
-                        $.ajax({
-                            traditional: true,
-                            url : '@Url.Action("_ImageFiles")',
-                            data: { 'fileId': file.newFileName, 'colorId': -1, 'colors': scids},
-                            success: function (data) {
-                                $('#files').append(data);
-                                $('.delete-image-btn').bind('click', function () {
-                                    deImg(this);
-                                });
-                                reif();
-                            }
-                        });
-                    });
-                },
-                progressall: function (e, data) {
-                    var progress = parseInt(data.loaded / data.total * 100, 10);
-                    $('#progress .progress-bar').css(
-                        'width',
-                        progress + '%'
-                    );
-                }
-            }).prop('disabled', !$.support.fileInput)
-                .parent().addClass($.support.fileInput ? undefined : 'disabled');
-
-            $('.delete-image-btn').bind('click', function () {
-                    deImg(this);
-            });
-
-
+           
             $('#RoomIds').chosen().change(function () {
                 $('#TypologyTypeId').empty();
                 var selected = $('#RoomIds :selected');
@@ -372,6 +355,128 @@
             });
         });
 
+        //Multi upload----------------------------------------
+        $('#fileuploads').fileupload({
+            url: '@Url.Action("Uploads", "FileUpload")',
+            dataType: 'json',
+            formData: { fileGroup: @Convert.ToInt32(FileGroups.Other) },
+            maxFileSize: 999000,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            done: function (e, data) {
+                $.each(data.result, function (index, file) {
+                    $.ajax({
+                        traditional: true,
+                        url: '@Url.Action("_imageFile")',
+                        data: { 'id': file.newFileName, 'colorId': -1, 'colors': gscid()},
+                        success: function (data) {
+                            $('#files').append(data);
+                            $('.delete-image-btn').bind('click', imageDelete);
+                            $('#filesuploadProgress').fadeOut('fast');
+                        }
+                    });
+                });
+            },
+            always: function(e, data){
+                $('#filesuploadProgress').fadeOut('fast');
+            },
+            progressall: function (e, data) {
+                $('#filesuploadProgress').fadeIn('fast');
+            }
+        }).bind('fileuploadprocessfail', function (e, data) {
+            alert(data.files[data.index].error);
+        });
+        $('.delete-image-btn').bind('click', imageDelete);
+
+        var imageDelete = function () {
+            var p = $(this).parents('.image-file')
+            var f = p.data('file-id');
+            $.ajax({
+                url: '@Url.Action("Delete", "FileManager")',
+                type: 'DELETE',
+                data: { 'id': f },
+                traditional: true,
+                success: function () {
+                    $(p).remove();
+                }
+            });
+            event.preventDefault();
+        };
+        //-------------------------------------------------
+
+        //Single upload
+        //-------------------------------------------------
+        $('#fileupload').fileupload({
+            url:'@Url.Action("Uploads", "FileUpload")',
+            dataType: 'json',
+            formData: { fileGroup: @Convert.ToInt32(FileGroups.Other) },
+            maxFileSize: 999000,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            done: function (e, data) {
+                $.each(data.result, function (index, file) {
+                    var a = $('.file-upload-result input').val();
+                    if (a){
+                        $.ajax({
+                            url: '@Url.Action("Delete", "FileManager")',
+                            type: 'DELETE',
+                            data: { 'id': a },
+                            traditional: true,
+                            success: function () {
+                                $('.file-upload-result').remove();
+                                $('.file-upload-new').fadeIn('fast');
+                                $('.file-remove-btn').hide();
+                                addImg(file);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        addImg(file);
+                    }
+                });
+            },
+            always: function(e, data){
+                $('#fileuploadProgress').fadeOut('fast');
+            },
+            progressall: function (e, data) {
+                $('#fileuploadProgress').fadeIn('fast');
+            }
+        }).bind('fileuploadprocessfail', function (e, data) {
+            alert(data.files[data.index].error);
+        });;
+
+        $('.file-remove-btn').bind('click', function(){
+            var a = $('.file-upload-result input').val();
+            if (a) 
+                $.ajax({
+                url: '@Url.Action("Delete", "FileManager")',
+                type: 'DELETE',
+                data: { 'id': a },
+                traditional: true,
+                success: function () {
+                    $('.file-upload-result').remove();
+                    $('.file-upload-new').fadeIn('fast');
+                    $('.file-remove-btn').hide();
+                }
+            });;
+        })
+
+        function addImg(file) {
+            $('.file-upload-new').hide();
+            $('.file-remove-btn').show();
+            var div = $('<div/>').hide()
+                .addClass('file-upload-result')
+                .addClass('img-thumbnail')
+            var img = $('<img/>')
+                .attr('src', '@Url.GetImageUploadFolder()' + file.newFileName + file.ext)
+                .appendTo(div);
+            var inp = $('<input/>')
+                .attr('name','previewImageId')
+                .attr('type','hidden')
+                .val(file.newFileName)
+                .appendTo(div);
+            div.prependTo('.file-upload').fadeIn('fast');
+        }
+        //-------------------------------------------------
 
     </script>
 }

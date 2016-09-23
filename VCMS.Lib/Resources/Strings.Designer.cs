@@ -358,6 +358,15 @@ namespace VCMS.Lib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End date.
+        /// </summary>
+        public static string EndDate {
+            get {
+                return ResourceManager.GetString("EndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Icon (Font Awesome).
         /// </summary>
         public static string FAIcon {
@@ -592,6 +601,15 @@ namespace VCMS.Lib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Percent.
+        /// </summary>
+        public static string Percent {
+            get {
+                return ResourceManager.GetString("Percent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone.
         /// </summary>
         public static string Phone {
@@ -633,6 +651,15 @@ namespace VCMS.Lib.Resources {
         public static string ProductMaterials {
             get {
                 return ResourceManager.GetString("ProductMaterials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Products.
+        /// </summary>
+        public static string Products {
+            get {
+                return ResourceManager.GetString("Products", resourceCulture);
             }
         }
         
@@ -718,6 +745,15 @@ namespace VCMS.Lib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sale.
+        /// </summary>
+        public static string Sale {
+            get {
+                return ResourceManager.GetString("Sale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
@@ -732,6 +768,15 @@ namespace VCMS.Lib.Resources {
         public static string Size {
             get {
                 return ResourceManager.GetString("Size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start date.
+        /// </summary>
+        public static string StartDate {
+            get {
+                return ResourceManager.GetString("StartDate", resourceCulture);
             }
         }
         

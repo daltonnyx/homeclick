@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = "Products";
     Layout = "~/Views/Shared/_SharedLayout.cshtml";
-    var url = "";
 }
 
 <div class="part-page product-feature" id="list_product_feature">
@@ -100,23 +99,13 @@
             snapValues[handle].innerHTML = val.format(0, 3, '.') + ' vnđ';
             $(snapValues[handle]).data('value', values[handle]);
 
-            if (currentTypoData) {
-                showProducts(filter(currentTypoData));
+            if (products) {
+                showProducts(filter(products));
             }
         });
 
-        //
-        var currentTypoData = [];
-        var currentCategoryData = [];
-        var maxProductValue = 0;
-        var currentModelId = '@Request.Params["category_id"]';
-        var currentTypoId = '@Request.Params["typo_id"]';
-        var currentCategory = null;
-        var currentTypo = null;
-        var pageSize = 16;
-
         $('#select-order').bind('change', function(){
-            showProducts(filter(currentTypoData));
+            showProducts(filter(products));
         });
 
         function filter(sourceData) {
@@ -199,83 +188,44 @@
             });
         }
 
-        function getMetarials(modelId, typoId) {
+        function getMetarials(args) {
             url = '@Url.Action("GetMetarialsJson")';
-            $.ajax({
-                type: "GET",
-                url: url,
-                data: { 'model_id': modelId , 'typo_id': typoId},
-                success: function (data) {
-                    $('.material-list').empty();
-                    for (var i = 0; i < data.length; i++) {
-                        var item = '<li><input class="filter material-checker" data-filter=".material-' + data[i].id + '" type="checkbox" value="' + data[i].id + '" />' + data[i].name + '</li>';
-                        $('.material-list').append(item);
+            $.ajaxCall(url, { 'ids': args })
+                .done(function (data) {
+                    if (data) {
+                        $('.material-list').empty();
+                        for (var i = 0; i < data.length; i++) {
+                            var item = '<li><input class="filter material-checker" data-filter=".material-' + data[i].id + '" type="checkbox" value="' + data[i].id + '" />' + data[i].name + '</li>';
+                            $('.material-list').append(item);
+                        }
+
+                        $('.material-checker').bind('click', function () {
+                            showProducts(filter(products));
+                        });
                     }
-
-                    $('.material-checker').bind('click', function () {
-                        showProducts(filter(currentTypoData));
-                    });
-
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log('error','Failed to retrieve data!');
-                }
-            });
+                }).fail(function () {
+                    console.log('error', 'Failed to retrieve data!');
+                });
         }
 
-        function getProducts(category_id, typo_id) {
+        function getProducts(args) {
             var url = '@Url.Action("ProductsJson")';
-            currentCategoryData = $.getJsonFromUrl(url, { 'category_id': category_id });
-            currentTypoData = refineProductsByTypo(currentCategoryData, typo_id);
-            showProducts(filter(currentTypoData));
+            $.ajaxCall(url, { 'ids': args })
+                .done(function (data) {
+                    if (data) {
+                        products = data;
+                        showProducts(filter(data));
+                        getMetarials(args);
+                    }
+                });
         }
 
-        function refineProductsByTypo(data, typo) {
-            var result = [];
-            if (typo > 0)
-                result = jLinq.from(data).equals('typo', typo).select();
-            else
-                result = currentCategoryData;
-            return result;
-        }
-
+        var products = [],
+            pageSize = 16;
 
         $(document).ready(function () {
-
-            currentCategory = $('#sidebar .category-link').filter('[data-category="' + currentModelId + '"]').first();
-            if (!currentTypoId) {
-                currentTypoId = -1;
-            }
-            currentTypo = currentCategory.find('li[data-typo="' + currentTypoId + '"]').first();
-
-            if (!currentCategory)
-                currentCategory = $('#sidebar .nav').children().first();
-
-            if (currentCategory) {
-                currentModelId = currentCategory.data('category');
-                if (!currentTypo) {
-                    currentTypo = currentCategory.children('.descendant-cat').children().first();
-                    currentTypoId = activeChild.data('typo');
-                }
-
-                currentTypo.addClass('active');
-                getProducts(currentModelId, parseInt(currentTypoId));
-                getMetarials(currentModelId, parseInt(currentTypoId));
-            }
-
-            $('.typo-link > a').bind('click', function (event) {
-                if (currentTypo) {
-                    currentTypo.removeClass('active');
-                }
-                currentTypo = $(this).parent();
-                currentTypo.addClass('active');
-                currentTypoId = currentTypo.data('typo');
-
-                currentTypoData = refineProductsByTypo(currentCategoryData, currentTypoId);
-                showProducts(filter(currentTypoData));
-                getMetarials(currentModelId, currentTypoId);
-                event.preventDefault();
-            });
+            var args = ['@Request.Params["category_id"]', '@Request.Params["typo_id"]'];
+            getProducts(args);
         });
     </script>
 }

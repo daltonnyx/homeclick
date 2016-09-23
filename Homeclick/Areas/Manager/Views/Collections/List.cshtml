@@ -1,12 +1,36 @@
 ﻿@using VCMS.Lib.Resources
-
+@using VCMS.Lib.Models.Business
 @{
     ViewBag.Title = Strings.Collections;
     var deleteMessage = "Delete this Collection?";
+
+    var cSelectListItems = new List<SelectListItem>();
+    var cSelectListGroups = new List<SelectListGroup>();
+    foreach (var category in ViewBag.Categories as IEnumerable<Category>)
+    {
+        var selectListGroup = new SelectListGroup
+        {
+            Name = category.Name
+        };
+        foreach (var child in category.CategoryChildren)
+        {
+            var selectListItem = new SelectListItem
+            {
+                Group = selectListGroup,
+                Value = child.Id.ToString(),
+                Text = child.Name,
+            };
+            cSelectListItems.Add(selectListItem);
+        }
+    }
 }
 
 <p>
     <a href="@Url.Action("Create")" class="btn btn-lime"><i class="fa fa-plus" aria-hidden="true"></i> @Strings.CreateNew</a>
+</p>
+
+<p id="extraSearch" class="bg-white clearfix">
+  @Html.DropDownList("categoryChose", cSelectListItems, "Select a category",new { @class = "form-control chosen", tabindex = "-1", style = "display: none;" })
 </p>
 
 <table id="dataTable" class="table table-striped table-hover fill-head" >
@@ -57,10 +81,12 @@
 
 @section styles {
     @Styles.Render("~/bundles/manager/datatables/css")
+    <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
     }
 
 @section scripts {
     @Scripts.Render("~/bundles/manager/datatables")
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
 
     <script>
        var simple_linkBtns = function (data, type, full, meta) {
@@ -69,23 +95,32 @@
                         '<a class="btn btn-sm show-tooltip" data-placement="top" data-original-title="Edit" href="@Url.Action("Edit")' + param + '" data-original-title="Edit"><i class="fa fa-edit"></i></a>' +
                         '<a class="btn btn-sm btn-danger show-tooltip" data-placement="top" data-original-title="Delete" href="#" data-toggle="modal" data-target="#deleteConfirmModal" data-id="' + data + '" ><i class="fa fa-trash-o"></i></a>' +
                     '</div>';
-        }
+       }
 
         $(document).ready(function () {
-            var dataTable = $('#dataTable');
-            var table = dataTable.DataTable({
+            var table = $('#dataTable');
+            var dataTable = table.DataTable({
                 "autoWidth": false,
                 "serverSide": true,
                 "ajax": {
                     "type": "POST",
                     "url": '@Url.Action("DataHandler")',
                     "contentType": 'application/json; charset=utf-8',
-                    'data': function (data) { return data = JSON.stringify(data); }
+                    'data': function (data)
+                    {
+                        var extraParam = $('#categoryChose').val();
+                        if (extraParam)
+                            data.category_id = extraParam;
+
+                        var v = JSON.stringify(data);
+                        return data = v;
+                    }
                 },
                 "responsive": false,
                 "columns": [
                    { "data": "name" },
                    { "data": "id", "render": simple_linkBtns }],
+
                 "columnDefs": [{
                     "searchable": false,
                     "orderable": false,
@@ -95,6 +130,10 @@
                     $('.show-tooltip').tooltip({ container: 'body', delay: { show: 500 } });
                     $('.show-popover').popover();
                 }
+            });
+
+            $('#categoryChose').bind('change', function () {
+                dataTable.ajax.reload();
             });
 
             $('#deleteConfirmModal').on('show.bs.modal', function (event) {

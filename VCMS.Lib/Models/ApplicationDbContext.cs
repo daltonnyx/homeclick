@@ -16,6 +16,10 @@ namespace VCMS.Lib.Models
             return new ApplicationDbContext();
         }
 
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Orders_Products> Orders_Products { get; set; }
+        public virtual DbSet<Sale> Sales { get; set; }
+
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Post_Details> Post_Details { get; set; }
         public virtual DbSet<Post_Product> Post_Products { get; set; }
@@ -166,6 +170,12 @@ namespace VCMS.Lib.Models
                 .HasRequired(o => o.Product)
                 .WithMany(o => o.Post_Products)
                 .HasForeignKey(o => o.ProductId);
+
+            //----------------------------------------
+            modelBuilder.Entity<Order>()
+                .HasMany(e => e.Orders_Products)
+                .WithRequired(e => e.Order)
+                .WillCascadeOnDelete(false);
 
             //modelBuilder.Configurations.Add(new CategoryEntityConfiguration());
             //modelBuilder.Configurations.Add(new ProductEntityConfiguration());

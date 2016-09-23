@@ -4105,7 +4105,16 @@ label.radio-image > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
       transform: translateX(-50%);
 }
 
+.full-width img{
+    width:100%;
+}
+
 /*Bootstrap utility classes*/
+
+/*background*/
+.bg-white {
+    background: #fff;
+}
 
 /*margin left*/
 .m-l-7{

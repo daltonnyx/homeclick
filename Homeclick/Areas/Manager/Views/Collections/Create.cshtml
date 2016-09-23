@@ -28,9 +28,13 @@
     }
     var products = ViewBag.Products as IEnumerable<Product>;
     var pSelectListItems = new List<CustomSelectItem>();
+    if (Model.products == null)
+    {
+        Model.products = new Dictionary<string, int>();
+    }
     foreach (var product in products)
     {
-        if (!Model.categoryIds.Contains(product.Id))
+        if (!Model.products.Select(o => o.Key).Contains(product.Id.ToString()))
         {
             var customSelectItem = new CustomSelectItem
             {
@@ -86,7 +90,7 @@
                             <div class="cssload-speeding-wheel-sm"></div>
                         </div>
                     </div>
-                    <div id="products" @Html.Raw(Model.products == null ? "style='display:none'" : "")>
+                    <div id="products" @Html.Raw(Model.products.Count > 0 ? "" : "style='display:none'")>
                         @if (Model.products != null)
                         {
                             foreach (var obj in Model.products)
@@ -136,7 +140,7 @@
         </div>
 
         <div class="form-group">
-            <label class="col-md-2 control-label">Images</label>
+            @Html.LabelFor(m => m.imageFiles, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 <div class="form-control-custom">
                     <div class="clearfix" style="margin-bottom:10px;">
@@ -357,7 +361,8 @@
                     var a = $('.file-upload-result input').val();
                     if (a){
                         $.ajax({
-                            url: '@Url.Action("DeleteFile", "FileUpload")',
+                            url: '@Url.Action("Delete", "FileManager")',
+                            type: 'DELETE',
                             data: { 'id': a },
                             traditional: true,
                             success: function () {
@@ -386,7 +391,18 @@
 
         $('.file-remove-btn').bind('click', function(){
             var a = $('.file-upload-result input').val();
-            if (a) deImg(a);
+            if (a) 
+                $.ajax({
+                url: '@Url.Action("Delete", "FileManager")',
+                type: 'DELETE',
+                data: { 'id': a },
+                traditional: true,
+                success: function () {
+                    $('.file-upload-result').remove();
+                    $('.file-upload-new').fadeIn('fast');
+                    $('.file-remove-btn').hide();
+                }
+            });
         })
 
         function addImg(file) {
@@ -405,23 +421,6 @@
                 .appendTo(div);
             div.prependTo('.file-upload').fadeIn('fast');
         }
-
-        function deImg(a) {
-            var imageDelete = function () {
-                $.ajax({
-                    url: '@Url.Action("Delete", "FileManager")',
-                    type: 'DELETE',
-                    data: { 'id': f },
-                    traditional: true,
-                    success: function () {
-                        $('.file-upload-result').remove();
-                        $('.file-upload-new').fadeIn('fast');
-                        $('.file-remove-btn').hide();
-                    }
-                });
-                event.preventDefault();
-            };
-        };
         //-------------------------------------------------
 
         //Editor

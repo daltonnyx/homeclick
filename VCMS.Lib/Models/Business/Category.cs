@@ -84,8 +84,6 @@ namespace VCMS.Lib.Models.Business
             }
         }
 
-
-
         public List<Post> GetAllPost()
         {
             var posts = new List<Post>();
@@ -96,6 +94,18 @@ namespace VCMS.Lib.Models.Business
                 posts = posts.Distinct().ToList();
             }
             return posts;
+        }
+
+        public List<Product> GetAllProduct()
+        {
+            var products = new List<Product>();
+            products.AddRange(Products);
+            foreach (var child in CategoryChildren)
+            {
+                products.AddRange(child.GetAllProduct());
+                products = products.Distinct().ToList();
+            }
+            return products;
         }
     }
 

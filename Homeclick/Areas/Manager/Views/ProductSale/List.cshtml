@@ -2,7 +2,7 @@
 @using VCMS.Lib.Models.Business
 
 @{
-    ViewBag.Title = Strings.Products;
+    ViewBag.Title = Strings.Sale;
 }
 
 <p>
@@ -11,7 +11,7 @@
 @foreach (var pair in ViewBag.Dic as Dictionary<string, IEnumerable<Category>>)
 {
     <p class="bg-white">
-        @Html.DropDownList(pair.Key, pair.Value.Select(o => new SelectListItem { Text = o.Name, Value = o.Id.ToString()}), "All - " + pair.Key, new { @class = "form-control chosen extra-search", tabindex = "-1", style = "display: none;"})
+        @Html.DropDownList(pair.Key, pair.Value.Select(o => new SelectListItem { Text = o.Name, Value = o.Id.ToString()}), "All - " + pair.Key, new { @class = "form-control chosen extra-search", data_key="status", tabindex = "-1", style = "display: none;"})
     </p>
 }
 
@@ -22,10 +22,13 @@
                 @Strings.Name
             </th>
             <th>
-                @Strings.Image
+                @Strings.Percent
             </th>
             <th>
-                @Strings.Quantity
+                @Strings.StartDate
+            </th>
+            <th>
+                @Strings.EndDate
             </th>
             <th>
             </th>
@@ -34,11 +37,8 @@
 </table>
 
 @section breadcrumb {
-    @{
-        var viewName = Html.ViewContext.RouteData.GetRequiredString("action");
-    }
     <li>
-        <a href="@Url.Action("Dashboard","Pages")">
+        <a href="@Url.Action("Index","Dashboard")">
             <i class="fa fa-home"></i> Home
         </a>
         <span class="divider"><i class="fa fa-angle-right"></i></span>
@@ -65,7 +65,6 @@
             var param = '?id=' + data;
             return   '<div class="table-action">' +
                         '<a class="btn btn-sm show-tooltip" data-placement="top" data-original-title="Details" href="@Url.Action("Details")' + param + '" data-original-title="View"><i class="fa fa-search-plus"></i></a>' +
-                        '<a class="btn btn-sm show-tooltip" data-placement="top" data-original-title="Edit" href="@Url.Action("Edit")' + param + '" data-original-title="Edit"><i class="fa fa-edit"></i></a>' +
                         '<a class="btn btn-sm btn-danger show-tooltip" data-placement="top" data-original-title="Delete" href="@Url.Action("Delete")' + param + '" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>' +
                     '</div>';
         }
@@ -83,10 +82,11 @@
                     {
                         var extraSearchs = $('.extra-search');
                         if (extraSearchs.length > 0) {
-                            data.args = [];
+                            data.args = {};
                             for (var i = 0; i < extraSearchs.length; i++) {
-                                if ($(extraSearchs[i]).val())
-                                    data.args.push($(extraSearchs[i]).val());
+                                var current = $(extraSearchs[i]);
+                                if (current.data('key') && current.val())
+                                    data.args[current.data('key')] = current.val();
                             }
                         }
                         return data = JSON.stringify(data);
@@ -96,24 +96,18 @@
                 responsive: false,
 
                 "columns": [
-                   { "data": "img", "render": thumbImg },
                    { "data": "name" },
-                   { "data": "status" },
+                   { "data": "percent" },
+                   { "data": "startdate" },
+                   { "data": "enddate" },
                    { "data": "id", "render": simple_linkBtns }],
 
                 "columnDefs": [{
                     "searchable": false,
                     "orderable": false,
-                    "targets": 0,
-                }, {
-                    "searchable": false,
-                    "orderable": false,
-                    "targets": 2,
-                }, {
-                    "searchable": false,
-                    "orderable": false,
-                    "targets": 3,
+                    "targets": 4,
                 }],
+
                 "drawCallback": function (settings) {
                     $('.show-tooltip').tooltip({ container: 'body', delay: { show: 500 } });
                     $('.show-popover').popover();

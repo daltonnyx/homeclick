@@ -1,0 +1,55 @@
+﻿@using VCMS.Lib.Models
+@using VCMS.Lib.Models.Business
+@model IEnumerable<CartItem>
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="view-cart">
+    <div class="container">
+        <div class="row">
+            @if (Model.Count() > 0)
+            {
+                <table>
+                    <thead>
+                        <tr>
+                            <td><strong>Product</strong></td>
+                            <td><strong>Name</strong></td>
+                            <td><strong>Prince</strong></td>
+                            <td><strong>Quantity</strong></td>
+                            <td><strong>Total</strong></td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var detail = item.product.DetailsToDictionary();
+                            <tr>
+                                <td><img src="@Url.GetImageUploadFolder()@item.product.Image.FullFileName" style="width:60px;"/></td>
+                                <td>@item.product.name</td>
+                                <td>@detail[ProductDetailTypes.Price]</td>
+                                @using (@Html.BeginForm("UpdateCartItem", "Cart", new { @id = item.id }))
+                                {
+                                    <td>@Html.TextBox("quantity", item.quantity, "", new { type = "number", @class = "Edit btn" })</td>
+                                    <td>@item.total</td>
+                                    <td><input type="submit" value="Update"/></td>
+                                }
+                                <td>@Html.ActionLink("Delete", "DeleteItemInCart", new { @id = item.id, @class="btn" })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="no-cart">
+                    <p>Your cart is currently empty.</p>
+                    @Html.ActionLink("Go to Home", "Index", "Home")
+                </div>
+            }
+        </div>
+    </div>
+</main>

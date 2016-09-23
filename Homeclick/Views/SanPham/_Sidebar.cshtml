@@ -1,8 +1,10 @@
 ﻿@using VCMS.Lib.Models.Business
 @model IEnumerable<Category>
 
-@{ 
+@{
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    var categoryId = int.Parse(Request.Params["category_id"] ?? "-1");
+    var typoId = int.Parse(Request.Params["typo_id"] ?? "-1");
 }
 
 <div class="sidebar">
@@ -15,30 +17,26 @@
         </div>
         <div class="box-content">
             <ul class="nav">
-                @foreach (Category item in Model)
+                @foreach (var item in Model)
                 {
-                    <li class="category-link" data-category="@item.Id">
-                        <a href="@Url.Action("Category",new { category_id = item.Id})">@item.Name</a>
-                        @{ IList<Category> descendants = item.GetDescendantCategories(CategoryTypes.Typology); }
+                    var children = item.CategoryChildren;
+
+                    <li class="@Html.Raw(item.Id == categoryId ? "active" : "")" data-category="@item.Id">
+                        <a href="@Url.Action("Category", new { category_id = item.Id })">@item.Name</a>
 
                         <ul class="descendant-cat">
-                            <li class="typo-link" data-category="@item.Id" data-typo="-1">
-                                <a href="#">All</a>
-                            </li>
-                            @if (descendants.Count > 0)
+                            @if (children.Count() > 0)
                             {
-                                foreach (Category des in descendants)
+                                foreach (var child in children)
                                 {
-                                    var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
-                                    <li class="typo-link" data-category="@item.Id" data-typo="@des.Id">
-                                        <a href="#">@des.Name</a>
+                                    <li class="@Html.Raw(categoryId == item.Id && typoId == child.Id ? "active" : "")">
+                                        <a href="@Url.Action("Category", new { category_id = item.Id, typo_id = child.Id })">@child.Name</a>
                                     </li>
                                 }
                             }
                         </ul>
-
                     </li>
-                  }
+                }
             </ul>
             <div class="box-subBox">
                 <hr />

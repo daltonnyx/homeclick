@@ -16,10 +16,17 @@ namespace VCMS.Lib.Controllers
 {
     public class CollectionsController : PostsController
     {
+        private IEnumerable<Category> GetCategories()
+        {
+            return db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+        }
+
         public override ActionResult List()
         {
+            ViewBag.Categories = GetCategories();
             return View();
         }
+    
         /// <summary>
         /// 
         /// </summary>
@@ -32,12 +39,13 @@ namespace VCMS.Lib.Controllers
             var category = db.Categories.Find(id);
             if (category == null)
                 return HttpNotFound();
+            ViewBag.Categories = GetCategories();
             return View(category);
         }
 
         public ActionResult Create(bool? success, string successObjectName)
         {
-            ViewBag.Categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+            ViewBag.Categories = GetCategories();
             ViewBag.Products = db.Products.Where(o => o.Status);
             ViewData["Success"] = success;
             ViewData["SuccessObjectName"] = successObjectName;
@@ -55,7 +63,7 @@ namespace VCMS.Lib.Controllers
                 if (db.SaveChanges() > 0)
                     return RedirectToAction("Create", new { success = true, successObjectName = model.Title });
             }
-            ViewBag.Categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+            ViewBag.Categories = GetCategories();
             ViewBag.Products = db.Products.Where(o => o.Status);
             return View(viewModel);
         }
@@ -73,7 +81,7 @@ namespace VCMS.Lib.Controllers
             if (post == null)
                 return HttpNotFound();
             var viewModel = ModelToViewModel(post);
-            ViewBag.Categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+            ViewBag.Categories = GetCategories();
             ViewBag.Products = db.Products.Where(o => o.Status);
             return View(viewModel);
         }
@@ -89,7 +97,7 @@ namespace VCMS.Lib.Controllers
                 if (db.SaveChanges() > 0)
                     return RedirectToAction("List");
             }
-            ViewBag.Categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+            ViewBag.Categories = GetCategories();
             ViewBag.Products = db.Products.Where(o => o.Status);
             return View(viewModel);
         }
@@ -248,11 +256,14 @@ namespace VCMS.Lib.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult DataHandler(DTParameters param)
+        public JsonResult DataHandler(DTParameters param, int? category_id)
         {
             try
             {
-                var categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+                var categories = (category_id != null) ?
+                    db.Categories.Where(o => o.Id == category_id) :
+                    db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+
                 var posts = new List<Post>();
                 foreach (var category in categories)
                 {
@@ -262,6 +273,7 @@ namespace VCMS.Lib.Controllers
                 var dtsource = posts.Select(o => new dt_collection {
                     id = o.Id,
                     name = o.Title,
+                    categories = o.Categories.Select(e => e.Name)
                 });
 
                 List<string> columnSearch = new List<string>();

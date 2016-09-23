@@ -15,8 +15,23 @@ namespace VCMS.Lib.Controllers
 {
     public class ProductsController : BaseController
     {
+        private List<CategoryTypes> ProductCategoryTypes
+        {
+            get
+            {
+                var categoryTypes = new List<CategoryTypes>();
+                categoryTypes.Add(CategoryTypes.Model);
+                categoryTypes.Add(CategoryTypes.Typology);
+                return categoryTypes;
+            }
+        }
+
         public ActionResult List()
         {
+            var dic = new Dictionary<string, IEnumerable<Category>>();
+            ProductCategoryTypes.ForEach(
+                o => dic.Add(o.ToString(), db.Categories.Where(c => c.Category_TypeId == (int)o)));
+            ViewBag.Dic = dic;
             return View();
         }
 
@@ -28,8 +43,6 @@ namespace VCMS.Lib.Controllers
             return View();
         }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(ProductViewModel model)
@@ -57,7 +70,7 @@ namespace VCMS.Lib.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Product product = await db.Products.FindAsync(Convert.ToInt32(id));
-            
+
             if (product == null)
             {
                 return HttpNotFound();
@@ -118,9 +131,11 @@ namespace VCMS.Lib.Controllers
             return PartialView(model);
         }
 
-        public ActionResult _ImageFiles(string fileId, int colorId, bool? isSelected, int[] colors)
+        public ActionResult _imageFile(string id, int colorId, int[] colors)
         {
-            var model = db.Files.Find(fileId);
+            var model = db.Files.Find(id);
+            if (model == null)
+                return HttpNotFound();
             var iColors = new List<Product_Variant>();
             if (colors != null)
                 foreach (var str in colors)
@@ -129,10 +144,8 @@ namespace VCMS.Lib.Controllers
                     iColors.Add(color);
                 }
 
-            ViewBag.Selected = (isSelected != null) ? isSelected : false;
             ViewBag.SelectedColor = colorId;
             ViewBag.Colors = iColors;
-
             return PartialView(model);
         }
 
@@ -168,49 +181,6 @@ namespace VCMS.Lib.Controllers
                 var rooms = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Typology)
                     .Select(o => new SelectListItem { Text = o.Name, Value = (o.Id).ToString() }).ToList();
                 return rooms;
-            }
-        }
-
-        public JsonResult DataHandler(DTParameters param)
-        {
-            try
-            {
-                var products = db.Products;
-                var dtsource = products.Select(o => new dt_product {
-                    id = o.Id,
-                    name = o.name,
-                    img = o.Image.Id + o.Image.Extension,
-                    status = o.Status
-                }).ToList();
-                
-                List<String> columnSearch = new List<string>();
-
-                foreach (var col in param.Columns)
-                {
-                    columnSearch.Add(col.Search.Value);
-                }
-                var search = param.Search.Value;
-
-                Expression<Func<dt_product, bool>> pre = (p => (search == null || (p.name != null && p.name.ToLower().Contains(search.ToLower())))
-                && (columnSearch[0] == null || (p.name != null && p.name.ToLower().Contains(columnSearch[1].ToLower()))));
-
-                var resultSet = new ResultSet();
-                List<dt_product> data = resultSet.GetResult(pre, param.SortOrder, param.Start, param.Length, dtsource);
-
-                var jsonResult = new List<object>();
-                int count = new ResultSet().Count(pre, dtsource);
-                DTResult<dt_product> result = new DTResult<dt_product>
-                {
-                    draw = param.Draw,
-                    data = data,
-                    recordsFiltered = count,
-                    recordsTotal = count
-                };
-                return Json(result);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { error = ex.Message });
             }
         }
 
@@ -360,7 +330,7 @@ namespace VCMS.Lib.Controllers
                 foreach (var obj in dic)
                 {
                     var found = false;
-                    foreach (var ImageFile in viewModel.ImageFiles)
+                    foreach (var ImageFile in viewModel.imageFiles)
                     {
                         if (obj.Key == ImageFile.Key && obj.Value == ImageFile.Value)
                         {
@@ -435,7 +405,7 @@ namespace VCMS.Lib.Controllers
                 if (!found)
                 {
                     model.Product_Variants.Remove(variant);
-                    foreach (var imageFile in viewModel.ImageFiles)
+                    foreach (var imageFile in viewModel.imageFiles)
                     {
                         var file = db.Files.Find(imageFile.Key);
                         if (file != null)
@@ -456,15 +426,17 @@ namespace VCMS.Lib.Controllers
                         model.Product_Variants.Add(selectedColor);
             }
 
+            //proview image
+            if (model.ImageId != viewModel.previewImageId)
+                model.ImageId = viewModel.previewImageId;
+
             //Images
-            foreach (var obj in viewModel.ImageFiles)
+            foreach (var obj in viewModel.imageFiles)
             {
                 var file = db.Files.Find(obj.Key);
                 if (file != null)
                 {
-                    if (obj.Key == viewModel.PreviewImage)
-                        model.Image = file;
-                    else if (!model.Files.Contains(file))
+                    if (!model.Files.Contains(file))
                     {
                         model.Files.Add(file);
                         var variant = db.Product_Variants.Find(obj.Value);
@@ -488,7 +460,8 @@ namespace VCMS.Lib.Controllers
             var viewModel = new ProductViewModel
             {
                 Name = model.name,
-                PreviewImage = model.ImageId,
+                previewImageId = model.ImageId,
+                previewImage = model.Image.FullFileName,
                 Colors = model.Product_Variants.Select(o => o.Id).ToArray(),
                 Description = model.content,
                 IColors = model.Product_Variants,
@@ -501,8 +474,8 @@ namespace VCMS.Lib.Controllers
                 foreach (var file in variant.Files)
                 {
                     if (model.Files.Contains(file))
-                        if (!viewModel.ImageFiles.ContainsKey(file.Id))
-                            viewModel.ImageFiles.Add(file.Id, variant.Id);
+                        if (!viewModel.imageFiles.ContainsKey(file.Id))
+                            viewModel.imageFiles.Add(file.Id, variant.Id);
                 }
             }
 
@@ -535,6 +508,56 @@ namespace VCMS.Lib.Controllers
                 }
             }
             return viewModel;
+        }
+
+        public JsonResult DataHandler(DTParameters param, int[] args) //args: categories id
+        {
+            try
+            {
+                var products = db.Products.ToList();
+                if (args != null)
+                    foreach (var arg in args)
+                    {
+                        products = products.Where(o => o.Categories.Select(e => e.Id).ToList().Contains(arg)).ToList();
+                    }
+
+                var dtsource = products.Select(o => new dt_product
+                {
+                    id = o.Id,
+                    name = o.name,
+                    img = o.Image.Id + o.Image.Extension,
+                    status = o.Status
+                }).ToList();
+
+                List<String> columnSearch = new List<string>();
+
+                foreach (var col in param.Columns)
+                {
+                    columnSearch.Add(col.Search.Value);
+                }
+                var search = param.Search.Value;
+
+                Expression<Func<dt_product, bool>> pre = (p => (search == null || (p.name != null && p.name.ToLower().Contains(search.ToLower())))
+                && (columnSearch[0] == null || (p.name != null && p.name.ToLower().Contains(columnSearch[1].ToLower()))));
+
+                var resultSet = new ResultSet();
+                List<dt_product> data = resultSet.GetResult(pre, param.SortOrder, param.Start, param.Length, dtsource);
+
+                var jsonResult = new List<object>();
+                int count = new ResultSet().Count(pre, dtsource);
+                DTResult<dt_product> result = new DTResult<dt_product>
+                {
+                    draw = param.Draw,
+                    data = data,
+                    recordsFiltered = count,
+                    recordsTotal = count
+                };
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message });
+            }
         }
     }
 }

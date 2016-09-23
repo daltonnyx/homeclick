@@ -32,14 +32,24 @@
             }
         </div>
         *@
-        <div class="owl-carousel">
-            @foreach (var file in Model.Files)
-            {
-                <div class="item">
-                    <img src="@Url.GetImageUploadFolder()@file.FullFileName" title="@Model.Title" alt="@Model.Title">
-                </div>
-            }
-        </div>
+        @if (Model.Files.Count > 0)
+        {
+            <div class="owl-carousel">
+                @foreach (var file in Model.Files)
+                {
+                    <div class="item">
+                        <img src="@Url.GetImageUploadFolder()@file.FullFileName" title="@Model.Title" alt="@Model.Title">
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="full-width">
+                <img src="@Url.GetImageUploadFolder()@Model.ImageFile.FullFileName" title="@Model.Title" alt="@Model.Title">
+            </div>
+        }
+
         <article class="collection-description">
             @Html.Raw(Model.Content)
         </article>

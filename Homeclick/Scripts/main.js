@@ -254,28 +254,6 @@ $(document).ready(function ($) {
     });
 });
 
-//Jquery Extend
-$.extend({
-    getJsonFromUrl: function (url, urlData) {
-        var result = null;
-        $.ajax({
-            type: "GET",
-            url: url,
-            data: urlData,
-            dataType: "json",
-            async: false,
-            success: function (jsonResult) {
-                result = jsonResult;
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                alert('Failed to retrieve data.');
-            }
-        })
-        return result;
-    }
-});
-
-
    // $(function() {
       //   var pgurl = window.location.href.substr(window.location.href
    // .lastIndexOf("/")+1);

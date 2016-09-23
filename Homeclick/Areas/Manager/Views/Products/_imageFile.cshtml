@@ -1,16 +1,15 @@
-﻿@model VCMS.Lib.Models.File
+﻿@using VCMS.Lib.Models
+@model VCMS.Lib.Models.File
+
 @{ 
     var selectedColor = ViewBag.SelectedColor;
-    var colors = ViewBag.Colors as IEnumerable<VCMS.Lib.Models.Product_Variant>;
+    var colors = ViewBag.Colors as IEnumerable<Product_Variant>;
 }
-    <div class="clearfix image-file">
+    <div class="clearfix image-file" data-file-id="@Model.Id">
         <div class="image-preview pull-left">
             <img src="@Url.GetImageUploadFolder()@Model.Id@Model.Extension">
         </div>
         <div class="pull-left controls">
-            <label class="radio">
-                <input type="radio" name="PreviewImage" @Html.Raw((ViewBag.Selected) ? "checked" : "" ) value="@Model.Id" /> Is preview image
-            </label>
             <label class="radio">
                 <a href="#" class="delete-image-btn" data-fileName="@Model.Id"><i class="fa fa-times" aria-hidden="true"> Delete</i></a>
             </label>

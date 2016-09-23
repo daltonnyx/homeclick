@@ -12,16 +12,17 @@ namespace VCMS.Lib.Models.Business
     {
         public ProductViewModel()
         {
-            ImageFiles = new Dictionary<string, int>();
+            imageFiles = new Dictionary<string, int>();
         }
 
         public new int Id { get; set; }
         [DataType(DataType.Upload)]
 
         [Required]
-        public string PreviewImage { get; set; }
+        public string previewImageId { get; set; }
+        public string previewImage { get; set; }
 
-        public Dictionary<string, int> ImageFiles { get; set; }
+        public Dictionary<string, int> imageFiles { get; set; }
 
         public bool Status { get; set; }
 

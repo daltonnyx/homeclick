@@ -24,13 +24,20 @@ namespace Homeclick.Controllers
         public ActionResult Index()
         {
             var maxItem = 3;
-            var dic = new Dictionary<string, IEnumerable<Post>>();
+            var dic = new Dictionary<Category, IEnumerable<Post>>();
             var categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
             foreach (var category in categories)
             {
                 var posts = category.GetAllPost().PickRandom(maxItem);
-                dic.Add(category.Name, posts);
+                dic.Add(category, posts);
             }
+
+            var slides = new List<Post>();
+            foreach (var pair in dic)
+            {
+                slides = slides.Concat(pair.Value).ToList();
+            }
+            ViewBag.Slides = slides.PickRandom(5);
             return View(dic);
         }
 

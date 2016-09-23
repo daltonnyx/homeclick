@@ -1,13 +1,21 @@
 ﻿@using VCMS.Lib.Models.Business
-@model Dictionary<string, IEnumerable<Post>>
+@model Dictionary<Category, IEnumerable<Post>>
 
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/_SharedLayout.cshtml";
-    var categoryValue = Request.RequestContext.RouteData.Values["category_id"];
 }
 
-@*Html.Partial("_Slider", slides)*@
+<section role="slider">
+    <div class="owl-carousel">
+        @foreach (var post in ViewBag.Slides as IEnumerable<Post>)
+        {
+            <div class="full-width">
+                <img src="@Url.GetImageUploadFolder()/@post.ImageFile.FullFileName" title="@post.Title" alt="@post.Title">
+            </div>
+        }
+    </div>
+</section>
 
 @foreach (var pair in Model)
 {
@@ -15,14 +23,14 @@
     <section>
         <div class="category-title">
             <span>
-                @pair.Key
+                @pair.Key.Name
             </span>
-            <a href="@Url.Action("Index", new { id = pair.Key})">Xem thêm >></a>
+            <a href="@Url.Action("Index", new { id = pair.Key.Id})">Xem thêm >></a>
         </div>
         <div class="grid-content clearfix">
             @foreach (var item in pair.Value)
             {
-                var link = Url.Action("Detail", new { category_id = pair.Key, collection_id = item.Id });
+                var link = Url.Action("Detail", new { category_id = item.Categories.FirstOrDefault(o => o.CategoryParents.FirstOrDefault() == pair.Key).Id, collection_id = item.Id });
                 <div class="collection-item col-sm-4">
                     <div class="collection-inner">
                         <div class="image">
@@ -49,48 +57,9 @@
 }
 
 @section styles {
-    <style>
-    </style>
+    @Styles.Render("~/content/lib/owl-carousel/css")
 }
 
 @section scripts {
-    <script type="text/javascript">
-
-        //slider home
-        $(window).load(function () {
-            var owl = $('.owl-carousel');
-
-            owl.owlCarousel({
-                navigation: false,
-                slideSpeed: 300,
-                paginationSpeed: 400,
-                pagination: true,
-                items: 1,
-                itemsDesktop: false,
-                itemsDesktopSmall: false,
-                itemsTablet: false,
-                itemsMobile: false,
-                navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
-            });
-
-            owl.on('translated.owl.carousel', function (event) {
-                var activeImg = $(this).find('.active').find('img');
-                var comment = activeImg.attr('alt');
-                var title = activeImg.attr('title');
-                var link = activeImg.data('link');
-                var templated = '<div>' +
-                                    '<span class="slider-title">' +
-                                        title +
-                                '</span> <br />' +
-                                '<a class="slider-link" href="' + link + '">' +
-                                    'Xem' +
-                                '</a>' +
-                            '</div>';
-                if (comment) $('.slider-caption').html(templated);
-            });
-
-            $('.table-section-header').toggleClass("active-show");
-            $('.list-show .category-product-detail').slideToggle("slow");
-        });
-    </script>
+    @Scripts.Render("~/content/lib/owl-carousel/js")
 }

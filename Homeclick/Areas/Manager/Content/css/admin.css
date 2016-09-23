@@ -74,3 +74,10 @@
             margin-bottom:10px;
             overflow:hidden;
         }
+
+
+/*Bootstrap utility classes*/
+/*background*/
+.bg-white {
+    background: #fff;
+}

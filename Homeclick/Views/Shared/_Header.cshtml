@@ -1,7 +1,9 @@
 ﻿@{
     var db = new VCMS.Lib.Models.ApplicationDbContext();
     var categories = db.Categories.ToList();
-
+    var controllerName = Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
+    var actionName = Request.RequestContext.RouteData.Values["action"].ToString().ToLower();
+    var categoryId = int.Parse(Request.Params["category_id"] ?? "-1");
 }
 
 <header id="header" class="site-header">
@@ -40,7 +42,7 @@
             </div>
             <div class="header-form">
                 <div class="shoppingcart">
-                    @Html.Action("ShoppingCartPartial", "GioHang")
+                    @Html.Action("_headerWidget", "Cart")
                 </div>
                 <div class="search-form">
                     @using (Html.BeginForm("Search_form", "Home", FormMethod.Get))
@@ -78,12 +80,12 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item" data-menu="CollectionIndex">
+                    <li class="@Html.Raw(controllerName == "collection" ? "active nav-item" : "nav-item")">
                         @Html.ActionLink("Bộ sưu tập", "Index", "Collection")
                         <ul class="nav-submenu">
                             @foreach (var category in categories.Where(o => o.Category_TypeId == (int)Homeclick.Models.CategoryTypes.Collection).ToList())
                             {
-                                <li class="nav-submenu-item category-link" data-category="@category.Id"><a href="@Url.Action("Category", "Collection", new { category_id = category.Id })">@category.Name</a></li>
+                                <li class="nav-submenu-item @Html.Raw(categoryId == category.Id|| category.CategoryChildren.Select(o=> o.Id).Contains(categoryId) ? "active" : "")"><a href="@Url.Action("Category", "Collection", new { category_id = category.Id })">@category.Name</a></li>
                             }
                         </ul>
                     </li>

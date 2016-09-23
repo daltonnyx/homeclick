@@ -44,6 +44,7 @@
     </div>
 
 @section styles {
+    @Styles.Render("~/content/lib/owl-carousel/css")
     <style>
         .slider-home {
             margin-bottom:15px;
@@ -54,17 +55,6 @@
         }
     </style>
 }
-
 @section scripts {
-    <script type="text/javascript">
-        var owl = $('.owl-carousel');
-        owl.owlCarousel({
-            nav: false,
-            slideSpeed: 300,
-            paginationSpeed: 400,
-            pagination: true,
-            items: 1,
-            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
-        });
-    </script>
+    @Scripts.Render("~/content/lib/owl-carousel/js")
 }

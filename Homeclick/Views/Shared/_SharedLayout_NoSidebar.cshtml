@@ -8,10 +8,6 @@
     {
         @RenderSection("styles", false)
     }
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/Scripts/jquery-1.11.3.min.js")
-    @Scripts.Render("~/bundles/bootstrap")
-
 </head>
 <body>
     <div class="wapper">
@@ -29,6 +25,9 @@
         @Html.Partial("_Footer");
     </div>
 
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/jquery-1.11.3.min.js")
+    @Scripts.Render("~/bundles/bootstrap")
     <script>
         var menu = '@ViewContext.RouteData.Values["controller"]@ViewContext.RouteData.Values["action"]';
         var currentMenu = $('.nav-item').filter('[data-menu="' + menu + '"]');
@@ -51,10 +50,10 @@
         parentCat.addClass('active');
     </script>
 
-    @if (IsSectionDefined("scripts"))
-    {
-        @RenderSection("scripts", false)
-    }
+    @RenderSection("scripts", false)
+
+    <script src="~/Content/js/homeclick.js"></script>
+
 </body>
 </html>
 

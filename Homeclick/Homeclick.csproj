@@ -202,7 +202,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
     <Compile Include="Controllers\DesignController.cs" />
-    <Compile Include="Controllers\GioHangController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HoidapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HtmlController.cs" />
@@ -258,6 +258,9 @@
     <Content Include="Areas\Manager\Content\css\loading.css" />
     <Content Include="Areas\Manager\Content\js\admin.js" />
     <Content Include="Areas\Manager\Content\lib\bootstrap\bootstrap.min.js" />
+    <Content Include="Areas\Manager\Content\lib\datatables\columnFilterWidgets\css\ColumnFilterWidgets.css" />
+    <Content Include="Areas\Manager\Content\lib\datatables\columnFilterWidgets\images\bullet_delete.png" />
+    <Content Include="Areas\Manager\Content\lib\datatables\columnFilterWidgets\js\ColumnFilterWidgets.js" />
     <Content Include="Areas\Manager\Content\lib\froala-WYSIWYG-editor\css\froala_editor.css" />
     <Content Include="Areas\Manager\Content\lib\froala-WYSIWYG-editor\css\froala_editor.min.css" />
     <Content Include="Areas\Manager\Content\lib\froala-WYSIWYG-editor\css\froala_editor.pkgd.css" />
@@ -553,7 +556,7 @@
     <Content Include="Areas\Manager\Views\Products\Create.cshtml" />
     <Content Include="Areas\Manager\Views\Products\Delete.cshtml" />
     <Content Include="Areas\Manager\Views\Products\Edit.cshtml" />
-    <Content Include="Areas\Manager\Views\Products\_ImageFiles.cshtml" />
+    <Content Include="Areas\Manager\Views\Products\_imageFile.cshtml" />
     <Content Include="Areas\Manager\Views\Products\_Colors.cshtml" />
     <Content Include="Areas\Manager\Views\ProductColors\_ImageFile.cshtml" />
     <Content Include="Areas\Manager\Views\ProductColors\Edit.cshtml" />
@@ -625,6 +628,7 @@
     <Content Include="Content\lib\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\lib\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\lib\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Areas\Manager\Views\ProductSale\List.cshtml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1040,6 +1044,8 @@
     <Content Include="Views\Post\Index.cshtml" />
     <Content Include="Views\Collection\_productsGrid.cshtml" />
     <Content Include="Views\Collection\_productsTable.cshtml" />
+    <Content Include="Views\Cart\_headerWidget.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\SanPham\CanvasList.cshtml" />
@@ -1069,6 +1075,7 @@
     <Content Include="Views\Project\_Sidebar_Details.cshtml" />
     <Content Include="Views\Shared\_SharedLayout.cshtml" />
     <Content Include="Views\Shared\_SharedLayout_NoSidebar.cshtml" />
+    <Content Include="Views\Shared\_shareSidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
