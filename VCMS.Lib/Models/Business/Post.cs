@@ -13,7 +13,7 @@ namespace VCMS.Lib.Models.Business
         {
             Post_Details = new HashSet<Post_Details>();
             Categories = new HashSet<Category>();
-            Post_Products = new HashSet<Post_Product>();
+            Post_ProductOptions = new HashSet<Post_Product>();
             Files = new HashSet<File>();
         }
 
@@ -46,7 +46,7 @@ namespace VCMS.Lib.Models.Business
 
         public virtual ICollection<Category> Categories { get; set; }
 
-        public virtual ICollection<Post_Product> Post_Products { get; set; }
+        public virtual ICollection<Post_Product> Post_ProductOptions { get; set; }
 
         public virtual ICollection<File> Files { get; set; }
 

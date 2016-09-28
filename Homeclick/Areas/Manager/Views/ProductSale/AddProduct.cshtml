@@ -1,9 +1,10 @@
 ﻿@using VCMS.Lib.Resources
-@model VCMS.Lib.Models.Business.FeatureProductViewModel
+@using VCMS.Lib.Models.Business
+@model Sale
 
 @{
-    ViewBag.Title = Strings.FeatureProducts;
-    ViewBag.FormName = "Add product to features";
+    ViewBag.Title = Model.Name;
+    ViewBag.FormName = "Add product to sale";
     Layout = "~/Areas/Manager/Views/Shared/_Layout_Form.cshtml";
 }
 
@@ -13,7 +14,7 @@
     {
         <div class="alert alert-success">
             <button class="close" data-dismiss="alert">×</button>
-            <strong>Success!</strong> The <strong>@ViewData["SuccessObjectName"]</strong> has been added.
+            <strong>Success!</strong> The <strong>@ViewData["SuccessObjectName"]</strong> has been added!
         </div>
     }
 }
@@ -22,12 +23,13 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary("", new { @class = "text-danger" })
+    <input type="hidden" name="saleId" value="@Model.Id" />
     <div class="form-horizontal">
         <div class="form-group">
-            @Html.LabelFor(m => m.ProductId, new { @class = "col-md-2 control-label" })
+            @Html.Label("Product", new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 <div class="form-control-custom">
-                    @Html.DropDownListFor(model => model.ProductId, ViewBag.Products as List<SelectListItem>, new { data_placeholder = "Select a products", @class = "form-control chosen-with-diselect", style = "display: none;" })
+                    @Html.DropDownList("productId", (ViewBag.Products as IEnumerable<Product>).Select(o => new SelectListItem { Value = o.Id.ToString(), Text = o.name }), new { data_placeholder = "Select a products", @class = "form-control chosen-with-diselect", style = "display: none;" })
                 </div>
             </div>
         </div>
@@ -40,9 +42,6 @@
 }
 
 @section breadcrumb {
-    @{
-        var viewName = Html.ViewContext.RouteData.GetRequiredString("action");
-    }
     <li>
         <a href="@Url.Action("Dashboard","Pages")">
             <i class="fa fa-home"></i> Home

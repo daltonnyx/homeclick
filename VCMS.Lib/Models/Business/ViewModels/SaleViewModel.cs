@@ -10,10 +10,13 @@ namespace VCMS.Lib.Models.Business
     {
         public int saleId { get; set; }
 
-        public int? percent { get; set; }
+        [Required]
+        public int percent { get; set; }
 
-        public DateTime startDate { get; set; }
+        public string startDate { get; set; }
 
-        public DateTime endDate { get; set; }
+        public string endDate { get; set; }
+
+        public bool status { get; set; }
     }
 }

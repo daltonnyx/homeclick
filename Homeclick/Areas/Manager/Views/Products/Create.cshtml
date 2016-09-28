@@ -62,7 +62,7 @@
                 </div>
             </div>
         </div>
-
+        @*
         <div class="form-group">
             <label class="col-md-2 control-label">Color</label>
             <div class="col-md-10">
@@ -94,6 +94,7 @@
                 </div>
             </div>
         </div>
+        *@
         <div class="form-group">
             @Html.LabelFor(m => m.previewImageId, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
@@ -128,7 +129,7 @@
                 @Html.ValidationMessageFor(m => m.previewImageId, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        @*
         <div class="form-group">
             @Html.LabelFor(m => m.imageFiles, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
@@ -157,7 +158,7 @@
                 </div>
             </div>
         </div>
-
+        *@
         <div class="form-group">
             @Html.LabelFor(model => model.Warranty, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -264,62 +265,7 @@
     <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/jquery.fileupload.js"></script>
 
     <script>
-        var selectedColors = [];
-        var colorRemove = function () {
-            var v = $(this).find('input').val();
-            var s = $('#selColor option').filter('[value="' + v + '"]').prop("disabled", false);
-            if (s) {
-                $("#selColor").trigger("chosen:updated");
-            }
-            s.prop("disabled", false);
-            $(this).remove();
-
-            selectedColors = $.grep(selectedColors, function (d, i) {
-                return d.id != v;
-            });
-            reif();
-        };
-
-        function reif() {
-            $('.sc').empty();
-            $.each(selectedColors, function (key, value) {
-                $('.sc').append($("<option/>").attr("value", value.id).text(value.text));
-            });
-        }
-
-        $('#addColorButton').bind('click', function (event) {
-            var selected = $('#selColor :selected');
-            var b = selected.is(":disabled");
-            if (selected.val() && !b) {
-
-                selected.prop('disabled', true);
-                $("#selColor").trigger("chosen:updated");
-
-                var a = '<div class="color">' +
-                            '<span>' + selected.text() + '</span>' +
-                            '<input type="hidden" name="Colors" value="' + selected.val() + '">' +
-                        '</div>';
-                $('#colorField').append(a);
-                $('.color').bind('click', colorRemove);
-
-                var obj = {};
-                obj['id'] = selected.val();
-                obj['text'] = selected.text();
-                selectedColors.push(obj);
-
-                reif();
-            }
-            event.preventDefault();
-        });
-
-        function gscid() {
-            var scids = [];
-            for (var i = 0; i < selectedColors.length; i++) {
-                scids.push(selectedColors[i].id);
-            }
-            return scids;
-        }
-
+        
         function getSelectedRoomIds() {
             var roomIds = [];
             var selected = $('#RoomIds :selected');
@@ -414,7 +360,7 @@
             done: function (e, data) {
                 $.each(data.result, function (index, file) {
                     var a = $('.file-upload-result input').val();
-                    if (a){
+                    if (a)
                         $.ajax({
                             url: '@Url.Action("Delete", "FileManager")',
                             type: 'DELETE',
@@ -427,11 +373,8 @@
                                 addImg(file);
                             }
                         });
-                    }
                     else
-                    {
                         addImg(file);
-                    }
                 });
             },
             always: function(e, data){
@@ -457,23 +400,15 @@
                     $('.file-upload-new').fadeIn('fast');
                     $('.file-remove-btn').hide();
                 }
-            });;
+            });
         })
 
         function addImg(file) {
             $('.file-upload-new').hide();
             $('.file-remove-btn').show();
-            var div = $('<div/>').hide()
-                .addClass('file-upload-result')
-                .addClass('img-thumbnail')
-            var img = $('<img/>')
-                .attr('src', '@Url.GetImageUploadFolder()' + file.newFileName + file.ext)
-                .appendTo(div);
-            var inp = $('<input/>')
-                .attr('name','previewImageId')
-                .attr('type','hidden')
-                .val(file.newFileName)
-                .appendTo(div);
+            var div = $('<div/>').hide().addClass('file-upload-result').addClass('img-thumbnail')
+            var img = $('<img/>').attr('src', '@Url.GetImageUploadFolder()' + file.newFileName + file.ext).appendTo(div);
+            var inp = $('<input/>').attr('name','previewImageId').attr('type','hidden').val(file.newFileName).appendTo(div);
             div.prependTo('.file-upload').fadeIn('fast');
         }
         //-------------------------------------------------

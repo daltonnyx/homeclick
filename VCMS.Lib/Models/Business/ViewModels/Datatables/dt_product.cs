@@ -11,6 +11,7 @@ namespace VCMS.Lib.Models.Business.Datatables
         public int id { get; set; }
         public string name { get; set; }
         public string img { get; set; }
+        public Dictionary<string,int> options { get; set; }
         public bool status { get; set; }
     }
 }

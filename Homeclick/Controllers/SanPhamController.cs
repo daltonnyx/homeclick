@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Collections;
 using VCMS.Lib.Models;
 using VCMS.Lib.Models.Business;
+using System.Net;
 
 namespace Homeclick.Controllers
 {
@@ -117,7 +118,8 @@ namespace Homeclick.Controllers
                     image = item.Image.FullFileName,
                     value = Convert.ToInt32(details["gia"]),
                     materials = materialList,
-                    typo = typo.Id
+                    typo = typo.Id,
+                    sale = item.CurrentSale != null ? item.CurrentSale.Percent : 0
                 });
             }
             return Json(json, JsonRequestBehavior.AllowGet);     
@@ -180,27 +182,36 @@ namespace Homeclick.Controllers
             return PartialView(product);
         }
 
-        public ActionResult GetImages(int? variantId, int? productId)
+        public ActionResult GetImages(int? optionId)
         {
-            var result = new List<object>();
-            if (variantId != null && productId != null)
+            var result = new List<string>();
+            if (optionId != null)
             {
-                var product = db.Products.Find(productId);
-                if (product != null)
+                var option = db.Product_Options.Find(optionId);
+                if (option != null)
                 {
-                    var color = db.Product_Variants.Find(variantId);
-                    if (color != null)
-                    {
-                        var commonItem = product.Files.Intersect(color.Files);
-                        foreach (var item in commonItem)
-                        {
-                            result.Add(item.FullFileName);
-                        }
-                    }
+                    result.Add(option.PreviewImage.FullFileName);
+                    result.AddRange(option.Files.Select(o => o.Id + o.Extension));
                 }
             }
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-	}
+
+        [HttpGet]
+        public ActionResult GetOptionData(int? optionId)
+        {
+            var option = db.Product_Options.Find(optionId);
+            dynamic result = null;
+            if (option != null)
+            {
+                var images = new List<string>();
+                images.Add(option.PreviewImage.FullFileName);
+                images.AddRange(option.Files.Select(o => o.Id + o.Extension));
+                var quantity = int.Parse(option.Details[ProductDetailTypes.Quantity] ?? "0");
+                result = new { images = images, quantity = quantity };
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+    }
 }

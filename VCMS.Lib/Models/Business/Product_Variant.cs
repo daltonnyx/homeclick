@@ -13,8 +13,8 @@ namespace VCMS.Lib.Models
     {
         public Product_Variant()
         {
-            Files = new HashSet<File>();
-            Children = new HashSet<Product_Variant>();
+            //Files = new HashSet<File>();
+            //Children = new HashSet<Product_Variant>();
             Categories = new HashSet<Category>();
         }
 
@@ -26,23 +26,24 @@ namespace VCMS.Lib.Models
         [StringLength(128)]
         public string Description { get; set; }
 
-        [Column("ImageId")]
-        public string ImageFileId { get; set; }
+        public string PreviewImageId { get; set; }
 
-        public int? ParentId { get; set; }
+        //public int? ParentId { get; set; }
 
-        [ForeignKey("ImageFileId")]
-        public virtual File ImageFile { get; set; }
+        [ForeignKey("PreviewImageId")]
+        public virtual File PreviewImage { get; set; }
 
-        public virtual Product_Variant Parent { get; set; }
+        //public virtual Product_Variant Parent { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        //public virtual ICollection<Product> Products { get; set; }
 
-        public virtual ICollection<Product_Variant> Children { get; set; }
+        //public virtual ICollection<Product_Variant> Children { get; set; }
 
-        public virtual ICollection<File> Files { get; set; }
+        //public virtual ICollection<File> Files { get; set; }
 
         public virtual ICollection<Category> Categories { get; set; }
+
+        public virtual ICollection<Product_Option> Product_Options { get; set; }
     }
 
     public partial class Product_Variant
@@ -68,17 +69,6 @@ namespace VCMS.Lib.Models
                 }
                 return type;
             }
-        }
-
-        public List<Product_Variant> GetAllChildren()
-        {
-            var allChildren = new List<Product_Variant>();
-            foreach (var child in Children)
-            {
-                allChildren.Add(child);
-                allChildren.AddRange(child.GetAllChildren() );
-            }
-            return allChildren;
         }
     }
 

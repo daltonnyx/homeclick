@@ -26,10 +26,10 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            var detail = item.product.DetailsToDictionary();
+                            var detail = item.product_Option.Product.DetailsToDictionary();
                             <tr>
-                                <td><img src="@Url.GetImageUploadFolder()@item.product.Image.FullFileName" style="width:60px;"/></td>
-                                <td>@item.product.name</td>
+                                <td><img src="@Url.GetImageUploadFolder()@item.product_Option.PreviewImage.FullFileName" style="width:60px;"/></td>
+                                <td>@item.product_Option.Name</td>
                                 <td>@detail[ProductDetailTypes.Price]</td>
                                 @using (@Html.BeginForm("UpdateCartItem", "Cart", new { @id = item.id }))
                                 {

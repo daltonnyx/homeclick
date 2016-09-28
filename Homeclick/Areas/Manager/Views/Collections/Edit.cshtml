@@ -70,7 +70,7 @@
                 </div>
             </div>
         </div>
-
+        @*
         <div class="form-group">
             @Html.LabelFor(m => m.products, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
@@ -95,7 +95,7 @@
                 </div>
             </div>
         </div>
-
+        *@
         <div class="form-group">
             @Html.LabelFor(m => m.previewImageId, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
@@ -241,6 +241,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
 
     <script>
+        @*
         //----------------------------------------------------
         var chosen = $("#productChosen");
         chosen.bind('change', function(){
@@ -290,7 +291,7 @@
 
         $('.product-remove-btn').bind('click', productRemove);
         //----------------------------------------------------
-
+        *@
         //Multi upload----------------------------------------
         $('#fileuploads').fileupload({
             url: '@Url.Action("Uploads", "FileUpload")',
@@ -384,7 +385,7 @@
 
         $('.file-remove-btn').bind('click', function(){
             var a = $('.file-upload-result input').val();
-            if (a) 
+            if (a)
                 $.ajax({
                 url: '@Url.Action("Delete", "FileManager")',
                 type: 'DELETE',

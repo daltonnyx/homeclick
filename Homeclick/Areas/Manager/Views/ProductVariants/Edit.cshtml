@@ -15,16 +15,8 @@
     <div class="form-horizontal">
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryIds, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="form-control-custom">
-                    @Html.ListBoxFor(model => model.CategoryIds, ViewBag.Categories as List<SelectListItem>, new { @class = "form-control chosen", multiple = "multiple", tabindex = "-1", style = "display: none;" })
-                </div>
-            </div>
-        </div>
-
+        @Html.HiddenFor(m => m.Id);
+        @Html.HiddenFor(m => m.CategoryId)
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -38,6 +30,15 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryIds, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="form-control-custom">
+                    @Html.ListBoxFor(model => model.CategoryIds, ViewBag.Categories as List<SelectListItem>, new { @class = "form-control chosen", multiple = "multiple", tabindex = "-1", style = "display: none;" })
+                </div>
             </div>
         </div>
 
@@ -60,7 +61,7 @@
         <span class="divider"><i class="fa fa-angle-right"></i></span>
     </li>
     <li>
-        <a href="@Url.Action("List")">
+        <a href="@Url.Action("List", new { categoryId = Model.CategoryId})">
             @ViewBag.Title
         </a>
         <span class="divider"><i class="fa fa-angle-right"></i></span>
@@ -69,10 +70,10 @@
 }
 
 @section Styles {
-    <link href="~/Areas/Manager/Content/Themes/FLATY/Chosen.min.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Areas/Manager/Content/Themes/FLATY/chosen.jquery.min.js"></script>
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
 }

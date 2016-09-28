@@ -9,7 +9,7 @@
     Layout = "~/Views/Shared/_SharedLayout_NoSidebar.cshtml";
     var iUrl = Url.GetImageUploadFolder();
     var details = Model.DetailsToDictionary();
-    var materials = Model.Materials;   
+    var materials = Model.Materials;
 }
 
 <div class="single-product">
@@ -24,51 +24,62 @@
         <div class="sumary col-sm-7 col-md-8">
             <h3 class="single-product-title">@Model.name</h3>
             <div class="sg-prince">
-                <div class="number-prince">@Convert.ToInt32(details[ProductDetailTypes.Price]).ToString("#,###", info.NumberFormat) vnđ</div>
+                <div class="number-prince" @Html.Raw(Model.CurrentSale != null ? "style='text-decoration: line-through'" : "")>@Convert.ToInt32(details[ProductDetailTypes.Price]).ToString("#,###", info.NumberFormat) vnđ</div>
+                @if (Model.CurrentSale != null)
+                {
+                    var oldPrice = Convert.ToInt32(details[ProductDetailTypes.Price]);
+                    var newPrice = oldPrice - ((oldPrice / 100) * Model.CurrentSale.Percent);
+                    <div class="number-prince">@newPrice.ToString("#,###", info.NumberFormat) vnđ</div>
+                }
             </div>
 
             <div class="form-add-to-cart">
-                @using (Html.BeginForm("AddItemToCard", "Cart", new { @Id = @Model.Id, @returnUrl = Request.Url.ToString(), @class= "form-horizontal" }))
+                @using (Html.BeginForm("AddItemToCard", "Cart", new { returnUrl = Request.Url.ToString() }, FormMethod.Post, new { }))
                 {
-                    <div class="form-group">
-                        <label class="control-label">Chất liệu</label>
-                        <div class="controls">
-                            @Html.DropDownList("material", materials.Select(o => new SelectListItem { Value = o.Id.ToString(), Text =o.Name}), new {@class= "form-control", style="width:150px;" })
+                    <div class="form-horizontal col-lg-12">
+                        <div class="form-group">
+                            <label class="control-label">Chất liệu</label>
+                            <div class="controls">
+                                @Html.DropDownList("materials", materials.Select(o => new SelectListItem { Value = o.Id.ToString(), Text = o.Name }), new { style = "width:150px;" })
+                            </div>
                         </div>
-                    </div>
-                    <div class="colors-wrapper clearfix">
-                        <div class="wrapper-title">
+                        <div class="form-group">
                             <label class="control-label">Màu sắc</label>
+                            <div id="options">
+                                @foreach (var material in materials)
+                                {
+                                    foreach (var option in material.Product_Options.Where(o => o.ProductId == Model.Id))
+                                    {
+                                        <label class="radio-image image-preview option" data-material="@material.Id" style="display:none">
+                                            <input type="radio" name="option" value="@option.Id" />
+                                            <img src="@iUrl@option.PreviewImage.FullFileName" alt="@option.Name" />
+                                        </label>
+                                    }
+                                }
+                            </div>
                         </div>
-                        <div class="wrapper-content">
-                            @{ var colors = materials.FirstOrDefault().Children.Intersect(Model.Product_Variants);}
-                            @foreach (var color in colors)
-                            {
-                                <label class="radio-image image-preview">
-                                    <input type="radio" name="@ProductVarianTypes.Color.ToString()" value="@color.Id" />
-                                    <img src="@iUrl@color.ImageFile.FullFileName" alt="@color.Name" />
-                                </label>
-                            }
-                        </div>
-                    </div>
-                    <div id="quality">
-                        <div class="wrapper-title">
-                            <label>Số lượng</label>
-                        </div>
-                        <div class="quantity wrapper-content">
-                            <span class="minus">-</span>
-                            <input type="number" step="1" min="0" value="1" title="Qty" class="qty" size="4" name="quantity">
-                            <span class="plus">+</span>
-                        </div>
-                        <div class="add-shop">
-                            @if (Model.Status)
-                            {
-                                <input class="input add-to-cart" type="submit" value="Đặt hàng" />
-                            }
-                            else
-                            {
-                                <input class="input add-to-cart" disabled="disabled" type="submit" value="Hết hàng" />
-                            }
+                        <div class="form-group">
+
+                            <div id="quality">
+                                <div class="wrapper-title">
+                                    <label>Số lượng</label>
+                                </div>
+                                <div class="quantity wrapper-content">
+                                    <select name="quantity" id="quantity">
+                                        <option value="1">Quantity: 1</option>
+                                    </select>
+                                </div>
+                                <div class="add-shop">
+                                    @if (Model.Status)
+                                    {
+                                        <input class="input add-to-cart" type="submit" value="Đặt hàng" />
+                                    }
+                                    else
+                                    {
+                                        <input class="input add-to-cart" disabled="disabled" type="submit" value="Hết hàng" />
+                                    }
+                                </div>
+                            </div>
                         </div>
                     </div>
                 }
@@ -193,35 +204,39 @@
 
         function colorChanged(a) {
             $('.elevatezoom-wrapper').empty();
-            var url = '@Url.Action("GetImages")';
+            var url = '@Url.Action("GetOptionData")';
             $.ajax({
                 url: url,
-                data: { 'variantId': a, 'productId': $('#modelId').val() },
+                type: 'GET',
+                data: { 'optionId': a },
                 success: function (data) {
-                    if (data.length > 0) {
+                    if (data.images.length > 0) {
                         var iUrl = '@iUrl';
                         var img = $('<img/>').addClass('elevatezoom-img')
-                            .attr('src', iUrl + data[0])
-                            .data('zoom-image', iUrl + data[0]).hide()
+                            .attr('src', iUrl + data.images[0])
+                            .data('zoom-image', iUrl + data.images[0]).hide()
                             .appendTo('.elevatezoom-wrapper').fadeIn('slow');
                         var gallery = $('<div/>')
                             .attr('id', "elevatezoom-gallery").hide()
                             .appendTo('.elevatezoom-wrapper').fadeIn('slow');
 
-                        for (var i = 0; i < data.length; i++) {
-                            var thumb = $('<div/>')
-                                .addClass('elevatezoom-thumb')
-                                .appendTo(gallery);
-                            var a = $('<a/>')
-                                .addClass('item')
-                                .attr('href', '#')
-                                .data('image', iUrl + data[i])
-                                .data('zoom-image', iUrl + data[i])
-                                .appendTo(thumb);
-                            var tImg = $('<img/>')
-                                .attr('src', iUrl + data[i])
-                                .appendTo(a);
+                        if (data.images.length > 1) {
+                            for (var i = 0; i < data.images.length; i++) {
+                                var thumb = $('<div/>')
+                                    .addClass('elevatezoom-thumb')
+                                    .appendTo(gallery);
+                                var a = $('<a/>')
+                                    .addClass('item')
+                                    .attr('href', '#')
+                                    .data('image', iUrl + data.images[i])
+                                    .data('zoom-image', iUrl + data.images[i])
+                                    .appendTo(thumb);
+                                var tImg = $('<img/>')
+                                    .attr('src', iUrl + data.images[i])
+                                    .appendTo(a);
+                            }
                         }
+                        
 
                         img.elevateZoom(
                           {
@@ -251,19 +266,33 @@
                             slidesToScroll: 3
                         });
                     }
+                    if (data.quantity) {
+                        $('#quantity').empty();
+                        for (var i = 1; i <= data.quantity; i++) {
+                            var option = $('<option/>').val(i).text('Quantity: ' + i).appendTo($('#quantity'))
+                        }
+                    }
                 }
             })
         };
 
         $(function () {
-            $('input[type=radio][name=@ProductVarianTypes.Color.ToString()]').change(function () {
+            $('input[type=radio][name=option]').change(function () {
                 colorChanged(this.value);
             });
 
-            var fc = $('input[type=radio][name=@ProductVarianTypes.Color.ToString()]').first();
+            var fc = $('input[type=radio][name=option]').first();
             fc.attr('checked', true);
             colorChanged(fc.val());
+
+            $('.option').filter('[data-material="' + $('#materials').val() + '"]').fadeIn('fast');
         });
+
+
+
+        $('#materials').change(function () {
+            $('.option').hide().filter('[data-material="' + $(this).val() + '"]').fadeIn('fast');
+        })
     </script>
 
 }

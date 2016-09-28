@@ -199,10 +199,10 @@
     <Compile Include="Areas\Manager\Bundles.cs" />
     <Compile Include="Areas\Manager\ManagerAreaRegistration.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
     <Compile Include="Controllers\DesignController.cs" />
-    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HoidapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HtmlController.cs" />
@@ -431,6 +431,7 @@
     <Content Include="Areas\Manager\Content\lib\jquery\jquery-1.10.2.js" />
     <Content Include="Areas\Manager\Content\lib\jquery\jquery-1.11.0.js" />
     <Content Include="Areas\Manager\Content\lib\jquery\jquery-1.11.3.min.js" />
+    <Content Include="Areas\Manager\Uploads\Images\NoImageFound.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -560,10 +561,10 @@
     <Content Include="Areas\Manager\Views\Products\_Colors.cshtml" />
     <Content Include="Areas\Manager\Views\ProductColors\_ImageFile.cshtml" />
     <Content Include="Areas\Manager\Views\ProductColors\Edit.cshtml" />
-    <Content Include="Areas\Manager\Views\ProductMaterials\List.cshtml" />
-    <Content Include="Areas\Manager\Views\ProductMaterials\Create.cshtml" />
-    <Content Include="Areas\Manager\Views\ProductMaterials\Delete.cshtml" />
-    <Content Include="Areas\Manager\Views\ProductMaterials\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductVariants\List.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductVariants\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductVariants\Delete.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductVariants\Edit.cshtml" />
     <Content Include="Areas\Manager\Views\FeatureProducts\List.cshtml" />
     <Content Include="Areas\Manager\Views\FeatureProducts\Add.cshtml" />
     <Content Include="Areas\Manager\Views\Rooms\Index.cshtml" />
@@ -629,6 +630,14 @@
     <Content Include="Content\lib\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\lib\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="Areas\Manager\Views\ProductSale\List.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductSale\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductSale\Details.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductSale\AddProduct.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductSale\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Products\CreateOption.cshtml" />
+    <Content Include="Areas\Manager\Views\Products\EditOption.cshtml" />
+    <Content Include="Areas\Manager\Views\Collections\AddOption.cshtml" />
+    <Content Include="Areas\Manager\Views\Slides\List.cshtml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1079,7 +1088,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Manager\Uploads\Images\" />
     <Folder Include="Scripts\Plugins\ResponsiveMenu\" />
     <Folder Include="Scripts\Plugins\shareThis\" />
     <Folder Include="Upload\Images\assets\Colors\" />

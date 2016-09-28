@@ -8,10 +8,10 @@
 <p>
     <a href="@Url.Action("Create")" class="btn btn-lime"><i class="fa fa-plus" aria-hidden="true"></i> @Strings.CreateNew</a>
 </p>
-@foreach (var pair in ViewBag.Dic as Dictionary<string, IEnumerable<Category>>)
+@foreach (var pair in ViewBag.Dic as Dictionary<string, Dictionary<string, object>>)
 {
     <p class="bg-white">
-        @Html.DropDownList(pair.Key, pair.Value.Select(o => new SelectListItem { Text = o.Name, Value = o.Id.ToString()}), "All - " + pair.Key, new { @class = "form-control chosen extra-search", data_key="status", tabindex = "-1", style = "display: none;"})
+        @Html.DropDownList(pair.Key, pair.Value.Select(o => new SelectListItem { Text = o.Key, Value = o.Value.ToString()}), "All - " + pair.Key, new { @class = "form-control chosen extra-search", data_key="status", tabindex = "-1", style = "display: none;"})
     </p>
 }
 
@@ -23,6 +23,9 @@
             </th>
             <th>
                 @Strings.Percent
+            </th>
+            <th>
+                @Strings.Product
             </th>
             <th>
                 @Strings.StartDate
@@ -56,15 +59,11 @@
     <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
 
     <script>
-        var thumbImg = function (data, type, full, meta) {
-            var fp = '@Url.GetImageUploadFolder()' + data;
-            return '<div class="list-thumb "><img src="' + fp + '"></div>';
-        }
-
         var simple_linkBtns = function (data, type, full, meta) {
             var param = '?id=' + data;
             return   '<div class="table-action">' +
                         '<a class="btn btn-sm show-tooltip" data-placement="top" data-original-title="Details" href="@Url.Action("Details")' + param + '" data-original-title="View"><i class="fa fa-search-plus"></i></a>' +
+                        '<a class="btn btn-sm show-tooltip" data-placement="top" data-original-title="Edit" href="@Url.Action("Edit")' + param + '" data-original-title="View"><i class="fa fa-edit"></i></a>' +
                         '<a class="btn btn-sm btn-danger show-tooltip" data-placement="top" data-original-title="Delete" href="@Url.Action("Delete")' + param + '" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>' +
                     '</div>';
         }
@@ -72,6 +71,7 @@
         $(document).ready(function () {
             var table = $('#dataTable');
             var dataTable = table.DataTable({
+                "processing": true,
                 "autoWidth": false,
                 "serverSide": true,
                 "ajax": {
@@ -98,6 +98,7 @@
                 "columns": [
                    { "data": "name" },
                    { "data": "percent" },
+                   { "data": "products" },
                    { "data": "startdate" },
                    { "data": "enddate" },
                    { "data": "id", "render": simple_linkBtns }],

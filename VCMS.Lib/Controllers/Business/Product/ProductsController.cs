@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using VCMS.Lib.Common;
 using VCMS.Lib.Models;
 using VCMS.Lib.Models.Business;
 using VCMS.Lib.Models.Business.Datatables;
@@ -15,6 +16,17 @@ namespace VCMS.Lib.Controllers
 {
     public class ProductsController : BaseController
     {
+        private List<ProductVarianTypes> productVariantTypes
+        {
+            get
+            {
+                var productVariantTypes = new List<ProductVarianTypes>();
+                productVariantTypes.Add(ProductVarianTypes.Color);
+                productVariantTypes.Add(ProductVarianTypes.Material);
+                return productVariantTypes;
+            }
+        }
+
         private List<CategoryTypes> ProductCategoryTypes
         {
             get
@@ -28,9 +40,9 @@ namespace VCMS.Lib.Controllers
 
         public ActionResult List()
         {
-            var dic = new Dictionary<string, IEnumerable<Category>>();
+            var dic = new Dictionary<string, Dictionary<string, int>>();
             ProductCategoryTypes.ForEach(
-                o => dic.Add(o.ToString(), db.Categories.Where(c => c.Category_TypeId == (int)o)));
+                o => dic.Add(o.ToString(), db.Categories.Where(c => c.Category_TypeId == (int)o).ToDictionary(e => e.Name, e => e.Id)));
             ViewBag.Dic = dic;
             return View();
         }
@@ -38,7 +50,6 @@ namespace VCMS.Lib.Controllers
         public ActionResult Create()
         {
             ViewBag.Typologies = Typologies;
-            ViewBag.Colors = Colors;
             ViewBag.Rooms = Rooms;
             return View();
         }
@@ -55,10 +66,10 @@ namespace VCMS.Lib.Controllers
 
                 model = new ProductViewModel();
                 ViewData["Success"] = true;
+                return View();
             }
 
             ViewBag.Typologies = Typologies;
-            ViewBag.Colors = Colors;
             ViewBag.Rooms = Rooms;
             return View(model);
         }
@@ -78,7 +89,6 @@ namespace VCMS.Lib.Controllers
             var viewModel = ModelToViewModel(product);
 
             ViewBag.Typologies = Typologies;
-            ViewBag.Colors = Colors;
             ViewBag.Rooms = Rooms;
             return View(viewModel);
         }
@@ -96,7 +106,6 @@ namespace VCMS.Lib.Controllers
             }
 
             ViewBag.Typologies = Typologies;
-            ViewBag.Colors = Colors;
             ViewBag.Rooms = Rooms;
             return View(model);
         }
@@ -131,37 +140,13 @@ namespace VCMS.Lib.Controllers
             return PartialView(model);
         }
 
-        public ActionResult _imageFile(string id, int colorId, int[] colors)
+        public ActionResult _imageFile(string id)
         {
             var model = db.Files.Find(id);
             if (model == null)
                 return HttpNotFound();
-            var iColors = new List<Product_Variant>();
-            if (colors != null)
-                foreach (var str in colors)
-                {
-                    var color = db.Product_Variants.Find(str);
-                    iColors.Add(color);
-                }
 
-            ViewBag.SelectedColor = colorId;
-            ViewBag.Colors = iColors;
             return PartialView(model);
-        }
-
-        public IEnumerable<Product_Variant> Colors
-        {
-            get
-            {
-                var variants = db.Product_Variants;
-                var colors = new List<Product_Variant>();
-                foreach (var variant in variants)
-                {
-                    if (variant.VariantType == ProductVarianTypes.Color)
-                        colors.Add(variant);
-                }
-                return colors;
-            }
         }
 
         public List<SelectListItem> Rooms
@@ -209,7 +194,6 @@ namespace VCMS.Lib.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
         public Product ViewModelToModel(ProductViewModel viewModel)
         {
             var files = db.Files;
@@ -314,6 +298,8 @@ namespace VCMS.Lib.Controllers
                             break;
                     }
                 }
+
+                /*
                 // old variants data
                 var dic = new Dictionary<string, int>();
                 foreach (var variant in model.Product_Variants)
@@ -352,6 +338,7 @@ namespace VCMS.Lib.Controllers
                         }
                     }
                 }
+                            */
             }
 
             model.Status = viewModel.Status;
@@ -388,7 +375,7 @@ namespace VCMS.Lib.Controllers
                     if (!model.Categories.Contains(category))
                         model.Categories.Add(category);
             }
-
+            /*
             //colors
             var modelVariants = model.Product_Variants;
             foreach (var variant in modelVariants)
@@ -425,11 +412,11 @@ namespace VCMS.Lib.Controllers
                     if (!model.Product_Variants.Contains(selectedColor))
                         model.Product_Variants.Add(selectedColor);
             }
-
+            */
             //proview image
             if (model.ImageId != viewModel.previewImageId)
                 model.ImageId = viewModel.previewImageId;
-
+            /*
             //Images
             foreach (var obj in viewModel.imageFiles)
             {
@@ -451,6 +438,7 @@ namespace VCMS.Lib.Controllers
                     }
                 }
             }
+            */
 
             return model;
         }
@@ -461,23 +449,11 @@ namespace VCMS.Lib.Controllers
             {
                 Name = model.name,
                 previewImageId = model.ImageId,
-                previewImage = model.Image.FullFileName,
-                Colors = model.Product_Variants.Select(o => o.Id).ToArray(),
+                previewImage = model.Image != null ? model.Image.FullFileName : string.Empty,
                 Description = model.content,
-                IColors = model.Product_Variants,
                 Id = model.Id,
                 Status = model.Status
             };
-
-            foreach (var variant in model.Product_Variants)
-            {
-                foreach (var file in variant.Files)
-                {
-                    if (model.Files.Contains(file))
-                        if (!viewModel.imageFiles.ContainsKey(file.Id))
-                            viewModel.imageFiles.Add(file.Id, variant.Id);
-                }
-            }
 
             if (model.Typology != null)
                 viewModel.TypologyTypeId = model.Typology.Id;
@@ -510,7 +486,8 @@ namespace VCMS.Lib.Controllers
             return viewModel;
         }
 
-        public JsonResult DataHandler(DTParameters param, int[] args) //args: categories id
+        [HttpPost]
+        public JsonResult DataHandler(DTParameters param, Dictionary<string, string> args)
         {
             try
             {
@@ -518,15 +495,31 @@ namespace VCMS.Lib.Controllers
                 if (args != null)
                     foreach (var arg in args)
                     {
-                        products = products.Where(o => o.Categories.Select(e => e.Id).ToList().Contains(arg)).ToList();
+                        int number;
+                        switch (arg.Key.ToLower())
+                        {
+                            case "sale":
+                                if (int.TryParse(arg.Value, out number))
+                                    products = products.Where(o => o.Sales.Select(e => e.Id).Contains(number)).ToList();
+                                break;
+                            case "model":
+                                if (int.TryParse(arg.Value, out number))
+                                    products = products.Where(o => o.Categories.Select(e => e.Id).ToList().Contains(number)).ToList();
+                                break;
+                            case "typology":
+                                if (int.TryParse(arg.Value, out number))
+                                    products = products.Where(o => o.Categories.Select(e => e.Id).ToList().Contains(number)).ToList();
+                                break;
+                        }
                     }
 
                 var dtsource = products.Select(o => new dt_product
                 {
                     id = o.Id,
                     name = o.name,
-                    img = o.Image.Id + o.Image.Extension,
-                    status = o.Status
+                    img = o.Image != null ? o.Image.FullFileName : "NoImageFound.png",
+                    status = o.Status,
+                    options = o.Product_Options.ToDictionary(e => e.Name, e => int.Parse(e.Product_Options_Details.FirstOrDefault(q => q.Name == ProductDetailTypes.Quantity).Value))
                 }).ToList();
 
                 List<String> columnSearch = new List<string>();
@@ -559,5 +552,235 @@ namespace VCMS.Lib.Controllers
                 return Json(new { error = ex.Message });
             }
         }
+
+        #region [Options]
+        public ActionResult CreateOption(int? productId, bool? success, string successObjectName)
+        {
+            if (productId == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var product = db.Products.Find(productId);
+            if (product == null)
+                return HttpNotFound();
+
+            ViewData["Success"] = success;
+            ViewData["SuccessObjectName"] = successObjectName;
+            var option = new ProductOptionViewModel
+            {
+                productId = product.Id,
+                productName = product.name
+            };
+
+            var variantCategories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.ProductVariant);
+            ViewBag.VariantCategories = variantCategories;
+
+            var options = product.Product_Options;
+            ViewBag.Options = options;
+
+            return View(option);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateOption(ProductOptionViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var model = new Product_Option
+                {
+                    Name = viewModel.name,
+                    Description = viewModel.description,
+                    ProductId = viewModel.productId,
+                    PreviewImageId = viewModel.previewImageId,
+                    Status = viewModel.status,
+                    Files = new List<File>(),
+                    CreateUserId = User.Identity.GetUserId(),
+                    CreateTime = DateTime.Now
+                };
+
+                if (viewModel.variants != null)
+                    foreach (var variant in viewModel.variants)
+                    {
+                        foreach (var variantId in variant.Value)
+                        {
+                            var variantModel = db.Product_Variants.Find(variantId);
+                            if (variantModel != null)
+                                variantModel.Product_Options.Add(model);
+                        }
+                    }
+
+                if (viewModel.imageFiles != null)
+                    foreach (var file in viewModel.imageFiles)
+                    {
+                        var fileModel = db.Files.Find(file);
+                        if (fileModel != null)
+                            model.Files.Add(fileModel);
+                    }
+
+                if (viewModel.details != null)
+                    foreach (var pair in viewModel.details)
+                    {
+                        if (pair.Key != string.Empty && pair.Value != string.Empty)
+                        {
+                            var detailModel = new Product_Options_Details
+                            {
+                                Name = pair.Key,
+                                Value = pair.Value,
+                            };
+                            db.Product_Options_Details.Add(detailModel);
+                            model.Product_Options_Details.Add(detailModel);
+                        }
+                    }
+
+                db.Product_Options.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("CreateOption", new { productId = model.ProductId, success = true, successObjectName = model.Name });
+            }
+
+            var variantCategories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.ProductVariant);
+            ViewBag.VariantCategories = variantCategories;
+
+            var product = db.Products.Find(viewModel.productId);
+            var options = product.Product_Options;
+            ViewBag.Options = options;
+
+            return View(viewModel);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="OptionId">Option Id</param>
+        /// <returns></returns>
+        public ActionResult EditOption(int? OptionId)
+        {
+            if (OptionId == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var option = db.Product_Options.Find(OptionId);
+            if (option == null)
+                return HttpNotFound();
+
+            var viewModel = new ProductOptionViewModel
+            {
+                id = option.Id,
+                description = option.Description,
+                details = option.Product_Options_Details.ToDictionary(o => o.Name, o => o.Value),
+                imageFiles = option.Files.Select(o => o.Id).ToArray(),
+                name = option.Name,
+                previewImage = option.PreviewImage != null ? option.PreviewImage.FullFileName : string.Empty,
+                previewImageId = option.PreviewImageId,
+                productId = option.ProductId,
+                productName = option.Product.name,
+                status = option.Status,
+                variants = new Dictionary<string, int[]>()
+            };
+
+            foreach (var item in productVariantTypes)
+            {
+                var variants = new List<Product_Variant>();
+                foreach (var variant in option.Product_Variants)
+                {
+                    if (variant.VariantType == item)
+                        variants.Add(variant);
+                }
+                viewModel.variants.Add(item.ToString(), variants.Select(o => o.Id).ToArray());
+            }
+
+            var variantCategories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.ProductVariant);
+            ViewBag.VariantCategories = variantCategories;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditOption(ProductOptionViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var model = db.Product_Options.Find(viewModel.id);
+                model.Name = viewModel.name;
+                model.Description = viewModel.description;
+                model.ProductId = viewModel.productId;
+                model.PreviewImageId = viewModel.previewImageId;
+                model.Status = viewModel.status;
+
+                model.Product_Variants.Clear();
+                if (viewModel.variants != null)
+                    foreach (var variant in viewModel.variants)
+                    {
+                        foreach (var variantId in variant.Value)
+                        {
+                            var variantModel = db.Product_Variants.Find(variantId);
+                            if (variantModel != null)
+                                variantModel.Product_Options.Add(model);
+                        }
+                    }
+
+                model.Files.Clear();
+                if (viewModel.imageFiles != null)
+                    foreach (var file in viewModel.imageFiles)
+                    {
+                        var fileModel = db.Files.Find(file);
+                        if (fileModel != null)
+                            model.Files.Add(fileModel);
+                    }
+
+                model.Product_Options_Details.Clear();
+                if (viewModel.details != null)
+                    foreach (var pair in viewModel.details)
+                    {
+                        if (pair.Key != string.Empty && pair.Value != string.Empty)
+                        {
+                            var detailModel = new Product_Options_Details
+                            {
+                                Name = pair.Key,
+                                Value = pair.Value,
+                            };
+                            db.Product_Options_Details.Add(detailModel);
+                            model.Product_Options_Details.Add(detailModel);
+                        }
+                    }
+                db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                if (db.SaveChanges() > 0)
+                    return RedirectToAction("CreateOption", new { productId = model.ProductId });
+            }
+            var variantCategories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.ProductVariant);
+            ViewBag.VariantCategories = variantCategories;
+
+            return View(viewModel);
+        }
+
+        [HttpDelete]
+        public JsonResult DeleteOption(int? id)
+        {
+            object result;
+            try
+            {
+                var option = db.Product_Options.Find(id);
+                var product = option.Product;
+                foreach (var file in option.Files)
+                {
+                    option.Files.Remove(file);
+                    db.Files.Remove(file);
+                    Uploader.DeleteFile(file, this);
+                }
+
+                if (option.PreviewImage != null)
+                {
+                    db.Files.Remove(option.PreviewImage);
+                    Uploader.DeleteFile(option.PreviewImage, this);
+                }
+
+                product.Product_Options.Remove(option);
+                db.Product_Options.Remove(option);
+                result = db.SaveChanges() > 0 ? "Success" : "Fail";
+            }
+            catch (Exception ex)
+            {
+                result = ex;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

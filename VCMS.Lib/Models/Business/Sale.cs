@@ -12,6 +12,7 @@ namespace VCMS.Lib.Models.Business
         public Sale()
         {
             Orders_Products = new HashSet<Orders_Products>();
+            Products = new HashSet<Product>();
         }
 
         public new int Id { get; set; }
@@ -21,7 +22,8 @@ namespace VCMS.Lib.Models.Business
 
         public string Description { get; set; }
 
-        public int? Percent { get; set; }
+        [Required]
+        public int Percent { get; set; }
 
         public DateTime StartDate { get; set; }
 
@@ -35,6 +37,8 @@ namespace VCMS.Lib.Models.Business
         public virtual Category Category { get; set; }
 
         public virtual ICollection<Orders_Products> Orders_Products { get; set; }
+
+        public virtual ICollection<Product> Products { get; set; }
     }
 
     public enum SaleType { Default = -1, Product = 120, Collection = 121 }

@@ -55,8 +55,8 @@
         </article>
 
         <section class="col-xs-12 product-list-section list-show">
-            @Html.Partial("_productsTable", Model.Post_Products)
-            @Html.Partial("_productsGrid", Model.Post_Products.Select(o => o.Product))
+            @Html.Partial("_productsTable", Model.Post_ProductOptions)
+            @Html.Partial("_productsGrid", Model.Post_ProductOptions.Select(o => o.ProductOption.Product))
         </section>
         <div class="clearfix" style="margin-top: 15px;">
             <button class="add-to-cart btn bg pull-right"><i class="fa fa-plus" aria-hidden="true"></i> Thêm vào giỏ</button>

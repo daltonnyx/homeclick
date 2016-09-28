@@ -7,22 +7,40 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using VCMS.Lib.Common;
 using VCMS.Lib.Models;
 using VCMS.Lib.Models.Business;
 
 namespace VCMS.Lib.Controllers
 {
-    public class ProductMaterialsController : BaseController
+    public class ProductVariantsController : BaseController
     {
-        public ActionResult List()
+        public ActionResult List(int? categoryId)
         {
-            return View();
+            if (categoryId == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var category = db.Categories.Find(categoryId);
+            if (category == null || category.Category_TypeId != (int)CategoryTypes.ProductVariant)
+                return HttpNotFound();
+
+            return View(category);
         }
 
-        public ActionResult Create()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="categoryId">variant type Id(category)</param>
+        /// <returns></returns>
+        public ActionResult Create(int? categoryId)
         {
+            if (categoryId == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var category = db.Categories.Find(categoryId);
+            if (category == null || category.Category_TypeId != (int)CategoryTypes.ProductVariant)
+                return HttpNotFound();
+
             ViewBag.Categories = Categories;
-            return View(new ProductVariantsViewModel());
+            return View(new ProductVariantsViewModel { CategoryId = category.Id});
         }
 
         [HttpPost]
@@ -35,8 +53,10 @@ namespace VCMS.Lib.Controllers
                 db.Product_Variants.Add(model);
 
                 await db.SaveChangesAsync();
-                ModelState.Clear();
+
+                //Return after success
                 ViewData["Success"] = true;
+                ViewData["SuccessObjectName"] = model.Name;
                 ViewBag.Categories = Categories;
                 return View(new ProductVariantsViewModel());
             }
@@ -76,31 +96,34 @@ namespace VCMS.Lib.Controllers
             return View(viewModel);
         }
 
-        public async Task<ActionResult> Delete(string id)
+        [HttpDelete]
+        public JsonResult Delete(int id)
         {
-            if (id == null)
+            var model = db.Product_Variants.Find(id);
+            object result;
+            if (model != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Product_Variant model = await db.Product_Variants.FindAsync(Convert.ToInt32(id));
-            if (model == null)
-            {
-                return HttpNotFound();
-            }
-            return View(model);
-        }
+                try
+                {
+                    if (model.PreviewImage != null)
+                    {
+                        Uploader.DeleteFile(model.PreviewImage, this);
+                        db.Files.Remove(model.PreviewImage);
+                    }
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(string id)
-        {
-            Product_Variant model = await db.Product_Variants.FindAsync(Convert.ToInt32(id));
-            var allModelChildren = model.GetAllChildren();
-            db.Product_Variants.RemoveRange(allModelChildren);
-            db.Product_Variants.Remove(model);
-            
-            await db.SaveChangesAsync();
-            return RedirectToAction("List");
+                    db.Product_Variants.Remove(model);
+                    result = db.SaveChanges() > 0 ? "Success" : "Fail";
+                }
+                catch (Exception ex)
+                {
+                    result = ex.Message;
+                }
+            }
+            else
+            {
+                result = HttpStatusCode.NotFound;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult _ImageFile(string fileId)
@@ -116,8 +139,8 @@ namespace VCMS.Lib.Controllers
                 Id = model.Id,
                 Name = model.Name,
                 Description = model.Description,
-                Image = model.ImageFileId,
-                VariantParent = model.ParentId,
+                CategoryId = (int)model.VariantType,
+                Image = model.PreviewImageId,
             };
 
             var cMaterials = model.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Material);
@@ -143,13 +166,12 @@ namespace VCMS.Lib.Controllers
 
             model.Name = viewModel.Name;
             model.Description = viewModel.Description;
-            model.ParentId = viewModel.VariantParent;
 
             var imageFile = db.Files.Find(viewModel.Image);
-            if (imageFile != null && model.ImageFile != imageFile)
-                model.ImageFileId = viewModel.Image;
+            if (imageFile != null && model.PreviewImage != imageFile)
+                model.PreviewImageId = viewModel.Image;
 
-            var category = db.Categories.Find((int)ProductVarianTypes.Material);
+            var category = db.Categories.Find(viewModel.CategoryId);
             if (!model.Categories.Contains(category))
                 model.Categories.Add(category);
 
@@ -176,25 +198,30 @@ namespace VCMS.Lib.Controllers
             }
         }
 
-        public JsonResult DataHandler(DTParameters param)
+        public JsonResult DataHandler(DTParameters param, Dictionary<string,string> args)
         {
             try
             {
                 var dtsource = new List<ProductVariantsViewModel>();
                 var product_Variants = db.Product_Variants;
-
-                foreach (var product_Variant in product_Variants)
-                {
-                    if (product_Variant.VariantType == ProductVarianTypes.Material)
+                if (args != null)
+                    foreach (var arg in args)
                     {
-                        dtsource.Add(new ProductVariantsViewModel
+                        int number;
+                        if (int.TryParse(arg.Value, out number))
                         {
-                            Id = product_Variant.Id,
-                            Name = product_Variant.Name
-                        });
+                            if (arg.Key == ((int)CategoryTypes.ProductVariant).ToString())
+                                foreach (var variant in product_Variants)
+                                {
+                                    if (variant.VariantType == (ProductVarianTypes)number)
+                                        dtsource.Add(new ProductVariantsViewModel
+                                        {
+                                            Id = variant.Id,
+                                            Name = variant.Name
+                                        });
+                                }
+                        }
                     }
-                }
-
 
                 List<String> columnSearch = new List<string>();
 

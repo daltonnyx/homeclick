@@ -113,8 +113,7 @@ namespace VCMS.Lib.Controllers
                 Id = model.Id,
                 Name = model.Name,
                 Description = model.Description,
-                Image = model.ImageFileId,
-                VariantParent = model.ParentId
+                Image = model.PreviewImageId,
             };
             return viewModel;
         }
@@ -131,11 +130,10 @@ namespace VCMS.Lib.Controllers
 
             model.Name = viewModel.Name;
             model.Description = viewModel.Description;
-            model.ParentId = viewModel.VariantParent;
 
             var imageFile = db.Files.Find(viewModel.Image);
-            if (imageFile != null && model.ImageFile != imageFile)
-                model.ImageFileId = viewModel.Image;
+            if (imageFile != null && model.PreviewImage != imageFile)
+                model.PreviewImageId = viewModel.Image;
 
             var category = db.Categories.Find((int)ProductVarianTypes.Material);
             if (!model.Categories.Contains(category))
@@ -174,7 +172,7 @@ namespace VCMS.Lib.Controllers
                         {
                             Id = product_Variant.Id,
                             Name = product_Variant.Name,
-                            Image = (product_Variant.ImageFileId != null) ? product_Variant.ImageFileId + product_Variant.ImageFile.Extension : string.Empty
+                            Image = (product_Variant.PreviewImageId != null) ? product_Variant.PreviewImageId + product_Variant.PreviewImage.Extension : string.Empty
                         });
                     }
                 }

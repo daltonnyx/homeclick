@@ -170,7 +170,7 @@
                             container.html('');
                             for (var i = 0; i < pagidata.length; i++) {
                                 var item = '<div class="item-product col-xs-6 col-md-4 col-lg-3"">' +
-                                                '<div class="image">' +
+                                                '<div class="image" style="position:relative">' +
                                                     '<a href="@Url.Action("Product_Detail","SanPham")' + '/' + pagidata[i].id + '"><img src="' + '@Url.GetImageUploadFolder()' + pagidata[i].image + '" alt="" /></a>' +
                                                 '</div>' +
                                                 '<div class="detail-item">' +
@@ -178,7 +178,15 @@
                                                     '<p>' + parseInt(pagidata[i].value).format(0, 3, '.') + ' vnđ</p>' +
                                               '</div>' +
                                           '</div>';
-                                $('.feature-items').append(item);
+                                var jItem = $(item);
+                                if (pagidata[i].sale > 0) {
+                                    var label = $('<label/>').addClass('label label-xlarge label-success')
+                                        .css('position', 'absolute')
+                                        .css('left', '0')
+                                        .html(pagidata[i].sale + '%');
+                                    jItem.children('.image').append(label);
+                                }
+                                $('.feature-items').append(jItem);
                             }
                         }
                     })

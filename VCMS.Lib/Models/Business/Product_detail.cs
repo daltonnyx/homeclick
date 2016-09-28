@@ -37,5 +37,6 @@
         public const string MadeIn = "xuat_xu";
         //đơn vị tính
         public const string UnitType = "dvt";
+        public const string Quantity = "so_luong";
     }
 }

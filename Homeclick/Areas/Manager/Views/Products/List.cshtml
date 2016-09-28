@@ -8,10 +8,10 @@
 <p>
     <a href="@Url.Action("Create")" class="btn btn-lime"><i class="fa fa-plus" aria-hidden="true"></i> @Strings.CreateNew</a>
 </p>
-@foreach (var pair in ViewBag.Dic as Dictionary<string, IEnumerable<Category>>)
+@foreach (var pair in ViewBag.Dic as Dictionary<string, Dictionary<string, int>>)
 {
     <p class="bg-white">
-        @Html.DropDownList(pair.Key, pair.Value.Select(o => new SelectListItem { Text = o.Name, Value = o.Id.ToString()}), "All - " + pair.Key, new { @class = "form-control chosen extra-search", tabindex = "-1", style = "display: none;"})
+        @Html.DropDownList(pair.Key, pair.Value.Select(o => new SelectListItem { Text = o.Key, Value = o.Value.ToString()}), "All - " + pair.Key, new { @class = "form-control chosen extra-search", data_key=pair.Key, tabindex = "-1", style = "display: none;"})
     </p>
 }
 
@@ -25,7 +25,10 @@
                 @Strings.Image
             </th>
             <th>
-                @Strings.Quantity
+                @Strings.Options
+            </th>
+            <th>
+                @Strings.Status
             </th>
             <th>
             </th>
@@ -58,7 +61,7 @@
     <script>
         var thumbImg = function (data, type, full, meta) {
             var fp = '@Url.GetImageUploadFolder()' + data;
-            return '<div class="list-thumb "><img src="' + fp + '"></div>';
+            return '<div class="list-thumb"><img src="' + fp + '"></div>';
         }
 
         var simple_linkBtns = function (data, type, full, meta) {
@@ -83,10 +86,11 @@
                     {
                         var extraSearchs = $('.extra-search');
                         if (extraSearchs.length > 0) {
-                            data.args = [];
+                            data.args = {};
                             for (var i = 0; i < extraSearchs.length; i++) {
-                                if ($(extraSearchs[i]).val())
-                                    data.args.push($(extraSearchs[i]).val());
+                                var current = $(extraSearchs[i]);
+                                if (current.data('key') && current.val())
+                                    data.args[current.data('key')] = current.val();
                             }
                         }
                         return data = JSON.stringify(data);
@@ -98,6 +102,17 @@
                 "columns": [
                    { "data": "img", "render": thumbImg },
                    { "data": "name" },
+                   {
+                       "data": "options",
+                       "render": function (data, type, full, meta) {
+                           var item = "";
+                           for (var key in data) {
+                               item += '<p><strong>' + key + '</strong>: ' + data[key] + '<p>';
+                           }
+                           item += '<a class="btn-link" href="' + '@Url.Action("CreateOption")?productId=' + full.id + '"><i class="fa fa-plus" aria-hidden="true"></i>' + ' Add option</a>';
+                           return item;
+                       }
+                   },
                    { "data": "status" },
                    { "data": "id", "render": simple_linkBtns }],
 

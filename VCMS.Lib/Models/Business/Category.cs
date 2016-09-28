@@ -47,6 +47,8 @@ namespace VCMS.Lib.Models.Business
         public virtual ICollection<Product_Variant> ProductVariants { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
+
+        public virtual ICollection<Slide> Slides { get; set; }
     }
 
     public partial class Category

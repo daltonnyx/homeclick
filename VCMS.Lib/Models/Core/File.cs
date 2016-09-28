@@ -30,7 +30,7 @@ namespace VCMS.Lib.Models
 
         public virtual ICollection<Product> Products { get; set; }
 
-        public virtual ICollection<Product_Variant> Product_Variants { get; set; }
+        public virtual ICollection<Product_Option> Product_Options { get; set; }
 
         [Display(Name = "FileType", ResourceType = typeof(Strings))]
         public virtual ICollection<Category> Categories { get; set; }

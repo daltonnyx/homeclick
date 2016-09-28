@@ -9,6 +9,18 @@
        {
            total += item.TotalValue;
        }
+       var products = new Dictionary<int?, dynamic>();
+       foreach (var item in Model)
+       {
+           if (products.ContainsKey(item.ProductOption.ProductId))
+           {
+               products[item.ProductOption.ProductId].quantity += item.Quantity;
+           }
+           else
+           {
+               products.Add(item.ProductOption.ProductId, new { name = item.ProductOption.Product.name, price = int.Parse(item.ProductOption.Product.DetailsToDictionary()[ProductDetailTypes.Price].ToString()), quantity = item.Quantity });
+           }
+       }
    }
 <h3 class="section-header table-section-header">Sản phẩm trong Set</h3>
 <div class="total-html">Tổng: <span>@total.ToString("#,###", info.NumberFormat)</span>vnđ</div>
@@ -24,23 +36,25 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @item.Product.name
-                    </td>
-                    <td>
-                        @item.Quantity
-                    </td>
-                    <td>
-                        @int.Parse(@item.Product.Product_detail.FirstOrDefault(o => o.Name == ProductDetailTypes.Price).Value).ToString("#,###", info.NumberFormat) vnđ
-                    </td>
-                    <td>
-                        @item.TotalValue.ToString("#,###", info.NumberFormat) vnđ
-                    </td>
-                </tr>
-            }
+            
+    @foreach (var item in products)
+    {
+        <tr>
+            <td>
+                @item.Value.name
+            </td>
+            <td>
+                @item.Value.quantity
+            </td>
+            <td>
+                @item.Value.price.ToString("#,###", info.NumberFormat) vnđ
+            </td>
+            <td>
+                @((item.Value.price*item.Value.quantity).ToString("#,###", info.NumberFormat)) vnđ
+            </td>
+        </tr>
+    }
+
         </tbody>
     </table>
 </div>

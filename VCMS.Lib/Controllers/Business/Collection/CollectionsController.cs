@@ -113,26 +113,6 @@ namespace VCMS.Lib.Controllers
             return PartialView(model);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id">Product id</param>
-        /// <param name="quantity">Product quantity</param>
-        /// <returns></returns>
-        public ActionResult _product(int? id, int? quantity)
-        {
-            if (id == null)
-                return new HttpNotFoundResult();
-
-            var model = db.Products.Find(id);
-
-            if (quantity == null)
-                quantity = 1;
-
-            ViewData["Quantity"] = quantity;
-            return PartialView(model);
-        }
-
         public new CollectionViewModel ModelToViewModel(Post model)
         {
             var viewModel = new CollectionViewModel
@@ -146,7 +126,7 @@ namespace VCMS.Lib.Controllers
                 categoryIds = model.Categories.Select(o => o.Id).ToArray(),
                 status = model.Status
             };
-            viewModel.products = model.Post_Products.ToDictionary(o => o.ProductId.ToString(), o => o.Quantity);
+            //viewModel.products = model.Post_Products.ToDictionary(o => o.ProductOptionId.ToString(), o => o.Quantity);
             viewModel.imageFiles = model.Files.ToDictionary(o => o.Id, o => o.Extension);
             return viewModel;
         }
@@ -155,14 +135,14 @@ namespace VCMS.Lib.Controllers
         {
             var model = base.ViewModelToModel(viewModel);
 
-            var modelPost_Products = model.Post_Products.ToDictionary(o => o.ProductId.ToString(), o => o.Quantity);
-            var viewModelPost_Products = viewModel.products ?? new Dictionary<string, int>();
+            //var modelPost_Products = model.Post_Products.ToDictionary(o => o.ProductOptionId.ToString(), o => o.Quantity);
+            //var viewModelPost_Products = viewModel.products ?? new Dictionary<string, int>();
 
-            //Products
+            /*/Products
             var except = modelPost_Products.Select(o => o.Key).Except(viewModelPost_Products.Select(o => o.Key));
             foreach (var obj in except)
             {
-                var post_product = model.Post_Products.FirstOrDefault(o => o.ProductId == int.Parse(obj));
+                var post_product = model.Post_Products.FirstOrDefault(o => o.ProductOptionId == int.Parse(obj));
                 if (post_product != null)
                     model.Post_Products.Remove(post_product);   
             }
@@ -172,7 +152,7 @@ namespace VCMS.Lib.Controllers
                 var product = db.Products.Find(int.Parse(obj.Key));
                 if (product != null)
                 {
-                    var post_Product = model.Post_Products.FirstOrDefault(o => o.ProductId == product.Id);
+                    var post_Product = model.Post_Products.FirstOrDefault(o => o.ProductOptionId == product.Id);
                     if (post_Product != null)
                     {
                         if (post_Product.Quantity != obj.Value)
@@ -186,13 +166,14 @@ namespace VCMS.Lib.Controllers
                     {
                         var post_product = new Post_Product
                         {
-                            ProductId = product.Id,
+                            ProductOptionId = product.Id,
                             Quantity = obj.Value
                         };
                         model.Post_Products.Add(post_product);
                     }
                 }
             }
+            */
 
             //Files
             var modelFiles = model.Files;
@@ -306,5 +287,114 @@ namespace VCMS.Lib.Controllers
                 return Json(new { error = ex.Message });
             }
         }
+
+        #region [Product Option]
+        public ActionResult AddOption(int postId, bool? success, string successObjectName)
+        {
+            var post = db.Posts.Find(postId);
+            if (post == null)
+                return HttpNotFound();
+
+            ViewBag.Products = db.Products.Where(o => o.Status);
+            ViewBag.Options = post.Post_ProductOptions;
+
+            ViewData["Success"] = success;
+            ViewData["SuccessObjectName"] = successObjectName;
+            return View(new PostProductOptionViewModel { postId = postId, postName = post.Title});
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddOption(PostProductOptionViewModel viewModel)
+        {
+            var post = db.Posts.Find(viewModel.postId);
+            ViewBag.Products = db.Products.Where(o => o.Status);
+            ViewBag.Options = post.Post_ProductOptions;
+
+            if (ModelState.IsValid)
+            {
+                var option = db.Product_Options.Find(viewModel.optionId);
+                if (post != null && option != null)
+                {
+                    var model = new Post_Product
+                    {
+                        PostId = viewModel.postId,
+                        Quantity = viewModel.quantity,
+                        ProductOption = option,
+                        CreateUserId = User.Identity.GetUserId(),
+                        CreateTime = DateTime.Now
+                    };
+                    db.Post_Products.Add(model);
+                    post.Post_ProductOptions.Add(model);
+                    db.SaveChanges();
+
+                    ModelState.Clear();
+                    return RedirectToAction("AddOption", new { postId = viewModel.postId, success = true, successObjectName = model.ProductOption.Name});
+                }
+            }
+            return View(viewModel);
+        }
+
+        public ActionResult EditOption(int postProductOptionId)
+        {
+            var postProductOption = db.Post_Products.Find(postProductOptionId);
+            if (postProductOption == null)
+                return HttpNotFound();
+
+            var viewModel = new PostProductOptionViewModel()
+            {
+                postId = postProductOption.PostId,
+                optionId = postProductOption.ProductOptionId,
+                quantity = postProductOption.Quantity
+            };
+            ViewBag.Products = db.Products.Where(o => o.Status);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditOption(PostProductOptionViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var postProductOption = db.Post_Products.Find(viewModel.id);
+                var option = db.Product_Options.Find(viewModel.optionId);
+                if (postProductOption != null )
+                {
+                    postProductOption.Quantity = viewModel.quantity;
+                    postProductOption.ProductOptionId = option.Id;
+                    db.SaveChanges();
+
+                    return RedirectToAction("AddOption", new { postId = viewModel.postId });
+                }
+            }
+            ViewBag.Products = db.Products.Where(o => o.Status);
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public JsonResult RemoveOption(int postId, int optionId)
+        {
+            var Post_Product = db.Post_Products.Find(optionId);
+            var post = db.Posts.Find(postId);
+            db.Post_Products.Remove(Post_Product);
+            var result = db.SaveChanges();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetOptions(int postId, int productId)
+        {
+            var product = db.Products.Find(productId);
+            dynamic result = null;
+            if (product != null)
+            {
+                var post = db.Posts.Find(postId);
+                var postOptions = post.Post_ProductOptions.Select(o => o.ProductOptionId);
+                result = product.Product_Options.Where(o => o.Status && !postOptions.Contains(o.Id)).Select(o => new { id = o.Id, name = o.Name});
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

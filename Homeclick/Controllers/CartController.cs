@@ -22,42 +22,32 @@ namespace Homeclick.Controllers
         /// <summary>
         /// Thêm sản phẩm vào giỏ hàng
         /// </summary>
-        /// <param name="Id">Mã sản phẩm</param>
+        /// <param name="Id">Mã option của sản phẩm</param>
         /// <param name="returnUrl">Liên kết trả về sau khi thêm thành công</param>
         /// <returns></returns>
-        [Authorize]
-        public ActionResult AddItemToCard(int Id, string returnUrl)
+        public ActionResult AddItemToCard(string returnUrl)
         {
+            var optionId = int.Parse(Request.Form["option"]);
             //Lấy thông tin sản phẩm
-            var product = db.Products.Find(Id);
-
-            //Màu sắc của sản phẩm
-            var variantTypeName = ProductVarianTypes.Color.ToString().ToLower();
-            var variantId = int.Parse(Request.Form[variantTypeName]);
-            var variant = db.Product_Variants.Find(variantId);
+            var option = db.Product_Options.Find(optionId);
 
             //Kiểm tra sản phẩm và màu sắc
-            if (product == null && variant == null)
+            if (option == null)
                 return HttpNotFound();
 
             //Lấy số lượng từ form
             var quantity = int.Parse(Request.Form["quantity"]);
 
-            //Tạo danh sách của màu sắc cho sản phẩm, ở đây chỉ 1 sản phẩm chỉ có 1 màu duy nhất
-            var variants = new List<Product_Variant>();
-            variants.Add(variant);
-
             //Lấy ra session giỏ hàng
             var cartItems = GetCartItems();
 
             //Kiểm tra xem sản phẩm cùng màu sắc này đã có trong giỏ hàng hay chưa
-            var cartItem = cartItems.Find(b => b.product.Id == Id && b.variants.Select(o => o.Id).SequenceEqual(variants.Select( o=> o.Id)));
+            var cartItem = cartItems.Find(o => o.product_Option.Id == optionId);
             //Sau đó...
             if (cartItem == null) //Nếu chưa có thì thêm vào giỏ
-                cartItems.Add(new CartItem(product)
+                cartItems.Add(new CartItem(option)
                 {
                     quantity = quantity,
-                    variants = variants
                 });
             else //có rồi thì chỉ đặt lại số lượng
                 cartItem.quantity += quantity;
@@ -80,7 +70,7 @@ namespace Homeclick.Controllers
             var cartItem = cartItems.Find(o => o.id == id);
 
             //Lấy sản phẩm từ item
-            var product = db.Products.Find(cartItem.product.Id);
+            var product = db.Products.Find(cartItem.product_Option.Id);
 
             //Kiểm tra item lẫn sản phẩm có tồn tại
             if (cartItem == null && product == null)
@@ -105,7 +95,7 @@ namespace Homeclick.Controllers
             var cartItem = cartItems.Find(o => o.id == id);
 
             //Lấy sản phẩm từ item
-            var product = db.Products.Find(cartItem.product.Id);
+            var product = db.Products.Find(cartItem.product_Option.Id);
 
             //Kiểm tra item lẫn sản phẩm có tồn tại
             if (cartItem == null && product == null)

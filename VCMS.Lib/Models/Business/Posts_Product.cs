@@ -15,11 +15,12 @@ namespace VCMS.Lib.Models.Business
 
         public int Quantity { get; set; }
 
-        public int PostId { get; set; }
+        public int? PostId { get; set; }
 
-        public int ProductId { get; set; }
+        public int ProductOptionId { get; set; }
 
-        public virtual Product Product { get; set; }
+        [ForeignKey("ProductOptionId")]
+        public virtual Product_Option ProductOption { get; set; }
 
         public virtual Post Post { get; set; }
     }
@@ -30,7 +31,7 @@ namespace VCMS.Lib.Models.Business
         {
             get
             {
-                var totalValue = int.Parse(Product.Product_detail.FirstOrDefault(o => o.Name == ProductDetailTypes.Price).Value) * Quantity;
+                var totalValue = int.Parse(ProductOption.Product.Product_detail.FirstOrDefault(o => o.Name == ProductDetailTypes.Price).Value) * Quantity;
                 return totalValue;
             }
         }

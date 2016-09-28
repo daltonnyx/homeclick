@@ -16,7 +16,7 @@ namespace VCMS.Lib.Models.Business
         {
             Product_detail = new HashSet<Product_detail>();
             Categories = new HashSet<Category>();
-            Product_Variants = new HashSet<Product_Variant>();
+            Product_Options = new HashSet<Product_Option>();
             Files = new HashSet<File>();
         }
 
@@ -43,7 +43,7 @@ namespace VCMS.Lib.Models.Business
 
         public virtual ICollection<Category> Categories { get; set; }
 
-        public virtual ICollection<Product_Variant> Product_Variants { get; set; }
+        public virtual ICollection<Product_Option> Product_Options { get; set; }
 
         [ForeignKey("ImageId")]
         public virtual File Image { get; set; }
@@ -51,10 +51,21 @@ namespace VCMS.Lib.Models.Business
         public virtual ICollection<File> Files { get; set; }
 
         public virtual ICollection<Post_Product> Post_Products { get; set; }
+
+        public virtual ICollection<Sale> Sales { get; set; }
     }
 
     public partial class Product
     {
+        public Sale CurrentSale
+        {
+            get
+            {
+                var sale = Sales.Count > 0 ? Sales.FirstOrDefault(o => o.EndDate > DateTime.UtcNow) : null;
+                return sale;
+            }
+        }
+
         public Category Typology {
             get
             {
@@ -77,11 +88,13 @@ namespace VCMS.Lib.Models.Business
             get
             {
                 var materials = new List<Product_Variant>();
-                foreach (var item in Product_Variants)
+                foreach (var Product_Option in Product_Options)
                 {
-                    var material = item.Parent;
-                    if (!materials.Contains(material))
-                        materials.Add(material);
+                    foreach (var Product_Variant in Product_Option.Product_Variants)
+                    {
+                        if (Product_Variant.VariantType == ProductVarianTypes.Material && !materials.Select(o => o.Id).Contains(Product_Variant.Id))
+                            materials.Add(Product_Variant);
+                    }
                 }
                 return materials;
             }

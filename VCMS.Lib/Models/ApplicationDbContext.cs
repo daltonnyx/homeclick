@@ -16,6 +16,11 @@ namespace VCMS.Lib.Models
             return new ApplicationDbContext();
         }
 
+        public virtual DbSet<Slide> Slides { get; set; }
+
+        public virtual DbSet<Product_Option> Product_Options { get; set; }
+        public virtual DbSet<Product_Options_Details> Product_Options_Details { get; set; }
+
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Orders_Products> Orders_Products { get; set; }
         public virtual DbSet<Sale> Sales { get; set; }
@@ -44,6 +49,9 @@ namespace VCMS.Lib.Models
 
             //Category
             //--------------------------------------
+            modelBuilder.Entity<Category>().HasMany(e => e.Slides)
+                .WithOptional(e => e.Category);
+
             modelBuilder.Entity<Category>().HasMany(e => e.Category_details)
                 .WithOptional(e => e.Category)
                 .WillCascadeOnDelete();
@@ -64,6 +72,9 @@ namespace VCMS.Lib.Models
                     .WithRequired(e => e.Product)
                     .WillCascadeOnDelete();
 
+            modelBuilder.Entity<Product>().HasMany(e => e.Product_Options)
+                .WithRequired(e => e.Product)
+                .WillCascadeOnDelete();
 
             modelBuilder.Entity<Product>().HasMany(e => e.Categories)
                 .WithMany(e => e.Products)
@@ -72,15 +83,6 @@ namespace VCMS.Lib.Models
                     cs.MapLeftKey("ParentId");
                     cs.MapRightKey("ChildId");
                     cs.ToTable("Product_Category_Link");
-                });
-
-            modelBuilder.Entity<Product>().HasMany(e => e.Product_Variants)
-                .WithMany(e => e.Products)
-                .Map(cs =>
-                {
-                    cs.MapLeftKey("ParentId");
-                    cs.MapRightKey("ChildId");
-                    cs.ToTable("Product_Product_Variants_Link");
                 });
 
             modelBuilder.Entity<Product>().HasMany(e => e.Files)
@@ -96,20 +98,6 @@ namespace VCMS.Lib.Models
             //Product Variant
             //--------------------------------------
             modelBuilder.Entity<Product_Variant>()
-                .HasMany(o => o.Children)
-                .WithOptional(o => o.Parent)
-                .HasForeignKey(o => o.ParentId);
-
-            modelBuilder.Entity<Product_Variant>()
-                .HasMany(e => e.Files)
-                .WithMany(e => e.Product_Variants)
-                .Map(cs =>
-                {
-                    cs.MapLeftKey("ParentId");
-                    cs.MapRightKey("ChildId");
-                    cs.ToTable("Product_Variants_Files_Link");
-                });
-            modelBuilder.Entity<Product_Variant>()
                 .HasMany(e => e.Categories)
                 .WithMany(e => e.ProductVariants)
                 .Map(cs =>
@@ -117,6 +105,16 @@ namespace VCMS.Lib.Models
                     cs.MapLeftKey("ParentId");
                     cs.MapRightKey("ChildId");
                     cs.ToTable("Product_Variants_Category_Link");
+                });
+
+            modelBuilder.Entity<Product_Variant>()
+                .HasMany(e => e.Product_Options)
+                .WithMany(e => e.Product_Variants)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Product_Variants_Product_Options_Link");
                 });
             //--------------------------------------
 
@@ -141,8 +139,8 @@ namespace VCMS.Lib.Models
                 .HasForeignKey(o => o.PostId);
 
             modelBuilder.Entity<Post>()
-                .HasMany(e => e.Post_Products)
-                .WithRequired(o => o.Post)
+                .HasMany(e => e.Post_ProductOptions)
+                .WithOptional(o => o.Post)
                 .HasForeignKey(o => o.PostId);
 
             modelBuilder.Entity<Post>()
@@ -165,17 +163,51 @@ namespace VCMS.Lib.Models
                     cs.ToTable("Posts_Files_Link");
                 });
             //--------------------------------------
-
+            
             modelBuilder.Entity<Post_Product>()
-                .HasRequired(o => o.Product)
+                .HasRequired(o => o.ProductOption)
                 .WithMany(o => o.Post_Products)
-                .HasForeignKey(o => o.ProductId);
+                .HasForeignKey(o => o.ProductOptionId);
+
 
             //----------------------------------------
             modelBuilder.Entity<Order>()
                 .HasMany(e => e.Orders_Products)
                 .WithRequired(e => e.Order)
                 .WillCascadeOnDelete(false);
+
+            //Sale
+            //----------------------------------------
+            modelBuilder.Entity<Sale>()
+                .HasMany(e => e.Products)
+                .WithMany(e => e.Sales)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Sale_Product_Link");
+                });
+
+            //Product_Options
+            //----------------------------------------
+            modelBuilder.Entity<Product_Option>()
+                .HasMany(e => e.Product_Options_Details)
+                .WithOptional(e => e.Product_Options)
+                .HasForeignKey(e => e.ProductOptionId)
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<Product_Option>()
+                .HasMany(e => e.Files)
+                .WithMany(e => e.Product_Options)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Product_Options_Files_Link");
+                });
+
+            //Slide
+            //----------------------------------------
 
             //modelBuilder.Configurations.Add(new CategoryEntityConfiguration());
             //modelBuilder.Configurations.Add(new ProductEntityConfiguration());

@@ -10,8 +10,10 @@ namespace VCMS.Lib.Models.Business.Datatables
     {
         public int id { get; set; }
         public string name { get; set; }
+        public int percent { get; set; }
         public string startdate { get; set; }
         public string enddate { get; set; }
         public int status { get; set; }
+        public int products { get; set; }
     }
 }
