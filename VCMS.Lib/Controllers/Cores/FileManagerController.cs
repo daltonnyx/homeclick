@@ -103,8 +103,8 @@ namespace VCMS.Lib.Controllers
                 try
                 {
                     db.Files.Remove(file);
-                    db.SaveChanges();
                     Uploader.DeleteFile(file, this);
+                    db.SaveChanges();
                     result = "Success";
                 }
                 catch (Exception ex)

@@ -32,12 +32,7 @@ namespace Homeclick.Controllers
                 dic.Add(category, posts);
             }
 
-            var slides = new List<Post>();
-            foreach (var pair in dic)
-            {
-                slides = slides.Concat(pair.Value).ToList();
-            }
-            ViewBag.Slides = slides.PickRandom(5);
+            ViewBag.Slides = db.Categories.Find((int)SlideTypes.Collection).Slides;
             return View(dic);
         }
 

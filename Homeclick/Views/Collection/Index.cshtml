@@ -8,10 +8,12 @@
 
 <section role="slider">
     <div class="owl-carousel">
-        @foreach (var post in ViewBag.Slides as IEnumerable<Post>)
+        @foreach (var slide in ViewBag.Slides as IEnumerable<Slide>)
         {
             <div class="full-width">
-                <img src="@Url.GetImageUploadFolder()/@post.ImageFile.FullFileName" title="@post.Title" alt="@post.Title">
+                <a href="@slide.Link">
+                    <img src="@Url.GetImageUploadFolder()/@slide.ImageFile.FullFileName" alt="@slide.Name" />
+                </a>
             </div>
         }
     </div>

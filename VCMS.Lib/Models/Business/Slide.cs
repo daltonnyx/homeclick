@@ -6,9 +6,9 @@ namespace VCMS.Lib.Models.Business
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Slide : BaseModel
+    public partial class Slide 
     {
-        public new int Id { get; set; }
+        public int Id { get; set; }
 
         [StringLength(128)]
         public string Name { get; set; }
@@ -22,9 +22,21 @@ namespace VCMS.Lib.Models.Business
 
         public int? CategoryId { get; set; }
 
-        [ForeignKey("ImageFileId")]
-        public File ImageFile { get; set; }
+        public bool Status { get; set; }
 
-        public Category Category { get; set; }
+        [ForeignKey("ImageFileId")]
+        public virtual File ImageFile { get; set; }
+
+        public virtual Category Category { get; set; }
+
+        public DateTime? CreateTime { get; set; }
+
+        [StringLength(128)]
+        public string CreateUserId { get; set; }
+
+        [ForeignKey("CreateUserId")]
+        public virtual ApplicationUser CreateUser { get; set; }
     }
+
+    public enum SlideTypes { Home = 122, Collection = 123 }
 }

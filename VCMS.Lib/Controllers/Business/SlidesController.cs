@@ -15,7 +15,7 @@ using VCMS.Lib.Models.Business.Datatables;
 
 namespace VCMS.Lib.Controllers
 {
-    public class SlidesController : PostsController
+    public class SlidesController : BaseController
     {
         public ActionResult List(int categoryId)
         {
@@ -37,7 +37,9 @@ namespace VCMS.Lib.Controllers
 
             if (category == null)
                 return HttpNotFound();
-
+            ViewBag.Category = category;
+            ViewData["Success"] = success;
+            ViewData["SuccessObjectName"] = successObjectName;
             return View(new Slide { CategoryId = category.Id});
         }
 
@@ -45,16 +47,18 @@ namespace VCMS.Lib.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Slide model)
         {
+            var category = db.Categories.Find(model.CategoryId);
             if (ModelState.IsValid)
             {
-                var category = db.Categories.Find(model.CategoryId);
                 if (!CheckCategoryIsType(category.Category_TypeId))
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
+                model.CreateUserId = User.Identity.GetUserId();
+                model.CreateTime = DateTime.Now;
                 db.Slides.Add(model);
                 db.SaveChanges();
                 return RedirectToAction("Create", new { categoryId = model.CategoryId, success = true, successObjectName = model.Name });
             }
+            ViewBag.Category = category;
             return View(model);
         }
 
@@ -68,7 +72,7 @@ namespace VCMS.Lib.Controllers
             if (category == null || slide == null)
                 return HttpNotFound();
 
-            return View(new Slide { CategoryId = category.Id });
+            return View(slide);
         }
 
         [HttpPost]
@@ -81,7 +85,9 @@ namespace VCMS.Lib.Controllers
                 if (!CheckCategoryIsType(category.Category_TypeId) || !category.Slides.Select(o => o.Id).Contains(model.Id))
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-                db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                var modelInDb = db.Slides.Find(model.Id);
+                db.Entry(modelInDb).CurrentValues.SetValues(model);
+                db.Entry(modelInDb).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("List", new { categoryId = model.CategoryId});
             }

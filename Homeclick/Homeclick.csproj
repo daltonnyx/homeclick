@@ -638,6 +638,8 @@
     <Content Include="Areas\Manager\Views\Products\EditOption.cshtml" />
     <Content Include="Areas\Manager\Views\Collections\AddOption.cshtml" />
     <Content Include="Areas\Manager\Views\Slides\List.cshtml" />
+    <Content Include="Areas\Manager\Views\Slides\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\Slides\Edit.cshtml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1088,6 +1090,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Manager\Uploads\Images\thumb\" />
     <Folder Include="Scripts\Plugins\ResponsiveMenu\" />
     <Folder Include="Scripts\Plugins\shareThis\" />
     <Folder Include="Upload\Images\assets\Colors\" />

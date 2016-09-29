@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,20 +15,22 @@ namespace VCMS.Lib.Controllers
 {
     public class FileUploadController : BaseController
     {
-        private async Task<List<object>> uploads(IEnumerable<HttpPostedFileBase> files, FileGroups fileGroup)
+        private async Task<List<dynamic>> uploads(IEnumerable<HttpPostedFileBase> files, FileGroups fileGroup, string imagesFolderPath)
         {
-                var result = new List<object>();
+            var result = new List<dynamic>();
             foreach (var file in files)
             {
                 var newFile = await Uploader.Upload(file, fileGroup, this);
                 if (newFile != null)
                 {
-                    result.Add(new
+                    var resultItem = new
                     {
                         oldFileName = file.FileName,
                         newFileName = newFile.Id,
                         ext = newFile.Extension,
-                    });
+                        link = imagesFolderPath + newFile.Id + newFile.Extension
+                    };
+                    result.Add(resultItem);
                 }
             }
             return result;
@@ -35,59 +38,47 @@ namespace VCMS.Lib.Controllers
 
         private async Task<dynamic> upload(HttpPostedFileBase file, FileGroups fileGroup, string imagesFolderPath)
         {
-            try
+            var newFile = await Uploader.Upload(file, fileGroup, this);
+            var result = new
             {
-                var newFile = await Uploader.Upload(file, fileGroup, this);
-                var result = new
-                {
-                    oldFileName = file.FileName,
-                    newFileName = newFile.Id,
-                    ext = newFile.Extension,
-                    link = imagesFolderPath + newFile.Id + newFile.Extension,
-                };
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-
+                oldFileName = file.FileName,
+                newFileName = newFile.Id,
+                ext = newFile.Extension,
+                link = imagesFolderPath + newFile.Id + newFile.Extension,
+            };
+            return result;
         }
 
         [HttpPost]
         public async Task<ActionResult> UploadP(IEnumerable<HttpPostedFileBase> files)
         {
-            var result = await uploads(files, FileGroups.ProductImage);
+            var imagesFolderPath = Url.GetImageUploadFolder();
+            var result = await uploads(files, FileGroups.ProductImage, imagesFolderPath);
             return Json(result);
         }
 
         [HttpPost]
         public async Task<ActionResult> UploadPV(IEnumerable<HttpPostedFileBase> files)
         {
-            var result = await uploads(files, FileGroups.ProductVariantImage);
+            var imagesFolderPath = Url.GetImageUploadFolder();
+            var result = await uploads(files, FileGroups.ProductVariantImage, imagesFolderPath);
             return Json(result);
         }
 
         [HttpPost]
         public async Task<ActionResult> Upload(HttpPostedFileBase file, int fileGroup)
         {
-            try
-            {
-                var imagesFolderPath = Url.GetImageUploadFolder();
-                var result = await upload(file, (FileGroups)fileGroup, imagesFolderPath);
-                return Json(result);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
 
+            var imagesFolderPath = Url.GetImageUploadFolder();
+            var result = await upload(file, (FileGroups)fileGroup, imagesFolderPath);
+            return Json(result);
         }
 
         [HttpPost]
         public async Task<ActionResult> Uploads(IEnumerable<HttpPostedFileBase> files, int fileGroup)
         {
-            var result = await uploads(files, (FileGroups)fileGroup);
+            var imagesFolderPath = Url.GetImageUploadFolder();
+            var result = await uploads(files, (FileGroups)fileGroup, imagesFolderPath);
             return Json(result);
         }
 

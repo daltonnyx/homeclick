@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,32 @@ namespace VCMS.Lib.Common
 {
     public static class Uploader
     {
+        public static Image CreateThumbnail(this Image image, Size thumbnailSize)
+        {
+            int scaledWidth = thumbnailSize.Width;
+            int scaledHeight = thumbnailSize.Height;
+            int scaledLeft = (thumbnailSize.Width - scaledWidth) / 2;
+            int scaledTop = (thumbnailSize.Height - scaledHeight) / 2;
+
+            // For portrait mode, adjust the vertical top of the crop area so that we get more of the top area
+            if (scaledWidth < scaledHeight && scaledHeight > thumbnailSize.Height)
+            {
+                scaledTop = (thumbnailSize.Height - scaledHeight) / 4;
+            }
+
+            Rectangle cropArea = new Rectangle(scaledLeft, scaledTop, scaledWidth, scaledHeight);
+
+            System.Drawing.Image thumbnail = new Bitmap(thumbnailSize.Width, thumbnailSize.Height);
+            using (Graphics thumbnailGraphics = Graphics.FromImage(thumbnail))
+            {
+                thumbnailGraphics.CompositingQuality = CompositingQuality.HighQuality;
+                thumbnailGraphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                thumbnailGraphics.SmoothingMode = SmoothingMode.HighQuality;
+                thumbnailGraphics.DrawImage(image, cropArea);
+            }
+            return thumbnail;
+        }
+
         public static async Task<bool> Upload(CreateFileViewModel model, FileGroups fileGroup, Controller controller)
         {
             try
@@ -104,6 +132,11 @@ namespace VCMS.Lib.Common
                     var newPath = System.IO.Path.Combine(controller.Server.MapPath("~/" + destinationFolder), newFileName + fileExt);
                     file.SaveAs(newPath);
 
+                    //thumb
+                    var image = Image.FromFile(newPath);
+                    var thumb = image.CreateThumbnail(new Size(256, Convert.ToInt32((image.Height / (image.Width / 256)))));
+
+                    thumb.Save(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(newPath),"thumb",System.IO.Path.GetFileName(newPath)));
                     return newFile;
                 }
             }
@@ -124,6 +157,9 @@ namespace VCMS.Lib.Common
             string fullPath = controller.Request.MapPath("~/" + destinationFolder + "//" + file.Id + file.Extension);
             if (System.IO.File.Exists(fullPath))
                 System.IO.File.Delete(fullPath);
+            var thumbPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(fullPath), "thumb", System.IO.Path.GetFileName(fullPath));
+            if (System.IO.File.Exists(thumbPath))
+                System.IO.File.Delete(thumbPath);
         }
     }
 }

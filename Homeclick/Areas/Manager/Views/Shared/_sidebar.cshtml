@@ -127,6 +127,19 @@
                 </li>
             </ul>
         </li>
+        <li class="@Html.Raw(controllerName == "slides" ? "active" : "")">
+            <a class="dropdown-toggle">
+                <i class="fa fa-square-o"></i>
+                <span>Slides</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                @foreach (var category in db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Slide))
+                {
+                    <li><a href="@Url.Action("List", "Slides", new { categoryId = category.Id})">@category.Name</a></li>
+                }
+            </ul>
+        </li>
         <li>
             <a class="dropdown-toggle">
                 <i class="fa fa-square-o"></i>
