@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VCMS.Lib.Models.Business.Datatables
+namespace VCMS.Lib.Models.Datatables
 {
     public class dt_product
     {

@@ -640,6 +640,11 @@
     <Content Include="Areas\Manager\Views\Slides\List.cshtml" />
     <Content Include="Areas\Manager\Views\Slides\Create.cshtml" />
     <Content Include="Areas\Manager\Views\Slides\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Projects\List.cshtml" />
+    <Content Include="Areas\Manager\Views\Projects\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\_imageFile.cshtml" />
+    <Content Include="Areas\Manager\Views\Projects\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Projects\Details.cshtml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />

@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using VCMS.Lib.Models;
-using VCMS.Lib.Models.Business;
 using VCMS.Lib.Common;
 
 namespace Homeclick.Controllers

@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Collections;
 using VCMS.Lib.Models;
-using VCMS.Lib.Models.Business;
 using System.Net;
 
 namespace Homeclick.Controllers

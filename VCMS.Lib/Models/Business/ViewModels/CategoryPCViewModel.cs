@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VCMS.Lib.Models.Business
+namespace VCMS.Lib.Models
 {
     public class ParentChildViewModel
     {

@@ -9,7 +9,6 @@ using System.Web;
 using System.Web.Mvc;
 using VCMS.Lib.Models;
 using System.Linq.Expressions;
-using VCMS.Lib.Models.Business;
 using Microsoft.AspNet.Identity;
 using VCMS.Lib.Common;
 using System.Text;
@@ -135,55 +134,48 @@ namespace VCMS.Lib.Controllers
 
         public JsonResult DataHandler(DTParameters param)
         {
-            try
+            //var imageTypeId = (int)CategoryTypes.FileImage;
+            var files = db.Files;
+
+            var dtsource = new List<FileViewModel>();
+
+            foreach (var file in files)
             {
-                //var imageTypeId = (int)CategoryTypes.FileImage;
-                var files = db.Files;
-
-                var dtsource = new List<FileViewModel>();
-
-                foreach (var file in files)
+                dtsource.Add(new FileViewModel
                 {
-                    dtsource.Add(new FileViewModel
-                    {
-                        Id = file.Id,
-                        Name = file.Id,
-                        Ext = file.Extension,
-                        FileType = file.FileType.ToString(),
-                        Size = file.Size.ToString(),
-                        CreateTime = file.CreateTime.ToString()
-                    });
-                }
-
-
-                List<String> columnSearch = new List<string>();
-
-                foreach (var col in param.Columns)
-                {
-                    columnSearch.Add(col.Search.Value);
-                }
-                var search = param.Search.Value;
-
-                Expression<Func<FileViewModel, bool>> pre = (p => (search == null || (p.Name != null && p.Name.ToLower().Contains(search.ToLower())))
-                && (columnSearch[0] == null || (p.Name != null && p.Name.ToLower().Contains(columnSearch[1].ToLower()))));
-
-                List<FileViewModel> data = new ResultSet().GetResult(pre, param.SortOrder, param.Start, param.Length, dtsource);
-
-                var jsonResult = new List<object>();
-                int count = new ResultSet().Count(pre, dtsource);
-                DTResult<FileViewModel> result = new DTResult<FileViewModel>
-                {
-                    draw = param.Draw,
-                    data = data,
-                    recordsFiltered = count,
-                    recordsTotal = count
-                };
-                return Json(result);
+                    Id = file.Id,
+                    Name = file.Id,
+                    Ext = file.Extension,
+                    FileType = file.FileType.ToString(),
+                    Size = file.Size.ToString(),
+                    CreateTime = file.CreateTime.ToString()
+                });
             }
-            catch (Exception ex)
+
+
+            List<String> columnSearch = new List<string>();
+
+            foreach (var col in param.Columns)
             {
-                return Json(new { error = ex.Message });
+                columnSearch.Add(col.Search.Value);
             }
+            var search = param.Search.Value;
+
+            Expression<Func<FileViewModel, bool>> pre = (p => (search == null || (p.Name != null && p.Name.ToLower().Contains(search.ToLower())))
+            && (columnSearch[0] == null || (p.Name != null && p.Name.ToLower().Contains(columnSearch[1].ToLower()))));
+
+            List<FileViewModel> data = new ResultSet().GetResult(pre, param.SortOrder, param.Start, param.Length, dtsource);
+
+            var jsonResult = new List<object>();
+            int count = new ResultSet().Count(pre, dtsource);
+            DTResult<FileViewModel> result = new DTResult<FileViewModel>
+            {
+                draw = param.Draw,
+                data = data,
+                recordsFiltered = count,
+                recordsTotal = count
+            };
+            return Json(result);
         }
     }
 }

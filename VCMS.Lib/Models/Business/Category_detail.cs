@@ -1,4 +1,4 @@
-namespace VCMS.Lib.Models.Business
+namespace VCMS.Lib.Models
 {
     using System;
     using System.Collections.Generic;

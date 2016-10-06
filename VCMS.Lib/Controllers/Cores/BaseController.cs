@@ -17,5 +17,15 @@ namespace VCMS.Lib.Controllers
         {
             return db;
         }
+
+        public ActionResult _imageFile(string imageId)
+        {
+            var imageFile = db.Files.Find(imageId);
+            if (imageFile != null)
+            {
+                return PartialView(imageFile);
+            }
+            return null;
+        }
     }
 }

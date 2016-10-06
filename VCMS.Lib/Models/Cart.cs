@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using VCMS.Lib.Models;
 
-namespace VCMS.Lib.Models.Business
+namespace VCMS.Lib.Models
 {
     public class CartItem
     {

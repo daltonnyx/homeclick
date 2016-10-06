@@ -133,10 +133,12 @@ namespace VCMS.Lib.Common
                     file.SaveAs(newPath);
 
                     //thumb
-                    var image = Image.FromFile(newPath);
-                    var thumb = image.CreateThumbnail(new Size(256, Convert.ToInt32((image.Height / (image.Width / 256)))));
+                    using (Image img = Image.FromFile(newPath))
+                    {
+                        var thumb = img.CreateThumbnail(new Size(256, Convert.ToInt32((img.Height / (img.Width / 256)))));
+                        thumb.Save(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(newPath), "thumb", System.IO.Path.GetFileName(newPath)));
+                    }
 
-                    thumb.Save(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(newPath),"thumb",System.IO.Path.GetFileName(newPath)));
                     return newFile;
                 }
             }

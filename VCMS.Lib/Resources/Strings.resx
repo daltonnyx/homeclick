@@ -384,4 +384,7 @@
   <data name="Options" xml:space="preserve">
     <value>Options</value>
   </data>
+  <data name="Projects" xml:space="preserve">
+    <value>Projects</value>
+  </data>
 </root>

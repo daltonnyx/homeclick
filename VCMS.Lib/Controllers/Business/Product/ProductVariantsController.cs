@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using VCMS.Lib.Common;
 using VCMS.Lib.Models;
-using VCMS.Lib.Models.Business;
 
 namespace VCMS.Lib.Controllers
 {

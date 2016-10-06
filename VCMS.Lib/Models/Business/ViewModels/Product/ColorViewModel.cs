@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VCMS.Lib.Resources;
 
-namespace VCMS.Lib.Models.Business
+namespace VCMS.Lib.Models
 {
     public class ColorViewModel : BaseBusinessModel
     {

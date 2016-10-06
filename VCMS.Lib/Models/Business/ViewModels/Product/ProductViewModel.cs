@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace VCMS.Lib.Models.Business
+namespace VCMS.Lib.Models
 {
     public class ProductViewModel : BaseViewModel
     {

@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using VCMS.Lib.Common;
 using VCMS.Lib.Models;
-using VCMS.Lib.Models.Business;
-using VCMS.Lib.Models.Business.Datatables;
+using VCMS.Lib.Models.Datatables;
 
 namespace VCMS.Lib.Controllers
 {

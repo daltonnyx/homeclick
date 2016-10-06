@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
-using VCMS.Lib.Models.Business;
+using VCMS.Lib.Models;
 
 namespace VCMS.Lib.Models
 {
@@ -15,6 +15,11 @@ namespace VCMS.Lib.Models
         {
             return new ApplicationDbContext();
         }
+        public virtual DbSet<District> Districts { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+
+        public virtual DbSet<Project_Details> Project_Details { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
 
         public virtual DbSet<Slide> Slides { get; set; }
 
@@ -49,8 +54,13 @@ namespace VCMS.Lib.Models
 
             //Category
             //--------------------------------------
+            modelBuilder.Entity<Category>().HasMany(e => e.Projects)
+                .WithOptional(e => e.Category)
+                .HasForeignKey(e => e.CategoryId);
+
             modelBuilder.Entity<Category>().HasMany(e => e.Slides)
-                .WithOptional(e => e.Category);
+                .WithOptional(e => e.Category)
+                .HasForeignKey(e => e.CategoryId);
 
             modelBuilder.Entity<Category>().HasMany(e => e.Category_details)
                 .WithOptional(e => e.Category)
@@ -206,8 +216,38 @@ namespace VCMS.Lib.Models
                     cs.ToTable("Product_Options_Files_Link");
                 });
 
-            //Slide
+            //Projects
             //----------------------------------------
+            modelBuilder.Entity<Project>()
+                .HasMany(e => e.Project_Details)
+                .WithOptional(e => e.Project)
+                .WillCascadeOnDelete();
+
+            modelBuilder.Entity<Project>()
+                .HasOptional(e => e.PreviewImage)
+                .WithMany(e => e.ProjectPreviews);
+
+            modelBuilder.Entity<Project>()
+            .HasMany(e => e.Files)
+            .WithMany(e => e.Projects)
+            .Map(cs =>
+            {
+                cs.MapLeftKey("ParentId");
+                cs.MapRightKey("ChildId");
+                cs.ToTable("Projects_Files_Link");
+            });
+
+            //Cities
+            //----------------------------------------
+            modelBuilder.Entity<City>()
+                .HasMany(o => o.Districts)
+                .WithOptional(o => o.City);
+
+            //Districts
+            //----------------------------------------
+            modelBuilder.Entity<District>()
+                .HasMany(o => o.Projects)
+                .WithOptional(o => o.District);
 
             //modelBuilder.Configurations.Add(new CategoryEntityConfiguration());
             //modelBuilder.Configurations.Add(new ProductEntityConfiguration());

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VCMS.Lib.Models.Business
+namespace VCMS.Lib.Models
 {
     public class CategoryViewModel
     {

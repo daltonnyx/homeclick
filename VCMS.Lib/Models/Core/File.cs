@@ -1,11 +1,11 @@
 namespace VCMS.Lib.Models
 {
-    using Business;
     using Resources;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Core.Objects.DataClasses;
     using System.Data.Entity.ModelConfiguration;
     using System.Data.Entity.Spatial;
     using System.Linq;
@@ -34,6 +34,9 @@ namespace VCMS.Lib.Models
 
         [Display(Name = "FileType", ResourceType = typeof(Strings))]
         public virtual ICollection<Category> Categories { get; set; }
+
+        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<Project> ProjectPreviews { get; set; }
     }
 
     public partial class File

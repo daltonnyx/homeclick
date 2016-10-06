@@ -1,6 +1,5 @@
 namespace VCMS.Lib.Models
 {
-    using Business;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

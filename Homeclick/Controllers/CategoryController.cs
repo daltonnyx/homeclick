@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using System;
 using VCMS.Lib.Models;
-using VCMS.Lib.Models.Business;
 
 namespace Homeclick.Controllers
 {

@@ -1,0 +1,29 @@
+﻿@using VCMS.Lib.Resources
+@using VCMS.Lib.Models
+@using VCMS.Lib.Models
+
+@model Project
+@{
+    ViewBag.Title = Model.Name;
+}
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Index","Dashboard")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+        <a href="@Url.Action("List")"> Projects</a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.Title</li>
+}
+
+@section styles {
+}
+
+@section scripts {
+    <script>
+
+    </script>
+}

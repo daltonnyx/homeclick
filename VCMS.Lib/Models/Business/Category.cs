@@ -1,4 +1,4 @@
-namespace VCMS.Lib.Models.Business
+namespace VCMS.Lib.Models
 {
     using System;
     using System.Collections.Generic;
@@ -49,6 +49,8 @@ namespace VCMS.Lib.Models.Business
         public virtual ICollection<Post> Posts { get; set; }
 
         public virtual ICollection<Slide> Slides { get; set; }
+
+        public virtual ICollection<Project> Projects { get; set; }
     }
 
     public partial class Category
