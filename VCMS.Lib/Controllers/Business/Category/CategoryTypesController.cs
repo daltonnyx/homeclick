@@ -164,7 +164,7 @@ namespace VCMS.Lib.Controllers
                         CreateUserId = User.Identity.GetUserId(),
                         CreateTime = DateTime.Now
                     };
-                    category.Category_Type = type;
+                    category.CategoryType = type;
                     db.Categories.Add(category);
                     db.SaveChanges();
                     return RedirectToAction("CreateCategory", new { id = type.Id, success = true, susccessObjName = category.Name });

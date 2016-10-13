@@ -1,0 +1,122 @@
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Resources
+
+@{
+    ViewBag.Title = Strings.CustomFields;
+}
+
+<div class="tabbable">
+    <ul class="nav nav-tabs active-blue">
+        <li class="active"><a href="#list"><i class="fa fa-list"></i> List</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade active in">
+            <div class="clearfix btn-toolbar ">
+                <div class="pull-left">
+                    @Html.DropDownList(string.Format("{0}-type", ConstantKeys.CATEGORY), new SelectList(ViewData[ConstantKeys.CATEGORIES] as IQueryable,"Id","Name", null), new { @class= "extra-search form-control", style="min-width:150px" })
+                </div>
+                <div class="btn-group pull-right">
+                    <a class="btn btn-circle show-tooltip disabled" title="" href="@Url.Action("Create","CustomFields")" data-original-title="Add new user"><i class="fa fa-plus"></i></a>
+                    <a class="btn btn-circle show-tooltip disabled" title="" href="#" data-original-title="Delete selected" data-toggle="modal" data-target="#deleteConfirmModal"><i class="fa fa-trash-o"></i></a>
+                    <a class="btn btn-circle show-tooltip disabled" title="" href="#" data-original-title="Refresh"><i class="fa fa-repeat"></i></a>
+                </div>
+            </div>
+            <hr />
+            <table id="dataTable" class="table display table-striped table-hover fill-head">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" />
+                        </th>
+                        <th>
+                            @Strings.Name
+                        </th>
+                        <th>
+                            @Strings.Label
+                        </th>
+                        <th>
+                            @Strings.Type
+                        </th>
+                        <th>
+                            @Strings.Placeholder
+                        </th>
+                        <th>
+                            @Strings.Status
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Widgets/DeleteConfirmModal")
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.Title</li>
+}
+
+@section styles {
+    @Styles.Render("~/bundles/manager/datatables/css")
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/manager/datatables")
+    <script src="~/Areas/Manager/Content/lib/moment.js"></script>
+
+    <script>
+        var dataTable = $('#dataTable').DataTable({
+            autoWidth: false,
+            serverSide: true,
+            ajax: {
+                type: "POST",
+                url: '@Url.Action("DataHandler")',
+                contentType: 'application/json; charset=utf-8',
+                data: function (data) {
+                    var extraSearchs = $('.extra-search');
+                    if (extraSearchs.length > 0) {
+                        data.args = {};
+                        for (var i = 0; i < extraSearchs.length; i++) {
+                            var current = $(extraSearchs[i]);
+                            if (current.attr('id') && current.val())
+                                data.args[current.attr('id')] = current.val();
+                        }
+                    }
+                    return data = JSON.stringify(data);
+                }
+            },
+            processing: true,
+            columns: [
+               { "data": "id", render: function (data, type, full, meta) { return '<input type="checkbox" class="select-item" value="' + data + '"/>' } },
+               { "data": "name" },
+               { "data": "label"},
+               { "data": "type" },
+               {
+                    "data": "pHolder", "render": function (data, type, full, meta) {
+                       if (!data) return '<i>empty</i>';
+                       return '';
+                    }
+               },
+               {
+                   "data": "status", "render": function (data, type, full, meta) {
+                       if (!data) return '<i class="fa fa-eye-slash"></i> Disabled';
+                       return '';
+                   }
+               }],
+            order: [[1, 'asc']],
+            columnDefs: [{ "searchable": false, "orderable": false, "targets": 0 }]
+        });
+        var tableReloadFunction = function () {
+            dataTable.ajax.reload();
+        }
+        $('.extra-search').bind('change', tableReloadFunction);
+    </script>
+    @Html.RenderDelayed("deleteConfirmModal-script")
+}

@@ -1,7 +1,7 @@
-﻿@using Homeclick.Models
-@model Homeclick.Models.Room
+﻿@using VCMS.Lib.Models
+@model Room
 @{
-    var CategoryTypes = ViewBag.CategoryTypes as IEnumerable<Category_type>;
+    var CategoryTypes = ViewBag.CategoryTypes as IEnumerable<Category_Type>;
 }
 
 <!DOCTYPE HTML>
@@ -16,7 +16,6 @@
     @Styles.Render("~/Content/components/notify.min.css")
     @Styles.Render("~/Content/theme.css")
     @Styles.Render("~/Content/spectrum.css")
-    @Styles.Render("~/Content/font-awesome.min.css")
     @Styles.Render("~/Content/front-to-back.css")
 </head>
 <body>
@@ -120,7 +119,7 @@
                 <div class="control-container uk-hidden">
                 </div>
             </div>
-            <input type="hidden" value="@Model.canvas_data" id="canvas-data" />
+            <input type="hidden" value="@Model.CanvasData" id="canvas-data" />
             <div class="canvas-holder" id="canvas-holder">
                 <canvas id="tutorial" width="914" height="600" draggable="true"></canvas>
                 <div class="delete-button object-button"></div>
@@ -308,10 +307,29 @@
             <a href="#0" class="cd-close-form">Close</a>
         </div> <!-- cd-user-modal-container -->
     </div> <!-- cd-user-modal -->
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/jquery-1.11.3.min.js")
+    @Scripts.Render("~/Scripts/fabric.js")
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    @Scripts.Render("~/Scripts/canvas.nocache.js")
 
+    @Scripts.Render("~/Scripts/wall.draw.js")
+
+    @Scripts.Render("~/Scripts/jquery-ui.js")
+
+    @Scripts.Render("~/Scripts/lipolygon.class.js")
+
+    @Scripts.Render("~/Scripts/groupLiPolygon.js")
+
+    @Scripts.Render("~/Scripts/measureLine.js")
+
+    @Scripts.Render("~/Scripts/uikit.min.js")
+
+    @Scripts.Render("~/Scripts/notify.min.js")
+
+    @Scripts.Render("~/Scripts/main.js")
+
+    @Scripts.Render("~/Scripts/spectrum.js")
     <script type="text/javascript">
 
         jQuery(document).ready(function ($) {
@@ -365,30 +383,6 @@
 
         });
     </script>
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/Scripts/jquery-1.11.3.min.js")
-    @Scripts.Render("~/Scripts/fabric.js")
-
-    @Scripts.Render("~/Scripts/canvas.nocache.js")
-
-    @Scripts.Render("~/Scripts/wall.draw.js")
-
-    @Scripts.Render("~/Scripts/jquery-ui.js")
-
-    @Scripts.Render("~/Scripts/lipolygon.class.js")
-
-    @Scripts.Render("~/Scripts/groupLiPolygon.js")
-
-    @Scripts.Render("~/Scripts/measureLine.js")
-
-    @Scripts.Render("~/Scripts/uikit.min.js")
-
-    @Scripts.Render("~/Scripts/notify.min.js")
-
-    @Scripts.Render("~/Scripts/main.js")
-
-    @Scripts.Render("~/Scripts/spectrum.js")
-
 </body>
 
 </html>

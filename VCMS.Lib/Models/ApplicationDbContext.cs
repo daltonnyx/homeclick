@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration;
 using VCMS.Lib.Models;
 
 namespace VCMS.Lib.Models
@@ -15,6 +16,17 @@ namespace VCMS.Lib.Models
         {
             return new ApplicationDbContext();
         }
+
+        public virtual DbSet<CustomField_Enums> CustomField_Enums { get; set; }
+        public virtual DbSet<CustomField> CustomFields { get; set; }
+
+        public virtual DbSet<User_Detail> User_Details { get; set; }
+
+        public virtual DbSet<Canva> Canvas { get; set; }
+        public virtual DbSet<Floor> Floors { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<Room> Rooms { get; set; }
+
         public virtual DbSet<District> Districts { get; set; }
         public virtual DbSet<City> Cities { get; set; }
 
@@ -46,14 +58,23 @@ namespace VCMS.Lib.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //Category
-            //--------------------------------------
-            modelBuilder.Entity<Category_Type>().HasMany(e => e.Categories)
-                .WithOptional(e => e.Category_Type)
-                .HasForeignKey(o => o.Category_TypeId);
+
+            //ApplicationUser
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(e => e.Details)
+                .WithOptional(e => e.User);
 
             //Category
             //--------------------------------------
+            modelBuilder.Entity<Category_Type>().HasMany(e => e.Categories)
+                .WithOptional(e => e.CategoryType)
+                .HasForeignKey(o => o.CategoryTypeId);
+
+            //Category
+            //--------------------------------------
+            modelBuilder.Entity<Category>().HasMany(e => e.Children)
+                .WithOptional(e => e.CategoryParent);
+
             modelBuilder.Entity<Category>().HasMany(e => e.Projects)
                 .WithOptional(e => e.Category)
                 .HasForeignKey(e => e.CategoryId);
@@ -65,6 +86,9 @@ namespace VCMS.Lib.Models
             modelBuilder.Entity<Category>().HasMany(e => e.Category_details)
                 .WithOptional(e => e.Category)
                 .WillCascadeOnDelete();
+
+            modelBuilder.Entity<Category>().HasMany(e => e.CustomFields)
+                .WithOptional(e => e.Category);
 
             modelBuilder.Entity<Category>().HasMany(e => e.CategoryParents)
                 .WithMany(e => e.CategoryChildren)
@@ -248,6 +272,33 @@ namespace VCMS.Lib.Models
             modelBuilder.Entity<District>()
                 .HasMany(o => o.Projects)
                 .WithOptional(o => o.District);
+
+            //Department
+            //----------------------------------------
+            modelBuilder.Entity<Department>()
+                .HasMany(e => e.ChildDepartments)
+                .WithOptional(e => e.ParentDepartment);
+            modelBuilder.Entity<Department>()
+                .HasMany(e => e.Floors)
+                .WithOptional(e => e.Department);
+
+            //Floor
+            //----------------------------------------
+            modelBuilder.Entity<Floor>()
+                .HasMany(e => e.Rooms)
+                .WithOptional(e => e.Floor);
+
+            //Room
+            //----------------------------------------
+            modelBuilder.Entity<Room>()
+                .HasMany(e => e.Canvas)
+                .WithOptional(e => e.Room);
+
+            //Customfields
+            //----------------------------------------
+            modelBuilder.Entity<CustomField>()
+                .HasMany(e => e.CustomField_Enums)
+                .WithOptional(e => e.CustomField);
 
             //modelBuilder.Configurations.Add(new CategoryEntityConfiguration());
             //modelBuilder.Configurations.Add(new ProductEntityConfiguration());

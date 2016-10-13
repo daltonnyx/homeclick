@@ -27,5 +27,12 @@ namespace VCMS.Lib.Controllers
             }
             return null;
         }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            if (TempData[ConstantKeys.ACTION_RESULT_MESSAGES] != null)
+                ViewData[ConstantKeys.ACTION_RESULT_MESSAGES] = TempData[ConstantKeys.ACTION_RESULT_MESSAGES];
+        }
     }
 }

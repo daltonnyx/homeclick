@@ -20,13 +20,13 @@ namespace Homeclick.Controllers
 
         public virtual ActionResult _Sidebar()
         {
-            var categories = db.Categories.Where(c => c.Category_TypeId == (int)CategoryType).ToList();
+            var categories = db.Categories.Where(c => c.CategoryTypeId == (int)CategoryType).ToList();
             return PartialView(categories);
         }
 
         public ActionResult Typologies()
         {
-            var typologies = db.Categories.Where(c => c.Category_TypeId == (int)CategoryTypes.Typology).ToList();
+            var typologies = db.Categories.Where(c => c.CategoryTypeId == (int)CategoryTypes.Typology).ToList();
             return View(typologies);
         }
     }

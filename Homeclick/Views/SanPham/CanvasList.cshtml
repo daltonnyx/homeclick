@@ -1,15 +1,13 @@
-﻿﻿@using Homeclick.Models
-@model IList<Product>
+﻿@using VCMS.Lib.Models
+@model IEnumerable<Product>
 
 @{
-    var prefix = string.Empty;
-    //var prefix = "\\homeclick";
+
 }
 
 @foreach (Product product in Model)
 {
-    Dictionary<string, object> productArr = product.ToArray();
-    Dictionary<string, object> detail = productArr["Product_detail"] as Dictionary<string, object>;
+    var detail = product.DetailsToDictionary();
     <div class="product">
         <div class="product-image">
             <a href="#" 
@@ -17,10 +15,10 @@
                data-name="@product.name" 
                data-pid="@product.Id" 
                data-init="@if (detail.Keys.SingleOrDefault<string>(s => s == "initScale") != null) {@detail["initScale"]} else { <text>0.18</text> }" 
-               data-pid="@product.Id" data-svg="\admin\@if (detail.Keys.SingleOrDefault<string>(s => s == "data") != null) {@detail["data"]}" 
+               data-pid="@product.Id" data-svg="@Url.GetImageUploadFolder()\design\@if (detail.Keys.SingleOrDefault<string>(s => s == "data") != null) {@detail["data"]}" 
                data-can-scale="@if (detail.Keys.SingleOrDefault<string>(s => s == "scale") != null) {@detail["scale"]}">
-                <img src="@prefix\admin\@if (detail.Keys.SingleOrDefault<string>(s => s == "image") != null) {@detail["image"]}" 
-                     data-image="@prefix\admin\@if (detail.Keys.SingleOrDefault<string>(s => s == "image") != null) {@detail["image"]}" 
+                <img src="@Url.GetImageUploadFolder()\design\@if (detail.Keys.SingleOrDefault<string>(s => s == "image") != null) {@detail["image"]}" 
+                     data-image="@Url.GetImageUploadFolder()\design\@if (detail.Keys.SingleOrDefault<string>(s => s == "image") != null) {@detail["image"]}" 
                      class="svg-item"
                      data-name="@product.name" 
                      data-pid="@product.Id"
@@ -38,8 +36,8 @@
                data-name="@product.name" 
                data-pid="@product.Id" 
                data-init="@if (detail.Keys.SingleOrDefault<string>(s => s == "initScale") != null) {@detail["initScale"]} else { <text>0.18</text> }" 
-               data-image="@prefix\admin\@if (detail.Keys.SingleOrDefault<string>(s => s == "image") != null) {@detail["image"]}" 
-               data-svg="\admin\@if (detail.Keys.SingleOrDefault<string>(s => s == "data") != null) {@detail["data"]}" 
+               data-image="@Url.GetImageUploadFolder()\design\@if (detail.Keys.SingleOrDefault<string>(s => s == "image") != null) {@detail["image"]}" 
+               data-svg="@Url.GetImageUploadFolder()\design\@if (detail.Keys.SingleOrDefault<string>(s => s == "data") != null) {@detail["data"]}" 
                data-can-scale="@if (detail.Keys.SingleOrDefault<string>(s => s == "scale") != null) {@detail["scale"]}"
                data-zData="@if (detail.Keys.SingleOrDefault<string>(s => s == "zdata") != null) {@detail["zdata"]}" 
                data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null) {@detail["gia"]}">

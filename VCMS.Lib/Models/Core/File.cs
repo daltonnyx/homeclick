@@ -45,7 +45,7 @@ namespace VCMS.Lib.Models
         {
             get
             {
-                var category = Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.FileType).FirstOrDefault();
+                var category = Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.FileType).FirstOrDefault();
                 switch(category.Id)
                 {
                     case (int)FileTypes.Image:

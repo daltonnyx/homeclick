@@ -19,7 +19,7 @@ namespace VCMS.Lib.Controllers
             if (categoryId == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var category = db.Categories.Find(categoryId);
-            if (category == null || category.Category_TypeId != (int)CategoryTypes.ProductVariant)
+            if (category == null || category.CategoryTypeId != (int)CategoryTypes.ProductVariant)
                 return HttpNotFound();
 
             return View(category);
@@ -35,7 +35,7 @@ namespace VCMS.Lib.Controllers
             if (categoryId == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var category = db.Categories.Find(categoryId);
-            if (category == null || category.Category_TypeId != (int)CategoryTypes.ProductVariant)
+            if (category == null || category.CategoryTypeId != (int)CategoryTypes.ProductVariant)
                 return HttpNotFound();
 
             ViewBag.Categories = Categories;
@@ -142,7 +142,7 @@ namespace VCMS.Lib.Controllers
                 Image = model.PreviewImageId,
             };
 
-            var cMaterials = model.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Material);
+            var cMaterials = model.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Material);
             var materials = new List<int>();
             foreach (var category in cMaterials)
             {
@@ -191,7 +191,7 @@ namespace VCMS.Lib.Controllers
         {
             get
             {
-                var categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Material)
+                var categories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Material)
                     .Select(o => new SelectListItem { Text = o.Name, Value = (o.Id).ToString() }).ToList();
                 return categories;
             }

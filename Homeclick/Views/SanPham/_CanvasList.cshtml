@@ -1,11 +1,9 @@
-﻿@using Homeclick.Models
-@model IList<Product>
-
+﻿@using VCMS.Lib.Models
+@model IEnumerable<Product>
 
 @foreach (Product product in Model)
 {
-    Dictionary<string, object> productArr = product.ToArray();
-    Dictionary<string, object> detail = productArr["Product_detail"] as Dictionary<string, object>;
+    var detail = product.DetailsToDictionary();
         <div class="product">
             <div class="product-image">
                 <a href="#" class="product-link svg-item" data-svg="@detail["data"]" data-can-scale="@detail["scale"]">

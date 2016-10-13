@@ -22,7 +22,7 @@ namespace VCMS.Lib.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var cRoom = db.Categories.Find(id);
-            if (cRoom == null || cRoom.Category_TypeId != (int)CategoryTypes.Model)
+            if (cRoom == null || cRoom.CategoryTypeId != (int)CategoryTypes.Model)
                 return HttpNotFound();
 
             var typologies = cRoom.CategoryChildren;
@@ -36,7 +36,7 @@ namespace VCMS.Lib.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var category = db.Categories.Find(id);
-            if (category == null || category.Category_TypeId != (int)parentType)
+            if (category == null || category.CategoryTypeId != (int)parentType)
                 return HttpNotFound();
  
             ViewBag.Typologies = GetDistinctCategories(category); ;
@@ -56,10 +56,10 @@ namespace VCMS.Lib.Controllers
 
             if (ModelState.IsValid)
             {
-                if (parent?.Category_TypeId == (int)parentType)
+                if (parent?.CategoryTypeId == (int)parentType)
                 {
                     var child = db.Categories.Find(viewModel.ChildId);
-                    if (child?.Category_TypeId == (int)childType && !parent.CategoryChildren.Contains(child))
+                    if (child?.CategoryTypeId == (int)childType && !parent.CategoryChildren.Contains(child))
                     {
                         parent.CategoryChildren.Add(child);
                         db.Entry(parent).State = System.Data.Entity.EntityState.Modified;
@@ -78,10 +78,10 @@ namespace VCMS.Lib.Controllers
         {
             int result = 0;
             var parent = db.Categories.Find(roomId);
-            if (parent?.Category_TypeId == (int)parentType)
+            if (parent?.CategoryTypeId == (int)parentType)
             {
                 var child = db.Categories.Find(typoId);
-                if (child?.Category_TypeId == (int)childType && parent.CategoryChildren.Contains(child))
+                if (child?.CategoryTypeId == (int)childType && parent.CategoryChildren.Contains(child))
                 {
                     parent.CategoryChildren.Remove(child);
                     result = await db.SaveChangesAsync();
@@ -92,7 +92,7 @@ namespace VCMS.Lib.Controllers
 
         public IEnumerable<SelectListItem> GetDistinctCategories(Category parent)
         {
-            var typologies = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Typology).ToList();
+            var typologies = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Typology).ToList();
             var result = typologies.Except(parent.CategoryChildren).Select(o => new SelectListItem { Text = o.Name, Value = o.Id.ToString() });
             return result;
         }

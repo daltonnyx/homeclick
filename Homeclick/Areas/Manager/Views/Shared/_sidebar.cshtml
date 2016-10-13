@@ -1,9 +1,9 @@
-﻿@using VCMS.Lib.Controllers
+﻿@using VCMS.Lib.Common
 @using VCMS.Lib.Models
+@using VCMS.Lib.Controllers
 @{
-    var controller = ViewContext.Controller as BaseController;
-    var controllerName = ViewContext.RouteData.Values["controller"].ToString().ToLower();
-    var db = controller.GetDbContext();
+    var controllerName = Html.GetControllerName();
+    var db = (ViewContext.Controller as BaseController).GetDbContext();
 }
 
 
@@ -22,27 +22,46 @@
             </form>
         </li>
         <!-- END Search Form -->
-        <li data-page="Dashboard">
-            <a href="@Url.Action("Index", "Dashboard")">
+        <li class="@Html.Raw(controllerName == ConstantKeys.CONTROLLER_NAME_DASHBOARD ? "active" : string.Empty)">
+            <a href="@Url.Action("Index", ConstantKeys.CONTROLLER_NAME_DASHBOARD)">
                 <i class="fa fa-dashboard"></i>
                 <span>Dashboard</span>
             </a>
         </li>
-
+        <li class="@Html.Raw(controllerName == ConstantKeys.CONTROLLER_NAME_USERS ? "active" : string.Empty)">
+            <a href="@Url.Action("List", ConstantKeys.CONTROLLER_NAME_USERS)">
+                <i class="fa fa-users"></i>
+                <span>Users</span>
+            </a>
+        </li>
+        <li class="@Html.Raw(controllerName == ConstantKeys.CONTROLLER_NAME_ROLES ? "active" : string.Empty)">
+            <a href="@Url.Action("List", ConstantKeys.CONTROLLER_NAME_ROLES)">
+                <i class="fa fa-key"></i>
+                <span>Roles</span>
+            </a>
+        </li>
         <li>
-            <a href="#" class="dropdown-toggle">
-                <i class="fa fa-desktop"></i>
+            <a class="dropdown-toggle">
+                <i class="fa fa-gears"></i>
                 <span>System</span>
                 <b class="arrow fa fa-angle-right"></b>
             </a>
-
-            <!-- BEGIN Submenu a-->
             <ul class="submenu">
-                <li data-page="users"><a href="@Url.Action("List", "Users")">Users</a></li>
-                <li data-page="roles"><a href="@Url.Action("List", "Roles")">Roles</a></li>
+                <li class="@Html.Raw(controllerName == ConstantKeys.CONTROLLER_NAME_CUSTOMFIELDS ? "active" : string.Empty)">
+                    <a href="@Url.Action("List", ConstantKeys.CONTROLLER_NAME_CUSTOMFIELDS)">
+                        <span>Custom Fields</span>
+                    </a>
+                </li>
             </ul>
-            <!-- END Submenu -->
+            <ul class="submenu">
+                <li class="@Html.Raw(controllerName == ConstantKeys.CONTROLLER_NAME_CATEGORIES ? "active" : string.Empty)">
+                    <a href="@Url.Action("List", ConstantKeys.CONTROLLER_NAME_CATEGORIES)">
+                        <span>Categories</span>
+                    </a>
+                </li>
+            </ul>
         </li>
+
 
         <li class="@Html.Raw(controllerName == "products" ||controllerName == "productvariants" ? "active" : "")">
             <a class="dropdown-toggle">
@@ -53,11 +72,11 @@
 
             <!-- BEGIN Submenu -->
             <ul class="submenu">
-                @{ 
-                    var variantCategories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.ProductVariant);
+                @{
+                    var variantCategories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProductVariant);
                     var currentCategoryId = int.Parse(Request.Params["categoryId"] ?? "-1");
 
-                    }
+                }
                 <li class="@Html.Raw(variantCategories.Select(o => o.Id).Contains(currentCategoryId) ? "active" : "")">
                     <span>Variants</span>
                     <ul>
@@ -67,11 +86,12 @@
                         }
                     </ul>
                 </li>
-                <li data-page="products"><a href="@Url.Action("List", "Products")">Products</a>
+                <li data-page="products">
+                    <a href="@Url.Action("List", "Products")">Products</a>
                     @if (Request.Params["productId"] != null || Request.Params["optionId"] != null)
                     {
-                        var product = 
-                            db.Products.Find(int.Parse(Request.Params["productId"] ?? "-1")) ?? 
+                        var product =
+                            db.Products.Find(int.Parse(Request.Params["productId"] ?? "-1")) ??
                             db.Product_Options.Find(int.Parse(Request.Params["optionId"] ?? "-1")).Product;
                         if (product != null)
                         {
@@ -88,7 +108,7 @@
                 <li>
                     <span>Categories</span>
                     <ul>
-                        @{ var rooms = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Model);
+                        @{ var rooms = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Model);
                             foreach (var room in rooms)
                             {
                                 <li data-page="rooms-@room.Id">
@@ -112,7 +132,7 @@
                 <li>
                     <span>Categories</span>
                     <ul>
-                        @{ var cCollections = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+                        @{ var cCollections = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Collection);
                             foreach (var cCollection in cCollections)
                             {
                                 if (cCollection.CategoryParents.Count == 0)
@@ -134,7 +154,7 @@
                 <b class="arrow fa fa-angle-right"></b>
             </a>
             <ul class="submenu">
-                @foreach (var category in db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Slide))
+                @foreach (var category in db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Slide))
                 {
                     <li><a href="@Url.Action("List", "Slides", new { categoryId = category.Id})">@category.Name</a></li>
                 }

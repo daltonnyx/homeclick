@@ -8,8 +8,8 @@ namespace VCMS.Lib.Models
     using System.Data.Entity.Spatial;
     using System.Linq;
 
-    [Table("Category")]
-    public partial class Category : BaseModel
+    [Table("Categories")]
+    public partial class Category : BaseModel, OrderedModelBase
     {
         public Category()
         {
@@ -17,12 +17,12 @@ namespace VCMS.Lib.Models
             CategoryParents = new HashSet<Category>();
             CategoryChildren = new HashSet<Category>();
             Products = new HashSet<Product>();
+            CustomFields = new HashSet<CustomField>();
         }
 
         [Key]
         public new int Id { get; set; }
 
-        [Column("name")]
         [StringLength(128)]
         public string Name { get; set; }
 
@@ -30,14 +30,21 @@ namespace VCMS.Lib.Models
 
         public int? Order { get; set; }
 
-        public int? Category_TypeId { get; set; }
+        public int? CategoryParentId { get; set; }
 
-        public virtual Category_Type Category_Type { get; set; }
+        public int? CategoryTypeId { get; set; }
+
+        public virtual Category CategoryParent { get; set; }
+
+        public virtual Category_Type CategoryType { get; set; }
+
+        public virtual ICollection<Category> Children { get; set; }
 
         public virtual ICollection<Category_detail> Category_details { get; set; }
 
+        //temp
         public virtual ICollection<Category> CategoryParents { get; set; }
-
+        //temp
         public virtual ICollection<Category> CategoryChildren { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
@@ -51,6 +58,8 @@ namespace VCMS.Lib.Models
         public virtual ICollection<Slide> Slides { get; set; }
 
         public virtual ICollection<Project> Projects { get; set; }
+
+        public virtual ICollection<CustomField> CustomFields { get; set; }
     }
 
     public partial class Category
@@ -68,7 +77,7 @@ namespace VCMS.Lib.Models
                                 where (from cat2 in product.Categories
                                        where cat2.Id == this.Id
                                        select cat2).Count<Category>() > 0
-                                select product).Count<Product>() > 0 && cat.Category_Type.Name == descendantType
+                                select product).Count<Product>() > 0 && cat.CategoryType.Name == descendantType
                               select cat).ToList<Category>();
                 return descendant;
             }

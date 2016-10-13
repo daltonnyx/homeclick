@@ -16,7 +16,7 @@ namespace Homeclick.Controllers
 
         public virtual ActionResult _Sidebar()
         {
-            var categories = db.Categories.Where(c => c.Category_TypeId == (int)CategoryType).ToList();
+            var categories = db.Categories.Where(c => c.CategoryTypeId == (int)CategoryType).ToList();
             return PartialView(categories);
         }
 
@@ -24,7 +24,7 @@ namespace Homeclick.Controllers
         {
             var maxItem = 3;
             var dic = new Dictionary<Category, IEnumerable<Post>>();
-            var categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+            var categories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Collection);
             foreach (var category in categories)
             {
                 var posts = category.GetAllPost().PickRandom(maxItem);

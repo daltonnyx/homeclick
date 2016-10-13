@@ -11,12 +11,17 @@ namespace VCMS.Lib.Models
     public class CreateUserViewModel
     {
         [Required]
+        [Display(Name = "UserName", ResourceType = typeof(Strings))]
+        [StringLength(32, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        public string UserName { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email", ResourceType = typeof(Strings))]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(32, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password", ResourceType = typeof(Strings))]
         public string Password { get; set; }
@@ -27,6 +32,6 @@ namespace VCMS.Lib.Models
         public string ConfirmPassword { get; set; }
 
         [Display(Name = "Roles", ResourceType =typeof(Strings))]
-        public string[] Roles { get; set; }
+        public string[] RoleList { get; set; }
     }
 }

@@ -7,13 +7,16 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using VCMS.Lib.Common;
 using VCMS.Lib.Models;
 
 namespace VCMS.Lib.Controllers
 {
+    using static ConstantKeys;
+    using static TemplateStrings;
+
     public class RolesController : UserManageController
     {
-        
         public ActionResult List()
         {
             return View();
@@ -34,46 +37,46 @@ namespace VCMS.Lib.Controllers
                 var result = await RoleManager.CreateAsync(role);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("List");
+                    var messageCollection = new List<Message>();
+                    messageCollection.Add(new Message { MessageType = MessageTypes.Success, MessageContent = string.Format("<strong>{0}</strong> has been created!", role.Name)});
+                    TempData[ACTION_RESULT_MESSAGES] = messageCollection;
+                    return RedirectToAction("Create");
                 }
                 AddErrors(result);
             }
             return View(model);
         }
 
-        public async Task<ActionResult> Delete(string role_id)
-        {
-            var role = await RoleManager.FindByIdAsync(role_id);
-            if (role != null)
-            {
-                var model = new RoleViewModel { Id = role.Id, Name = role.Name };
-                return View(model);
-            }
-            return RedirectToAction("Dashboard", "Pages");
-        }
-
-        //
-        // POST: /Users/DeleteComfirmed
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(RoleViewModel model)
+        public async Task<ActionResult> DeleteConfirmed(string[] ids)
         {
-            if (ModelState.IsValid)
+            var messageCollection = new List<Message>();
+            var successes = new List<string>();
+            foreach (var id in ids)
             {
-                var role = await RoleManager.FindByIdAsync(model.Id);
+                var role = await RoleManager.FindByIdAsync(id);
                 if (role != null)
-                {
-                    var result = await RoleManager.DeleteAsync(role);
-                    if (result.Succeeded)
-                        return RedirectToAction("List");
-                    AddErrors(result);
-                }
-                else
-                {
-                    AddErrors("Role not found!");
-                }
+                    try
+                    {
+                        var result = RoleManager.Delete(role);
+                        if (!result.Succeeded)
+                            foreach (var err in result.Errors)
+                            {
+                                messageCollection.Add(new Message { MessageType = MessageTypes.Danger, MessageContent = err });
+                            }
+                        else
+                            successes.Add(string.Format(HTML_STRONG, role.Name));
+                    }
+                    catch (Exception)
+                    {
+                        messageCollection.Add(new Message { MessageType = MessageTypes.Danger, MessageContent = string.Format(MODEL_DELETE_ERROR_UNKNOW, role.Name) });
+                    }
             }
-            return View(model);
+            if (successes.Count != 0)
+                messageCollection.Add(new Message { MessageType = MessageTypes.Warning, MessageContent = string.Format(MODEL_DELETE_RESULT, "Roles", string.Join(", ", successes.ToArray()), successes.Count) });
+
+            TempData[ACTION_RESULT_MESSAGES] = messageCollection;
+            return RedirectToAction("List");
         }
 
         public async Task<ActionResult> Edit(string role_id)
@@ -111,35 +114,28 @@ namespace VCMS.Lib.Controllers
             return View(model);
         }
 
+        #region[Datatables]
+        private DTResult<T> getResult<T>(DTParameters param) where T : Dictionary<string, object>, new()
+        {
+            var dtsource = new List<T>();
+            var roles = db.Roles;
+            foreach (var role in roles)
+            {
+                var obj = new T {
+                        {"id", role.Id },
+                        {"name", role.Name},
+                        {"users", role.Users.Count}
+                    };
+                dtsource.Add(obj);
+            }
+            return JDatatables<T>.GetDTResult(param, dtsource);
+        }
+
         public JsonResult DataHandler(DTParameters param)
         {
             try
             {
-                var dtsource = db.Roles.Select(o => new RoleViewModel { Id = o.Id, Name = o.Name}).ToList();
-
-                List<String> columnSearch = new List<string>();
-
-                foreach (var col in param.Columns)
-                {
-                    columnSearch.Add(col.Search.Value);
-                }
-                var search = param.Search.Value;
-
-                Expression<Func<RoleViewModel, bool>> pre = (p => (search == null || (p.Name != null && p.Name.ToLower().Contains(search.ToLower())))
-                && (columnSearch[0] == null || (p.Name != null && p.Name.ToLower().Contains(columnSearch[1].ToLower()))));
-
-                var resultSet = new ResultSet();
-                List<RoleViewModel> data = resultSet.GetResult(pre, param.SortOrder, param.Start, param.Length, dtsource);
-
-                var jsonResult = new List<object>();
-                int count = new ResultSet().Count(pre, dtsource);
-                DTResult<RoleViewModel> result = new DTResult<RoleViewModel>
-                {
-                    draw = param.Draw,
-                    data = data,
-                    recordsFiltered = count,
-                    recordsTotal = count
-                };
+                var result = getResult<Dictionary<string, object>>(param);
                 return Json(result);
             }
             catch (Exception ex)
@@ -147,5 +143,6 @@ namespace VCMS.Lib.Controllers
                 return Json(new { error = ex.Message });
             }
         }
+        #endregion
     }
 }

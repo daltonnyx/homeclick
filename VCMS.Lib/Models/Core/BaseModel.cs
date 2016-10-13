@@ -19,12 +19,6 @@ namespace VCMS.Lib.Models
 
     public class BaseModel
     {
-        public BaseModel()
-        {
-            var guid = Guid.NewGuid();
-            this.Id = guid.ToString();
-        }
-
         [Key]
         [StringLength(128)]
         public string Id { get; set; }

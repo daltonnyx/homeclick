@@ -31,8 +31,8 @@
                     @RenderSection("breadcrumb", required: false)
                 </ul>
             </div>
+            @Html.Partial("Widgets/DisplayMessages")
             @RenderBody()
-
             @RenderSection("ActionLinks",false)
         </div>
     </main>
@@ -40,23 +40,10 @@
     @*-----------------JS------------------*@
     @Scripts.Render("~/bundles/manager/jquery")
     @Scripts.Render("~/bundles/manager/bootstrap")
-    @Scripts.Render("~/bundles/manager/flaty")
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/manager/flaty")
     <script>
-        var cCtrler = "@Html.ViewContext.RouteData.GetRequiredString("controller").ToLower()";
-        var rprm = '@Html.ViewContext.RouteData.Values["id"]';
-        $(function () {
-            if (rprm != '') {
-                cCtrler = cCtrler + '-' + rprm;
-            }
-            var sidebarListItems = $('#sidebar').find('li');
-            var active = sidebarListItems.filter('[data-page="' + cCtrler + '"]');
-            if (active) {
-                active.addClass("active");
-                var liParents = active.parents('li');
-                liParents.addClass("active");
-            }
-        });
+        $('.submenu li.active').parents().addClass('active');
     </script>
 </body>
 </html>

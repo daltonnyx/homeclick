@@ -1,4 +1,4 @@
-﻿using Homeclick.Models;
+﻿using VCMS.Lib.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace Homeclick.Controllers
     public class DesignController : Controller
     {
 
-        vinabits_homeclickEntities db = new vinabits_homeclickEntities();
+        ApplicationDbContext db = new ApplicationDbContext();
         //
         // GET: /Design/
         public ActionResult Index()
@@ -29,7 +29,7 @@ namespace Homeclick.Controllers
 
         public ActionResult getDepartments(int? id = null)
         {
-            var model = db.Departments.Where<Department>(d => d.ParentDepartmentId == id).ToList<Department>();
+            var model = db.Departments.Where(d => d.ParentDepartmentId == id).ToList();
             return PartialView("Departments", model);
         }
 
@@ -47,7 +47,7 @@ namespace Homeclick.Controllers
 
         public ActionResult Canvas(int? id)
         {
-            var categoryTypes = db.Category_type.ToList();
+            var categoryTypes = db.Category_types.ToList();
 
             categoryTypes.Remove(categoryTypes.Find(o => o.Id == 17));
             categoryTypes.Remove(categoryTypes.Find(o => o.Id == 18));
@@ -62,7 +62,7 @@ namespace Homeclick.Controllers
 
         public ActionResult _CategoryOptions(int? CategoryTypeId)
         {
-            var categories = db.Categories.Where(o => o.Category_typeId == CategoryTypeId).ToList();
+            var categories = db.Categories.Where(o => o.CategoryTypeId == CategoryTypeId).ToList();
             return PartialView(categories);
         }
 

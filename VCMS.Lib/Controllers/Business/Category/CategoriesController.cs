@@ -10,165 +10,80 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using VCMS.Lib.Models;
 using VCMS.Lib.Models.Datatables;
+using VCMS.Lib.Common;
 
 namespace VCMS.Lib.Controllers
 {
+    using static ConstantKeys;
+
     public class CategoriesController : BaseController
     {
+        public IQueryable<Category_Type> GetAllType()
+        {
+            return db.Category_types;
+        }
+
         public virtual ActionResult List()
         {
-            var types = db.Category_types.ToList();
-            var viewModels = types.Select(o => new CategoryTypeViewModel
-            {
-                Id = o.Id,
-                Name = o.Name,
-                Count = o.Categories.Count
-            });
-
-            return View(viewModels);
+            ViewData[CATEGORY_TYPES] = GetAllType();
+            return View();
         }
 
-        public virtual ActionResult Index(int? id)
+        #region[Datatables]
+        private IQueryable<Category> FilterDbSource(Dictionary<string, string> args)
         {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            var categoryType = db.Category_types.Find(id);
-            if (categoryType == null)
-                return HttpNotFound();
-
-            var categories = db.Categories.Where(o => o.Category_TypeId == id);
-            ViewBag.Categories = categories;
-            return View(categoryType);
-        }
-
-
-        public virtual ActionResult CreateCategory(int? id, bool? success, string successObjectName)
-        {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var parent = db.Categories.Find(id);
-            if (parent == null)
-                return HttpNotFound();
-
-            var viewModel = new CategoryViewModel
-            {
-                ParentId = parent.Id,
-                ParentName = parent.Name,
-                TypeName = parent.Category_Type.Name,
-            };
-
-            if (success == true)
-            {
-                ViewData["Success"] = success;
-                ViewData["SuccessObjectName"] = successObjectName;
-            }
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public virtual ActionResult CreateCategory(CategoryViewModel viewModel)
-        {
-            var parentCategory = db.Categories.Find(viewModel.ParentId);
-
-            if (parentCategory != null && ModelState.IsValid)
-            {
-                var model = new Category
+            var categories = db.Categories.AsQueryable();
+            if (args != null)
+                foreach (var arg in args)
                 {
-                    Name = viewModel.Name,
-                    Description = viewModel.Desciption,
-                };
-                model.CategoryParents.Add(parentCategory);
-                db.Categories.Add(model);
-                db.SaveChanges();
-                return RedirectToAction("CreateCategory", new { id = parentCategory.Id, success = true, successObjectName = model.Name });
-            }
-            return View(viewModel);
-        }
-
-        /// <summary>
-        /// Edit a category for type.
-        /// </summary>
-        /// <param name="id">Target category-parent Id</param>
-        /// <returns></returns>
-        public ActionResult EditCategory(int? id, int? categoryId)
-        {
-            if (id == null || categoryId == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            var parent = db.Categories.Find(id);
-            var category = db.Categories.Find(categoryId);
-            if (parent == null || category == null)
-                return HttpNotFound();
-
-            var viewModel = new CategoryViewModel
-            {
-                CategoryId = category.Id,
-                Name = category.Name,
-                Desciption = category.Description,
-                ParentId = parent.Id,
-                ParentName = parent.Name,
-                TypeId = parent.Category_TypeId ?? null,
-                TypeName = parent.Category_Type?.Name ?? null
-            };
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public virtual ActionResult EditCategory(CategoryViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var type = db.Category_types.Find(viewModel.TypeId);
-                var parent = db.Categories.Find(viewModel.ParentId);
-                if (type != null && parent !=null)
-                {
-                    var category = db.Categories.Find(viewModel.CategoryId);
-                    if (category != null && parent.CategoryChildren.Contains(category))
+                    if (arg.Key.Contains(CATEGORY_TYPE))
                     {
-                        category.Name = viewModel.Name;
-                        category.Description = viewModel.Desciption;
-                        db.Entry(category).State = System.Data.Entity.EntityState.Modified;
-                        var result = db.SaveChanges();
-                        if (result > 0)
-                            return RedirectToAction("Index", new { id = parent.Id });
+                        int value;
+                        if (int.TryParse(arg.Value, out value))
+                            categories = categories.Where(o => o.CategoryTypeId == value);
                     }
                 }
-            }
-            return View(viewModel);
+            return categories;
         }
 
-
-        /// <summary>
-        /// Delete a category with given id.
-        /// </summary>
-        /// <param name="id">Category Id</param>
-        /// <returns></returns>
-        public ActionResult DeleteCategory (int? id)
+        private DTResult<T> GetDtResult<T>(DTParameters param, Dictionary<string, string> args) where T : Dictionary<string, object>, new()
         {
-            var result = "";
-            var category = db.Categories.Find(id);
-            if (category != null)
-                try
-                {
-                    db.Categories.Remove(category);
-                    db.SaveChanges();
-                    result = "Success";
-                }
-                catch (Exception ex)
-                {
-                    var sb = new StringBuilder();
-                    sb.AppendLine("Delete failure!");
-                    sb.AppendLine("Error code: " + ((ex.InnerException.InnerException) as SqlException).Number);
-                    result = sb.ToString();
-                }
-            else
-                result = "Incorrect ID!";
+            var dtsource = new List<T>();
+            var dbSource = FilterDbSource(args);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            var hierarchyNodes = dbSource.AsHierarchy(o => o.Id, o => o.CategoryParentId);
+            var sortedNodes = hierarchyNodes.OrderBy(o => o.Entity.Order);
+            var ordered = new List<HierarchyNode<Category>>();
+            foreach (var node in sortedNodes)
+            {
+                ordered.AddRange(node.NodesToListOrdered());
+            }
+
+            foreach (var item in ordered)
+            {
+                dtsource.Add(new T
+                {
+                    {"name", item.Entity.Name },
+                    {"description", item.Entity.Description },
+                    {"level", item.Depth - 1}
+                });
+            }
+
+            return JDatatables<T>.GetDTResult(param, dtsource);
         }
+
+        public JsonResult DataHandler(DTParameters param, Dictionary<string, string> args)
+        {
+            try
+            {
+                var result = GetDtResult<Dictionary<string, object>>(param, args);
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message });
+            }
+        }
+        #endregion
     }
 }

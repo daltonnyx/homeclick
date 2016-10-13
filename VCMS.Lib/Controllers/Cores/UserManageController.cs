@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Web;
 using System.Web.Mvc;
+using VCMS.Lib.Models;
 
 namespace VCMS.Lib.Controllers
 {

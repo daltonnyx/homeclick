@@ -12,7 +12,7 @@ namespace Homeclick.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            Canvas = new HashSet<Canva>();
+            //Canvas = new HashSet<Canva>();
             Carts = new HashSet<Cart>();
             Posts = new HashSet<Post>();
             Products = new HashSet<Product>();
@@ -38,7 +38,7 @@ namespace Homeclick.Models
         public string StoredPassword { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Canva> Canvas { get; set; }
+        //public virtual ICollection<Canva> Canvas { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Carts { get; set; }

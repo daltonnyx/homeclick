@@ -123,6 +123,20 @@ namespace VCMS.Lib.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult DeleteFileByPath(string src)
+        {
+            var result = 0;
+            var id = System.IO.Path.GetFileNameWithoutExtension(src);
+            var file = db.Files.Find(id);
+            if (file != null)
+            {
+                db.Files.Remove(file);
+                result = db.SaveChanges();
+            }
+            return Json(result);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

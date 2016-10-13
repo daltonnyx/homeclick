@@ -212,7 +212,6 @@
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\SanPhamController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -223,21 +222,17 @@
     <Compile Include="Models\ViewModel\ColorViewModel.cs" />
     <Compile Include="Models\ContextExtension.cs" />
     <Compile Include="Models\Feedback.cs" />
-    <Compile Include="Models\Extends\Floor.cs" />
     <Compile Include="Models\Giohang.cs" />
     <Compile Include="Models\Helper\ModelHelper.cs" />
     <Compile Include="Models\Extends\Post.cs" />
     <Compile Include="Models\ProductsLayoutsLink.cs" />
     <Compile Include="Models\Extends\Product.cs" />
     <Compile Include="Models\ViewModel\ProjectViewModel.cs" />
-    <Compile Include="Models\Web\Canva.cs" />
     <Compile Include="Models\Web\Cart.cs" />
     <Compile Include="Models\Web\Category.cs" />
     <Compile Include="Models\Web\Category_detail.cs" />
     <Compile Include="Models\Web\Category_type.cs" />
     <Compile Include="Models\Web\City.cs" />
-    <Compile Include="Models\Web\Department.cs" />
-    <Compile Include="Models\Web\Floor.cs" />
     <Compile Include="Models\Web\Post.cs" />
     <Compile Include="Models\Web\Post_detail.cs" />
     <Compile Include="Models\Web\Product.cs" />
@@ -246,7 +241,6 @@
     <Compile Include="Models\Web\Project.cs" />
     <Compile Include="Models\Web\ProjectItem.cs" />
     <Compile Include="Models\Web\ProjectLayout_Collection.cs" />
-    <Compile Include="Models\Web\Room.cs" />
     <Compile Include="Models\Web\State.cs" />
     <Compile Include="Models\Web\Tag.cs" />
     <Compile Include="Models\Web\User.cs" />
@@ -368,6 +362,26 @@
     <Content Include="Areas\Manager\Content\lib\images\sort_asc.png" />
     <Content Include="Areas\Manager\Content\lib\images\sort_both.png" />
     <Content Include="Areas\Manager\Content\lib\images\sort_desc.png" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\AUTHORS.txt" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\external\jquery\jquery.js" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\images\ui-icons_444444_256x240.png" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\images\ui-icons_555555_256x240.png" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\images\ui-icons_777620_256x240.png" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\images\ui-icons_777777_256x240.png" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\index.html" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\jquery-ui.css" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\jquery-ui.js" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\jquery-ui.min.css" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\jquery-ui.min.js" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\jquery-ui.structure.css" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\jquery-ui.structure.min.css" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\jquery-ui.theme.css" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\jquery-ui.theme.min.css" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\LICENSE.txt" />
+    <Content Include="Areas\Manager\Content\lib\jquery.formtowirard\jquery.formtowizard.css" />
+    <Content Include="Areas\Manager\Content\lib\jquery.formtowirard\jquery.formtowizard.js" />
     <Content Include="Areas\Manager\Content\lib\jQueryFileUpload\css\demo-ie8.css" />
     <Content Include="Areas\Manager\Content\lib\jQueryFileUpload\css\demo.css" />
     <Content Include="Areas\Manager\Content\lib\jQueryFileUpload\css\jquery.fileupload-noscript.css" />
@@ -431,7 +445,10 @@
     <Content Include="Areas\Manager\Content\lib\jquery\jquery-1.10.2.js" />
     <Content Include="Areas\Manager\Content\lib\jquery\jquery-1.11.0.js" />
     <Content Include="Areas\Manager\Content\lib\jquery\jquery-1.11.3.min.js" />
+    <Content Include="Areas\Manager\Content\lib\moment.js" />
     <Content Include="Areas\Manager\Uploads\Images\NoImageFound.png" />
+    <Content Include="Areas\Manager\Views\Categories\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\Categories\List.cshtml" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -535,14 +552,10 @@
     <Content Include="Areas\Manager\Views\Account\Register.cshtml" />
     <Content Include="Areas\Manager\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Manager\Views\Roles\Create.cshtml" />
-    <Content Include="Areas\Manager\Views\Roles\Delete.cshtml" />
     <Content Include="Areas\Manager\Views\Roles\Edit.cshtml" />
     <Content Include="Areas\Manager\Views\Roles\List.cshtml" />
     <Content Include="Areas\Manager\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Manager\Views\Users\ChangePassword.cshtml" />
     <Content Include="Areas\Manager\Views\Users\Create.cshtml" />
-    <Content Include="Areas\Manager\Views\Users\Delete.cshtml" />
-    <Content Include="Areas\Manager\Views\Users\Details.cshtml" />
     <Content Include="Areas\Manager\Views\Users\Edit.cshtml" />
     <Content Include="Areas\Manager\Views\Users\List.cshtml" />
     <Content Include="Areas\Manager\Views\FileManager\Create.cshtml" />
@@ -569,12 +582,6 @@
     <Content Include="Areas\Manager\Views\FeatureProducts\Add.cshtml" />
     <Content Include="Areas\Manager\Views\Rooms\Index.cshtml" />
     <Content Include="Areas\Manager\Views\Rooms\Add.cshtml" />
-    <Content Include="Areas\Manager\Views\Categories\Index.cshtml" />
-    <Content Include="Areas\Manager\Views\Categories\Create.cshtml" />
-    <Content Include="Areas\Manager\Views\Categories\Edit.cshtml" />
-    <Content Include="Areas\Manager\Views\Categories\List.cshtml" />
-    <Content Include="Areas\Manager\Views\Categories\EditType.cshtml" />
-    <Content Include="Areas\Manager\Views\Categories\CreateType.cshtml" />
     <Content Include="Areas\Manager\Content\lib\fonts\arial.eot" />
     <Content Include="Areas\Manager\Content\lib\fonts\arial.otf" />
     <Content Include="Areas\Manager\Content\lib\fonts\arial.ttf" />
@@ -645,6 +652,11 @@
     <Content Include="Areas\Manager\Views\Shared\_imageFile.cshtml" />
     <Content Include="Areas\Manager\Views\Projects\Edit.cshtml" />
     <Content Include="Areas\Manager\Views\Projects\Details.cshtml" />
+    <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\package.json" />
+    <Content Include="Areas\Manager\Views\Shared\Widgets\ImageUpload.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\Widgets\DeleteConfirmModal.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\Widgets\DisplayMessages.cshtml" />
+    <Content Include="Areas\Manager\Views\CustomFields\List.cshtml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1095,6 +1107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Manager\Uploads\Images\design\" />
     <Folder Include="Areas\Manager\Uploads\Images\thumb\" />
     <Folder Include="Scripts\Plugins\ResponsiveMenu\" />
     <Folder Include="Scripts\Plugins\shareThis\" />

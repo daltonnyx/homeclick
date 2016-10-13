@@ -2198,8 +2198,10 @@ a.btn {
 }
 .pagination > li.active > a,
 .pagination > li.active > a:hover {
+    /*
     background-color: #e9e9e9;
     color: #555;
+    */
 }
 
 
@@ -2524,77 +2526,78 @@ a.tile:hover {
     border-bottom-color: #333;
 }
 
-.tabbable .tab-content {
+.tabbable .tab-content, .content {
+    background: #fff;
     border: 1px solid #ddd;
     padding: 16px 12px;
     position: relative;
     z-index: 11;
 }
-.tabbable.tabs-below > .nav-tabs {
+.tabbable.tabbable-below > .nav-tabs {
     border-bottom-width: 0;
     border-color: #ddd;
     margin-bottom: 0;
     margin-top: -1px;
     top: auto;
 }
-.tabbable.tabs-below > .nav-tabs > li > a,
-.tabbable.tabs-below > .nav-tabs > li > a:hover,
-.tabbable.tabs-below > .nav-tabs > li > a:focus {
+.tabbable.tabbable-below > .nav-tabs > li > a,
+.tabbable.tabbable-below > .nav-tabs > li > a:hover,
+.tabbable.tabbable-below > .nav-tabs > li > a:focus {
     border-color: #ddd;
 }
-.tabbable.tabs-below > .nav-tabs > li.active > a,
-.tabbable.tabs-below > .nav-tabs > li.active > a:hover,
-.tabbable.tabs-below > .nav-tabs > li.active > a:focus {
+.tabbable.tabbable-below > .nav-tabs > li.active > a,
+.tabbable.tabbable-below > .nav-tabs > li.active > a:hover,
+.tabbable.tabbable-below > .nav-tabs > li.active > a:focus {
     border-bottom: 2px solid #ddd;
     border-color: transparent #ddd #ddd;
     border-top-width: 1px;
     margin-top: 0;
 }
-.tabbable.tabs-left > .nav-tabs > li > a,
-.tabbable.tabs-right > .nav-tabs > li > a {
+.tabbable.tabbable-left > .nav-tabs > li > a,
+.tabbable.tabbable-right > .nav-tabs > li > a {
     min-width: 60px;
 }
-.tabbable.tabs-left > .nav-tabs {
+.tabbable.tabbable-left > .nav-tabs {
     border-color: #ddd;
     float: left;
     margin-bottom: 0;
     top: auto;
 }
-.tabbable.tabs-left > .nav-tabs > li {
+.tabbable.tabbable-left > .nav-tabs > li {
     float: none;
 }
-.tabbable.tabs-left > .nav-tabs > li > a,
-.tabbable.tabs-left > .nav-tabs > li > a:focus,
-.tabbable.tabs-left > .nav-tabs > li > a:hover {
+.tabbable.tabbable-left > .nav-tabs > li > a,
+.tabbable.tabbable-left > .nav-tabs > li > a:focus,
+.tabbable.tabbable-left > .nav-tabs > li > a:hover {
     border-color: #ddd;
     margin: 0 -1px 0 0;
 }
-.tabbable.tabs-left > .nav-tabs > li.active > a,
-.tabbable.tabs-left > .nav-tabs > li.active > a:focus,
-.tabbable.tabs-left > .nav-tabs > li.active > a:hover {
+.tabbable.tabbable-left > .nav-tabs > li.active > a,
+.tabbable.tabbable-left > .nav-tabs > li.active > a:focus,
+.tabbable.tabbable-left > .nav-tabs > li.active > a:hover {
     border-color: #ddd transparent #ddd #ddd;
     border-left: 2px solid #ddd;
     border-top-width: 1px;
     margin: 0 -1px;
 }
-.tabbable.tabs-right > .nav-tabs {
+.tabbable.tabbable-right > .nav-tabs {
     border-color: #ddd;
     float: right;
     margin-bottom: 0;
     top: auto;
 }
-.tabbable.tabs-right > .nav-tabs > li {
+.tabbable.tabbable-right > .nav-tabs > li {
     float: none;
 }
-.tabbable.tabs-right > .nav-tabs > li > a,
-.tabbable.tabs-right > .nav-tabs > li > a:focus,
-.tabbable.tabs-right > .nav-tabs > li > a:hover {
+.tabbable.tabbable-right > .nav-tabs > li > a,
+.tabbable.tabbable-right > .nav-tabs > li > a:focus,
+.tabbable.tabbable-right > .nav-tabs > li > a:hover {
     border-color: #ddd;
     margin: 0 -1px;
 }
-.tabbable.tabs-right > .nav-tabs > li.active > a,
-.tabbable.tabs-right > .nav-tabs > li.active > a:focus,
-.tabbable.tabs-right > .nav-tabs > li.active > a:hover {
+.tabbable.tabbable-right > .nav-tabs > li.active > a,
+.tabbable.tabbable-right > .nav-tabs > li.active > a:focus,
+.tabbable.tabbable-right > .nav-tabs > li.active > a:hover {
     border-color: #ddd #ddd #ddd transparent;
     border-right: 2px solid #ddd;
     border-top-width: 1px;
@@ -2625,8 +2628,8 @@ a.tile:hover {
     color: #999 !important;
     opacity: 1;
 }
-.tabbable.tabs-left .tab-content,
-.tabbable.tabs-right .tab-content {
+.tabbable.tabbable-left .tab-content,
+.tabbable.tabbable-right .tab-content {
     overflow: auto;
 }
 
@@ -2662,19 +2665,19 @@ a.tile:hover {
 .tabbable .active-blue > li.active > a:focus {
     border-top-color: #419cf0;
 }
-.tabbable.tabs-below .active-blue > li.active > a,
-.tabbable.tabs-below .active-blue > li.active > a:hover,
-.tabbable.tabs-below .active-blue > li.active > a:focus {
+.tabbable.tabbable-below .active-blue > li.active > a,
+.tabbable.tabbable-below .active-blue > li.active > a:hover,
+.tabbable.tabbable-below .active-blue > li.active > a:focus {
     border-bottom-color: #419cf0;
 }
-.tabbable.tabs-left .active-blue > li.active > a,
-.tabbable.tabs-left .active-blue > li.active > a:hover,
-.tabbable.tabs-left .active-blue > li.active > a:focus {
+.tabbable.tabbable-left .active-blue > li.active > a,
+.tabbable.tabbable-left .active-blue > li.active > a:hover,
+.tabbable.tabbable-left .active-blue > li.active > a:focus {
     border-left-color: #419cf0;
 }
-.tabbable.tabs-right .active-blue > li.active > a,
-.tabbable.tabs-right .active-blue > li.active > a:hover,
-.tabbable.tabs-right .active-blue > li.active > a:focus {
+.tabbable.tabbable-right .active-blue > li.active > a,
+.tabbable.tabbable-right .active-blue > li.active > a:hover,
+.tabbable.tabbable-right .active-blue > li.active > a:focus {
     border-right-color: #419cf0;
 }
 
@@ -2683,19 +2686,19 @@ a.tile:hover {
 .tabbable .active-red > li.active > a:focus {
     border-top-color: #f73a28;
 }
-.tabbable.tabs-below .active-red > li.active > a,
-.tabbable.tabs-below .active-red > li.active > a:hover,
-.tabbable.tabs-below .active-red > li.active > a:focus {
+.tabbable.tabbable-below .active-red > li.active > a,
+.tabbable.tabbable-below .active-red > li.active > a:hover,
+.tabbable.tabbable-below .active-red > li.active > a:focus {
     border-bottom-color: #f73a28;
 }
-.tabbable.tabs-left .active-red > li.active > a,
-.tabbable.tabs-left .active-red > li.active > a:hover,
-.tabbable.tabs-left .active-red > li.active > a:focus {
+.tabbable.tabbable-left .active-red > li.active > a,
+.tabbable.tabbable-left .active-red > li.active > a:hover,
+.tabbable.tabbable-left .active-red > li.active > a:focus {
     border-left-color: #f73a28;
 }
-.tabbable.tabs-right .active-red > li.active > a,
-.tabbable.tabs-right .active-red > li.active > a:hover,
-.tabbable.tabs-right .active-red > li.active > a:focus {
+.tabbable.tabbable-right .active-red > li.active > a,
+.tabbable.tabbable-right .active-red > li.active > a:hover,
+.tabbable.tabbable-right .active-red > li.active > a:focus {
     border-right-color: #f73a28;
 }
 
@@ -2704,19 +2707,19 @@ a.tile:hover {
 .tabbable .active-green > li.active > a:focus {
     border-top-color: #393;
 }
-.tabbable.tabs-below .active-green > li.active > a,
-.tabbable.tabs-below .active-green > li.active > a:hover,
-.tabbable.tabs-below .active-green > li.active > a:focus {
+.tabbable.tabbable-below .active-green > li.active > a,
+.tabbable.tabbable-below .active-green > li.active > a:hover,
+.tabbable.tabbable-below .active-green > li.active > a:focus {
     border-bottom-color: #393;
 }
-.tabbable.tabs-left .active-green > li.active > a,
-.tabbable.tabs-left .active-green > li.active > a:hover,
-.tabbable.tabs-left .active-green > li.active > a:focus {
+.tabbable.tabbable-left .active-green > li.active > a,
+.tabbable.tabbable-left .active-green > li.active > a:hover,
+.tabbable.tabbable-left .active-green > li.active > a:focus {
     border-left-color: #393;
 }
-.tabbable.tabs-right .active-green > li.active > a,
-.tabbable.tabs-right .active-green > li.active > a:hover,
-.tabbable.tabs-right .active-green > li.active > a:focus {
+.tabbable.tabbable-right .active-green > li.active > a,
+.tabbable.tabbable-right .active-green > li.active > a:hover,
+.tabbable.tabbable-right .active-green > li.active > a:focus {
     border-right-color: #393;
 }
 
@@ -6033,4 +6036,9 @@ Fixes for BS 3.2
     position: static;
 }
 
-
+/* ========================================================
+   Something needed
+======================================================== */
+.error {
+    color: firebrick;
+}

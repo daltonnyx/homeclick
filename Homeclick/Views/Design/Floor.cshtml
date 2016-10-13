@@ -1,9 +1,8 @@
-﻿@using Homeclick.Models
+﻿@using VCMS.Lib.Models
 @model Floor
 @{
-    ViewBag.Title = Model.Department.name + " " + Model.name;
+    ViewBag.Title = Model.Department.Name + " " + Model.Name;
     Layout = "~/Views/Shared/Layout_html.cshtml";
-    var url = "/admin";
 }
 <main id="main" class="">
     <div class="container thietke thietke02">
@@ -112,14 +111,14 @@
                 <div class="right-thietke2">
                     <h3 class="title-name-thietke">@ViewBag.Title</h3>
                     @{
-                        var canvasCoords = Model.getRooms();
+                        var canvasCoords = Model.Rooms;
                     }
                     <div class="show-room-tuthietke">
-                        <img src="@url/@Model.structure_link" id="floor-map" usemap="#floor-map" alt="@ViewBag.Title" />
+                        <img src="@Url.GetImageUploadFolder()/design/@Model.Structure_link" id="floor-map" usemap="#floor-map" alt="@ViewBag.Title" />
                         <map name="floor-map">
-                            @foreach(Room room in canvasCoords)
+                            @foreach(var room in canvasCoords)
                             { 
-                                <area data-key="@room.Id" shape="poly" href="@Url.Action("Canvas","Design",new { @id = room.Id })" coords="@room.coordinates" />
+                                <area data-key="@room.Id" shape="poly" href="@Url.Action("Canvas","Design",new { @id = room.Id })" coords="@room.Coordinates" />
                             }
                         </map>
                         <script>

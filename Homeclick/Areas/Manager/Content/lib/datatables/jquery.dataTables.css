@@ -173,7 +173,7 @@ table.dataTable.display tbody tr:hover.selected > .sorting_3, table.dataTable.or
 }
 table.dataTable.no-footer {
   border-bottom: 1px solid transparent;
-  padding: 10px;
+  /*padding: 10px;*/
  background: white;
 }
 table.dataTable.nowrap th, table.dataTable.nowrap td {

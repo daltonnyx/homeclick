@@ -6,44 +6,34 @@
     ViewBag.FormName = "Create a new category";
     Layout = "~/Areas/Manager/Views/Shared/_Layout_Form.cshtml";
 }
+<div class="tabbable">
+    <ul class="nav nav-tabs active-blue">
+        <li class=""><a href="@Url.Action("List")"><i class="fa fa-list"></i> List</a></li>
+        <li class="active"><a href="#edit"><i class="fa fa-plus-circle"></i> @ViewBag.FormName</a></li>
+    </ul>
 
-@if (ViewData["Success"] != null)
-{
-    if ((bool)ViewData["Success"])
-    {
-        <div class="alert alert-success">
-            <button class="close" data-dismiss="alert">×</button>
-            <strong>Success!</strong> The @ViewData["AddedCategoryName"] has been added.
-        </div>
-    }
-}
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <div class="form-horizontal">
-        @Html.HiddenFor(model => model.TypeId)
-        <div class="form-group">
-            @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Desciption, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Desciption, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Desciption, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-default" value="@Strings.Create" />
-            </div>
+    <div class="tab-content">
+        <div class="tab-pane fade active in">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="clearfix">
+                        <input type="submit" value="Create" class="btn btn-primary pull-right"/>
+                    </div>
+                </div>
+            }
         </div>
     </div>
-}
+</div>
 
 @section ActionLinks {
     <div>

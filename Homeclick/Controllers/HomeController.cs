@@ -65,15 +65,15 @@ namespace Homeclick.Controllers
             ViewBag.catId = RouteData.Values["id"];
             Dictionary<string, IList<Category>> blocks = new Dictionary<string, IList<Category>>();
             var queryModel = from category in db.Categories
-                             where category.Category_Type.Name == "model"
+                             where category.CategoryType.Name == "model"
                              select category;
             blocks.Add("models",queryModel.ToList());
             var queryTypology = from category in db.Categories
-                                where category.Category_Type.Name == "typology"
+                                where category.CategoryType.Name == "typology"
                                 select category;
             blocks.Add("typologies", queryTypology.ToList());
             var queryTypes = from category in db.Categories
-                             where category.Category_Type.Name == "vat_lieu"
+                             where category.CategoryType.Name == "vat_lieu"
                              select category;
 
             blocks.Add("types", queryTypes.ToList());

@@ -59,7 +59,7 @@ namespace VCMS.Lib.Models
             get
             {
                 var category = Categories.FirstOrDefault();
-                switch (category.Category_TypeId)
+                switch (category.CategoryTypeId)
                 {
                     case (int)PostTypes.Collection:
                         return PostTypes.Collection;

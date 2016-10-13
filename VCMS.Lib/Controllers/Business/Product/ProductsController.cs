@@ -41,7 +41,7 @@ namespace VCMS.Lib.Controllers
         {
             var dic = new Dictionary<string, Dictionary<string, int>>();
             ProductCategoryTypes.ForEach(
-                o => dic.Add(o.ToString(), db.Categories.Where(c => c.Category_TypeId == (int)o).ToDictionary(e => e.Name, e => e.Id)));
+                o => dic.Add(o.ToString(), db.Categories.Where(c => c.CategoryTypeId == (int)o).ToDictionary(e => e.Name, e => e.Id)));
             ViewBag.Dic = dic;
             return View();
         }
@@ -152,7 +152,7 @@ namespace VCMS.Lib.Controllers
         {
             get
             {
-                var rooms = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Model)
+                var rooms = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Model)
                     .Select(o => new SelectListItem { Text = o.Name, Value = (o.Id).ToString() }).ToList();
                 return rooms;
             }
@@ -162,7 +162,7 @@ namespace VCMS.Lib.Controllers
         {
             get
             {
-                var rooms = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Typology)
+                var rooms = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Typology)
                     .Select(o => new SelectListItem { Text = o.Name, Value = (o.Id).ToString() }).ToList();
                 return rooms;
             }
@@ -175,9 +175,9 @@ namespace VCMS.Lib.Controllers
             foreach (var roomId in roomIds)
             {
                 var cRoom = db.Categories.Find(roomId);
-                if (cRoom?.Category_TypeId == (int)CategoryTypes.Model)
+                if (cRoom?.CategoryTypeId == (int)CategoryTypes.Model)
                 {
-                    var typologies = cRoom.CategoryChildren.Where(o => o.Category_TypeId == (int)CategoryTypes.Typology);
+                    var typologies = cRoom.CategoryChildren.Where(o => o.CategoryTypeId == (int)CategoryTypes.Typology);
                     typoLists.Add(typologies);
                 }
             }
@@ -569,7 +569,7 @@ namespace VCMS.Lib.Controllers
                 productName = product.name
             };
 
-            var variantCategories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.ProductVariant);
+            var variantCategories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProductVariant);
             ViewBag.VariantCategories = variantCategories;
 
             var options = product.Product_Options;
@@ -635,7 +635,7 @@ namespace VCMS.Lib.Controllers
                 return RedirectToAction("CreateOption", new { productId = model.ProductId, success = true, successObjectName = model.Name });
             }
 
-            var variantCategories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.ProductVariant);
+            var variantCategories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProductVariant);
             ViewBag.VariantCategories = variantCategories;
 
             var product = db.Products.Find(viewModel.productId);
@@ -684,7 +684,7 @@ namespace VCMS.Lib.Controllers
                 viewModel.variants.Add(item.ToString(), variants.Select(o => o.Id).ToArray());
             }
 
-            var variantCategories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.ProductVariant);
+            var variantCategories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProductVariant);
             ViewBag.VariantCategories = variantCategories;
 
             return View(viewModel);
@@ -743,7 +743,7 @@ namespace VCMS.Lib.Controllers
                 if (db.SaveChanges() > 0)
                     return RedirectToAction("CreateOption", new { productId = model.ProductId });
             }
-            var variantCategories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.ProductVariant);
+            var variantCategories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProductVariant);
             ViewBag.VariantCategories = variantCategories;
 
             return View(viewModel);

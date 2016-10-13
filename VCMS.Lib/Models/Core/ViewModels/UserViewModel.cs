@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VCMS.Lib.Resources;
 
 namespace VCMS.Lib.Models
 {
@@ -18,13 +19,23 @@ namespace VCMS.Lib.Models
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
 
-        [Display(Name = "Lockout")]
-        public bool Lockout { get; set; }
+        [StringLength(32, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "NewPassword", ResourceType = typeof(Strings))]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+
+        [Display(Name = "LockoutEnabled", ResourceType = typeof(Strings))]
+        public bool LockoutEnabled { get; set; }
 
         [Display(Name = "Lockout end date")]
         public DateTime? LockoutEndDate { get; set; }
 
         [Display(Name = "Roles")]
-        public string[] Roles { get; set; }
+        public string[] RoleList { get; set; }
     }
 }

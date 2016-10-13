@@ -172,7 +172,7 @@
     <value>Link required!</value>
   </data>
   <data name="LockoutEnabled" xml:space="preserve">
-    <value>Enabled</value>
+    <value>Lockout enabled</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -386,5 +386,20 @@
   </data>
   <data name="Projects" xml:space="preserve">
     <value>Projects</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="CustomFields" xml:space="preserve">
+    <value>Custom fields</value>
+  </data>
+  <data name="Label" xml:space="preserve">
+    <value>Label</value>
+  </data>
+  <data name="Placeholder" xml:space="preserve">
+    <value>Placeholder</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New password</value>
   </data>
 </root>

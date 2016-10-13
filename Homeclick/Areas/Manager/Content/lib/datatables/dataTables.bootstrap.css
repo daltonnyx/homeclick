@@ -1,9 +1,9 @@
 ﻿table.dataTable {
   clear: both;
-  margin-top: 0px !important;
-  margin-bottom: 0px !important;
+  margin-top: 6px !important;
+  margin-bottom: 6px !important;
   max-width: none !important;
-  border-collapse: separate !important;
+  /*border-collapse: separate !important;*/
 }
 table.dataTable td,
 table.dataTable th {
@@ -154,6 +154,13 @@ table.dataTable.table-condensed .sorting_asc:after,
 table.dataTable.table-condensed .sorting_desc:after {
   top: 6px;
   right: 6px;
+}
+
+table.dataTable.display tbody tr.odd>.sorting_1, table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
+    background-color: #f1f1f1;
+}
+table.dataTable.display tbody tr.even>.sorting_1, table.dataTable.order-column.stripe tbody tr.even>.sorting_1 {
+    background-color: #fafafa;
 }
 
 table.table-bordered.dataTable th,

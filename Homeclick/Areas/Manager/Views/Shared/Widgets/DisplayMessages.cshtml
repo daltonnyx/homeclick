@@ -1,0 +1,20 @@
+﻿@using VCMS.Lib.Common
+
+@if (ViewData.ContainsKey(ConstantKeys.ACTION_RESULT_MESSAGES))
+{
+    foreach (var message in ViewData[ConstantKeys.ACTION_RESULT_MESSAGES] as IEnumerable<Message>)
+    {
+        <div class="alert alert-@message.MessageType.ToString().ToLower()">
+            <button class="close" data-dismiss="alert">×</button>
+            @Html.Raw(@message.MessageContent)
+        </div>
+    }
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <button class="close" data-dismiss="alert">×</button>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger " })
+    </div>
+}

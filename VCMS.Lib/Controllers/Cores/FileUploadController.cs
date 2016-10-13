@@ -81,29 +81,5 @@ namespace VCMS.Lib.Controllers
             var result = await uploads(files, (FileGroups)fileGroup, imagesFolderPath);
             return Json(result);
         }
-
-        public async void DeleteFile(string id)
-        {
-            var file = db.Files.Find(id);
-            if (file != null)
-            {
-                db.Files.Remove(file);
-                await db.SaveChangesAsync();
-            }
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> DeleteFileByPath(string src)
-        {
-            var result = 0;
-            var id = Path.GetFileNameWithoutExtension(src);
-            var file = db.Files.Find(id);
-            if (file != null)
-            {
-                db.Files.Remove(file);
-                result = await db.SaveChangesAsync();
-            }
-            return Json(result);
-        }
     }
 }

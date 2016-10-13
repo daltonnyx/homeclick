@@ -259,6 +259,15 @@ namespace VCMS.Lib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom fields.
+        /// </summary>
+        public static string CustomFields {
+            get {
+                return ResourceManager.GetString("CustomFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -439,6 +448,15 @@ namespace VCMS.Lib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Label.
+        /// </summary>
+        public static string Label {
+            get {
+                return ResourceManager.GetString("Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last name.
         /// </summary>
         public static string Lastname {
@@ -493,7 +511,7 @@ namespace VCMS.Lib.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enabled.
+        ///   Looks up a localized string similar to Lockout enabled.
         /// </summary>
         public static string LockoutEnabled {
             get {
@@ -552,6 +570,15 @@ namespace VCMS.Lib.Resources {
         public static string New {
             get {
                 return ResourceManager.GetString("New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New password.
+        /// </summary>
+        public static string NewPassword {
+            get {
+                return ResourceManager.GetString("NewPassword", resourceCulture);
             }
         }
         
@@ -624,6 +651,15 @@ namespace VCMS.Lib.Resources {
         public static string Phone {
             get {
                 return ResourceManager.GetString("Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Placeholder.
+        /// </summary>
+        public static string Placeholder {
+            get {
+                return ResourceManager.GetString("Placeholder", resourceCulture);
             }
         }
         
@@ -867,6 +903,15 @@ namespace VCMS.Lib.Resources {
         public static string UserName {
             get {
                 return ResourceManager.GetString("UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Users.
+        /// </summary>
+        public static string Users {
+            get {
+                return ResourceManager.GetString("Users", resourceCulture);
             }
         }
     }

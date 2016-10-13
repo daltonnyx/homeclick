@@ -69,7 +69,7 @@ namespace VCMS.Lib.Models
         public Category Typology {
             get
             {
-                var typology = Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Typology).FirstOrDefault();
+                var typology = Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Typology).FirstOrDefault();
                 return typology;
             }
         }
@@ -78,7 +78,7 @@ namespace VCMS.Lib.Models
         {
             get
             {
-                var room = Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Model);
+                var room = Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Model);
                 return room;
             }
         }

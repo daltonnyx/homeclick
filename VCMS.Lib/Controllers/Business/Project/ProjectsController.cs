@@ -32,7 +32,7 @@ namespace VCMS.Lib.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.Categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.ProjectType); ;
+            ViewBag.Categories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProjectType); ;
             ViewBag.Cities = db.Cities.Where(o => o.Status);
             return View();
         }
@@ -53,7 +53,7 @@ namespace VCMS.Lib.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Details", new { projectId = model.Id});
             }
-            ViewBag.Categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.ProjectType); ;
+            ViewBag.Categories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProjectType); ;
             ViewBag.Cities = db.Cities.Where(o => o.Status);
             return View(model);
         }
@@ -63,7 +63,7 @@ namespace VCMS.Lib.Controllers
             var project = db.Projects.Find(projectId);
             if (project == null)
                 return HttpNotFound();
-            ViewBag.Categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.ProjectType); ;
+            ViewBag.Categories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProjectType); ;
             ViewBag.Cities = db.Cities.Where(o => o.Status);
             return View(project);
         }
@@ -90,7 +90,7 @@ namespace VCMS.Lib.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Details", new { projectId = model.Id });
             }
-            ViewBag.Categories = db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.ProjectType); ;
+            ViewBag.Categories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProjectType); ;
             ViewBag.Cities = db.Cities.Where(o => o.Status);
             return View(model);
         }

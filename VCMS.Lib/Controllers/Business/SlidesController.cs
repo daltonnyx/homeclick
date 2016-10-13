@@ -19,7 +19,7 @@ namespace VCMS.Lib.Controllers
         public ActionResult List(int categoryId)
         {
             var category = db.Categories.Find(categoryId);
-            if (!CheckCategoryIsType(category.Category_TypeId))
+            if (!CheckCategoryIsType(category.CategoryTypeId))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             if (category == null)
@@ -31,7 +31,7 @@ namespace VCMS.Lib.Controllers
         public ActionResult Create(int categoryId, bool? success, string successObjectName)
         {
             var category = db.Categories.Find(categoryId);
-            if (!CheckCategoryIsType(category.Category_TypeId))
+            if (!CheckCategoryIsType(category.CategoryTypeId))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             if (category == null)
@@ -49,7 +49,7 @@ namespace VCMS.Lib.Controllers
             var category = db.Categories.Find(model.CategoryId);
             if (ModelState.IsValid)
             {
-                if (!CheckCategoryIsType(category.Category_TypeId))
+                if (!CheckCategoryIsType(category.CategoryTypeId))
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 model.CreateUserId = User.Identity.GetUserId();
                 model.CreateTime = DateTime.Now;
@@ -65,7 +65,7 @@ namespace VCMS.Lib.Controllers
         {
             var category = db.Categories.Find(categoryId);
             var slide = db.Slides.Find(slideId);
-            if (!CheckCategoryIsType(category.Category_TypeId) || !category.Slides.Select(o => o.Id).Contains(slide.Id))
+            if (!CheckCategoryIsType(category.CategoryTypeId) || !category.Slides.Select(o => o.Id).Contains(slide.Id))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             if (category == null || slide == null)
@@ -81,7 +81,7 @@ namespace VCMS.Lib.Controllers
             if (ModelState.IsValid)
             {
                 var category = db.Categories.Find(model.CategoryId);
-                if (!CheckCategoryIsType(category.Category_TypeId) || !category.Slides.Select(o => o.Id).Contains(model.Id))
+                if (!CheckCategoryIsType(category.CategoryTypeId) || !category.Slides.Select(o => o.Id).Contains(model.Id))
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
                 var modelInDb = db.Slides.Find(model.Id);

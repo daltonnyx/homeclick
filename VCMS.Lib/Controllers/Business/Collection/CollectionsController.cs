@@ -17,7 +17,7 @@ namespace VCMS.Lib.Controllers
     {
         private IEnumerable<Category> GetCategories()
         {
-            return db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+            return db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Collection);
         }
 
         public override ActionResult List()
@@ -242,7 +242,7 @@ namespace VCMS.Lib.Controllers
             {
                 var categories = (category_id != null) ?
                     db.Categories.Where(o => o.Id == category_id) :
-                    db.Categories.Where(o => o.Category_TypeId == (int)CategoryTypes.Collection);
+                    db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Collection);
 
                 var posts = new List<Post>();
                 foreach (var category in categories)

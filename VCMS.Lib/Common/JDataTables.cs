@@ -34,7 +34,7 @@ namespace VCMS.Lib.Models
         /// This is an array of data source objects, one for each row, which will be used by DataTables.
         /// Note that this parameter's name can be changed using the ajaxDT option's dataSrc property.
         /// </summary>
-        public List<T> data { get; set; }
+        public IEnumerable<T> data { get; set; }
     }
 
     /// <summary>
@@ -198,6 +198,64 @@ namespace VCMS.Lib.Models
         public bool Regex { get; set; }
     }
 
+    public static class JDatatables<T> where T : Dictionary<string, object>
+    {
+        public static DTResult<T> GetDTResult(DTParameters param, List<T> dtsource)
+        {
+            var columnSearch = new List<string>();
+            foreach (var col in param.Columns)
+            {
+                columnSearch.Add(col.Search.Value);
+            }
+            var search = param.Search.Value;
+            var paramSortOrder = param.SortOrder ?? string.Empty;
+            var sortElement = paramSortOrder.Split(' ');
+            var sortField = sortElement.First();
+            var sortOrder = sortElement.Length > 1 ? sortElement.Last() : "";
+
+            Func<T, bool> func = (dic) =>
+            {
+                var funcResult = (search == null);
+                foreach (var o in dic)
+                {
+                    if (funcResult)
+                        break;
+                    funcResult = (o.Key != null && o.Key.ToLower().Contains(search.ToLower()));
+                }
+                return funcResult;
+            };
+            System.Linq.Expressions.Expression<Func<T, bool>> pre = o => func(o);
+
+            var data = GetResultSets(pre, sortField, sortOrder, param.Start, param.Length, dtsource);
+            var result = new DTResult<T>()
+            {
+                draw = param.Draw,
+                data = data,
+                recordsFiltered = data.Count(),
+                recordsTotal = dtsource.Count()
+            };
+            return result;
+        }
+
+        private static IEnumerable<T> GetResultSets(System.Linq.Expressions.Expression<Func<T, bool>> expression, string sortField, string sortOrder, int start, int length, IEnumerable<T> dtResult)
+        {
+            var result = FilterResult(expression, dtResult);
+            if (sortField != string.Empty)
+                result = (sortOrder == "DESC") ? result.OrderByDescending(o => o[sortField]) : result.OrderBy(o => o[sortField]);
+            if (length == -1)
+                return result;
+            return result.Skip(start).Take(length);
+        }
+
+        private static IQueryable<T> FilterResult(System.Linq.Expressions.Expression<Func<T, bool>> pre, IEnumerable<T> dtResult)
+        {
+            IQueryable<T> results = dtResult.AsQueryable();
+            results = results.Where(pre);
+            return results;
+        }
+    }
+
+    //temp
     public class ResultSet
     {
         public List<T> GetResult<T>(System.Linq.Expressions.Expression<Func<T, bool>> pre, string sortOrder, int start, int length, IEnumerable<T> dtResult) where T : class

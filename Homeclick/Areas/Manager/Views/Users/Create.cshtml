@@ -1,65 +1,97 @@
-﻿@using VCMS.Lib.Models
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Models
 @using VCMS.Lib.Resources
 
 @model CreateUserViewModel
 
 @{
-    ViewBag.Title = "Users";
-    ViewBag.Description = "Create a new account";
-    ViewBag.FormName = "Simple form";
-    Layout = "~/Areas/Manager/Views/Shared/_Layout_Form.cshtml";
-    var roles = ViewData["Roles"] as string[];
+    ViewBag.Title = Strings.Users;
+    ViewBag.FormName = "Create a new user";
 }
 
-@using (Html.BeginForm("Create", "Users", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+<div class="tabbable">
+    <ul class="nav nav-tabs active-blue">
+        <li class=""><a href="@Url.Action("List", "Users")"><i class="fa fa-list"></i> List</a></li>
+        <li class=""><a href="@Url.Action("CustomFields", "Users")"> Custom field</a></li>
+        <li class="active"><a href="#"> <i class="fa fa-plus-circle"></i>@ViewBag.FormName</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade active in">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="form-horizontal formToWizard">
+                    <hr />
+                    <fieldset data-step-name="Basic Accounting">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.UserName, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.RoleList, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9 ">
+                                @Html.ListBoxFor(m => m.RoleList, new SelectList((ViewData[ConstantKeys.ROLES] as string[])), new { @class = "form-control chosen", style = "display: none;", multiple = "multiple", tabindex = "-1", data_placeholder = "Select one or more..." })
+                            </div>
+                        </div>
+                        <hr />
+                    </fieldset>
+                    <fieldset data-step-name="Create Profile">
+                        @foreach (var customField in ViewData[ConstantKeys.CUSTOM_FIELD] as IEnumerable<CustomField>)
+                        {
+                            var fieldName = string.Format("{0}[{1}]", ConstantKeys.CUSTOM_FIELD, customField.Name);
+                            <div class="form-group">
+                                @Html.Label(customField.Label, new { @class="col-md-3 control-label"})
+                                <div class="col-md-9">
+                                    @if (customField.FieldType == FieldTypes.Text || customField.FieldType == FieldTypes.Number || customField.FieldType == FieldTypes.Date)
+	                                {
+		                                 @Html.TextBox(fieldName, null, new { @class = "form-control", type = customField.FieldType.ToString().ToLower(), placeholder = customField.PlaceHolder })
+                                    }
+                                    else if(customField.FieldType == FieldTypes.Select)
+                                    {
+                                        @Html.DropDownList(fieldName, customField.CustomField_Enums.Select(o => new SelectListItem { Value = o.Id.ToString(), Text = o.Name}), "Not set", new { @class= "form-control chosen" })
+                                    }
+                                    else if (customField.FieldType == FieldTypes.Image)
+                                    {
+                                        @Html.Partial("Widgets/ImageUpload", new Dictionary<string, string>() { { fieldName, Html.Value(fieldName).ToString() } })
+                                    }
+                                </div>
+                            </div>
+                        }
+                        <hr/>
+                    </fieldset>
+                    <input type="submit" id="submit" class="btn btn-default pull-right" value="@Strings.Create" />
+                </div>
+            }
         </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Roles, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10 ">
-            <div class="form-control-custom">
-                <select name="Roles" data-placeholder="Select one or more..." class="form-control chosen" multiple="multiple" tabindex="-1" style="display: none;">
-                    <option value=""> </option>
-                    @foreach (var role in roles)
-                    {
-                        <option>@role</option>
-                    }
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="@Strings.Create" />
-        </div>
-    </div>
-}
+</div>
+
 
 @section breadcrumb {
-    @{
-        var viewName = Html.ViewContext.RouteData.GetRequiredString("action");
-    }
     <li>
-        <a href="@Url.Action("Dashboard","Pages")">
+        <a href="@Url.Action("Index","Dashboard")">
             <i class="fa fa-home"></i> Home
         </a>
         <span class="divider"><i class="fa fa-angle-right"></i></span>
@@ -75,9 +107,14 @@
 
 @section links {
     <link rel="stylesheet" href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/lib/jquery.formtowirard/jquery.formtowizard.css" />
+    @Html.RenderDelayed("jquery-uploads-css")
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.js"></script>
+    <script src="~/Areas/Manager/Content/lib/jquery.formtowirard/jquery.formtowizard.js"></script>
+    @Html.RenderDelayed("jquery-uploads-js")
+    @Html.RenderDelayed("widget-imageupload-script")
 }

@@ -29,7 +29,7 @@
 }
 
 .form-control, .form-control-custom, .fileupload, .image-preview img {
-    max-width:350px;
+    /*max-width:350px;*/
 }
 
 .form-control-custom {
@@ -75,8 +75,13 @@
             overflow:hidden;
         }
 
+        .text-danger > ul{
+            margin-bottom:0;
+        }
+/*====================================
+    Bootstrap utility classes
+====================================*/
 
-/*Bootstrap utility classes*/
 /*background*/
 .bg-white {
     background: #fff;

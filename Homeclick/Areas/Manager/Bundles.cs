@@ -30,7 +30,8 @@ namespace Homeclick.Areas.Manager
         public static void RegisterCSS(BundleCollection bundles)
         {
             bundles.Add(new StyleBundle("~/bundles/manager/datatables/css").Include(
-                "~/Areas/Manager/Content/lib/datatables/jquery.dataTables.css"
+                //"~/Areas/Manager/Content/lib/datatables/jquery.dataTables.css",
+                "~/Areas/Manager/Content/lib/datatables/dataTables.bootstrap.css"
                 ));
 
             bundles.Add(new StyleBundle("~/bundles/manager/bootstrap/css").Include(
