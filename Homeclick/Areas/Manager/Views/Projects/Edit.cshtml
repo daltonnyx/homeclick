@@ -4,127 +4,135 @@
 
 @{
     ViewBag.Title = Strings.Projects;
-    ViewBag.FormName = Strings.Create;
-    Layout = "~/Areas/Manager/Views/Shared/_Layout_Form.cshtml";
+    ViewBag.FormName = "Edit project";
 }
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-
+<div class="content">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @if (Model.Id != default(int))
+        if (Model.Id != default(int))
         {
             @Html.HiddenFor(m => m.Id);
         }
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <div class="form-horizontal">
+            <fieldset class="col-md-8">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            </fieldset>
+            <fieldset class="col-lg-4">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="form-control-custom">
-                    @Html.DropDownListFor(model => model.CategoryId, (ViewBag.Categories as IEnumerable<Category>).Select(o => new SelectListItem { Value = o.Id.ToString(), Text = o.Name}), new { @class = "form-control chosen", tabindex = "-1", style = "display: none;" })
+            </fieldset>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(m => m.PreviewImageId, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                <div class="form-control-custom file-upload">
-                    <div class="file-upload-new img-thumbnail" @Html.Raw(Model?.PreviewImageId != null ? "style='display:none'" : "")>
-                        <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-                    </div>
-                    @if (Model?.PreviewImageId != null)
-                    {
-                        <div class="file-upload-result img-thumbnail">
-                            <img src="@Url.GetImageUploadFolder()@Model.PreviewImage.FullFileName">
-                            <input name="previewImageId" type="hidden" value="@Model.PreviewImageId">
-                        </div>
-                    }
-                    <div class="clearfix">
-                        <span class="btn btn-success fileinput-button pull-left">
-                            <i class="glyphicon glyphicon-plus"></i>
-                            <span>Select file...</span>
-                            <input id="fileupload" type="file" name="files" accept="image/*">
-                        </span>
 
-                        <span class="btn pull-left file-remove-btn" @Html.Raw(Model?.PreviewImageId != null ? "" : "style='display:none'")>
-                            Remove
-                        </span>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-                        <div id="fileuploadProgress" class="cssload-container" style="display:none">
-                            <div class="cssload-speeding-wheel"></div>
-                        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="form-control-custom">
+                        @Html.DropDownListFor(model => model.CategoryId, (ViewBag.Categories as IEnumerable<Category>).Select(o => new SelectListItem { Value = o.Id.ToString(), Text = o.Name }), new { @class = "form-control chosen", tabindex = "-1", style = "display: none;" })
                     </div>
                 </div>
-                @Html.ValidationMessageFor(m => m.PreviewImageId, "", new { @class = "text-danger" })
             </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(m => m.FileIds, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                <div class="form-control-custom">
-                    <div class="clearfix" style="margin-bottom:10px;">
-                        <span class="btn btn-success fileinput-button pull-left">
-                            <i class="glyphicon glyphicon-plus"></i>
-                            <span>Select files...</span>
-                            <input id="fileuploads" type="file" name="files" accept="image/jpg,image/png,image/jpeg,image/gif" multiple>
-                        </span>
 
-                        <div id="filesuploadProgress" class="cssload-container" style="display:none">
-                            <div class="cssload-speeding-wheel"></div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PreviewImageId, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    <div class="form-control-custom file-upload">
+                        <div class="file-upload-new img-thumbnail" @Html.Raw(Model?.PreviewImageId != null ? "style='display:none'" : "")>
+                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                         </div>
-                    </div>
-
-                    <div id="files" class="files">
-                        @if (Model?.FileIds != null)
+                        @if (Model?.PreviewImageId != null)
                         {
-                            foreach (var file in Model.Files)
-                            {
-                                Html.RenderAction("_imageFile", new { id = file.Id});
-                            }
+                            <div class="file-upload-result img-thumbnail">
+                                <img src="@Url.GetImageUploadFolder()@Model.PreviewImage.FullFileName">
+                                <input name="previewImageId" type="hidden" value="@Model.PreviewImageId">
+                            </div>
                         }
+                        <div class="clearfix">
+                            <span class="btn btn-success fileinput-button pull-left">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>Select file...</span>
+                                <input id="fileupload" type="file" name="files" accept="image/*">
+                            </span>
+
+                            <span class="btn pull-left file-remove-btn" @Html.Raw(Model?.PreviewImageId != null ? "" : "style='display:none'")>
+                                Remove
+                            </span>
+
+                            <div id="fileuploadProgress" class="cssload-container" style="display:none">
+                                <div class="cssload-speeding-wheel"></div>
+                            </div>
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.PreviewImageId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.FileIds, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    <div class="form-control-custom">
+                        <div class="clearfix" style="margin-bottom:10px;">
+                            <span class="btn btn-success fileinput-button pull-left">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>Select files...</span>
+                                <input id="fileuploads" type="file" name="files" accept="image/jpg,image/png,image/jpeg,image/gif" multiple>
+                            </span>
+
+                            <div id="filesuploadProgress" class="cssload-container" style="display:none">
+                                <div class="cssload-speeding-wheel"></div>
+                            </div>
+                        </div>
+
+                        <div id="files" class="files">
+                            @if (Model?.FileIds != null)
+                            {
+                                foreach (var file in Model.Files)
+                                {
+                                    Html.RenderAction("_imageFile", new { id = file.Id });
+                                }
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <label class="checkbox">
-                    @Html.CheckBoxFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
-                </label>
-                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.HtmlContent, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.HtmlContent, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.HtmlContent, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <label class="checkbox">
+                        @Html.CheckBoxFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                    </label>
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <hr />
+            <div class="clearfix">
+                <input type="submit" value="@Strings.SaveChanged" class="btn btn-default pull-right" />
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
+    }
+</div>
 @section breadcrumb {
     <li>
         <a href="@Url.Action("Dashboard","Pages")">
@@ -148,6 +156,18 @@
 
     <link href="~/Areas/Manager/Content/lib/jQueryFileUpload/css/jquery.fileupload.css" rel="stylesheet" />
     <link href="~/Areas/Manager/Content/lib/jQueryFileUpload/css/jquery.fileupload-ui.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css">
+
+    <link rel="stylesheet" href="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/css/froala_editor.min.css" />
+
+    <link rel="stylesheet" href="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/css/froala_style.min.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/css/plugins/image.min.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/css/plugins/table.min.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/css/plugins/colors.min.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/css/plugins/inline_style.min.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/css/plugins/code_view.min.css" />
+
 }
 
 @section Scripts {
@@ -158,6 +178,18 @@
     <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/vendor/jquery.ui.widget.js"></script>
     <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/jquery.iframe-transport.js"></script>
     <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/jquery.fileupload.js"></script>
+
+    <!-- Code Mirror JS files. -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
+
+    <script src="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/js/froala_editor.min.js"></script>
+    <script src="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/js/plugins/image.min.js"></script>
+    <script src="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/js/plugins/table.min.js"></script>
+    <script src="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/js/plugins/colors.min.js"></script>
+    <script src="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/js/plugins/inline_style.min.js"></script>
+    <script src="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/js/plugins/code_view.min.js"></script>
+    <script src="~/Areas/Manager/Content/lib/froala-WYSIWYG-editor/js/plugins/code_beautifier.min.js"></script>
 
     <script>
 
@@ -307,6 +339,30 @@
             div.prependTo('.file-upload').fadeIn('fast');
         }
         //-------------------------------------------------
-
+        //Editor
+        $('textarea').froalaEditor({
+            useFrTag: true,
+            tableStyles: {
+                'fr-none-borders': 'Border none',
+            },
+            imageUploadURL: '@Url.Action("Upload","FileUpload")',
+            imageUploadParams: {
+                fileGroup: '@Convert.ToInt32(FileGroups.Other)'
+            }
+        }).on('froalaEditor.image.removed', function (e, editor, $img) {
+            $.ajax({
+                method: "POST",
+                url: '@Url.Action("DeleteFileByPath", "FileUpload")',
+                data: {
+                    src: $img.attr('src')
+                }
+            })
+            .done (function (data) {
+                console.log ('image was deleted');
+            })
+            .fail (function () {
+                console.log ('image delete problem');
+            })
+        });
     </script>
 }

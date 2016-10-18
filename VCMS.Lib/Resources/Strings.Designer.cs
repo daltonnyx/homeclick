@@ -817,6 +817,15 @@ namespace VCMS.Lib.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save changed.
+        /// </summary>
+        public static string SaveChanged {
+            get {
+                return ResourceManager.GetString("SaveChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Size.
         /// </summary>
         public static string Size {

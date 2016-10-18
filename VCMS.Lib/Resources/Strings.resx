@@ -402,4 +402,7 @@
   <data name="NewPassword" xml:space="preserve">
     <value>New password</value>
   </data>
+  <data name="SaveChanged" xml:space="preserve">
+    <value>Save changed</value>
+  </data>
 </root>

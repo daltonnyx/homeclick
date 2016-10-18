@@ -58,9 +58,9 @@ namespace VCMS.Lib.Controllers
             return View(model);
         }
 
-        public ActionResult Edit(int projectId)
+        public ActionResult Edit(int project_id)
         {
-            var project = db.Projects.Find(projectId);
+            var project = db.Projects.Find(project_id);
             if (project == null)
                 return HttpNotFound();
             ViewBag.Categories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProjectType); ;
@@ -74,19 +74,19 @@ namespace VCMS.Lib.Controllers
         {
             if (ModelState.IsValid)
             {
-                var modelInDb = db.Projects.Find(model.Id);
-                if (modelInDb == null)
+                var project = db.Projects.Find(model.Id);
+                if (project == null)
                     return HttpNotFound();
-                db.Entry(modelInDb).CurrentValues.SetValues(model);
+                db.Entry(project).CurrentValues.SetValues(model);
 
-                modelInDb.Files.Clear();
+                project.Files.Clear();
                 foreach (var fileId in model.FileIds ?? new string[] { })
                 {
                     var file = db.Files.Find(fileId);
                     if (file != null)
                         model.Files.Add(file);
                 }
-                db.Entry(modelInDb).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(project).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Details", new { projectId = model.Id });
             }

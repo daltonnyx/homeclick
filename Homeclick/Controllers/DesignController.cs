@@ -26,13 +26,13 @@ namespace Homeclick.Controllers
         {
             return View();
         }
-
+        /*
         public ActionResult getDepartments(int? id = null)
         {
             var model = db.Departments.Where(d => d.ParentDepartmentId == id).ToList();
             return PartialView("Departments", model);
         }
-
+        */
         public ActionResult getFloors(int? id)
         {
             var model = db.Floors.Where<Floor>(f => f.Department.Id == id).ToList<Floor>();

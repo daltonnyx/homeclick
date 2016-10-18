@@ -2531,7 +2531,7 @@ a.tile:hover {
     border: 1px solid #ddd;
     padding: 16px 12px;
     position: relative;
-    z-index: 11;
+    z-index: 4;
 }
 .tabbable.tabbable-below > .nav-tabs {
     border-bottom-width: 0;

@@ -6,12 +6,11 @@ namespace VCMS.Lib.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Department")]
+    [Table("Departments")]
     public partial class Department
     {
         public Department()
         {
-            ChildDepartments = new HashSet<Department>();
             Floors = new HashSet<Floor>();
         }
 
@@ -20,17 +19,11 @@ namespace VCMS.Lib.Models
         [StringLength(100)]
         public string Name { get; set; }
 
-        [StringLength(100)]
-        public string Address { get; set; }
+        public string Description { get; set; }
 
-        [StringLength(100)]
-        public string Desciption { get; set; }
+        public int? ProjectId { get; set; }
 
-        public int? ParentDepartmentId { get; set; }
-
-        public virtual ICollection<Department> ChildDepartments { get; set; }
-
-        public virtual Department ParentDepartment { get; set; }
+        public virtual Project Project { get; set; }
 
         public virtual ICollection<Floor> Floors { get; set; }
     }

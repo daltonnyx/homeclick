@@ -6,7 +6,7 @@ namespace VCMS.Lib.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Room")]
+    [Table("Rooms")]
     public partial class Room
     {
         public Room()
@@ -26,6 +26,8 @@ namespace VCMS.Lib.Models
         public string CanvasData { get; set; }
 
         public int? FloorId { get; set; }
+
+        public virtual ICollection<Post> Collections { get; set; }
 
         public virtual ICollection<Canva> Canvas { get; set; }
 

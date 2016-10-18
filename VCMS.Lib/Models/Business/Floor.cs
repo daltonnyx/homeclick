@@ -6,7 +6,7 @@ namespace VCMS.Lib.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Floor")]
+    [Table("Floors")]
     public partial class Floor
     {
         public Floor()
@@ -21,11 +21,6 @@ namespace VCMS.Lib.Models
 
         [StringLength(128)]
         public string Description { get; set; }
-
-        public int? Block_id { get; set; }
-
-        [StringLength(128)]
-        public string Structure_link { get; set; }
 
         public int? DepartmentId { get; set; }
 

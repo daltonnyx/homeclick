@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Homeclick.Models.ProjectLayout_Collection>
+@{
+    var url = "";
+}
+
+    @foreach (var item in Model)
+    {
+        <div class="card-l col-xs-6 col-sm-4 col-md-4 col-lg-4">
+            <div class="card card-shadow">
+                <div>
+                    <a class="layoutItem" onclick="CollectionClick(@item.Id)">
+                        <img style="height:auto; width:100%" src="@url/@item.Image" alt="@item.Description" />
+                    </a>
+                </div>
+                <div class="card-title">
+                    <span>Thumbnail</span>
+                </div>
+            </div>
+        </div>
+    }

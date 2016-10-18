@@ -243,6 +243,11 @@ namespace VCMS.Lib.Models
             //Projects
             //----------------------------------------
             modelBuilder.Entity<Project>()
+            .HasMany(e => e.Departments)
+            .WithOptional(e => e.Project)
+            .WillCascadeOnDelete();
+
+            modelBuilder.Entity<Project>()
                 .HasMany(e => e.Project_Details)
                 .WithOptional(e => e.Project)
                 .WillCascadeOnDelete();
@@ -276,9 +281,6 @@ namespace VCMS.Lib.Models
             //Department
             //----------------------------------------
             modelBuilder.Entity<Department>()
-                .HasMany(e => e.ChildDepartments)
-                .WithOptional(e => e.ParentDepartment);
-            modelBuilder.Entity<Department>()
                 .HasMany(e => e.Floors)
                 .WithOptional(e => e.Department);
 
@@ -294,6 +296,15 @@ namespace VCMS.Lib.Models
                 .HasMany(e => e.Canvas)
                 .WithOptional(e => e.Room);
 
+            modelBuilder.Entity<Room>()
+                .HasMany(e => e.Collections)
+                .WithMany(e => e.Rooms).Map( cs =>
+                    {
+                        cs.MapLeftKey("ParentId");
+                        cs.MapRightKey("ChildId");
+                        cs.ToTable("Rooms_Posts_Link");
+                    }
+                );
             //Customfields
             //----------------------------------------
             modelBuilder.Entity<CustomField>()

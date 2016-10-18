@@ -380,7 +380,7 @@ jQuery(document).ready(function($){
 
 
  //   //Setting wall
-   var svgLink = 'http://localhost:1867/admin/' + $("#canvas-data").val();
+   var svgLink = 'http://localhost:1868/areas/manager/' + $("#canvas-data").val();
    var polWall = {};
    fabric.GroupLiPolygon.fromURL(svgLink,{
        originX: "left",

@@ -15,6 +15,7 @@ namespace VCMS.Lib.Models
             Categories = new HashSet<Category>();
             Post_ProductOptions = new HashSet<Post_Product>();
             Files = new HashSet<File>();
+            Rooms = new HashSet<Room>();
         }
 
         [Key]
@@ -41,6 +42,8 @@ namespace VCMS.Lib.Models
 
         [ForeignKey("ImageId")]
         public virtual File ImageFile { get; set; }
+
+        public virtual ICollection<Room> Rooms { get; set; }
 
         public virtual ICollection<Post_Details> Post_Details { get; set; }
 

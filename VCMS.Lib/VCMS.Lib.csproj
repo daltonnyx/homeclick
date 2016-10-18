@@ -221,6 +221,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\Business\Collection\" />
+    <Folder Include="Controllers\Business\NewFolder1\" />
     <Folder Include="Models\Test\" />
     <Folder Include="Script\" />
   </ItemGroup>

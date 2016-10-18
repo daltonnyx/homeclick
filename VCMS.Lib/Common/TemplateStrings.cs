@@ -2,6 +2,17 @@
 {
     public static class TemplateStrings
     {
+
+        /// <summary>
+        /// '0' model name
+        /// </summary>
+        public const string MODEL_CREATE_SUCCESS = "<strong>{0}</strong> has been created!";
+
+        /// <summary>
+        /// '0' model name
+        /// </summary>
+        public const string MODEL_CREATE_FAIL = "One or more error occurred. <strong>{0}</strong> have not created!";
+
         /// <summary>
         /// '0' is model type(s)
         /// '1' is models name combined
@@ -18,6 +29,7 @@
         /// '0' string content
         /// </summary>
         public const string HTML_STRONG = "<strong>{0}</strong>";
+
 
     }
 }

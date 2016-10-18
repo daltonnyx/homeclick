@@ -1,0 +1,62 @@
+﻿@*
+    *Usage: @Html.Partial("Widgets/DeleteConfirmModalAjax")
+*@
+
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+            </div>
+            <div class="modal-body">
+                <p>You are sure?</p>
+                @using (Html.BeginForm("DeleteConfirmed", Html.GetControllerName()))
+                {
+                    
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary btn-yes">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.Delayed("DeleteConfirmModalAjax-script"))
+{
+    <script>
+        $('#deleteConfirmModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var form = $(this).find('.modal-body form');
+            var selects = $('.select-item:checked');
+            for (var i = 0; i < selects.length; i++) {
+                var input = $('<input type="hidden" name="ids"/>').val($(selects[i]).val()).appendTo(form);
+            }
+            $(this).find('.modal-footer .btn-yes').prop('disabled', selects.length <= 0);
+        });
+
+        $('#deleteConfirmModal').on('click', '.btn-yes', function (e) {
+            var $modalDiv = $(e.delegateTarget);
+            var form = $modalDiv.find('.modal-body form');
+            $.ajax({
+                url: form.attr('action'),
+                data: form.serialize(),
+                method: 'POST',
+                success: function (resultMessage) {
+                    for (var i = 0; i < resultMessage.length; i++) {
+                        var message = CreateMessage(resultMessage[i].MessageType, resultMessage[i].MessageContent);
+                        $('.head-messages').append(message);
+                    }
+                    dataTable.ajax.reload();
+                },
+                complete: function () {
+                    $modalDiv.modal('hide');
+                }
+            });
+        });
+    </script>
+}

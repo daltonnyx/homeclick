@@ -19,10 +19,6 @@ namespace VCMS.Lib.Models
 
     public class BaseModel
     {
-        [Key]
-        [StringLength(128)]
-        public string Id { get; set; }
-
         public DateTime? CreateTime { get; set; }
 
         [StringLength(128)]

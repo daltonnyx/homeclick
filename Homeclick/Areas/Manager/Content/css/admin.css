@@ -22,7 +22,7 @@
 
 .file-upload .img-thumbnail > img, [class*="image-preview"] img {
       height: 100%;
-      min-width: 100%;
+      max-width: 100%;
       left: 50%;
       position: relative;
       transform: translateX(-50%);
@@ -77,6 +77,13 @@
 
         .text-danger > ul{
             margin-bottom:0;
+        }
+/*====================================
+    Froala class
+====================================*/
+        .fr-view table.fr-none-borders td,
+        .fr-view table.fr-none-borders th {
+          border-style: none;
         }
 /*====================================
     Bootstrap utility classes

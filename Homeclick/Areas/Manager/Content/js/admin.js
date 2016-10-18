@@ -1,4 +1,11 @@
-﻿function showChosenOption(chosen, opt) {
+﻿function CreateMessage(type, content) {
+    var result = '<div class="alert alert-' + type.toLowerCase() + '">' +
+                    '<button class="close" data-dismiss="alert">×</button>' + content +
+                 '</div>';
+    return result;
+}
+
+function showChosenOption(chosen, opt) {
     opt.show().prop("disabled", false);;
     chosen.trigger("chosen:updated");
     return true;

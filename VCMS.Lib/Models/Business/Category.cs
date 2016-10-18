@@ -20,9 +20,9 @@ namespace VCMS.Lib.Models
             CustomFields = new HashSet<CustomField>();
         }
 
-        [Key]
-        public new int Id { get; set; }
+        public int Id { get; set; }
 
+        [Required]
         [StringLength(128)]
         public string Name { get; set; }
 
@@ -120,30 +120,25 @@ namespace VCMS.Lib.Models
             }
             return products;
         }
+
+        public IEnumerable<EntityNode<Category>> GetNodes(int depth,params int[] exclude)
+        {
+            var result = new List<EntityNode<Category>>();
+            if (!exclude.Contains(Id))
+            {
+                result.Add(new EntityNode<Category>() { Entity = this, Depth = depth });
+                foreach (var childNode in Children)
+                {
+                    result.AddRange(childNode.GetNodes(depth + 1, exclude));
+                }
+            }
+            return result;
+        }
     }
 
-    /*
-    public class CategoryEntityConfiguration : EntityTypeConfiguration<Category>
+    public class EntityNode<T> where T : class
     {
-        public CategoryEntityConfiguration()
-        {
-            this.HasMany(e => e.Category_detail)
-                .WithOptional(e => e.Category)
-                .WillCascadeOnDelete();
-
-            this.HasMany(e => e.Files)
-                .WithOptional(e => e.FileType)
-                .HasForeignKey(e => e.FileTypeId);
-
-            //Parents
-            this.HasMany(e => e.CategoryParents)
-                .WithMany(e => e.CategoryChildren)
-                .Map(cs =>
-                {
-                    cs.MapLeftKey("ChildId");
-                    cs.MapRightKey("ParentId");
-                    cs.ToTable("Category_Category_Link");
-                });
-        }
-    }        */
+        public T Entity { get; set; }
+        public int Depth { get; set; }
+    }
 }

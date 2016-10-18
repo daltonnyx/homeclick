@@ -5,6 +5,7 @@ namespace VCMS.Lib.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web.Mvc;
 
     public partial class Project
     {
@@ -30,6 +31,9 @@ namespace VCMS.Lib.Models
 
         public bool Status { get; set; }
 
+        [AllowHtml]
+        public string HtmlContent { get; set; }
+
         [StringLength(128)]
         public string CreateUserId { get; set; }
 
@@ -40,6 +44,8 @@ namespace VCMS.Lib.Models
         public virtual District District { get; set; }
 
         public virtual ICollection<File> Files { get; set; }
+
+        public virtual ICollection<Department> Departments { get; set; }
 
         public virtual ICollection<Project_Details> Project_Details { get; set; }
 

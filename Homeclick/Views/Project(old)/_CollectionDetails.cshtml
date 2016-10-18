@@ -1,0 +1,28 @@
+﻿@model Homeclick.Models.ProjectLayout_Collection
+@{ 
+    var tableItems = ViewBag.TableItems as IEnumerable<Homeclick.Models.ProjectLayout_Collection_Product_Link>;
+    var products = ViewBag.Products as IEnumerable<Homeclick.Models.Product>;
+    var url = "";
+}
+
+    <div class="" role="img">
+        <img src="@url/@Model.Image" />
+    </div>
+
+    <div class="details-title">
+        <span>@Model.Name</span>
+    </div>
+
+    <div class="description">
+        @Html.Raw(Model.HtmlContent)
+    </div>
+
+    <section class="product-list-section">
+        @Html.Partial("_ProductsTable", tableItems)
+        @Html.Partial("_ProductsGrid", products)
+    </section>
+
+<div>
+    <button class="add-to-cart btn bg pull-right"><i class="fa fa-plus" aria-hidden="true"></i> Thêm vào giỏ</button>
+</div>
+

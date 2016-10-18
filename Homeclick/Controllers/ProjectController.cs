@@ -1,4 +1,4 @@
-﻿using Homeclick.Models;
+﻿using VCMS.Lib.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,19 +8,14 @@ using System.Web.Mvc;
 
 namespace Homeclick.Controllers
 {
-    public class ProjectController : BaseController
+    public class ProjectController : Controller
     {
-        public override CategoryTypes CategoryType
-        {
-            get
-            {
-                return CategoryTypes.ProjectType;
-            }
-        }
+        ApplicationDbContext db = new ApplicationDbContext();
+
 
         public ActionResult Index(int? category_id)
         {
-            var viewModel = db.Projects.Where(o => o.LockedOut == false);
+            var viewModel = db.Projects.Where(o => o.Status);
             return View(viewModel);
         }
 
@@ -33,18 +28,18 @@ namespace Homeclick.Controllers
         {
             ViewBag.MetaKeyword = "homeclick";
             ViewBag.MetaDescription = "project";
-            var types = db.Categories.Where(o => o.ParentCategoryId == 28);
+            var types = db.Categories.Where(o => o.CategoryParentId == 28);
             var cities = db.Cities.ToList();
 
             ViewBag.ProjectTypes = types;
             ViewBag.Cities = cities;
 
-            var categories = db.Categories.Where(o => o.Category_typeId == (int)CategoryTypes.ProjectType);
+            var categories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProjectType);
             ViewBag.Categories = categories;
 
             return View();
         }
-
+        /*
         public ActionResult _CollectionDetails(int collection_id)
         {
             var query = string.Format("SELECT * FROM dbo.ProjectLayout_Collection_Product_Link WHERE ParentId = '{0}'", collection_id);
@@ -73,23 +68,11 @@ namespace Homeclick.Controllers
        
             return PartialView(v);
         }
-
-        public ActionResult Details(int category_id, int project_id)
+        */
+        public ActionResult Details(int? category_id, int? project_id)
         {
-            var layouts = db.ProjectItems.Where(o => o.ProjectId == project_id && o.Category.Id == 25).ToList();
-            ViewBag.Layouts = layouts;
-
-            var firstLayoutId = layouts.FirstOrDefault().Id;
-            ViewBag.firstLayoutId = firstLayoutId;
-
-
-            var thumbnails = db.ProjectItems.Where(o => o.ProjectId == project_id && o.Category.Id == 24).ToList();
-            ViewBag.Thumbnails = thumbnails;
-
-            var project = db.Projects.ToList();
-            var v = project.SingleOrDefault(o => o.Id == project_id);
-            
-            return View(v);
+            var project = db.Projects.Find(project_id);
+            return View(project);
         }
     }
 }

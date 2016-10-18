@@ -16,6 +16,8 @@ namespace VCMS.Lib.Models
         {
             Categories = new HashSet<Category>();
         }
+
+        public string Id { get; set; }
         
         [Display(Name = "FileName", ResourceType = typeof(Strings))]
         public string Name { get; set; }
