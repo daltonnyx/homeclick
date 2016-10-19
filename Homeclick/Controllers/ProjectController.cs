@@ -74,5 +74,13 @@ namespace Homeclick.Controllers
             var project = db.Projects.Find(project_id);
             return View(project);
         }
+
+        public ActionResult Collection(int? collection_id)
+        {
+            var collection = db.Posts.Find(collection_id);
+            if (collection != null)
+                return PartialView(collection);
+            return HttpNotFound();
+        }
     }
 }

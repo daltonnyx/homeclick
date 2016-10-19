@@ -251,6 +251,10 @@
   <ItemGroup>
     <Content Include="Areas\Manager\Content\css\loading.css" />
     <Content Include="Areas\Manager\Content\js\admin.js" />
+    <Content Include="Areas\Manager\Uploads\Images\Layout1.jpg" />
+    <Content Include="Areas\Manager\Uploads\Images\Layout2.jpg" />
+    <Content Include="Areas\Manager\Uploads\Images\Layout3.jpg" />
+    <Content Include="Areas\Manager\Uploads\Images\Layout4.jpg" />
     <Content Include="Areas\Manager\Content\lib\bootstrap\bootstrap.min.js" />
     <Content Include="Areas\Manager\Content\lib\datatables\columnFilterWidgets\css\ColumnFilterWidgets.css" />
     <Content Include="Areas\Manager\Content\lib\datatables\columnFilterWidgets\images\bullet_delete.png" />
@@ -1088,6 +1092,7 @@
     <Content Include="Views\Shared\_SharedLayout.cshtml" />
     <Content Include="Views\Shared\_SharedLayout_NoSidebar.cshtml" />
     <Content Include="Views\Shared\_shareSidebar.cshtml" />
+    <Content Include="Views\Project\Collection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

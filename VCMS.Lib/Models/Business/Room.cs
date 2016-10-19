@@ -25,6 +25,9 @@ namespace VCMS.Lib.Models
 
         public string CanvasData { get; set; }
 
+        [ForeignKey("Image")]
+        public string ImageId {get;set;}
+
         public int? FloorId { get; set; }
 
         public virtual ICollection<Post> Collections { get; set; }
@@ -32,5 +35,7 @@ namespace VCMS.Lib.Models
         public virtual ICollection<Canva> Canvas { get; set; }
 
         public virtual Floor Floor { get; set; }
+
+        public virtual File Image { get; set; }
     }
 }

@@ -65,6 +65,7 @@ namespace System.Web.Mvc
             }
 
             TagBuilder dropdown = new TagBuilder("select");
+            dropdown.Attributes.Add("id", fullName.Replace('[','_').Replace(']', '_'));
             dropdown.Attributes.Add("name", fullName);
             //dropdown.MergeAttribute("data-val", "true");
             //dropdown.MergeAttribute("data-val-required", "Mandatory field.");
@@ -73,15 +74,17 @@ namespace System.Web.Mvc
             dropdown.MergeAttributes(htmlHelper.GetUnobtrusiveValidationAttributes(name, metadata));
 
             //option label
-
-            var option = new TagBuilder("option");
-            option.SetInnerText(optionLabel);
-            dropdown.InnerHtml += option.ToString();
+            if (optionLabel != null)
+            {
+                var option = new TagBuilder("option");
+                option.SetInnerText(optionLabel);
+                dropdown.InnerHtml += option.ToString();
+            }
 
             foreach (var item in list)
             {
                 var optionHtmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(item.HtmlAttributes);
-                 option = new TagBuilder("option");
+                var option = new TagBuilder("option");
                 option.Attributes.Add("value", item.Value);
                 option.MergeAttributes(optionHtmlAttributes);
                 option.SetInnerText(item.Text);

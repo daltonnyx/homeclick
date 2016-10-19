@@ -1,4 +1,5 @@
-﻿@model VCMS.Lib.Models.Project
+﻿@using VCMS.Lib.Models
+@model VCMS.Lib.Models.Project
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_SharedLayout_NoSidebar.cshtml";
@@ -9,35 +10,133 @@
     @Html.Raw(Model.HtmlContent)
 </div>
 <hr />
-<ul>
-    @foreach (var depart in Model.Departments)
+@Html.DropDownList("departments", new SelectList(Model.Departments, "Id", "Name", null), new { })
+@{ 
+    var floors = new List<Floor>();
+    foreach (var department in Model.Departments)
     {
-        <li>
-            @Html.ActionLink(depart.Name, "Department", new { department_id = depart.Id })
-            <ul style="margin-left:15px;">
-                <li>
-                    @foreach (var floor in depart.Floors)
-                    {
-                        @Html.ActionLink(floor.Name, "Floor", new { floor_id = floor.Id })
-                        <ul style="margin-left:15px;">
-                                @foreach (var room in floor.Rooms)
-                                {
-                                    <li>
-                                        @Html.ActionLink(room.Name, "Room", new { room_id = floor.Id })
-                                        <ul style="margin-left:15px;">
-                                            @foreach (var collection in room.Collections)
-                                            {
-                                                <li>
-                                                    @Html.ActionLink(collection.Title, "collection", new { collection_id = collection.Id })
-                                                </li>
-                                            }
-                                        </ul>
-                                    </li>
-                                }
-                        </ul>
-                    }
-                </li>
-            </ul>
-        </li>
+        floors.AddRange(department.Floors);
     }
-</ul>
+    var floorSelectlistItems = new List<CustomSelectItem>();
+    foreach (var floor in floors)
+    {
+        floorSelectlistItems.Add(new CustomSelectItem
+        {
+            Value = floor.Id.ToString(),
+            Text = floor.Name,
+            HtmlAttributes = new { data_departments = floor.DepartmentId }
+        });
+    }
+}
+@Html.CustomDropdownList("floors", floorSelectlistItems, null, null, new { })
+@{ 
+    var rooms = new List<Room>();
+    foreach (var floor in floors)
+    {
+        rooms.AddRange(floor.Rooms);
+    }
+    var roomSelectItems = new List<CustomSelectItem>();
+    foreach (var room in rooms)
+    {
+        roomSelectItems.Add(new CustomSelectItem
+        {
+            Value = room.Id.ToString(),
+            Text = room.Name,
+            HtmlAttributes = new { data_floors = room.FloorId, data_image = room.Image != null ? room.Image.FullFileName : string.Empty}
+        });
+    }
+}
+@Html.CustomDropdownList("rooms", roomSelectItems, null, null, new { })
+
+<div class="clearfix">
+    <img id="LayoutImage"/>
+</div>
+
+@{ 
+    var collections = new List<Post>();
+    foreach (var room in rooms)
+    {
+        collections.AddRange(room.Collections);
+    }
+    collections = collections.Distinct().ToList();
+    var collectionsSelectItems = new List<CustomSelectItem>();
+    foreach (var collection in collections)
+    {
+        collectionsSelectItems.Add(new CustomSelectItem
+        {
+            Value = collection.Id.ToString(),
+            Text = collection.Title,
+            HtmlAttributes = new { data_rooms = collection.Rooms.FirstOrDefault().Id}
+        });
+    }
+}
+@Html.CustomDropdownList("collections", collectionsSelectItems, null, null, new { })
+
+<div id="Collection">
+
+</div>
+
+@section styles {
+    @Styles.Render("~/content/lib/owl-carousel/css")
+}
+
+@section scripts {
+    @Scripts.Render("~/content/lib/owl-carousel/js")
+    <script>
+        var $departments = $('#departments'),
+		    $floors = $('#floors'),
+            $floorsOptions = $floors.find('option'),
+            $rooms = $('#rooms'),
+            $roomsOptions = $rooms.find('option'),
+            $collections = $('#collections'),
+            $collectionsOptions = $collections.find('option');
+
+        $departments.on('change', function () {
+            $floors.empty();
+            var str = '[data-' + $(this).attr('id') + '="' + $(this).val() + '"]';
+            var filterResult = $floorsOptions.filter(str);
+            for (var i = filterResult.length - 1; i >= 0; i--) {
+                $(filterResult[i]).prependTo($floors);
+            }
+        }).trigger('change');
+
+        $floors.on('change', function () {
+            $rooms.empty();
+            var str = '[data-' + $(this).attr('id') + '="' + $(this).val() + '"]';
+            var filterResult = $roomsOptions.filter(str);
+            for (var i = filterResult.length - 1; i >= 0; i--) {
+                $(filterResult[i]).prependTo($rooms);
+            }
+            $rooms.trigger('change');
+        }).trigger('change');
+
+        $rooms.on('change', function () {
+            var selected = $rooms.find(':selected');
+            $('#LayoutImage').attr('src', '@Url.GetImageUploadFolder()' + $(selected).data('image'));
+            $collections.empty();
+            var str = '[data-' + $(this).attr('id') + '="' + $(this).val() + '"]';
+            var filterResult = $collectionsOptions.filter(str);
+            for (var i = filterResult.length - 1; i >= 0; i--) {
+                $(filterResult[i]).prependTo($collections);
+            }
+            $collections.trigger('change');
+        }).trigger('change');
+
+        $collections.on('change', function () {
+            $.ajax({
+                url: '@Url.Action("Collection")',
+                data: { 'collection_id': $(this).val() },
+                method: 'POST',
+                success: function (data) {
+                    $('#Collection').html(data);
+                    $(".owl-carousel").owlCarousel({
+                        slideSpeed: 300,
+                        paginationSpeed: 400,
+                        singleItem: true
+                    });
+                }
+            });
+        }).trigger('change');
+    </script>
+
+    }
