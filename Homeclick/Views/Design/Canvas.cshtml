@@ -1,7 +1,7 @@
 ﻿@using VCMS.Lib.Models
 @model Room
 @{
-    var CategoryTypes = ViewBag.CategoryTypes as IEnumerable<Category_Type>;
+    var Categories = ViewBag.Categories as IEnumerable<Category>;
 }
 
 <!DOCTYPE HTML>
@@ -32,15 +32,15 @@
                     <li><a href="">Sản phẩm</a></li>
                     <li><a href="">Ký hiệu</a></li>
                     <li><a href="">Mong muốn</a></li>
-                    <li><a href="">Giỏ hàng</a></li>
+                    <li><a href="">Danh sách</a></li>
                 </ul>
                 <ul class="uk-switcher svg-container" id="furnitures">
                     <li class="tab-list product-fur">
                         <div class="product-list">
                             <div class="product-select">
-                                @Html.DropDownList("CategoryTypeSelect", new SelectList(CategoryTypes, "Id", "name"), new { @id = "CategoryTypeSelect" })
-                                <select id="CategorySelect">
-                                    @{Html.RenderAction("_CategoryOptions",new { categoryTypeId = CategoryTypes.FirstOrDefault().Id });}
+                                @Html.DropDownList("CategorySelect", new SelectList(Categories, "Id", "Name"), new { @id = "CategorySelect" })
+                                <select id="TypeSelect">
+                                    @{Html.RenderAction("_CategoryOptions");}
                                 </select>
                             </div>
 
@@ -72,7 +72,7 @@
             <div class="control-container main-menu">
                 <button class="uk-button" id="saveJSON"">save</button>
                 <button class="uk-button" id="new">Refresh</button>
-                <button class="uk-button" id="print">print</button>
+                <button class="uk-button" id="print">Export</button>
                 @* <button class="uk-button" id="search">search</button> *@
                 <button class="uk-button" id="undo">undo</button>
             </div>
@@ -307,6 +307,13 @@
             <a href="#0" class="cd-close-form">Close</a>
         </div> <!-- cd-user-modal-container -->
     </div> <!-- cd-user-modal -->
+
+    <div id="export-modal" class="uk-modal">
+        <div class="uk-modal-dialog">
+            <a class="uk-modal-close uk-close"></a>
+            <img src="" id="export-img" />
+        </div>
+    </div>
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/Scripts/jquery-1.11.3.min.js")
     @Scripts.Render("~/Scripts/fabric.js")
@@ -353,24 +360,14 @@
                 });
             }
 
-            $('#CategoryTypeSelect').on('change', function (event) {
-                var v = this.options[this.selectedIndex].value;
-                GetHtmlView('/Design/_CategoryOptions?categoryTypeId=' + v, 'CategorySelect');
+           
+            $('#CategorySelect, #TypeSelect').on('change', function (event) {
+                var v = $('#CategorySelect').val();
+                var t = $('#TypeSelect').val();
+                GetHtmlView('/Sanpham/canvasList?cat_id=' + v + '&type_id=' + t, 'Funiture-list');
             });
 
-            $('#CategorySelect').on('change', function (event) {
-                var v = this.options[this.selectedIndex].value;
-                GetHtmlView('/Sanpham/canvasList?cat_id=' + v, 'Funiture-list');
-            });
-
-            $('#CategorySelect').bind("DOMSubtreeModified", function () {
-                var v = this.options;
-                if (v.selectedIndex != -1) {
-                    var v = this.options[this.selectedIndex].value;
-                    GetHtmlView('/Sanpham/canvasList?cat_id=' + v, 'Funiture-list');
-                }
-            });
-
+           
             $('#saveJSON').click(function () {
 
             });

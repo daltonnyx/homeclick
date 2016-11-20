@@ -95,7 +95,7 @@ position: absolute; width:16px;height:16px;left: 0;top: 0;z-index: 999;display: 
 span.slogan {padding-left:15px;font-family: Soraya;font-size: 35px;vertical-align: bottom;position: relative;	top: -20px;}
 span.aqua {color:#12a9a4;}
 .product-select {padding:15px 10px;}
-#CategoryTypeSelect,#CategorySelect {padding: 5px;font-family: Avo;min-width: 140px;text-align: center;font-size: 14px;color:#666;}
+#CategoryTypeSelect,#CategorySelect {padding: 5px;font-family: Avo;min-width: 140px;text-align: center;font-size: 14px;color:#666;max-width: 50%;}
 .uk-tab .uk-active a {color:#fff !important;border-top-right-radius: 10px !important;border-top-left-radius: 10px !important;background-color: #12a9a4 !important;}
 .uk-tab > li > a {padding-left:0.3em;padding-right:0.3em;font-size: 13px;}
 .uk-tab > li > a:hover {color:#fff;background-color: #12a9a4;}
@@ -112,7 +112,15 @@ span.aqua {color:#12a9a4;}
 .main-menu .uk-button {margin:0px 5px;background-color:#404040;font-family: Avo;color:#fff;text-transform: uppercase;}
 .main-menu .uk-button:hover {background-color: #12a9a4;}
 .main-canvas .zoom {font-family: Avo;border-radius:10px;color:#404040;text-transform: uppercase;background-color: #e3e6e6;padding:5px 10px;box-shadow: 1px 2px 5px -2px #404040;}
-
+.sub-total {
+    font-size: 20px;
+    text-align: right;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.sub-total .sub-total-value {
+    color: red;
+}
 .canvas-holder {margin-top:20px;border: 1px solid #ccc;}
 .zoom-value {text-align: center;}
 .control-container.toolbar {display:flex;flex-flow: row nowrap;background: none;}
