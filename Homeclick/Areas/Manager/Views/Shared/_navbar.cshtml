@@ -1,0 +1,90 @@
+﻿<div id="navbar" class="navbar">
+    <button type="button" class="navbar-toggle navbar-btn collapsed" data-toggle="collapse" data-target="#sidebar">
+        <span class="fa fa-bars"></span>
+    </button>
+    <a class="navbar-brand" href="#">
+        <small>
+            <i class="fa fa-desktop"></i>
+            VCMS
+        </small>
+    </a>
+
+    <!-- BEGIN Navbar Buttons -->
+    <ul class="nav flaty-nav pull-right">
+        <!-- BEGIN Button User -->
+        <li class="user-profile">
+            <a data-toggle="dropdown" href="#" class="user-menu dropdown-toggle">
+                <img class="nav-user-photo" src="~/Areas/Manager/Content/Images/man.png" alt="Photo">
+                <span class="hhh" id="user_info">
+                    @User.Identity.Name
+                </span>
+                <i class="fa fa-caret-down"></i>
+            </a>
+
+            <!-- BEGIN User Dropdown -->
+            <ul class="dropdown-menu dropdown-navbar" id="user_menu">
+                <li class="nav-header">
+                    <i class="fa fa-clock-o"></i>
+                    Logined From 20:45
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa fa-cog"></i>
+                        Account Settings
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa fa-user"></i>
+                        Edit Profile
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa fa-question"></i>
+                        Help
+                    </a>
+                </li>
+
+                <li class="divider visible-xs"></li>
+
+                <li class="visible-xs">
+                    <a href="#">
+                        <i class="fa fa-tasks"></i>
+                        Tasks
+                        <span class="badge badge-warning">4</span>
+                    </a>
+                </li>
+                <li class="visible-xs">
+                    <a href="#">
+                        <i class="fa fa-bell"></i>
+                        Notifications
+                        <span class="badge badge-important">8</span>
+                    </a>
+                </li>
+                <li class="visible-xs">
+                    <a href="#">
+                        <i class="fa fa-envelope"></i>
+                        Messages
+                        <span class="badge badge-success">5</span>
+                    </a>
+                </li>
+
+                <li class="divider"></li>
+
+                <li>
+                    <a href="@Url.Action("LogOff","Account")">
+                        <i class="fa fa-off"></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+            <!-- BEGIN User Dropdown -->
+        </li>
+        <!-- END Button User -->
+    </ul>
+    <!-- END Navbar Buttons -->
+</div>

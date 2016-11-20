@@ -61,6 +61,27 @@ namespace Homeclick.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> AjaxLogin(LoginViewModel model) {
+            var qs = ((System.Web.HttpRequestWrapper)Request).Params["model"];
+            var data = HttpUtility.ParseQueryString(qs);
+            var user = await UserManager.FindAsync(data["UserName"], data["Password"]);
+            if (user != null)
+            {
+                await SignInAsync(user, false);
+                Response.StatusCode = 202;
+                return Content("Success");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid username or password.");
+            }
+
+            Response.StatusCode = 403;
+            return Content("Fail to login");
+        }
+
         //
         // GET: /Account/Register
         [AllowAnonymous]

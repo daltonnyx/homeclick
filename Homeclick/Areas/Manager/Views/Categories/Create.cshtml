@@ -1,0 +1,65 @@
+﻿@using VCMS.Lib.Resources
+@model VCMS.Lib.Models.CategoryViewModel
+
+@{
+    ViewBag.Title = Strings.CategoryTypes;
+    ViewBag.FormName = "Create a new category";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout_Form.cshtml";
+}
+<div class="tabbable">
+    <ul class="nav nav-tabs active-blue">
+        <li class=""><a href="@Url.Action("List")"><i class="fa fa-list"></i> List</a></li>
+        <li class="active"><a href="#edit"><i class="fa fa-plus-circle"></i> @ViewBag.FormName</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade active in">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="clearfix">
+                        <input type="submit" value="Create" class="btn btn-primary pull-right"/>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section ActionLinks {
+    <div>
+        @Html.ActionLink("Back to list a", "Index", new { id = Model.TypeId })
+    </div>
+}
+
+@section breadcrumb {
+    @{
+        var viewName = Html.ViewContext.RouteData.GetRequiredString("action");
+    }
+    <li>
+        <a href="@Url.Action("Index","Dashboard")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("Index", new { id = Model.TypeId})">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

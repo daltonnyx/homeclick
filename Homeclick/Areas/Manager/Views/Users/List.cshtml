@@ -1,0 +1,101 @@
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Resources
+
+@{
+    ViewBag.Title = Strings.Users;
+    ViewBag.FormName = "List of User";
+}
+
+<div class="tabbable">
+    <ul class="nav nav-tabs active-blue">
+        <li class="active"><a href="#list"><i class="fa fa-list"></i> List</a></li>
+        <li class=""><a href="@Url.Action("CustomFields", "Users")"> Custom field</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade active in">
+            <div class="clearfix btn-toolbar ">
+                <div class="btn-group pull-right">
+                    <a class="btn btn-circle show-tooltip" title="" href="@Url.Action("Create","Users")" data-original-title="Add new user"><i class="fa fa-plus"></i></a>
+                    <a class="btn btn-circle show-tooltip" title="" href="#" data-original-title="Delete selected" data-toggle="modal" data-target="#deleteConfirmModal"><i class="fa fa-trash-o"></i></a>
+                    <a class="btn btn-circle show-tooltip" title="" href="#" data-original-title="Refresh"><i class="fa fa-repeat"></i></a>
+                </div>
+            </div>
+            <hr />
+            <table id="dataTable" class="table display table-striped table-hover fill-head">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" />
+                        </th>
+                        <th>
+                            @Strings.Name
+                        </th>
+                        <th>
+                            @Strings.UserName
+                        </th>
+                        <th>
+                            @Strings.Email
+                        </th>
+                        <th>
+                            @Strings.Lockout
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Widgets/DeleteConfirmModal")
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.Title</li>
+}
+
+@section styles {
+    @Styles.Render("~/bundles/manager/datatables/css")
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/manager/datatables")
+    <script src="~/Areas/Manager/Content/lib/moment.js"></script>
+
+    <script>
+        var dataTable = $('#dataTable');
+        var table = dataTable.DataTable({
+            autoWidth: false,
+            serverSide: true,
+            ajax: {
+                type: "POST",
+                url: '@Url.Action("DataHandler")',
+                contentType: 'application/json; charset=utf-8',
+                data: function (data) { return data = JSON.stringify(data); }
+            },
+            processing: true,
+            columns: [
+               { "data": "id", render: function (data, type, full, meta) { return '<input type="checkbox" class="select-item" value="' + data + '"/>' } },
+               { "data": "name" },
+               { "data": "username", render: function (data, type, full, meta) { return '<a href="@Url.Action("Edit")?user_id=' + full.id + '">' + data + '</a>'; } },
+               { "data": "email" },
+               {
+                   "data": "lockout", "render": function (data, type, full, meta) {
+                       if (data) return '<i class="fa fa-lock"></i> ' + moment(data).format("MM/DD/YYYY HH:mm");
+                       return '';
+                   }
+               },
+               { "data": "id" }],
+            order: [[1, 'asc']],
+            columnDefs: [{ "searchable": false, "orderable": false, "targets": 0 }]
+        });
+    </script>
+    @Html.RenderDelayed("deleteConfirmModal-script")
+}

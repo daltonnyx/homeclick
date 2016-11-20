@@ -14,15 +14,16 @@ namespace Homeclick
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Product",
-                url: "Product/{model_id}/{typo_id}/{mate_id}",
-                defaults: new { controller = "Category", action = "Filter", model_id = UrlParameter.Optional, typo_id = UrlParameter.Optional, mate_id = UrlParameter.Optional}
+                "Manager_Redirect",
+                "Manager",
+                new { area = "Manager", controller = "Dashboard", action = "Index" }
             );
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "Homeclick.Controllers" }
             );
         }
     }

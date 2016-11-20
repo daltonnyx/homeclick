@@ -1,0 +1,56 @@
+﻿@using VCMS.Lib.Resources
+@model VCMS.Lib.Models.RoleViewModel
+
+@{
+    ViewBag.Title = Strings.Roles;
+    ViewBag.FormName = Model.Name;
+}
+
+<div class="tabbable">
+    <ul class="nav nav-tabs active-blue">
+        <li class=""><a href="@Url.Action("List")"><i class="fa fa-list"></i> List</a></li>
+        <li class="active"><a href="#edit"><i class="fa fa-edit"></i> @ViewBag.FormName</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade active in">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="clearfix">
+                        <input type="submit" value="Save changed" class="btn btn-primary pull-right" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}

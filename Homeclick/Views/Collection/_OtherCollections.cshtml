@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Homeclick.Models.CollectionViewModel>
+
+@{ 
+    var baseLink = Request.RequestContext.RouteData.Values["Controller"];
+    var url = "";
+}
+
+<div class="collection-others row" >
+    @foreach (var collection in Model)
+    {
+        collection.link = "/" + baseLink + "/" + collection.categoryId + "/" + collection.id;
+        <div class="collection-other">
+            <a href="link">@collection.name</a>
+        </div>
+    }
+</div>

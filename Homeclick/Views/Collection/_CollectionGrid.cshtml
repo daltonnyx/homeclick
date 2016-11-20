@@ -1,0 +1,25 @@
+﻿@using VCMS.Lib.Models
+@using VCMS.Lib.Models
+@using VCMS.Lib.Common;
+
+@model IEnumerable<Post>
+@{ 
+}
+<div class="grid-content clearfix">
+    @foreach (var item in Model)
+    {
+        var link = Url.Action("Detail", new { category_id = item.Categories.Select(o => o.Id).FirstOrDefault(), collection_id = item.Id });
+        <div class="collection-item col-sm-6">
+            <div class="collection-inner">
+                <div class="image">
+                    <a href="@link"><img src="@Url.GetImageUploadFolder()@item.ImageFile.FullFileName" alt="" /></a>
+                </div>
+                <div class="collection-detail">
+                    <span class="collection-name">
+                        <a href="@link">@item.Title</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    }
+</div>

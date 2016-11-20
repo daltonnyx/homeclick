@@ -1,124 +1,139 @@
-﻿ <header id="header" class="site-header">
+﻿@{
+    var db = new VCMS.Lib.Models.ApplicationDbContext();
+    var categories = db.Categories.ToList();
+    var controllerName = Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
+    var actionName = Request.RequestContext.RouteData.Values["action"].ToString().ToLower();
+    var categoryId = int.Parse(Request.Params["category_id"] ?? "-1");
+}
+
+<header id="header" class="site-header">
     <div class="toolbar">
         <div class="container">
-            <div class="row">
-                <div class="left-toolbar">
-                    <ul>
-                        <li class="toolbar-phone">+565975 658</li>
-                        <li class="toolbar-email">infodoowood.vn</li>
-                    </ul>
-                </div>
-                <div class="right-toolbar">
-                    <ul>
-                        @if(Request.IsAuthenticated) {
-                            <li>@Html.ActionLink("My Account", "Manage", "Account")</li>
-                            <li><a href="#">My Wishlist</a></li>
+            <div class="left-toolbar col-xs-12 col-sm-6">
+                <ul>
+                    <li class="toolbar-phone">+565975 658</li>
+                    <li class="toolbar-email">infodoowood.vn</li>
+                </ul>
+            </div>
+            <div class="right-toolbar col-xs-12 col-sm-6">
+                <ul>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("My Account", "Manage", "Account")</li>
+                        <li><a href="#">My Wishlist</a></li>
                             <li><a href="#">Compare</a></li>
                             <li>@Html.ActionLink("Logout", "LogOff", "Account")</li>
-                        }
-                        else
-                        {
-                            <li>@Html.ActionLink("Login","Login","Account")</li>
-                        }
-                    </ul>
-                </div>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                    }
+                </ul>
             </div>
         </div>
     </div>
     <div class="mid-header">
         <div class="container">
-            <div class="row">
-                <div class="logo">
-                    <div class="item-logo">
-                        <a href="@Url.Action("Index","Home")"><img src="~/Upload/Images/assets/logo.png" alt="" /></a>
-                        <p>Online furniture store project</p>
-                    </div>
+            <div class="logo">
+                <div class="item-logo">
+                    <a href="@Url.Action("Index", "Home")"><img src="~/Upload/Images/assets/logo.png" alt="" /></a>
+                    <p>Online furniture store project</p>
                 </div>
-                <div class="header-form">
-                    <div class="shoppingcart">
-                        @Html.Action("ShoppingCartPartial", "GioHang")
-                    </div>
-                    <div class="search-form">
-                        @using (Html.BeginForm("Search_form", "Home", FormMethod.Get))
-                        {
+            </div>
+            <div class="header-form">
+                <div class="shoppingcart">
+                    @Html.Action("_headerWidget", "Cart")
+                </div>
+                <div class="search-form">
+                    @using (Html.BeginForm("Search_form", "Home", FormMethod.Get))
+                    {
 
-                            @Html.TextBox("search_name", "", new { @class = "search input-form" });
-                            <input class="button button-search" type="submit" />
-                        }
-                    </div>
+                        @Html.TextBox("search_name", "", new { @class = "search input-form" });
+                        <input class="button button-search" type="submit" />
+                    }
                 </div>
             </div>
         </div>
     </div>
     <div class="menu">
         <div class="container">
-            <div class="row">
-                <div class="mobimenu"><a href="#"><i class="fa fa-align-justify"></i></a></div>
-                <nav class="main-menu">
-                    <ul>
-                        <li class="menu-item">
-                            @Html.ActionLink("Sản Phẩm", "Index", "SanPham")
-                            <ul class="sub-menu">
-                                <li class="menu-item child-item">@Html.ActionLink("All Spaces","Models","Category")</li>
-                                <li class="menu-item child-item">@Html.ActionLink("All Typologies", "Typologies", "Category")</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Phòng khách", "Model", "Category", new { @id = 2}, null)</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Phòng ăn", "Model", "Category", new { @id = 2 }, null)</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Phòng ngủ", "Model", "Category", new { @id = 2 }, null)</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Phòng em bé", "Model", "Category", new { @id = 2 }, null)</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Sản phẩm khác", "Model", "Category", new { @id = 2 }, null)</li>
-                                
-                            </ul>
-                        </li>
-                        <li class="menu-item">@Html.ActionLink("Bộ sưu tập", "Index", "BoSuuTap")
-                            <ul class="sub-menu">
-                                <li class="menu-item child-item"><a href="http://demo.vinabits.com.vn/homeclick/BoSuuTap/Detail/8">Best collection</a></li>
-                                <li class="menu-item child-item"><a href="http://demo.vinabits.com.vn/homeclick/BoSuuTap/Detail/14">Bộ sưu tập tháng</a></li>
-                                <li class="menu-item child-item"><a href="http://demo.vinabits.com.vn/homeclick/BoSuuTap/Detail/8">Best choiced</a></li>
-                            </ul>
-                        </li>
-                        <li class="menu-item child-item">
-                            @Html.ActionLink("Dự án", "Index", "Project")
-                        @*<ul class="sub-menu">
-                            <li class="menu-item child-item">@Html.ActionLink("Thiết kế nội thất", "Thietkenoithat", "Html", new { @alias = "huongdantuthietke" }, null)</li>
-                            <li class="menu-item child-item">@Html.ActionLink("Thiết kế kiến trúc", "Thietkekientruc", "Html")</li>
-                        </ul>*@
-                    </li>
-                        <li class="menu-item">
-                            @*@Html.ActionLink("Tự thiết kế ", "Detail", "Page", new { @alias = "tuthietke" },null)*@
-                            @Html.ActionLink("Tự thiết kế", "Index", "Design")
-                            <ul class="sub-menu">
-                                @*<li class="menu-item child-item">@Html.ActionLink("Hướng dẫn tự thiết kế", "Detail", "Page",new { @alias = "huongdantuthietke" }, null)</li>*@
-                                <li class="menu-item child-item">@Html.ActionLink("Hướng dẫn thiết kế", "Index", "Design")</li>
-                                @*<li class="menu-item child-item">@Html.ActionLink("Thiết kế mẫu", "Thietkemau", "Html")</li>*@
-                                <li class="menu-item child-item">@Html.ActionLink("Tự thiết kế", "Design", "Design")</li>
-                            </ul>
-                        </li>
-                        @*<li class="menu-item">@Html.ActionLink("Cần thiết kế", "Detail", "Page", new { @alias = "canthietke" }, null)*@
-                        
-
-                        @*<li class="menu-item">@Html.ActionLink("Thư viện", "PostCategory", "Category", new { @id = 23 }, null)</li>*@
-                        <li class="menu-item child-item">@Html.ActionLink("Thư viện", "Blog", "Html")
-                            <ul class="sub-menu">
-                                <li class="menu-item child-item">@Html.ActionLink("Không gian mẫu", "Blog", "Html")</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Bài viết", "Blog", "Html")</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Phong thủy", "Blog", "Html")</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Vật liệu", "Blog", "Html")</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Phỏng vấn", "Blog", "Html")</li>
-                            </ul>
-                        </li>
-                        <li class="menu-item child-item">@Html.ActionLink("Thi công", "Blog", "Html")
-                            <ul class="sub-menu">
-                                <li class="menu-item child-item">@Html.ActionLink("Thiết kế nội thất", "Thietkenoithat", "Html", new { @alias = "huongdantuthietke" }, null)</li>
-                                <li class="menu-item child-item">@Html.ActionLink("Thiết kế kiến trúc", "Thietkekientruc", "Html")</li>
-                            </ul>
-                        </li>
-                        <li class="menu-item">@Html.ActionLink("Hướng dẫn", "Detail", "Page", new { @alias = "huongdan" }, null)</li>
-                        @*<li class="menu-item">@Html.ActionLink("Hỏi đáp", "Detail", "Page", new { @alias = "hoidap" }, null)</li>*@
-                        <li class="menu-item child-item">@Html.ActionLink("Hỏi đáp", "Faqs", "Html")</li>
-                        <li class="menu-item">@Html.ActionLink("Liên hệ", "Lienhe", "Html")</li>
-                    </ul>
-                </nav><!--.main-menu -->
+            <div class="nav-mobile-header">
+                <div class="nav-mobile"></div>
             </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item" data-menu="CategoryTypologies">
+                        @Html.ActionLink("Sản Phẩm", "Typologies", "Category", null, new { hidefocus = "hidefocus" })
+                        <ul class="nav-submenu">
+                            @*<li class="nav-submenu-item">@Html.ActionLink("All Spaces", "Models", "Category")</li>*@
+                            <li class="nav-submenu-item" data-menu="___"><a href="#" >All Spaces</a></li>
+                            @{
+                                var roomCategories = categories.Where(o => o.CategoryTypeId == (int)Homeclick.Models.CategoryTypes.Model).ToList();
+                                foreach (var category in roomCategories)
+                                {
+                                    if (category.Id != 70)
+                                    {
+                                        <li class="nav-submenu-item category-link" data-category="@category.Id">@Html.ActionLink(category.Name, "Category", "SanPham", new { category_id = category.Id }, null)</li>
+                                    }
+                                }
+                            }
+                        </ul>
+                    </li>
+
+                    <li class="@Html.Raw(controllerName == "collection" ? "active nav-item" : "nav-item")">
+                        @Html.ActionLink("Bộ sưu tập", "Index", "Collection")
+                        <ul class="nav-submenu">
+                            @foreach (var category in categories.Where(o => o.CategoryTypeId == (int)Homeclick.Models.CategoryTypes.Collection).ToList())
+                            {
+                                <li class="nav-submenu-item @Html.Raw(categoryId == category.Id|| category.CategoryChildren.Select(o=> o.Id).Contains(categoryId) ? "active" : "")"><a href="@Url.Action("Category", "Collection", new { category_id = category.Id })">@category.Name</a></li>
+                            }
+                        </ul>
+                    </li>
+
+                    <li class="nav-item" data-menu="ProjectIndex">
+                        @Html.ActionLink("Dự án", "Index", "Project")
+                        <ul class="nav-submenu">
+                            <li class="nav-submenu-item nav-item" data-menu="ProjectMap">@Html.ActionLink("Bản đồ", "Map", "Project")</li>
+                            @foreach (var category in categories.Where(o => o.CategoryTypeId == (int)Homeclick.Models.CategoryTypes.ProjectType).ToList())
+                            {
+                                <li class="nav-submenu-item category-link" data-category="@category.Id"><a href="@Url.Action("Index", "Project", new { category_id = category.Id})">@category.Name</a></li>
+                            }
+                        </ul>
+                    </li>
+                    <li class="nav-item" data-menu="DesignIndex">
+                        @Html.ActionLink("Tự thiết kế", "Index", "Design")
+                        <ul class="nav-submenu">
+                            <li class="nav-submenu-item" data-menu="DesignIndex">@Html.ActionLink("Hướng dẫn thiết kế", "Index", "Design")</li>
+                            <li class="nav-submenu-item" >@Html.ActionLink("Tự thiết kế", "Design", "Design")</li>
+                        </ul>
+                    </li>
+
+                    @{
+                        var blogCategories = categories.Where(o => o.CategoryTypeId == (int)Homeclick.Models.CategoryTypes.Postcat).ToList();
+                        var firstBlogCategory = blogCategories.FirstOrDefault();
+                    }
+                    <li class="nav-item category-link" data-category="@firstBlogCategory.Id">
+                        @Html.ActionLink("Thư viện", "Category", "Post", new { category_id = firstBlogCategory.Id }, new { hidefocus = "hidefocus" })
+                        <ul class="nav-submenu">
+                            @foreach (var category in blogCategories)
+                            {
+                                <li class="nav-submenu-item category-link" data-category="@category.Id">@Html.ActionLink(category.Name, "Category", "Post", new { id = category.Id }, new { hidefocus = "hidefocus" })</li>
+                            }
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("Thi công", "Blog", "Html")
+                        <ul class="nav-submenu">
+                            <li class="nav-submenu-item">@Html.ActionLink("Quy trình thi công", "Thietkenoithat", "Html")</li>
+                            <li class="nav-submenu-item">@Html.ActionLink("Thiết kế nội thất", "Thietkenoithat", "Html")</li>
+                            <li class="nav-submenu-item">@Html.ActionLink("Thiết kế kiến trúc", "Thietkekientruc", "Html")</li>
+                        </ul>
+                    </li>
+                    <li class="nav-item" data-menu="PageHoiDap">@Html.ActionLink("Hỏi đáp", "HoiDap", "Page")</li>
+                    <li class="nav-item" data-menu="PageLienHe">@Html.ActionLink("Liên hệ", "LienHe", "Page")</li>
+                </ul>
+            </nav><!--.main-menu -->
         </div> <!--Container-->
     </div><!-- menu-->
 </header><!-- .site-header -->

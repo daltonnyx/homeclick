@@ -1,0 +1,118 @@
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Models
+@using VCMS.Lib.Resources;
+@model Product_Option
+
+@{
+    ViewBag.Title = ViewData["ProductName"];
+    ViewBag.FormName = "Add Option";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix content">
+        @using (Html.BeginForm("Create", "ProductOptions", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="clearfix">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger", })
+                @Html.Hidden(Html.NameFor(o => o.ProductId).ToString(), Request.Params["product_id"])
+                <fieldset class="col-md-9">
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Name" } })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Description" } })
+                    </div>
+                    @{ //Loop for each detail field
+                        var customFieldsParam = new
+                        {
+                            CustomFields = ViewData[ConstantKeys.CUSTOM_FIELDS],
+                            Details = Model?.Product_Options_Details,
+                            FieldName = Html.NameFor(o => o.Product_Options_Details).ToString(),
+                            ContainerClass = "form-group",
+                            FileManagerId = "#lgx94"
+                        };
+                        @Html.Partial("Widgets/CustomFields_", customFieldsParam);
+                    }
+                </fieldset>
+                <fieldset class="col-md-3">
+                    @{
+                        var variantTypes = ViewData[ConstantKeys.PRODUCT_VARIANT_TYPES] as IEnumerable<Category>;
+                        var variantType_Material = variantTypes.FirstOrDefault(o => o.Id == (int)ProductVarianTypes.Material);
+                        <div class="form-group">
+                            <h3>@variantType_Material.Name</h3>
+                            @Html.ListBox(string.Format("{0}[{1}]", Html.NameFor(m => m.variantTypes), variantType_Material.Name), variantType_Material.ProductVariants.Select(o => new SelectListItem { Text = o.Name, Value = o.Id.ToString() }), new { @class = "form-control-custom chosen", style = "display:none;" })
+                        </div>
+                    }
+                    <hr />
+                    <div class="form-group">
+                        <h3>Preview Images</h3>
+                        @{
+                            var param = new
+                            {
+                                Value = (Model != null) ? new { FileName = Model?.PreviewImage?.FullFileName } : null,
+                                FieldName = Html.NameFor(m => m.PreviewImageId).ToString(),
+                                Accept = "image/*",
+                                FileManagerId = "#lgx94"
+                            };
+                            @Html.Partial("Widgets/SelectFiles", param)
+                         }
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <h3>Options</h3>
+                        <label class="checkbox">
+                            @Html.CheckBoxFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } }) Public
+                        </label>
+                    </div>
+                </fieldset>
+                <hr />
+                <div class="form-group">
+                    <input type="submit" value="Submit" class="btn btn-primary pull-right" />
+                </div>
+            </div>
+        }
+    </div>
+
+@{
+    var fileManagerParam = new {
+            ContainerId = "lgx94"
+    };
+    @Html.Partial("Widgets/FileManager", fileManagerParam)
+}
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")"><i class="fa fa-home"></i> Home</a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">Products</a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("Edit", "Product", new { id = Request.Params["product_id"]})">@ViewBag.Title</a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+
+@section Styles {
+    @Styles.Render("~/bundles/manager/datatables/css")
+    <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/css/loading.css" rel="stylesheet" />
+    @Html.RenderDelayed("jquery-uploads-style")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/manager/datatables")
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
+
+    @Html.RenderDelayed("jquery-uploads-js")
+    @Html.RenderDelayed("SelectImages-function")
+    @Html.RenderDelayed("SelectImages-script")
+    @Html.RenderDelayed("FileManager-script")
+}

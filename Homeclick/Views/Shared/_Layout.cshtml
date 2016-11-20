@@ -7,61 +7,21 @@
     <link href="~/fonts/Stylesheet.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/jquery-1.11.3.min.js")
     @Scripts.Render("~/Scripts/masonry.pkgd.min.js")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-    <script type="text/javascript">
-        //slider home
-        $(window).load(function () {
-            $('#slider-bosutap').nivoSlider({
-                effect: 'random',
-                animSpeed: 500,
-                pauseTime: 4000,
-                startSlide: 0,
-                directionNav: true,
-                controlNav: false,
-                //pauseOnHover: false,
-                prevText: '<i class="fa fa-angle-left"></i>',
-                nextText: '<i class="fa fa-angle-right"></i>'
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".zoom_03").elevateZoom(
-                   {
-                       gallery: 'gallery_01',
-                       cursor: 'pointer',
-                       galleryActiveClass: "active",
-                       imageCrossfade: true,
-                       loadingIcon: "",
-                       zoomWindowWidth: 400,
-                       zoomWindowHeight: 400,
-                       responsive: true,
-                       borderSize: 1
-
-                   });
-
-            $(".zoom_03").bind("click", function (e) {
-                var ez = $('.zoom_03').data('elevateZoom');
-                ez.closeAll(); //NEW: This function force hides the lens, tint and window
-                $.fancybox(ez.getGalleryList());
-                return false;
-            });
-
-        });
-
-    </script>
+    
 </head>
 <body>
     <div class="wapper">
         @Html.Partial("_Header")
-
         @RenderBody()
         @Html.Partial("_Footer")
-
     </div>
+    <script>
+
+    </script>
 </body>
 </html>

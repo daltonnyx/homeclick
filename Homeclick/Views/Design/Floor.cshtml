@@ -1,9 +1,8 @@
-﻿@using Homeclick.Models
+﻿@using VCMS.Lib.Models
 @model Floor
 @{
-    ViewBag.Title = Model.Department.name + " " + Model.name;
+    ViewBag.Title = Model.Department.Name + " " + Model.Name;
     Layout = "~/Views/Shared/Layout_html.cshtml";
-    var url = "/admin";
 }
 <main id="main" class="">
     <div class="container thietke thietke02">
@@ -13,40 +12,64 @@
                     <form id="canvas-picker" method="GET" action="@Url.Action("Floor", "Design")">
                         <label>Chọn địa điểm</label>
                         <select class="department" name="department_city" id="department-city">
+                            <option value="">--Chọn Thành phố--</option>
                             @Html.Action("getDepartments", "Design")
                         </select>
                         <label>Chọn quận</label>
-                        <select class="department" name="department_district" id="department-district"></select>
-                        <label>Chọn tháp</label>
-                        <select class="floor" name="department_tower" id="department-tower"></select>
+                        <select class="department" name="department_district" id="department-district">
+                            <option value="">--Chọn Quận--</option>
+                        </select>
+                        <label>Chọn công trình</label>
+
+                        <select class="floor" name="department_tower" id="department-tower">
+                            <option value="">--Chọn Công trình--</option>
+                        </select>
                         <label>Chọn tầng</label>
-                        <select class="floor-end" name="floor" id="floor"></select>
+                        <select class="floor-end" name="floor" id="floor">
+                            <option value="">--Chọn Tầng--</option>
+                        </select>
                         <input class="button-create left" type="submit" value="Mở mặt bằng này" />
                     </form>
                 </div>
                 <script type="text/javascript">
                 jQuery(document).ready(function ($) {
-
+                    var loadingDiv = '<div class="loading arc" style="margin: -12.5% 0 0 79%;"></div>';
                     $("select.department").mouseup(function (e) {
                         var open = $(this).data("isopen");
 
                         if (open) {
                             var parent_id = $(this).val();
+                            if (parent_id == "")
+                                return;
                             var Id = this.id;
                             jQuery.ajax({
                                 url: "@Url.Action("getDepartments", "Design")" + "/" + parent_id,
                                 method: "GET",
                                 dataType: "text",
                                 success: function (response) {
+                                    window.setTimeout(function () {
+                                        jQuery('.loading.arc').remove();
+                                        $("#department-district").removeAttr("disabled");
+                                        $("#department-tower").removeAttr("disabled");
+                                    }, 200);
                                     if (Id == "department-city") {
-                                        $("#department-district").html(response);
+
+                                        $("#department-district").html('<option value="">--Chọn Quận--</option>' + response);
                                     }
                                     else if (Id == "department-district") {
-                                        $("#department-tower").html(response);
+
+                                        $("#department-tower").html('<option value="">--Chọn Công trình--</option>' + response);
                                     }
                                 },
                                 beforeSend: function () {
-
+                                    if (Id == "department-city") {
+                                        $("#department-district").attr("disabled", "disabled");
+                                        $("#department-district").after(loadingDiv);
+                                    }
+                                    else if (Id == "department-district") {
+                                        $("#department-tower").attr("disabled", "disabled");
+                                        $("#department-tower").after(loadingDiv);
+                                    }
                                 }
                             });
                         }
@@ -58,15 +81,22 @@
 
                         if (open) {
                             var Id = $(this).val();
+                            if (Id == "")
+                                return;
                             jQuery.ajax({
                                 url: "@Url.Action("getFloors", "Design")" + "/" + Id,
                                 method: "GET",
                                 dataType: "text",
                                 success: function (response) {
-                                    $("#floor").html(response);
+                                    window.setTimeout(function () {
+                                        jQuery('.loading.arc').remove();
+                                        $("#floor").removeAttr("disabled");
+                                    }, 200);
+                                    $("#floor").html('<option value="">--Chọn Tầng--</option>' + response);
                                 },
                                 beforeSend: function () {
-
+                                    $("#floor").after(loadingDiv);
+                                    $("#floor").attr("disabled", "disabled");
                                 }
                             });
                         }
@@ -81,14 +111,14 @@
                 <div class="right-thietke2">
                     <h3 class="title-name-thietke">@ViewBag.Title</h3>
                     @{
-                        var canvasCoords = Model.getRooms();
+                        var canvasCoords = Model.Rooms;
                     }
                     <div class="show-room-tuthietke">
-                        <img src="@url/@Model.structure_link" id="floor-map" usemap="#floor-map" alt="@ViewBag.Title" />
+                        <img src="@Url.GetImageUploadFolder()/design/@Model.Structure_link" id="floor-map" usemap="#floor-map" alt="@ViewBag.Title" />
                         <map name="floor-map">
-                            @foreach(Room room in canvasCoords)
+                            @foreach(var room in canvasCoords)
                             { 
-                                <area data-key="@room.Id" shape="poly" href="@Url.Action("Canvas","Design",new { @id = room.Id })" coords="@room.coordinates" />
+                                <area data-key="@room.Id" shape="poly" href="@Url.Action("Canvas","Design",new { @id = room.Id })" coords="@room.Coordinates" />
                             }
                         </map>
                         <script>

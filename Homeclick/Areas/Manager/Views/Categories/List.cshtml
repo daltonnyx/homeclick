@@ -1,0 +1,176 @@
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Resources
+
+@{
+    ViewBag.Title = Strings.Categories;
+    var CREATE_CATEGORY_FORM_ID = "CreateCategoryForm";
+    var categoryTypes = new SelectList(ViewData[ConstantKeys.CATEGORY_TYPES] as IQueryable, "Id", "Name", null);
+}
+<div class="head-messages">
+
+</div>
+<div>
+    <div class="clearfix content">
+        <p><strong>Category type</strong></p>
+        <div class="pull-left">
+            @Html.DropDownList(ConstantKeys.CATEGORY_TYPE, categoryTypes, new { @class = "extra-search form-control", style = "min-width:150px" })
+        </div>
+    </div>
+    <div class="tabbable">
+        <div class="tab-content">
+            <div class="tab-pane fade active in">
+                <div class="clearfix btn-toolbar">
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-circle show-tooltip" title="" href="#" data-original-title="Delete selected" data-toggle="modal" data-target="#deleteConfirmModal"><i class="fa fa-trash-o"></i></a>
+                        <a class="btn btn-circle show-tooltip disabled" title="" href="#" data-original-title="Refresh"><i class="fa fa-repeat"></i></a>
+                    </div>
+                    <div class="btn-group pull-right" data-toggle="buttons-checkbox">
+                        <a class="btn btn-circle show-tooltip accordion-toggle" data-toggle="collapse" href="#collapse" data-original-title="Create new category"><i class="fa fa-plus"></i></a>
+                    </div>
+                </div>
+                <div id="collapse" class="panel-collapse collapse">
+                    <hr />
+                    @using (Html.BeginForm("Create", "Categories", FormMethod.Post, new { id = CREATE_CATEGORY_FORM_ID }))
+                    {
+                        @Html.Hidden(string.Format("{0}[{1}]", ConstantKeys.CREATE_CATEGORY_PARAM, ConstantKeys.CATEGORY_TYPE));
+                        <div class="form-horizontal">
+                            <fieldset>
+                                <div class="form-group">
+                                    @Html.Label("Name", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBox(string.Format("{0}[{1}]", ConstantKeys.CREATE_CATEGORY_PARAM, ConstantKeys.NAME), null, new { @class = "form-control", rel = "true" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Description", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.TextBox(string.Format("{0}[{1}]", ConstantKeys.CREATE_CATEGORY_PARAM, ConstantKeys.DESCRIPTION), null, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Parent Category", new { @class = "control-label col-md-3" })
+                                    <div class="col-md-9">
+                                        @Html.DropDownList(string.Format("{0}[{1}]", ConstantKeys.CREATE_CATEGORY_PARAM, ConstantKeys.PARENT_CATEGORY), new SelectList(new List<string>()), "None", new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="clearfix">
+                                <input type="submit" name="submit" value="Create" class="btn btn-info pull-right" />
+                            </div>
+                        </div>
+                    }
+                </div>
+                <table id="dataTable" class="table table-hover fill-head">
+                    <thead>
+                        <tr>
+                            <th style="width:18px;">
+                                <input type="checkbox" />
+                            </th>
+                            <th>
+                                @Strings.Name
+                            </th>
+                            <th>
+                                @Strings.Description
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("Widgets/DeleteConfirmModalAjax")
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.Title</li>
+}
+
+@section styles {
+    @Styles.Render("~/bundles/manager/datatables/css")
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/manager/datatables")
+    <script src="~/Areas/Manager/Content/lib/moment.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script>
+        $('#@CREATE_CATEGORY_FORM_ID').submit(function (evt) {
+            var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                data: form.serialize(),
+                method: 'POST',
+                success: function (resultMessage) {
+                    var domMessage = CreateMessage(resultMessage.MessageType, resultMessage.MessageContent);
+                    $('.head-messages').html(domMessage);
+                    if (resultMessage.MessageType == '@MessageTypes.Success.ToString()') {
+                        dataTable.ajax.reload();
+                    }
+                }
+            });
+
+            evt.preventDefault();
+        });
+
+        var dataTable = $('#dataTable').DataTable({
+            autoWidth: false,
+            serverSide: true,
+            ajax: {
+                type: "POST",
+                url: '@Url.Action("DataHandler")',
+                contentType: 'application/json; charset=utf-8',
+                data: function (data) {
+                    var extraSearchs = $('.extra-search');
+                    if (extraSearchs.length > 0) {
+                        data.args = {};
+                        for (var i = 0; i < extraSearchs.length; i++) {
+                            var current = $(extraSearchs[i]);
+                            if (current.attr('id') && current.val())
+                                data.args[current.attr('id')] = current.val();
+                        }
+                    }
+                    return data = JSON.stringify(data);
+                },
+                beforeSend: function () {
+                    $('#@string.Format("{0}_{1}_", ConstantKeys.CREATE_CATEGORY_PARAM, ConstantKeys.PARENT_CATEGORY)').html('<option value="">None</option>');
+                }
+            },
+            processing: true,
+            bFilter: false,
+            bPaginate: false,
+            ordering: false,
+            columns: [
+               { "data": "@ConstantKeys.ID", render: function (data, type, full, meta) { return '<input type="checkbox" class="select-item" value="' + data + '"/>' } },
+               {
+                   "data": "@ConstantKeys.NAME", render: function (data, type, full, meta) {
+                       var strs = ['',''];
+                       for (var i = 0; i < full['@ConstantKeys.LEVEL']; i++) {
+                           strs[0] += '---- ';
+                           strs[1] += '\xA0\xA0\xA0\xA0';
+                       }
+                       $('<option/>').attr('value', full['@ConstantKeys.ID']).text(strs[1] + data).appendTo($('#@string.Format("{0}_{1}_", ConstantKeys.CREATE_CATEGORY_PARAM, ConstantKeys.PARENT_CATEGORY)'));
+                       var result = '<a href="@Url.Action("Edit")?category_id=' + full["@ConstantKeys.ID"] + '">' + strs[0] + data + '</a>';
+                       return result;
+                   }
+               },
+               { "data": "@ConstantKeys.DESCRIPTION" }],
+            columnDefs: [{ "searchable": false, "orderable": false, "targets": 0 }],
+        });
+
+        $('.extra-search').bind('change', function () {
+            @*
+            if ($(this).attr('name') == '@ConstantKeys.CATEGORY_TYPE')
+                $('#@CREATE_CATEGORY_FORM_ID').find('input[name="@string.Format("{0}[{1}]", ConstantKeys.CREATE_CATEGORY_PARAM, ConstantKeys.CATEGORY_TYPE)"]').val($(this).val());
+            dataTable.ajax.reload();
+                *@
+            window.location = '@Url.Action("List")?category_type_id=' + $(this).val();
+        });
+    </script>
+    @Html.RenderDelayed("DeleteConfirmModalAjax-script")
+}

@@ -1,0 +1,63 @@
+﻿@using VCMS.Lib.Models
+@model IEnumerable<Post>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_SharedLayout.cshtml";
+}
+
+<section role="slider">
+    <div class="owl-carousel">
+        @foreach (var slide in ViewBag.Slides as IEnumerable<Slide>)
+        {
+            <div class="full-width">
+                <a href="@slide.Link">
+                    <img src="@Url.GetImageUploadFolder()/@slide.ImageFile.FullFileName" alt="@slide.Name" />
+                </a>
+            </div>
+        }
+    </div>
+</section>
+
+    <section>
+        <div class="category-title">
+            <span>
+                Feature collection
+            </span>
+        </div>
+        <div class="grid-content clearfix">
+            @foreach (var item in Model)
+            {
+                var link = Url.Action("Detail", new {collection_id = item.Id });
+                <div class="collection-item col-sm-4">
+                    <div class="collection-inner">
+                        <div class="image">
+                            <a href="@link"><img src="@Url.GetImageUploadFolder()@item.ImageFile.FullFileName" alt="" /></a>
+                        </div>
+                        <div class="collection-detail">
+                            <span class="collection-name">
+                                <a href="@link">@item.Title</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>    
+    </section>
+    <hr style="margin: 20px -15px;" />
+
+
+@section breadcrumb {
+    <ul>
+        <li><a href="@Url.Action("Index","Home")">Home</a></li>
+        <li>Bộ sưu tập</li>
+    </ul>
+}
+
+@section styles {
+    @Styles.Render("~/content/lib/owl-carousel/css")
+}
+
+@section scripts {
+    @Scripts.Render("~/content/lib/owl-carousel/js")
+}

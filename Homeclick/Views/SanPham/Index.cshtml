@@ -1,6 +1,291 @@
-﻿
-@{
-    ViewBag.Title = "Sản phẩm";
-    Layout = "~/Views/Shared/_Layout_Cat.cshtml";
+﻿@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_SharedLayout.cshtml";
+    var url = "";
 }
-@Html.Action("ListProduct","SanPham")
+
+<div class="part-page product-feature" id="list_product_feature">
+    <div class="title-page title-feature">
+        <h1 class="">@ViewBag.Title</h1>
+    </div>
+    <div class="content-product-feature">
+        <div class="feature-items row">
+
+        </div>
+    </div>
+    <div id="panigation" class="paginationjs-theme-blue">
+
+    </div>
+</div>
+
+@section breadcrumb {
+    <ul>
+        <li><a href="@Url.Action("Index","Home")">Home</a></li>
+        <li>Sản phẩm</li>
+    </ul>
+}
+
+@section styles {
+    <link href="~/Scripts/Plugins/noUiSlider/nouislider.min.css" rel="stylesheet" />
+    <link href="~/Scripts/Plugins/panigation/panigation.css" rel="stylesheet" />
+    <style>
+        #slider-snap {
+            margin: 20px 0;
+            padding: 0 16px;
+        }
+
+        .material-list li {
+            margin-left: 15px;
+            margin-top: 5px;
+        }
+
+            .material-list li input {
+                margin-right: 10px !important;
+            }
+
+        .paginationjs {
+            float: right;
+        }
+    </style>
+}
+
+@section scripts {
+    <script src="~/Scripts/Plugins/noUiSlider/nouislider.js"></script>
+    <script src="~/Scripts/Plugins/jlinq/jlinq.js"></script>
+    <script src="~/Scripts/Plugins/panigation/panigation.min.js"></script>
+    <script type="text/javascript">
+      
+        //snap
+        var snapSlider = document.getElementById('slider-snap');
+
+        noUiSlider.create(snapSlider, {
+            start: [0, 10000000],
+            snap: true,
+            connect: true,
+            range: {
+                'min': 0,
+                '15%': 1500000,
+                '30%': 3000000,
+                '45%': 4500000,
+                '60%': 6000000,
+                '75%': 7500000,
+                'max': 10000000
+            }
+        });
+
+        var snapValues = [
+	        document.getElementById('slider-snap-value-lower'),
+	        document.getElementById('slider-snap-value-upper')
+        ];
+
+        Number.prototype.format = function (n, x, s, c) {
+            var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+                num = this.toFixed(Math.max(0, ~~n));
+
+            return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
+        };
+
+        snapSlider.noUiSlider.on('update', function (values, handle) {
+            var val = parseInt(values[handle]);
+            snapValues[handle].innerHTML = val.format(0, 3, '.') + ' vnđ';
+            $(snapValues[handle]).data('value', values);
+
+            if (currentTypoData) {
+                showProducts(filter(currentTypoData));
+            }
+        });
+
+        //
+        var currentTypoData = [];
+        var currentModelData = [];
+        var maxProductValue = 0;
+        var currentModelId = '@Request.Params["model_id"]';
+        var currentTypoId = '@Request.Params["typo_id"]';
+        var currentModel = null;
+        var currentTypo = null;
+
+        function filter(sourceData) {
+            var minmax = $(snapValues).data('value'),
+                data = [],
+                dataResult = [],
+                min = parseInt(minmax[0]),
+                max = parseInt(minmax[1]);
+            if (min == max)
+                data = jlinq.from(sourceData).greater('value', min).select();
+            else
+                data = jlinq.from(sourceData).greater('value', min).notGreater('value', max).select();
+
+            var selectedMetarials = [];
+            var checkers = $('.material-checker:checked');
+            for (var i = 0; i < checkers.length; i++) {
+                selectedMetarials[i] = parseInt($(checkers[i]).val());
+            }
+
+            if (selectedMetarials.length > 0) {
+                for (var i = 0; i < data.length; i++) {
+                    var has = false;
+                    for (var j = 0; j < data.length; j++) {
+                        var c = jlinq.from(data[i].materials).equals('id', selectedMetarials[j]).select();
+                        if (c.length > 0) {
+                            has = true;
+                            dataResult.push(data[i]);
+                            break;
+                        }
+                    }
+                }
+            }
+            else {
+                dataResult = data;
+            }
+            return dataResult;
+        }
+
+        function showProducts(data) {
+            $('#panigation').toggle(data.length > 0);
+
+            var container = $('.feature-items');
+            var h = container.height();
+            container.css('height', h);
+            container.children().fadeOut('fast');
+            $(this).delay('250').queue(function () {
+                if (data.length == 0) {
+                    container.html('<span style="font-size: 20px; padding:0 7px;">Không tìm thấy sản phẩm nào...</span>');
+                }
+                else {
+                    $('#panigation').pagination({
+                        dataSource: data,
+                        pageSize: 30,
+                        autoHidePrevious: true,
+                        autoHideNext: true,
+                        callback: function (pagidata, pagination) {
+
+                            container.html('');
+                            for (var i = 0; i < pagidata.length; i++) {
+                                var item = '<div class="item-product col-xs-6 col-md-4"">' +
+                                                '<div class="image">' +
+                                                    '<a href="@Url.Action("Product_Detail","SanPham")' + '/' + pagidata[i].id + '"><img src="' + '@Url.GetImageUploadFolder()' + pagidata[i].image + '" alt="" /></a>' +
+                                                '</div>' +
+                                                '<div class="detail-item">' +
+                                                    '<h3 class="title-item"><a href="@Url.Action("Product_Detail","SanPham")' + '/' + pagidata[i].id + '">' + pagidata[i].name + '</a></h3>' +
+                                                    '<p>' + parseInt(pagidata[i].value).format(0, 3, '.') + ' vnđ</p>' +
+                                              '</div>' +
+                                          '</div>';
+                                $('.feature-items').append(item);
+                            }
+                        }
+                    })
+                }
+                container.css('height', 'auto');
+                $(this).dequeue();
+            });
+        }
+
+        function getMetarials(model_id, category_id) {
+            url = '@Url.Action("GetMetarialsJson")';
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: { 'category_id': category_id, 'model_id': model_id },
+                success: function (data) {
+                    $('.material-list').empty();
+                    for (var i = 0; i < data.length; i++) {
+                        var item = '<li><input class="filter material-checker" data-filter=".material-' + data[i].id + '" type="checkbox" value="' + data[i].id + '" />' + data[i].name + '</li>';
+                        $('.material-list').append(item);
+                    }
+
+                    $('.material-checker').bind('click', function () {
+                        showProducts(filter(currentTypoData));
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log('error','Failed to retrieve data!');
+                }
+            });
+        }
+
+        function getProducts(model_id, typo_id) {
+            var url = '@Url.Action("ProductsJson")';
+            currentModelData = $.getJsonFromUrl(url, { 'model_id': model_id });
+            currentTypoData = refineProductsByTypo(currentModelData, typo_id);
+            showProducts(filter(currentTypoData));
+        }
+
+        function refineProductsByTypo(data, typo) {
+            var result = [];
+            if (typo > 0)
+                result = jLinq.from(data).equals('typo', typo).select();
+            else
+                result = currentModelData;
+            return result;
+        }
+
+        var currentCategory = '';
+
+        $(document).ready(function () {
+            if (!currentModelId) {
+                currentModelId = 1;
+                currentModel = $('.model-link').first();
+            }
+            else
+                currentModel = $('li[data-model="' + currentModelId + '"]').first();
+
+            if (!currentTypoId)
+                currentTypoId = -1;
+            else {
+                currentTypoId = parseInt(currentTypoId);
+            }
+            currentTypo = currentModel.find('li[data-typo="' + currentTypoId + '"]').first();
+
+            if (!currentModel)
+                currentModel = $('#sidebar .nav').children().first();
+
+            if (currentModel) {
+                currentModel.addClass('active');
+                currentModelId = currentModel.data('model');
+                if (!currentTypo) {
+                    currentTypo = currentModel.children('.descendant-cat').children().first();
+                    currentTypoId = activeChild.data('typo');
+                }
+
+                currentTypo.addClass('active');
+                getProducts(currentModelId, parseInt(currentTypoId));
+                getMetarials(currentModelId, parseInt(currentTypoId));
+            }
+
+            $('.typo-link > a').bind('click', function (event) {
+                if (currentTypo) {
+                    currentTypo.removeClass('active');
+                }
+                currentTypo = $(this).parent();
+                currentTypo.addClass('active');
+                currentTypoId = currentTypo.data('typo');
+
+                currentTypoData = refineProductsByTypo(currentModelData, currentTypoId);
+                showProducts(filter(currentTypoData));
+                getMetarials(currentModelId, currentTypoId);
+                event.preventDefault();
+            });
+
+            $('.model-link > a').bind('click', function () {
+                if (currentTypo) {
+                    currentTypo.removeClass('active');
+                }
+                if (currentModel) {
+                    currentModel.removeClass('active');
+                }
+
+                currentModel = $(this).parent();
+                currentModel.addClass('active');
+                currentModelId = currentModel.data('model');
+
+                var activeChild = currentModel.children('.descendant-cat').children().first();
+                activeChild.addClass('active');
+                currentTypo = activeChild;
+                currentTypoId = activeChild.data('typo');
+                getProducts(currentModelId, currentTypoId);
+                getMetarials(currentModelId, currentTypoId);
+            });
+        });
+    </script>
+}

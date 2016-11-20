@@ -1,0 +1,96 @@
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Models
+@using VCMS.Lib.Resources
+@model Floor
+
+@{
+    ViewBag.Title = Strings.Floors;
+    ViewBag.FormName = (Model != null) ? ((Model.Department != null) ?  Model.Department.Name + " - " : string.Empty) + Model.Name : "Create new Floor";
+}
+
+<div class="content">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        if (Model?.Id != default(int))
+        {
+            @Html.HiddenFor(m => m.Id);
+        }
+        <div class="row">
+            <fieldset class="col-md-9">
+                <div class="form-group">
+                    <div class="form-group-title">
+                        <h3>Data</h3>
+                    </div>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Name" })
+                    @Html.ValidationMessageFor(m => m.Name)
+                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control", placeholder = "Description" })
+                    @Html.ValidationMessageFor(m => m.Description)
+                </div>
+                @if (Model != null)
+                {
+                    <div class="form-group">
+                        <div class="form-group-title">
+                            <h3>Rooms</h3>
+                        </div>
+                            @if (Model.Rooms.Count == 0)
+                            {
+		                         <i>Empty!</i>
+                            }
+                            else
+                            {
+                                foreach (var room in Model.Rooms)
+                                {
+                                <div class="form-control">
+                                    <a href="@Url.Action("Edit", "Rooms", new { room_id = room.Id })">@room.Name</a>
+                                </div>
+                                }
+                            }
+                    </div>
+                }
+            </fieldset>
+
+            <fieldset class="col-lg-3">
+                <div class="form-group">
+                    <div class="form-group-title">
+                        <h3>Department</h3>
+                    </div>
+                    @Html.DropDownList(ConstantKeys.PROJECTS, new SelectList(ViewData[ConstantKeys.PROJECTS] as IEnumerable<Project>, "Id", "Name", (Model?.Department?.Project != null) ? Model.Department.Project.Id : 0), new { @class = "form-control-custom chosen", data_placeholder="Select", data_child = "#" + Html.NameFor(m => m.DepartmentId), style="display:none" })
+                    @Html.CustomDropdownListFor(m => m.DepartmentId, (ViewData[ConstantKeys.DEPARTMENTS] as IEnumerable<Department>).Select(o => new CustomSelectItem { Value = o.Id.ToString(), Text = o.Name, HtmlAttributes = new { data_parent = o.ProjectId } }), null, new { @class= "form-control-custom chosen", data_placeholder = "Select", style = "display:none" })
+                    @Html.ValidationMessageFor(m => m.DepartmentId)
+                </div>
+            </fieldset>
+        </div>
+        <hr />
+        <div class="clearfix">
+            <input type="submit" value="@Strings.SaveChanged" class="btn btn-primary pull-right" />
+        </div>
+    }
+</div>
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+
+@section Styles {
+    <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
+}

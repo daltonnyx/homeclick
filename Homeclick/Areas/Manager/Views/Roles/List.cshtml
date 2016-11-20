@@ -1,0 +1,93 @@
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Resources
+@{
+    ViewBag.Title = Strings.Roles;
+}
+
+@if (ViewData.ContainsKey(ConstantKeys.ACTION_RESULT_MESSAGES))
+{
+    foreach (var message in ViewData[ConstantKeys.ACTION_RESULT_MESSAGES] as IEnumerable<Message>)
+    {
+        <div class="alert alert-@message.MessageType.ToString().ToLower()">
+            <button class="close" data-dismiss="alert">×</button>
+            @Html.Raw(@message.MessageContent)
+        </div>
+    }
+}
+
+<div class="tabbable">
+    <ul class="nav nav-tabs active-blue">
+        <li class="active"><a href="#list"><i class="fa fa-list"></i> List</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade active in">
+            <div class="clearfix btn-toolbar ">
+                <div class="btn-group pull-right">
+                    <a class="btn btn-circle show-tooltip" title="" href="@Url.Action("Create")" data-original-title="Add new user"><i class="fa fa-plus"></i></a>
+                    <a class="btn btn-circle show-tooltip" title="" href="#" data-original-title="Delete selected" data-toggle="modal" data-target="#deleteConfirmModal"><i class="fa fa-trash-o"></i></a>
+                    <a class="btn btn-circle show-tooltip table-refresh-btn" title="" href="#" data-table-id="dataTable" data-original-title="Refresh"><i class="fa fa-repeat"></i></a>
+                </div>
+            </div>
+            <hr />
+            <table id="dataTable" class="table display table-striped table-hover fill-head">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" />
+                        </th>
+                        <th>
+                            @Strings.Name
+                        </th>
+                        <th>
+                            @Strings.Users
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Widgets/DeleteConfirmModal")
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.Title</li>
+}
+
+@section styles {
+    @Styles.Render("~/bundles/manager/datatables/css")
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/manager/datatables")
+    <script>
+        var dataTable = $('#dataTable').DataTable({
+            autoWidth: false,
+            serverSide: true,
+            ajax: {
+                type: "POST",
+                url: '@Url.Action("DataHandler")',
+                contentType: 'application/json; charset=utf-8',
+                data: function (data) { return data = JSON.stringify(data); }
+            },
+            processing: true,
+            columns: [
+               { "data": "id", render: function (data, type, full, meta) { return '<input type="checkbox" class="select-item" value="' + data + '"/>' } },
+               { "data": "name", render: function (data, type, full, meta) { return '<a href="@Url.Action("Edit")?role_id=' + full.id + '">' + data + '</a>'; } },
+               { "data": "users" }],
+            order: [[1, 'asc']],
+            columnDefs: [{ "searchable": false, "orderable": false, "targets": 0 }]
+        });
+        $('.table-refresh-btn').on('click', function () {
+            dataTable.ajax.reload();
+        });
+    </script>
+    @Html.RenderDelayed("deleteConfirmModal-script")
+}

@@ -3,46 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Homeclick.Models;
-using PagedList;
-using PagedList.Mvc;
 using System.Collections;
-using System.Reflection;
+using VCMS.Lib.Models;
+using System.Net;
 
 namespace Homeclick.Controllers
 {
     public class SanPhamController : Controller
     {
-        //
-        // GET: /SanPham/
-        vinabits_homeclickEntities db = new vinabits_homeclickEntities();
-        //
-        // GET: /Bosutap/
+        public  CategoryTypes CategoryType { get { return CategoryTypes.Model; } }
+
+        public ApplicationDbContext db = new ApplicationDbContext();
+
+        public virtual ActionResult _Sidebar()
+        {
+            var categories = db.Categories.Where(c => c.CategoryTypeId == (int)CategoryType).ToList();
+            return PartialView(categories);
+        }
 
         public ActionResult Index()
         {
-            ViewBag.type = "all";
             return View();
         }
 
-        public ActionResult ListProduct(int? page)
+        public ActionResult Category(int category_id)
         {
-            //    //Số sản phẩm trên trang
-            int product_number = 8;
-            ////    //tao số biến trong trang
-            int pageNumber = (page ?? 1);
-            IList<Product> listproduct;
-            listproduct = db.Products.ToList();
-            if (Request.IsAjaxRequest())
-            {
-                return View(listproduct.OrderBy(n => n.name).ToPagedList(pageNumber, product_number));
-            }
-            return View("ListProduct", listproduct.OrderBy(n => n.name).ToPagedList(pageNumber, product_number));
-        }
-
-        public PartialViewResult SliderSanPham()
-        {
-            return PartialView();
+            return View();
         }
 
         public ActionResult ListCategory()
@@ -51,45 +37,26 @@ namespace Homeclick.Controllers
             return View(listcategory);
         }
 
-        public ActionResult Sidebar(string type = "all")
-        {
-            IList<Category> list = new List<Category>();
-            switch (type)
-            {
-                case "all":
-                    ViewBag.SideTitle = "Danh mục";
-                    list = db.Categories.Where<Category>(c => c.Category_type.typeFor == 0).OrderBy<Category,int>(c => c.Category_type.Id).ToList();
-                    break;
-                case "":
-                    break;
-                default:
-                    break;
-            }
-            ViewBag.type = type;
-            return PartialView(list);
-        }
-
-
         public ActionResult CanvasList(int? cat_id, int? type_id)
         {
             IList<Product> products = (from product in db.Products
-                                       where product.status == 1
+                                       where product.Status == true
                                       select product).ToList<Product>();
 
             if(cat_id != null)
             {
-                products = db.Categories.Find(cat_id).Products.Where<Product>(p => p.status == 1).ToList<Product>();
+                products = db.Categories.Find(cat_id).Products.Where<Product>(p => p.Status == true).ToList<Product>();
             }
             if(type_id != null)
             {
                 products = (from product in products
-                            where product.Product_type.Id == type_id && product.status == 1
+                            where product.Status == true
                             select product).ToList<Product>();
             }
             return PartialView(products);
         }
 
-        public ActionResult CategoryProduct(int categoryid)
+        public ActionResult CategoryProduct(int? categoryid)
         {
             List<Product> listproduct;
             if (categoryid == null)
@@ -104,30 +71,146 @@ namespace Homeclick.Controllers
             return View(listproduct);
         }
 
-        [HttpPost]
-        public ActionResult FilterProduct(int page = 1)
+        public List<Product> FilterByCategory(string[] args)
         {
-            string[] models = Request.Form.GetValues("Categories[Models][]");
-            string[] typologies = Request.Form.GetValues("Categories[Typologies][]");
-            var products = db.Products.AsQueryable();
-            if(models != null && models.Count<string>() > 0)
-            products = from product in products
-                           where product.Categories.Where(c => models.Contains<string>(c.Id.ToString())).Count<Category>() > 0
-                           select product;
-            if(typologies != null && typologies.Count<string>() > 0)
-            products = from product in products
-                       where product.Categories.Where(c => typologies.Contains<string>(c.Id.ToString())).Count<Category>() > 0
-                       select product;
-            ViewBag.Title = "Sản phẩm";
-            return PartialView(products.OrderBy<Product, string>(c => c.name).ToPagedList(page, 6));
+            var products = db.Products.ToList();
+            foreach (var arg in args)
+            {
+                int number;
+                if (int.TryParse(arg,out number))
+                    products = products.Where(o => o.Categories.Select(e => e.Id).ToList().Contains(number)).ToList();
+            }
+            return products;
+        }
+
+        /// <summary>
+        /// Get product via ajax call
+        /// </summary>
+        /// <param name="ids">categories id</param>
+        /// <returns></returns>
+        public JsonResult ProductsJson(string[] ids)
+        {
+            var list = this.FilterByCategory(ids);
+            var json = new List<object>();
+            foreach (var item in list)
+            {
+                var details = item.DetailsToDictionary();
+                var typo = item.Categories.FirstOrDefault(o => o.CategoryTypeId == (int)CategoryTypes.Typology);
+
+                var materialList = new List<object>();
+                var tList = new List<Product>();
+                tList.Add(item);
+                var materials = GetCMaterialOfProducts(tList);
+
+                foreach (var material in materials)
+                {
+                    materialList.Add(new
+                    {
+                        id = material.Id
+                    });
+                }
+
+                json.Add(new
+                {
+                    id = item.Id,
+                    name = item.Name,
+                    image = item.Image.FullFileName,
+                    value = Convert.ToInt32(details["gia"]),
+                    materials = materialList,
+                    typo = typo.Id,
+                    sale = item.CurrentSale != null ? item.CurrentSale.Percent : 0
+                });
+            }
+            return Json(json, JsonRequestBehavior.AllowGet);     
+        }
+
+        /// <summary>
+        /// taking all of the material relating to the category
+        /// </summary>
+        /// <param name="typo_id">Id of the category</param>
+        /// <param name="model_id">If 'category_id' is -1 and 'model_id' has been set, this will getting materials contained in the model</param>
+        /// <returns></returns>       
+        public JsonResult GetMetarialsJson(string[] ids)
+        {
+            var resuilt = new List<object>();
+            var products = this.FilterByCategory(ids);
+            var cMaterials = GetCMaterialOfProducts(products);
+
+            foreach (var cMaterial in cMaterials)
+            {
+                resuilt.Add(new
+                {
+                    id = cMaterial.Id,
+                    name = cMaterial.Name
+                });
+            }
+            return Json(resuilt, JsonRequestBehavior.AllowGet);
+        }
+
+        private List<Category> GetCMaterialOfProducts(IEnumerable<Product> products)
+        {
+            var pMaterials = new List<Product_Variant>();
+            var cMaterials = new List<Category>();
+            foreach (var product in products)
+            {
+                pMaterials = pMaterials
+                    .Concat(product.Materials.ToList())
+                    .Distinct()
+                    .ToList();
+            }
+            foreach (var pMaterial in pMaterials)
+            {
+                cMaterials = cMaterials
+                    .Concat(pMaterial.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Material))
+                    .Distinct()
+                    .ToList();
+            }
+            return cMaterials;
         }
 
         public ViewResult Product_Detail(int? id)
         {
             var product = db.Products.Find(id);
-            ViewBag.Title = product.name;
-            ViewBag.url = "http://demo.vinabits.com.vn/homeclick2";
+            ViewBag.Title = product.Name;
             return View(product);
         }
-	}
+
+        public PartialViewResult AjaxProductDetail(int id)
+        {
+            var product = db.Products.Find(id);
+            return PartialView(product);
+        }
+
+        public ActionResult GetImages(int? optionId)
+        {
+            var result = new List<string>();
+            if (optionId != null)
+            {
+                var option = db.Product_Options.Find(optionId);
+                if (option != null)
+                {
+                    result.Add(option.PreviewImage.FullFileName);
+                    result.AddRange(option.Files.Select(o => o.Id + o.Extension));
+                }
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetOptionData(int? optionId)
+        {
+            var option = db.Product_Options.Find(optionId);
+            dynamic result = null;
+            if (option != null)
+            {
+                var images = new List<string>();
+                images.Add(option.PreviewImage.FullFileName);
+                images.AddRange(option.Files.Select(o => o.Id + o.Extension));
+                var quantity = int.Parse(option.Product_Options_Details.FirstOrDefault(o => o.Name == ProductDetailTypes.Quantity).Value ?? "0");
+                result = new { images = images, quantity = quantity };
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+    }
 }

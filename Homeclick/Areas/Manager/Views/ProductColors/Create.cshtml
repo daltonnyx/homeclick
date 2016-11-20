@@ -1,0 +1,162 @@
+﻿@using VCMS.Lib.Resources
+@model VCMS.Lib.Models.ProductVariantsViewModel
+
+@{
+    ViewBag.Title = Strings.ProductColors;
+    ViewBag.FormName = Strings.Create;
+    Layout = "~/Areas/Manager/Views/Shared/_Layout_Form.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.VariantParent, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="form-control-custom">
+                    @Html.DropDownListFor(model => model.VariantParent, ViewBag.Materials as List<SelectListItem>, new { data_placeholder = "Select a category", @class = "form-control chosen-with-diselect", style = "display: none;" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Images</label>
+            <div class="col-md-10">
+                <div class="form-control-custom">
+                    <span class="btn btn-success fileinput-button">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>Select files...</span>
+                        <input id="fileupload" type="file" name="files">
+                    </span>
+                    <br>
+                    <br>
+                    <div id="progress" class="progress">
+                        <div class="progress-bar progress-bar-success"></div>
+                    </div>
+                    <div id="files" class="files">
+                        @if (Model?.Image != null)
+                        {
+                            Html.RenderAction("_ImageFile", new { fileId = Model.Image });
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section breadcrumb {
+    @{
+        var viewName = Html.ViewContext.RouteData.GetRequiredString("action");
+    }
+    <li>
+        <a href="@Url.Action("Index","Dashboard")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+@section Styles {
+    <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/lib/jQueryFileUpload/css/jquery.fileupload.css" rel="stylesheet" />
+    }
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
+    <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/jquery.iframe-transport.js"></script>
+    <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/jquery.fileupload.js"></script>
+    <script>
+        function deImg(a) {
+            var f = $(a).data('filename');
+            $.ajax({
+                url: '@Url.Action("DeleteFile", "FileUpload")',
+                data: { 'id': f },
+                traditional: true,
+                success: function () {
+                    var p = $(a).parents('.image-file');
+                    $(p).remove();
+                }
+            });
+            event.preventDefault();
+        };
+
+        $(function () {
+            'use strict';
+            // Change this to the location of your server-side upload handler:
+            var url = '@Url.Action("UploadPV","FileUpload")';
+            $('#fileupload').fileupload({
+                url: url,
+                dataType: 'json',
+                done: function (e, data) {
+                    $.each(data.result, function (index, file) {
+                        var a = $('#files').find('.delete-image-btn');
+                        if (a.length > 0)
+                            deImg(a);
+
+                        $.ajax({
+                            traditional: true,
+                            url: '@Url.Action("_ImageFile")',
+                            data: { 'fileId': file.newFileName },
+                            success: function (data) {
+
+                                $('#files').append(data);
+                                $('.delete-image-btn').bind('click', function () {
+                                    deImg(this);
+                                });
+                            }
+                        });
+                    });
+                },
+                progressall: function (e, data) {
+                    var progress = parseInt(data.loaded  / data.total * 100, 10);
+                    $('#progress .progress-bar').css(
+                        'width',
+                        progress + '%'
+                    );
+                }
+            }).prop('disabled', !$.support.fileInput)
+                .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+            $('.delete-image-btn').bind('click', function () {
+                deImg(this);
+            });
+        });
+    </script>
+}

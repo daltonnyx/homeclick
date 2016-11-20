@@ -29,10 +29,10 @@ namespace Homeclick.Models
                     child.Add(member.Name, details);
                 }
 
-                //else if (member.CanRead)
-                //{
-                //    child.Add(member.Name, member.GetValue(p));
-                //}
+                else if (member.CanRead)
+                {
+                    child.Add(member.Name, member.GetValue(this));
+                }
             }
             return child;
 

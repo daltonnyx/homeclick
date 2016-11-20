@@ -1,0 +1,245 @@
+﻿@using VCMS.Lib.Models
+@using VCMS.Lib.Common
+@using VCMS.Lib.Resources
+@model Post
+
+@{
+    ViewBag.Title = Strings.Collections;
+    ViewBag.FormName = Model.Title;
+}
+
+<div class="content">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        if (Model != null)
+        {
+            @Html.HiddenFor(m => m.Id)
+        }
+        <div class="row">
+            <fieldset class="col-md-9">
+                <div class="form-group">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Title" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(model => model.Excerpt, new { @class = "form-control", placeholder = "Excerpt" })
+                </div>
+                <div class="form-group">
+                    @Html.TextAreaFor(model => model.Content, new { @class = "form-control text-editor" })
+                </div>
+                <hr />
+                <div class="form-group">
+                    <h3>Slide Images</h3>
+                    @{
+                        var paramFiles = new Dictionary<string, object>
+                        {
+                            { "Files", Model?.Files != null ? Model.Files.Select(o => o.FullFileName) : null },
+                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.SlideImages).ToString() },
+                            { "Multiple", true },
+                            { "Accept" , "image/*"},
+                            { "FileManagerId", "#lgx94" },
+                            { "ContainerId", "Images" }
+                        };
+                        @Html.Partial("Widgets/SelectImages", paramFiles)
+                    }
+                </div>
+                <hr />
+                <div class="form-group">
+                    <h3>Products</h3>
+                    <div class="row">
+                        <div class="col-md-4 m-b-15">
+                            <h5 class="">Add product</h5>
+                            <div class="">
+                                <div class="form-control-custom">
+                                    @Html.DropDownList(ConstantKeys.PRODUCTS, new SelectList(ViewData[ConstantKeys.PRODUCTS] as IEnumerable<Product>, "Id", "Name", null), new { @class = "chosen", data_child = "#" + ConstantKeys.PRODUCT_OPTIONS, data_placeholder = "Products", style = "display:none" })
+                                </div>
+                                <div class="form-control-custom">
+                                    @{
+                                        var productOption = new List<CustomSelectItem>();
+                                        foreach (var product in ViewData[ConstantKeys.PRODUCTS] as IEnumerable<Product>)
+                                        {
+                                            productOption.AddRange(product.Product_Options.Select(o => new CustomSelectItem
+                                            {
+                                                Value = o.Id.ToString(),
+                                                Text = o.Name,
+                                                HtmlAttributes = new { data_parent = product.Id, data_parent_name = product.Name, data_thumb = o.PreviewImage.FullFileName }
+                                            }));
+                                        }
+                                    }
+                                    @Html.CustomDropdownList(ConstantKeys.PRODUCT_OPTIONS, productOption, null, null, new { @class = "form-control-custom chosen", data_placeholder = "Options", style = "display:none" })
+                                </div>
+                                <div class="">
+                                    <span class="btn products-add-btn"><i class="fa fa-plus"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 products-added">
+                            @if (Model.Post_ProductOptions.Count == 0)
+                            {
+                                <span class="empty">
+                                    <i>Empty!</i>
+                                </span>
+                            }
+                            else
+                            {
+                                foreach (var item in Model.Post_ProductOptions)
+                                {
+                                    <div class="form-control-custom product" style="border: 1px solid lightgray; padding: 10px;">
+                                        <img class="pull-left m-r-15" style="width:54px;" src="@Url.GetFilePath("images",item.ProductOption.PreviewImage.FullFileName)">
+                                        <a style="display: block;margin-bottom: 10px;" href="@Url.Action("Edit","Products", new { id = item.ProductOptionId})">@item.ProductOption.Product.Name -  @item.ProductOption.Name</a>
+                                        <input type="number" placeholder="Quantity" style="border: 1px solid lightgray; padding: 3px;" name="@string.Format("{0}[{1}]",Html.NameFor(o => o.ProductOptionSets), item.ProductOptionId)" value="@item.Quantity">
+                                        <div class="btn-group pull-right l-h-26">
+                                            <span class="btn-link red" onclick="deleteProduct(@item.ProductOptionId)">Delete</span>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="col-md-3">
+                <div class="form-group">
+                    @{
+                        var param = new Dictionary<string, object> {
+                            { ConstantKeys.FIELD_NAME, Html.NameFor(o => o.SelectedCategories).ToString()},
+                            { ConstantKeys.CATEGORIES, ViewData[ConstantKeys.CATEGORIES]},
+                            { ConstantKeys.SELECTED_CATEGORIES, Model.Categories.Select(o => o.Id) },
+                            { "ContainerClass", "widget"}
+                            };
+                        @Html.Partial("Widgets/CategoriesCheckBoxList", param);
+                    }
+                </div>
+                <hr/>
+                <div class="form-group">
+                    <h3>Room</h3>
+                    <div>
+                        @{
+                            var projects = (ViewData[ConstantKeys.PROJECTS] as IEnumerable<Project>).ToList();
+                            var departments = new List<Department>();
+                            var floors = new List<Floor>();
+                            var rooms = new List<Room>();
+                            projects.ForEach(o => departments.AddRange(o.Departments));
+                            departments.ForEach(o => floors.AddRange(o.Floors));
+                            floors.ForEach(o => rooms.AddRange(o.Rooms));
+                        }
+                        @Html.DropDownList(ConstantKeys.PROJECTS, new SelectList(projects, "Id", "Name", Model?.Room?.Floor?.Department?.Project?.Id), new { @class = "form-control-custom chosen", data_placeholder = "Select", data_child = "#" + ConstantKeys.DEPARTMENTS, style = "display:none" })
+                        @Html.CustomDropdownList(ConstantKeys.DEPARTMENTS, departments.Select(o => new CustomSelectItem { Value = o.Id.ToString(), Text = o.Name, HtmlAttributes = new { data_parent = o.ProjectId } }), null, null, new { @class = "form-control-custom chosen", data_placeholder = "Select", data_child = "#" + ConstantKeys.FLOORS, style = "display:none", data_default_value = Model?.Room?.Floor?.Department?.Id })   
+                        @Html.CustomDropdownList(ConstantKeys.FLOORS, floors.Select(o => new CustomSelectItem { Value = o.Id.ToString(), Text = o.Name, HtmlAttributes = new { data_parent = o.DepartmentId } }), Model?.Room?.Floor?.Id.ToString(), null, new { @class = "form-control-custom chosen", data_placeholder = "Select", data_child = "#" + Html.NameFor(o => o.RoomId), style = "display:none", data_default_value = Model?.Room?.Floor?.Id })
+                        @Html.CustomDropdownListFor(m => m.RoomId, rooms.Select(o => new CustomSelectItem { Value = o.Id.ToString(), Text = o.Name, HtmlAttributes = new { data_parent = o.FloorId } }), "Select", new { @class = "form-control-custom chosen", data_placeholder = "Select", style = "display:none", data_default_value = Model?.Room?.Id })               
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    @{
+                        <h3>Preview Image</h3>
+                        param = new Dictionary<string, object>
+                        {
+                            { "File", Model?.ImageFile != null ? Model.ImageFile.FullFileName : string.Empty },
+                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.ImageId).ToString() },
+                            { "Multiple", false },
+                            { "Accept" , "image/*"},
+                            { "FileManagerId", "#lgx94" }
+                        };
+                        @Html.Partial("Widgets/SelectImages", param)
+                    }
+                </div>
+                <hr />
+                <div class="form-group">
+                    <h3>Options</h3>
+                    <label class="checkbox">
+                        @Html.CheckBoxFor(m => m.Featured) Featured
+                    </label>
+                    <label class="checkbox">
+                        @Html.CheckBoxFor(m => m.Status) Publish
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+        <hr />
+        <div class="clearfix">
+            <input type="submit" value="Update" class="btn btn-primary pull-right" />
+        </div>
+    }
+</div>
+@{
+    var fileManagerParam = new Dictionary<string, object> {
+            { "ContainerId" , "lgx94"}
+
+    };
+
+    @Html.Partial("Widgets/FileManager", fileManagerParam)
+}
+
+@Html.Partial("Widgets/TextEditorFull")
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+@section links {
+    <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
+    @Html.RenderDelayed("TextEditorFull-style")
+    @Html.RenderDelayed("jquery-uploads-style")
+    @Html.RenderDelayed("FileManager-style")
+}
+
+@section scripts {
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
+    @Html.RenderDelayed("TextEditorFull-script")
+    @Html.RenderDelayed("jquery-uploads-js")
+    @Html.RenderDelayed("SelectImages-function")
+    @Html.RenderDelayed("SelectImages-script")
+    @Html.RenderDelayed("FileManager-script")
+    <script>
+        function deleteProduct(productOptionId) {
+            $('#@ConstantKeys.PRODUCT_OPTIONS option[value="' + productOptionId + '"]').prop('disabled', false);
+            if ($('#@ConstantKeys.PRODUCT_OPTIONS').hasClass('chosen'))
+                $('#@ConstantKeys.PRODUCT_OPTIONS').trigger('chosen:updated');
+            $(event.target).parents('div.product').remove();
+        }
+
+        function AddProduct(container, productName, productOptionName, productOptionThumb, productOptionId, quantity) {
+            var $div = $('<div class="form-control-custom product" style="border: 1px solid lightgray; padding: 10px;"/>');
+            var $img = $('<img class="pull-left m-r-15" style="width:54px;"/>').attr('src', '@Url.GetImageUploadFolder()' + productOptionThumb).appendTo($div);
+            var $a = $('<a style="display: block;margin-bottom: 10px;"/>').attr('href', '@Url.Action("Edit", "Products")\?id=' + productOptionId).text(productName + ' - ' + productOptionName).appendTo($div);;
+            var $input = $('<input type="number" placeholder="Quantity" style="border: 1px solid lightgray; padding: 3px;"/>').attr('name', '@Html.NameFor(m => m.ProductOptionSets)\[' + productOptionId + ']').appendTo($div);
+            var $btnGroup = $('<div class="btn-group pull-right l-h-26" />').appendTo($div);
+            var $btnDelete = $('<span class="btn-link red" onclick="deleteProduct(' + productOptionId + ')">Delete</span>').appendTo($btnGroup);
+            $(container).append($div);
+            if ($(container).find('div').length > 0)
+                $(container).find('.empty').hide();
+            else
+                $(container).find('.empty').hide();
+        };
+
+        $('.products-add-btn').on('click', function () {
+            var $this = $(this);
+            var container = '.products-added';
+            var productName = $('#@ConstantKeys.PRODUCT_OPTIONS option:selected').data('parent-name');
+            var productOptionName = $('#@ConstantKeys.PRODUCT_OPTIONS option:selected').text();
+            var productOptionThumb = $('#@ConstantKeys.PRODUCT_OPTIONS option:selected').data('thumb');
+            var productOptionId = $('#@ConstantKeys.PRODUCT_OPTIONS').val();
+            if (productOptionId) {
+                AddProduct(container, productName, productOptionName, productOptionThumb, productOptionId);
+                $('#@ConstantKeys.PRODUCT_OPTIONS option:selected').prop('disabled', true);
+                $('#@ConstantKeys.PRODUCT_OPTIONS').val('');
+                if ($('#@ConstantKeys.PRODUCT_OPTIONS').hasClass('chosen'))
+                    $('#@ConstantKeys.PRODUCT_OPTIONS').trigger('chosen:updated');
+            }
+        });
+    </script>
+}

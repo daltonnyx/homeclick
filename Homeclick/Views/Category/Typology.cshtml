@@ -4,7 +4,7 @@
 @model PagedList.PagedList<Product>
 
 @{
-    Layout = "~/Views/Shared/Layout_typology.cshtml";
+    Layout = "~/Views/Shared/_Layout_Cat.cshtml";
 }
 
 
@@ -16,7 +16,7 @@
         <div class="feature-item row">
             @foreach (Product item in Model)
             {
-                String url = "http://demo.vinabits.com.vn/homeclick2";
+                var url = "/homeclick";
                 Dictionary<string, object> arrayItem = item.ToArray(item);
                 Dictionary<string, object> details = arrayItem["Product_detail"] as Dictionary<string, object>;
                 <div class="item-product col-md-4">
@@ -25,7 +25,7 @@
                     </div>
                     <div class="detail-item">
                         <h3 class="title-item"><a href="@Url.Action("Product_Detail","Home", new {@Id=@item.Id})">@item.name</a></h3>
-                        <p>$@details["gia"].ToString()</p>
+                        <p>@if (@details.Keys.Contains("gia")) {@details["gia"].ToString();} đ</p>
                     </div>
                 </div>
             }

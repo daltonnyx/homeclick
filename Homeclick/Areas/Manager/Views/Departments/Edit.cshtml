@@ -1,0 +1,100 @@
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Models
+@using VCMS.Lib.Resources
+@model Department
+
+@{
+    ViewBag.Title = Strings.Departments;
+    ViewBag.FormName = (Model != null) ? ((Model.Project != null) ?  Model.Project.Name + " - " : string.Empty) + Model.Name : "Create new Department";
+}
+
+<div class="content">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        if (Model?.Id != default(int))
+        {
+            @Html.HiddenFor(m => m.Id);
+        }
+        <div class="row">
+            <fieldset class="col-md-9">
+                <div class="form-group">
+                    <div class="form-group-title">
+                        <h3>Data</h3>
+                    </div>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Department name" })
+                    @Html.ValidationMessageFor(m => m.Name)
+                </div>
+                <div class="form-group">
+                    <div class="form-group-title">
+                        <h3>Data</h3>
+                    </div>
+                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control", placeholder = "Department description" })
+                    @Html.ValidationMessageFor(m => m.Description)
+                </div>
+                @if (Model != null)
+                {
+                    <div class="form-group">
+                        <div class="form-group-title">
+                            <h3>Floors</h3>
+                        </div>
+                            @if (Model.Floors.Count == 0)
+                            {
+		                         <i>Empty!</i>
+                            }
+                            else
+                            {
+                                foreach (var floor in Model.Floors)
+                                {
+                                <div class="form-control">
+                                    <a href="@Url.Action("Edit", "Floors", new { floor_id = floor.Id })">@floor.Name</a>
+                                </div>
+                                }
+                            }
+                    </div>
+                }
+            </fieldset>
+
+            <fieldset class="col-lg-3">
+                <div class="form-group">
+                    <div class="form-group-title">
+                        <h3>Project</h3>
+                    </div>
+                    @Html.DropDownListFor(m => m.ProjectId, new SelectList(ViewData[ConstantKeys.PROJECTS] as IEnumerable<Project>, "Id", "Name", null), new { @class="chosen d-n"})
+                    @Html.ValidationMessageFor(m => m.ProjectId)
+                </div>
+            </fieldset>
+        </div>
+        <hr />
+        <div class="clearfix">
+            <input type="submit" value="@Strings.SaveChanged" class="btn btn-primary pull-right" />
+        </div>
+    }
+</div>
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+
+@section Styles {
+    <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
+}

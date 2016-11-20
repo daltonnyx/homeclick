@@ -1,0 +1,170 @@
+﻿@using VCMS.Lib.Resources
+@{
+    ViewBag.Title = "File Manager";
+    var deleteMessage = "Delete this file?";
+}
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-lime"><i class="fa fa-plus" aria-hidden="true"></i> @Strings.CreateNew</a>
+</p>
+
+<table id="dataTable" class="table table-striped table-hover fill-head" >
+    <thead>
+        <tr>
+            <th>
+                @Strings.Preview
+            </th>
+            <th>
+                @Strings.Name
+            </th>
+            <th>
+                @Strings.ContextType
+            </th>
+            <th>
+                @Strings.Size
+            </th>
+            <th>
+                @Strings.CreateTime
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+            </div>
+            <div class="modal-body">
+                <p>@deleteMessage</p>
+                <input type="hidden" id="hiddenId" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary btn-yes">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section breadcrumb {
+    @{
+        var viewName = Html.ViewContext.RouteData.GetRequiredString("action");
+    }
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li> File Manager</li>
+}
+
+@section styles {
+    @Styles.Render("~/bundles/manager/datatables/css")
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/manager/datatables")
+
+    <script>
+        function bytesToSize(bytes) {
+            var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+            if (bytes == 0) return '0 Byte';
+            var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+            return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+        };
+
+        var simple_linkBtns = function (data, type, full, meta) {
+            var param = '?id=' + data;
+            return   '<div class="table-action">' +
+                        '<a class="btn btn-sm show-tooltip" data-placement="top" data-original-title="Details" href="@Url.Action("Details")' + param + '" data-original-title="View"><i class="fa fa-search-plus"></i></a>' +
+                        '<a class="btn btn-sm show-tooltip" data-placement="top" data-original-title="Edit" href="@Url.Action("Edit")' + param + '" data-original-title="Edit"><i class="fa fa-edit"></i></a>' +
+                        '<a class="btn btn-sm btn-danger show-tooltip" data-placement="top" data-original-title="Delete" href="#" data-toggle="modal" data-target="#deleteConfirmModal" data-id="' + data + '" ><i class="fa fa-trash-o"></i></a>' +
+                    '</div>';
+        }
+
+        var preview = function (data, type, full, meta) {
+            if (full.FileType == 'Image')
+                return '<div class="image-preview"><img src="' + '@Url.GetImageUploadFolder()' + full.Id + full.Ext + '"></div>'
+            else
+                return 'No preview'
+        }
+
+        var sizeRender = function (data, type, full, meta) {
+            var a = bytesToSize(data);
+            return a;
+        }
+
+        var table = $('#dataTable');
+        $(document).ready(function () {
+            var dataTable = table.DataTable({
+                "autoWidth": false,
+                "serverSide": true,
+                "ajax": {
+                    "type": "POST",
+                    "url": '@Url.Action("DataHandler")',
+                    "contentType": 'application/json; charset=utf-8',
+                    'data': function (data) { return data = JSON.stringify(data); }
+                },
+
+                responsive: false,
+
+                "columns": [
+                   { "data": null, "render": preview },
+                   { "data": "Name" },
+                   { "data": "FileType" },
+                   { "data": "Size", "render": sizeRender },
+                   { "data": "CreateTime" },
+                   { "data": "Id", "render": simple_linkBtns }],
+
+                "order": [[4, 'asc']],
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 5,
+                }],
+
+                "drawCallback": function (settings) {
+                    $('.show-tooltip').tooltip({ container: 'body', delay: { show: 500 } });
+                    $('.show-popover').popover();
+                }
+            });
+
+            $('#deleteConfirmModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var recipient = button.data('id') // Extract info from data-* attributes
+                // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                modal.find('.modal-body input').val(recipient)
+                modal.find('.modal-body p').empty().append('@deleteMessage');
+            });
+
+            $('#deleteConfirmModal').on('click', '.btn-yes', function (e) {
+                var $modalDiv = $(e.delegateTarget);
+                var input = $modalDiv.find('.modal-body input');
+                var objId = input.val();
+                var url = '@Url.Action("Delete")';
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    data: { 'id': objId },
+                    success: function (data) {
+                        if (data === 'Success') {
+                            $modalDiv.modal('hide');
+                            table.DataTable().ajax.reload();
+                        }
+                        else
+                            $modalDiv.find('.modal-body p').empty().append(data);
+                    }
+                });
+            });
+        });
+    </script>
+}

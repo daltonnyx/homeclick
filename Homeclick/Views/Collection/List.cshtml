@@ -1,0 +1,16 @@
+﻿@using VCMS.Lib.Models
+@using VCMS.Lib.Common;
+
+@model IEnumerable<CollectionViewModel>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/Layout_BoSuuTap.cshtml";
+    var slides = Model.PickRandom(5);
+}
+
+@Html.Partial("Slider", slides)
+
+<section role="grid" class="row">
+    @Html.Partial("_CollectionGrid", Model)
+</section>

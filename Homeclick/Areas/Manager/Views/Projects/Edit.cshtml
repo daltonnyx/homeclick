@@ -1,0 +1,139 @@
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Models
+@using VCMS.Lib.Resources
+@model Project
+
+@{
+    ViewBag.Title = Strings.Projects;
+    ViewBag.FormName = "Edit project";
+}
+<div class="content">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        if (Model.Id != default(int))
+        {
+            @Html.HiddenFor(m => m.Id);
+        }
+        <div class="row">
+            <fieldset class="col-md-9">
+                <div class="form-group">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Name" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Description" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.TextAreaFor(model => model.HtmlContent, new { @class = "form-control text-editor" })
+                    @Html.ValidationMessageFor(model => model.HtmlContent, "", new { @class = "text-danger" })
+                </div>
+            </fieldset>
+            <fieldset class="col-lg-3">
+                <div class="form-group">
+                    <h3>Category</h3>
+                    @Html.DropDownListFor(model => model.CategoryId, (ViewBag.Categories as IEnumerable<Category>).Select(o => new SelectListItem { Value = o.Id.ToString(), Text = o.Name }), new { @class = "form-control chosen", tabindex = "-1", style = "display: none;" })
+                </div>
+                <hr />
+                <div class="form-group">
+                    @{
+                        var locationParam = new Dictionary<string, object>
+                        {
+                            { "ContainerId", "form-widget-location" },
+                            { "ContainerClass", "" },
+                            { "CityFieldName", "CityId" },
+                            { "CityFieldValue", Model.District.CityId },
+                            { "DistrictFielName" , Html.NameFor(m => m.DistrictId).ToString()},
+                            { "DistrictFielValue" , Model.DistrictId},
+                            { "AddressFielName", "Address" },
+                            { "AddressFielValue", "" },
+                            { "Cities", ViewData[ConstantKeys.CITIES] }
+                        };
+                        @Html.Partial("Widgets/Location", locationParam);
+                    }
+                </div>
+                <hr />
+                <div class="form-group">
+                    @{
+                        var param = new Dictionary<string, object>
+                        {
+                            { "File", Model?.PreviewImageId != null ? Model.PreviewImage.FullFileName : string.Empty },
+                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.PreviewImageId).ToString() },
+                            { "Multiple", false },
+                            { "Accept" , "image/*"},
+                            { "FileManagerId", "#lgx94" }
+                        };
+                        @Html.Partial("Widgets/SelectImages", param)
+                    }
+                </div>
+                <hr />
+                <div class="form-group">
+                    <h3>Options</h3>
+                    <label class="checkbox">
+                        @Html.CheckBoxFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } }) Publish
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+        <hr />
+        <div class="clearfix">
+            <input type="submit" value="@Strings.SaveChanged" class="btn btn-primary pull-right" />
+        </div>
+    }
+</div>
+
+@{
+    var fileManagerParam = new Dictionary<string, object> {
+            { "ContainerId" , "lgx94"}
+    };
+    @Html.Partial("Widgets/FileManager", fileManagerParam)
+}
+
+@Html.Partial("Widgets/TextEditorFull");
+
+
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+
+@section Styles {
+    <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/css/loading.css" rel="stylesheet" />
+    @Html.RenderDelayed("TextEditorFull-style")
+    @Html.RenderDelayed("jquery-uploads-style")
+    @Html.RenderDelayed("FileManager-style")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
+    @Html.RenderDelayed("TextEditorFull-script")
+
+    @Html.RenderDelayed("jquery-uploads-js")
+
+    @Html.RenderDelayed("SelectImages-function")
+    @Html.RenderDelayed("SelectImages-script")
+
+    @Html.RenderDelayed("FileManager-script")
+
+    @Html.RenderDelayed("Location-script")
+    <script>
+
+    </script>
+}

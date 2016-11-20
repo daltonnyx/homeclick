@@ -1,0 +1,138 @@
+﻿@using VCMS.Lib.Models
+@using VCMS.Lib.Common
+@model Product
+
+@{
+    ViewBag.Title = "Products";
+    ViewBag.FormName = "Create";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+    var colors = ViewBag.Colors as IEnumerable<Product_Variant>;
+    var categories = ViewBag.Categories as IEnumerable<Category>;
+}
+<div class="content">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <fieldset class="col-md-9">
+                <div class="form-group">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Name" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.EditorFor(model => model.Excerpt, new { htmlAttributes = new { @class = "form-control", placeholder = "Excerpt" } })
+                    @Html.ValidationMessageFor(model => model.Excerpt, "", new { @class = "text-danger" })
+                </div>
+
+                @{
+                    var customFieldsParam = new
+                    {
+                        CustomFields = ViewData[ConstantKeys.CUSTOM_FIELDS],
+                        Details = Model?.Product_Details,
+                        FieldName = Html.NameFor(o => o.Product_Details).ToString(),
+                        ContainerClass = "form-group",
+                        FileManagerId = "#lgx94"
+                    };
+                    @Html.Partial("Widgets/CustomFields_", customFieldsParam);
+                }
+            </fieldset>
+
+            <fieldset class="col-md-3">
+                <div class="form-group">
+                    @{
+                        var param = new Dictionary<string, object> {
+                            { ConstantKeys.FIELD_NAME, Html.NameFor(o => o.SelectedCategories).ToString()},
+                            { ConstantKeys.CATEGORIES, ViewData[ConstantKeys.CATEGORIES]},
+                            { ConstantKeys.SELECTED_CATEGORIES, Model != null ? Model.Categories.Select(o => o.Id) : new int[] { } },
+                            { "ContainerClass", "widget"}
+                        };
+                        @Html.Partial("Widgets/CategoriesCheckBoxList", param);
+                    }
+                </div>
+                <hr />
+                <div class="form-group">
+                    <h3>Product Type</h3>
+                    @Html.DropDownListFor(m => m.ProductTypeId, (ViewData[ConstantKeys.PRODUCT_TYPES] as IEnumerable<Product_Type>).Select(o => new SelectListItem { Value = o.Id.ToString(), Text = o.Name}), new { @class="form-control-custom chosen", style="display:none;"})
+                </div>
+                <hr/>
+                <div class="form-group">
+                    @{
+                        <h3>Preview Image</h3>
+                        var paramPreviewImage = new Dictionary<string, object>
+                        {
+                            { "File", Model?.Image != null ? Model.Image.FullFileName : string.Empty },
+                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.ImageId).ToString() },
+                            { "Multiple", false },
+                            { "Accept" , "image/*"},
+                            { "FileManagerId", "#lgx94" }
+                        };
+                        @Html.Partial("Widgets/SelectImages", paramPreviewImage)
+                    }
+                </div>
+                <hr />
+                <div class="form-group">
+                    <h3>Options</h3>
+                    <label class="checkbox">
+                        @Html.CheckBoxFor(model => model.Featured, new { htmlAttributes = new { @class = "form-control" } }) Feature
+                    </label>
+                    <label class="checkbox">
+                        @Html.CheckBoxFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } }) Publish
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+        <hr />
+        <div class="clearfix">
+            <input type="submit" value="Create" class="btn btn-default pull-right" />
+        </div>
+    }
+</div>
+
+@{
+    var fileManagerParam = new Dictionary<string, object> {
+            { "ContainerId" , "lgx94"}
+    };
+    @Html.Partial("Widgets/FileManager", fileManagerParam)
+}
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Index","Dashboard")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+@section Styles {
+    <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/css/loading.css" rel="stylesheet" />
+    @Html.RenderDelayed("jquery-uploads-style")
+    @Html.RenderDelayed("FileManager-style")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
+    @Html.RenderDelayed("jquery-uploads-js")
+
+    @Html.RenderDelayed("SelectImages-function")
+    @Html.RenderDelayed("SelectImages-script")
+
+    @Html.RenderDelayed("FileManager-script")
+
+    @Html.RenderDelayed("deleteConfirmModal-script")
+
+    <script>
+        
+    </script>
+}

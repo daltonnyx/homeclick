@@ -1,0 +1,95 @@
+﻿@using VCMS.Lib.Resources
+
+@{
+    ViewBag.Title = Strings.ProductColors;
+}
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-lime"><i class="fa fa-plus" aria-hidden="true"></i> @Strings.CreateNew</a>
+</p>
+
+<table id="dataTable" class="table table-striped table-hover fill-head" >
+    <thead>
+        <tr>
+            <th>
+                @Strings.Name
+            </th>
+            <th>
+                @Strings.Image
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+</table>
+
+@section breadcrumb {
+    @{
+        var viewName = Html.ViewContext.RouteData.GetRequiredString("action");
+    }
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>@ViewBag.Title</li>
+}
+
+@section styles {
+    @Styles.Render("~/bundles/manager/datatables/css")
+    }
+
+@section scripts {
+    @Scripts.Render("~/bundles/manager/datatables")
+
+    <script>
+        var thumbImg = function (data, type, full, meta) {
+            return '<div class="list-thumb "><img src="' + '@Url.GetImageUploadFolder()' + data + '"></div>';
+        }
+
+        var simple_linkBtns = function (data, type, full, meta) {
+            var param = '?id=' + data;
+            return   '<div class="table-action">' +
+                        '<a class="btn btn-sm show-tooltip" data-placement="top" data-original-title="Details" href="@Url.Action("Details")' + param + '" data-original-title="View"><i class="fa fa-search-plus"></i></a>' +
+                        '<a class="btn btn-sm show-tooltip" data-placement="top" data-original-title="Edit" href="@Url.Action("Edit")' + param + '" data-original-title="Edit"><i class="fa fa-edit"></i></a>' +
+                        '<a class="btn btn-sm btn-danger show-tooltip" data-placement="top" data-original-title="Delete" href="@Url.Action("Delete")' + param + '" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>' +
+                    '</div>';
+        }
+
+        $(document).ready(function () {
+            var dataTable = $('#dataTable');
+            var table = dataTable.DataTable({
+                "autoWidth": false,
+                "serverSide": true,
+                "ajax": {
+                    "type": "POST",
+                    "url": '@Url.Action("DataHandler")',
+                    "contentType": 'application/json; charset=utf-8',
+                    'data': function (data) { return data = JSON.stringify(data); }
+                },
+
+                responsive: false,
+
+                "columns": [
+                   { "data": "Name" },
+                   { "data": "Image", "render": thumbImg },
+                   { "data": "Id", "render": simple_linkBtns }],
+
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 1,
+                }, {
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 2,
+                }],
+                "drawCallback": function (settings) {
+                    $('.show-tooltip').tooltip({ container: 'body', delay: { show: 500 } });
+                    $('.show-popover').popover();
+                }
+            });
+
+        });
+    </script>
+}

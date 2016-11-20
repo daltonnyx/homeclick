@@ -1,0 +1,63 @@
+﻿@using VCMS.Lib.Models
+@model IEnumerable<Category>
+
+@{
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    var categoryId = int.Parse(Request.Params["category_id"] ?? "-1");
+    var typoId = int.Parse(Request.Params["typo_id"] ?? "-1");
+}
+
+<div class="sidebar">
+    <div class="box">
+        <div class="box-title">
+            <h3 class="title-sidebar title-cate-sidebar">Products</h3>
+            <div class="box-tool">
+                <a data-action="collapse" href="#"><i class="nav-arrow"></i></a>
+            </div>
+        </div>
+        <div class="box-content">
+            <ul class="nav">
+                @foreach (var item in Model)
+                {
+                    var children = item.CategoryChildren;
+
+                    <li class="@Html.Raw(item.Id == categoryId ? "active" : "")" data-category="@item.Id">
+                        <a href="@Url.Action("Category", new { category_id = item.Id })">@item.Name</a>
+
+                        <ul class="descendant-cat">
+                            @if (children.Count() > 0)
+                            {
+                                foreach (var child in children)
+                                {
+                                    <li class="@Html.Raw(categoryId == item.Id && typoId == child.Id ? "active" : "")">
+                                        <a href="@Url.Action("Category", new { category_id = item.Id, typo_id = child.Id })">@child.Name</a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </li>
+                }
+            </ul>
+            <div class="box-subBox">
+                <hr />
+                <h4>Chất liệu</h4>
+                <div class="product-metarials">
+                    <ul class="material-list"></ul>
+                </div>
+            </div>
+            <div class="box-subBox">
+                <hr />
+                <h4>Giá</h4>
+                <div id="slider-snap" class="noUi-target noUi-ltr noUi-horizontal noUi-background"></div>
+                <div style="display: inline-block; width: 100%; margin-bottom: 5px;">
+                    form <span id="slider-snap-value-lower" style="float: right; font-weight:bold"></span>
+                </div>
+                <div style="display: inline-block; width: 100%;">
+                    to <span id="slider-snap-value-upper" style="float: right; font-weight:bold"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

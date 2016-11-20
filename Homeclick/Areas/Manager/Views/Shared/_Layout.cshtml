@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    @*-----------------CSS-----------------*@
+    @Styles.Render("~/bundles/manager/font-awesome/css")
+    @Styles.Render("~/bundles/manager/bootstrap/css")
+    @RenderSection("links", required: false)
+    @RenderSection("Styles", required: false)
+    @Styles.Render("~/bundles/manager/css")
+</head>
+<body>
+    <header class="header">
+        @Html.Partial("_navbar")
+    </header>
+
+    <main id="main-container" class="container">
+        @Html.Partial("_sidebar")
+        <div id="main-content">
+            <div class="page-title">
+                <div>
+                    <h1><i class="fa fa-file-o"></i> @ViewBag.Title</h1>
+                    <h4>@ViewBag.Description</h4>
+                </div>
+            </div>
+            <div id="breadcrumbs">
+                <ul class="breadcrumb">
+                    @RenderSection("breadcrumb", required: false)
+                </ul>
+            </div>
+            @Html.Partial("Widgets/DisplayMessages")
+            @RenderBody()
+            @RenderSection("ActionLinks",false)
+        </div>
+    </main>
+
+    @*-----------------JS------------------*@
+    @Scripts.Render("~/bundles/manager/jquery")
+    @Scripts.Render("~/bundles/manager/bootstrap")
+    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/manager/flaty")
+    <script>
+        $('.submenu li.active').parents().addClass('active');
+    </script>
+    @Html.RenderScripts()
+    @Html.RenderDelayed()
+</body>
+</html>

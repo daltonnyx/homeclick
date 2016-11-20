@@ -1,0 +1,155 @@
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Resources
+@using VCMS.Lib.Models
+@model UserViewModel
+
+@{
+    ViewBag.Title = Strings.Users;
+    ViewBag.FormName = Model.UserName;
+}
+<div class="tabbable">
+    <ul class="nav nav-tabs active-blue">
+        <li class=""><a href="@Url.Action("List", "Users")"><i class="fa fa-list"></i> List</a></li>
+        <li class=""><a href="@Url.Action("CustomFields", "Users")"> Custom field</a></li>
+        <li class="active"><a href="#"> <i class="fa fa-edit"></i> @ViewBag.FormName</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade active in">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal" ng-app>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+                    <fieldset>
+                        <legend>Account</legend>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RoleList, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                <div class="form-control-custom">
+                                    @Html.ListBoxFor(m => m.RoleList, new SelectList((ViewData[ConstantKeys.ROLES] as string[])), new { @class = "form-control chosen", style = "display: none;", multiple = "multiple", tabindex = "-1", data_placeholder = "Select one or more..." })
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Profile</legend>
+                        @foreach (var customField in ViewData[ConstantKeys.CUSTOM_FIELD] as IEnumerable<CustomField>)
+                        {
+                            var fieldName = string.Format("{0}[{1}]", ConstantKeys.CUSTOM_FIELD, customField.Name);
+                            <div class="form-group">
+                                @Html.Label(customField.Label, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-9">
+                                    @if (customField.FieldType == FieldTypes.Text || customField.FieldType == FieldTypes.Number || customField.FieldType == FieldTypes.Date)
+                                    {
+                                        @Html.TextBox(fieldName, null, new { @class = "form-control", type = customField.FieldType.ToString().ToLower(), placeholder = customField.PlaceHolder })
+                                    }
+                                    else if (customField.FieldType == FieldTypes.Select)
+                                    {
+                                        @Html.DropDownList(fieldName, customField.CustomField_Enums.Select(o => new SelectListItem { Value = o.Id.ToString(), Text = o.Name }), "Not set", new { @class = "form-control chosen" })
+                                    }
+                                    else if (customField.FieldType == FieldTypes.Image)
+                                    {
+                                        @Html.Partial("Widgets/ImageUpload", new Dictionary<string, string>() { { fieldName, Html.Value(fieldName).ToString() } })
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </fieldset>
+                    <fieldset>
+                        <legend>Lockout</legend>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.LockoutEnabled, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.LockoutEnabled, new { htmlAttributes = new { @ng_model = "checked", ng_init = "checked=" + Model.LockoutEnabled.ToString().ToLower() } })
+                                    @Html.ValidationMessageFor(model => model.LockoutEnabled, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.LockoutEndDate, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.LockoutEndDate, new { htmlAttributes = new { @class = "form-control date-picker", @ng_disabled = "!checked" } })
+                                @Html.ValidationMessageFor(model => model.LockoutEndDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </fieldset>
+                    <hr />
+                    <div class="clearfix">
+                        <input type="submit" value="Save changed" class="btn btn-primary pull-right" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section breadcrumb {
+    @{
+        var viewName = Html.ViewContext.RouteData.GetRequiredString("action");
+    }
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+@section links {
+    <link rel="stylesheet" href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/lib/bootstrap-datepicker/bootstrap-datepicker.css" />
+    @Html.RenderDelayed("jquery-uploads-css")
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.js"></script>
+    <script src="~/Areas/Manager/Content/lib/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    @Html.RenderDelayed("jquery-uploads-js")
+    @Html.RenderDelayed("widget-imageupload-script")
+}

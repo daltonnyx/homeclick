@@ -1,5 +1,5 @@
-fabric.groupLiPolygon = fabric.util.createClass(fabric.Group,{
-	type: 'groupLiPolygon',
+fabric.GroupLiPolygon = fabric.util.createClass(fabric.Group,{
+	type: 'GroupLiPolygon',
 	childOptions: [],
 	initialize: function(pointArray, options, lineWidths) {
 		options = options || [];
@@ -13,11 +13,19 @@ fabric.groupLiPolygon = fabric.util.createClass(fabric.Group,{
 		this.childOptions = options;
 	    this.callSuper('initialize',this._objects, options);
 	},
+	toObject: function(propertiesToInclude){ // Keep fix this shit
+	    propertiesToInclude.push('type');
+	    propertiesToInclude.push('childOptions');
+    return fabric.util.object.extend(this.callSuper('toObject',propertiesToInclude), {
+
+    });
+  },
 	getActiveObject: function(f){
 		f = this.toLocalPoint(f,'center','center');
+		//console.log(f);
 		for (var i = this._objects.length - 1; i >= 0; i--) {
-			    console.log(i + " " +this._objects[i].toLocalPoint(f,'center','center'));
-			if(this._objects[i].containsPoint(this._objects[i].toLocalPoint(f,'center','center')))
+			  //  console.log(i + " " +this._objects[i].containsPoint(this._objects[i].toLocalPoint(f,'center','center')));
+			if(this._objects[i].type == 'liPolygon' && this._objects[i].containsPoint(this._objects[i].toLocalPoint(f,'center','center')))
 				return this._objects[i];
 		};
 	},
@@ -25,6 +33,8 @@ fabric.groupLiPolygon = fabric.util.createClass(fabric.Group,{
 	getPoints: function() {
 		var points = new Array();
 		for (var i = 0; i <= this._objects.length - 1; i++) {
+			if(this._objects[i] != 'liPolygon')
+				continue;
 			var objCenterPoint = this._objects[i].getCenterPoint();
 			for (var j = 0; j <= this._objects[i].points.length - 1; j++) {
 				var insrtPoint = new Object();
@@ -36,7 +46,7 @@ fabric.groupLiPolygon = fabric.util.createClass(fabric.Group,{
 			}
 		}
 		return points;
-	}, 
+	},
 
 	getLines: function() {
 		var lines = new Array();
@@ -125,7 +135,7 @@ fabric.groupLiPolygon = fabric.util.createClass(fabric.Group,{
 						}
 					}
 				}
-				
+
 			}
 			calcedEdges.sort(function(a,b){
 				if(a.angle > b.angle)
@@ -164,15 +174,15 @@ fabric.groupLiPolygon = fabric.util.createClass(fabric.Group,{
 				adjPoint = out[out.length - 1],
 				nearLastPoint = out[out.length - 2];
 			for (var i = 1; i <= edges.length - 1; i++) {
-				
-				if( edges[i].visited < 1 && adjPoint.x == edges[i].fPoint.x && adjPoint.y == edges[i].fPoint.y && 
+
+				if( edges[i].visited < 1 && adjPoint.x == edges[i].fPoint.x && adjPoint.y == edges[i].fPoint.y &&
 					nearLastPoint.x != edges[i].ePoint.x && nearLastPoint.y != edges[i].ePoint.y &&
 					!this.in_array(lastPop,edges[i].ePoint)) {
 					out.push(edges[i].ePoint);
 					edges[i].visited++;
 					break;
 				}
-				else if( edges[i].visited < 1 && adjPoint.x == edges[i].ePoint.x && adjPoint.y == edges[i].ePoint.y && 
+				else if( edges[i].visited < 1 && adjPoint.x == edges[i].ePoint.x && adjPoint.y == edges[i].ePoint.y &&
 					nearLastPoint.x != edges[i].fPoint.x && nearLastPoint.y != edges[i].fPoint.y &&
 					!this.in_array(lastPop,edges[i].fPoint))
 				{
@@ -182,7 +192,7 @@ fabric.groupLiPolygon = fabric.util.createClass(fabric.Group,{
 				}
 
 			}
-			var lastCount = out.length, 
+			var lastCount = out.length,
 				lastPoint = out[out.length - 1];
 			//backedges = out[out.length - 2];
 			if(lastCount != beforeCount) {
@@ -215,13 +225,13 @@ fabric.groupLiPolygon = fabric.util.createClass(fabric.Group,{
 
 		}
 		//pols = this.removeOverlapping(pols);
-		
+
 		var polsWithOffset = [];
 		for (var i = pols.length - 1; i >= 0; i--) {
 			var polWithOffset = [];
 			for (var j = pols[i].length - 1; j >= 0; j--) {
 				var xWithOffset = pols[i][j].x + this.getLeft() - 3.5,
-					yWithOffset = pols[i][j].y + this.getTop() - 3.5; 
+					yWithOffset = pols[i][j].y + this.getTop() - 3.5;
 					polWithOffset.push({x: xWithOffset,y:yWithOffset});
 			}
 			polsWithOffset.push(polWithOffset);
@@ -254,4 +264,128 @@ fabric.groupLiPolygon = fabric.util.createClass(fabric.Group,{
 			this.add(object);
 		}
 	}
-}); 
+});
+
+fabric.GroupLiPolygon.fromURL = function(url, options, callback) {
+	var xhr = new XMLHttpRequest();
+
+	var applyMatrixTransform = function(PolylineArr, matrix) {
+		for (var i = 0; i < PolylineArr.length; i++) {
+			for (var j = 0; j < PolylineArr[i].length; j++) {
+				PolylineArr[i][j].x = matrix[0] * PolylineArr[i][j].x + matrix[2] * PolylineArr[i][j].y + matrix[4];
+				PolylineArr[i][j].y = matrix[1] * PolylineArr[i][j].x + matrix[3] * PolylineArr[i][j].y + matrix[5];
+			}
+		}
+	};
+
+	xhr.onload = function() {
+		//parsing goes here
+		var polyArr = [],
+		svgData = xhr.responseXML.documentElement;
+		var boundary = svgData.getElementById('JLVA-GRD'),
+				matrixTrans = boundary.getAttribute('transform');
+				//matrixArray = matrixTrans.
+		var groupList = boundary.querySelectorAll('g'); // getElementByTagName doesnt work
+		//Get boundary array
+		for (var i = 0; i < groupList.length; i++) {
+
+				var polyline = groupList[i].querySelector('polyline'),
+
+						pointStr = polyline.getAttribute('points'),
+
+						pointArray = pointStr.split(/\s+/);
+
+				var pointObjArray = [];
+
+				pointArray.forEach(function(el,idx,arr){
+					if( 	el.indexOf(',') != -1 )
+						pointObjArray.push({
+							x: parseFloat(el.split(',')[0]),
+							y: parseFloat(el.split(',')[1])
+						});
+				});
+				polyArr.push(pointObjArray);
+
+		}
+		applyMatrixTransform(polyArr,[5.5840655,0,0,5.5840655,-1387.2827,-1681.9091]);
+		polWall = new fabric.GroupLiPolygon(polyArr, options, [0.00000001]);
+		polWall.childOptions = options;
+		svgData.removeChild(boundary);
+		var xmlSerializer = new XMLSerializer();
+		fabric.loadSVGFromString(xmlSerializer.serializeToString(svgData),function(objects,options){
+		    var obj = fabric.util.groupSVGElements(objects, options);
+			 obj.scale(1).cloneAsImage(function(clone){
+			        clone.origin = obj.toObject();
+					polWall.add(clone);
+					polWall._objects[polWall._objects.length - 1].set({
+						originX: "left",
+		                originY: "top",
+						left: clone.getWidth() / 2 * -1 - 8,
+						top: clone.getHeight() / 2 * -1 + 3
+					});
+					callback(polWall);
+
+			 });
+
+			// polWall._objects[polWall._objects.length - 1].set({
+			// 	left: obj.getWidth() / 2 * -1 - 8,
+			// 	top: obj.getHeight() / 2 * -1 + 3
+			// });
+		});
+
+
+
+	}
+	xhr.onerror = function (err) {
+	  alert(err);
+	}
+	xhr.open('GET',url);
+	xhr.responseType = 'document';
+	xhr.send();
+}
+
+fabric.GroupLiPolygon.fromObject = function (object, callback) {
+		var pointArr = [];
+		var bg;
+		object.objects.forEach(function(el){
+			if(el.type == 'liPolygon')
+			    pointArr.push(el.originalPoints);
+			else {
+			    fabric.PathGroup.fromObject(el.origin, function (originBg) {
+			        originBg.scale(1).cloneAsImage(function (clone) {
+			            clone.origin = originBg.toObject();
+			            clone.set({
+			                originX: "left",
+			                originY: "top",
+			                left: clone.getWidth() / 2 * -1 - 8,
+			                top: clone.getHeight() / 2 * -1 + 3
+			            });
+			            bg = clone;
+			            if (pl != undefined && pl.type == "GroupLiPolygon")
+			                pl._objects.push(bg);
+			        });
+			    });
+			}
+		});
+		var pl = new fabric.GroupLiPolygon(pointArr, object.childOptions, [1]);
+		pl.cart = object.cart;
+		return pl;
+        
+		
+};
+
+fabric.Canvas.getHistory = function(savedCanvas, canvas) {
+	canvas._objects.length = 0;
+	savedCanvas._objects.forEach(function(el){
+			canvas.add(el);
+	});
+	return canvas;
+};
+
+// fabric.duplicate = function(obj) {
+// 	var duplicateObj = fabric.util.object.clone(obj);
+// 	for(var key in obj)
+//     if(obj.hasOwnProperty(key))
+//         duplicateObj[key] = obj[key];
+// 	return duplicateObj;
+// }

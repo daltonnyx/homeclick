@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Thiết kế 1";
     Layout = "~/Views/Shared/Layout_html.cshtml";
-    string url = "http://demo.vinabits.com.vn/homeclick2";
 }
 
 
@@ -16,19 +15,21 @@
                     <form id="canvas-picker" method="GET" action="@Url.Action("Floor", "Design")">
                         <label>Chọn địa điểm</label>
                         <select class="department" name="department_city" id="department-city">
+                            <option value="">--Chọn Thành phố--</option>
                             @Html.Action("getDepartments", "Design")
                         </select>
                         <label>Chọn quận</label>
                         <select class="department" name="department_district" id="department-district">
-                            
+                            <option value="">--Chọn Quận--</option>
                         </select>
-                        <label>Chọn tháp</label>
+                        <label>Chọn công trình</label>
+                        
                         <select class="floor" name="department_tower" id="department-tower">
-                               
+                            <option value="">--Chọn Công trình--</option>
                         </select>
                         <label>Chọn tầng</label>
                         <select class="floor-end" name="floor" id="floor">
-                            
+                            <option value="">--Chọn Tầng--</option>
                         </select>
                         <input class="button-create left" type="submit" value="Mở mặt bằng này" />
                     </form>
@@ -36,27 +37,43 @@
             </div>
             <script type="text/javascript">
                 jQuery(document).ready(function ($) {
-
+                    var loadingDiv = '<div class="loading arc"></div>';
                     $("select.department").mouseup(function (e) {
                         var open = $(this).data("isopen");
 
                         if (open) {
                             var parent_id = $(this).val();
+                            if (parent_id == "")
+                                return;
                             var Id = this.id;
                             jQuery.ajax({
                                 url: "@Url.Action("getDepartments", "Design")" + "/" + parent_id,
                                 method: "GET",
                                 dataType: "text",
                                 success: function (response) {
+                                    window.setTimeout(function () {
+                                        jQuery('.loading.arc').remove();
+                                        $("#department-district").removeAttr("disabled");
+                                        $("#department-tower").removeAttr("disabled");
+                                    }, 200);
                                     if (Id == "department-city") {
-                                        $("#department-district").html(response);
+                                        
+                                        $("#department-district").html('<option value="">--Chọn Quận--</option>' + response);
                                     }
                                     else if (Id == "department-district") {
-                                        $("#department-tower").html(response);
+                                        
+                                        $("#department-tower").html('<option value="">--Chọn Công trình--</option>' + response);
                                     }
                                 },
                                 beforeSend: function () {
-
+                                    if (Id == "department-city") {
+                                        $("#department-district").attr("disabled", "disabled");
+                                        $("#department-district").after(loadingDiv);
+                                    }
+                                    else if (Id == "department-district") {
+                                        $("#department-tower").attr("disabled", "disabled");
+                                        $("#department-tower").after(loadingDiv);
+                                    }
                                 }
                             });
                         }
@@ -68,15 +85,22 @@
 
                         if (open) {
                             var Id = $(this).val();
+                            if (Id == "")
+                                return;
                             jQuery.ajax({
                                 url: "@Url.Action("getFloors", "Design")" + "/" + Id,
                                 method: "GET",
                                 dataType: "text",
                                 success: function (response) {
-                                    $("#floor").html(response);
+                                    window.setTimeout(function () {
+                                        jQuery('.loading.arc').remove();
+                                        $("#floor").removeAttr("disabled");
+                                    }, 200);
+                                    $("#floor").html('<option value="">--Chọn Tầng--</option>' + response);
                                 },
                                 beforeSend: function () {
-
+                                    $("#floor").after(loadingDiv);
+                                    $("#floor").attr("disabled", "disabled");
                                 }
                             });
                         }

@@ -1,0 +1,103 @@
+﻿@using VCMS.Lib.Resources
+@using VCMS.Lib.Common
+@using VCMS.Lib.Models
+
+@model Category
+
+@{
+    ViewBag.Title = Strings.Categories;
+    ViewBag.FormName = Model.Name;
+    //Get (parent)categores from ViewData
+    var categoriesFormViewData = ViewData[ConstantKeys.CATEGORIES] as IEnumerable<Category>;
+    //generate category node list
+    var categoryNodes = new List<EntityNode<Category>>();
+    //get node and child nodes of each category
+    var temp = Model.GetNodes(0).Select(o => o.Entity.Id).ToArray();
+    foreach (var category in categoriesFormViewData)
+    {
+        categoryNodes.AddRange(category.GetNodes(0, temp));
+    }
+    //generate select list for parent field
+    var categorySelectList = new List<SelectListItem>();
+    foreach (var categoryNode in categoryNodes)
+    {
+        var spaces = string.Empty;
+        for (int nodelevel = 0; nodelevel < categoryNode.Depth; nodelevel++)
+        {
+            spaces += "\xA0\xA0\xA0";
+        }
+        categorySelectList.Add(new SelectListItem { Value = categoryNode.Entity.Id.ToString(), Text = spaces + categoryNode.Entity.Name });
+    }
+}
+
+@Html.Partial("Widgets/DisplayMessages")
+
+<div class="content">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+        <div class="form-horizontal">
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.CategoryTypeId)
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.CategoryType, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    <label class="control-label"><strong>@Html.DisplayFor(m => m.CategoryType.Name, new { @class = "form-control" })</strong></label>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CategoryParentId, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.CategoryParentId, categorySelectList, "None", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.CategoryParentId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="clearfix">
+                <input type="submit" class="btn btn-default pull-right" value="@Strings.SaveChanged" />
+            </div>
+        </div>
+    }
+</div>
+
+@section ActionLinks {
+    <div>
+        @Html.ActionLink("Back to list", "List", new { category_type_id = Model.CategoryTypeId })
+    </div>
+}
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Index","Dashboard")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

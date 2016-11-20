@@ -1,0 +1,276 @@
+﻿/*====================================
+    List
+====================================*/
+ul, ol {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+}
+
+li.active > a {
+    font-weight: bold;
+}
+
+
+/*====================================
+    Images
+====================================*/
+img {
+    max-width: 100%;
+}
+
+#products {
+    padding: 10px;
+    border: 1px solid lightgray;
+}
+
+.image-preview-md {
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
+}
+
+.image-preview {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+}
+
+[class*="image-preview"] {
+    position: relative;
+    margin-bottom: 5px;
+}
+
+    .file-upload .img-thumbnail > img, [class*="image-preview"] img {
+        height: 100%;
+        max-width: 100%;
+        left: 50%;
+        position: relative;
+        transform: translateX(-50%);
+    }
+
+.form-control, .form-control-custom, .fileupload, .image-preview img {
+    /*max-width:350px;*/
+}
+
+.form-control-custom {
+    border: none;
+}
+
+.zero-margin {
+    margin: 0;
+}
+
+table#DataTable > tbody > tr > td:last-child {
+    text-align: end;
+}
+
+    table#DataTable > tbody > tr > td:last-child > div {
+        display: inline-block;
+        min-width: 100px;
+    }
+
+table#DataTable > thead > tr > th:last-child {
+    width: 100px;
+}
+
+.table-action {
+    float: right;
+}
+
+.list-thumb {
+    height: 64px;
+    width: 64px;
+}
+
+    .list-thumb img {
+        height: auto;
+        width: 100%;
+    }
+
+.file-upload .img-thumbnail {
+    width: 200px;
+    height: 150px;
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.text-danger > ul {
+    margin-bottom: 0;
+}
+
+/*Form Elements*/
+
+.text-editor {
+    min-height: 156px;
+    width: 100%;
+}
+
+.form-group .form-control:not(:last-child), .form-group .form-control-custom:not(:last-child) {
+    margin-bottom: 10px !important;
+}
+
+/*====================================
+    Froala class
+====================================*/
+.fr-view table.fr-none-borders td,
+.fr-view table.fr-none-borders th {
+    border-style: none;
+}
+
+/*====================================
+    File Manager
+====================================*/
+.file-uploaded-border {
+    border: 1px dashed gray;
+}
+
+.file-list {
+    list-style-type: none;
+    min-height: 142px;
+}
+
+    .file-list li {
+        display: inline-block;
+    }
+
+    .file-list input[type="checkbox"] {
+        display: none;
+    }
+
+    .file-list label {
+        border: 1px solid #fff;
+        padding: 10px;
+        display: block;
+        position: relative;
+        margin: 10px;
+        cursor: pointer;
+    }
+
+        .file-list label:before {
+            background-color: white;
+            color: white;
+            content: " ";
+            display: block;
+            border-radius: 50%;
+            border: 1px solid grey;
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: 25px;
+            height: 25px;
+            text-align: center;
+            line-height: 28px;
+            transition-duration: 0.4s;
+            transform: scale(0);
+        }
+
+        .file-list label img {
+            height: 100px;
+            width: 100px;
+            transition-duration: 0.2s;
+            transform-origin: 50% 50%;
+        }
+
+    .file-list :checked + label {
+        border-color: #ddd;
+    }
+
+        .file-list :checked + label:before {
+            content: "✓";
+            background-color: grey;
+            transform: scale(1);
+        }
+
+        .file-list :checked + label img {
+            transform: scale(0.9);
+            box-shadow: 0 0 5px #333;
+            z-index: -1;
+        }
+
+/*====================================
+    File Manager
+====================================*/
+
+.file-manager {
+    overflow: hidden;
+    margin: 15px;
+    background: white;
+}
+
+    .file-manager .modal-dialog, .file-manager .modal-content, .file-manager .modal-body, .file-manager .modal-body .files {
+        height: 100%;
+    }
+
+    .file-manager .modal-dialog {
+        padding: 0;
+    }
+
+    .file-manager .modal-body {
+        padding: 0 0 67px 0;
+        margin-right: 250px;
+    }
+
+        .file-manager .modal-body .files {
+            overflow: auto;
+            float: left;
+        }
+
+    .file-manager .file-list {
+        list-style-type: none;
+        overflow: auto;
+    }
+
+    .file-manager .file-info-col {
+        float: right;
+        margin-right: -250px;
+        width: 250px;
+        padding: 15px;
+        height: 100%;
+        position: relative;
+    }
+
+    .file-manager .file-info {
+    }
+/*Modal*/
+/* .modal-transparent */
+
+.modal-transparent {
+    background: transparent;
+}
+
+    .modal-transparent .modal-content {
+        background: transparent;
+    }
+
+.modal-backdrop.modal-backdrop-transparent {
+    background: #ffffff;
+}
+
+    .modal-backdrop.modal-backdrop-transparent.in {
+        opacity: .9;
+        filter: alpha(opacity=90);
+    }
+
+/* .modal-fullscreen */
+
+.modal-fullscreen {
+}
+
+    .modal-fullscreen .modal-content {
+        background: transparent;
+        border: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+.modal-backdrop.modal-backdrop-fullscreen {
+    background: #ffffff;
+}
+
+    .modal-backdrop.modal-backdrop-fullscreen.in {
+        opacity: .97;
+        filter: alpha(opacity=97);
+    }

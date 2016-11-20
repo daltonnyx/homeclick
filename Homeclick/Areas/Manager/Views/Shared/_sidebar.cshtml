@@ -1,0 +1,141 @@
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Models
+@using VCMS.Lib.Controllers
+@{
+    var controllerName = Html.GetControllerName();
+    var db = (ViewContext.Controller as BaseController).GetDbContext();
+    var categories = db.Categories.ToList();
+}
+
+<div id="sidebar" class="navbar-collapse collapse">
+    <!-- BEGIN Navlist -->
+    <ul class="nav nav-list" style="height: auto; overflow: hidden; width: auto;">
+        <!-- BEGIN Search Form -->
+        <li>
+            <form target="#" method="GET" class="search-form">
+                <span class="search-pan">
+                    <button type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <input type="text" name="search" placeholder="Search ..." autocomplete="off">
+                </span>
+            </form>
+        </li>
+        <!-- END Search Form -->
+        <li class="@Html.Raw(controllerName == ConstantKeys.CONTROLLER_NAME_DASHBOARD ? "active" : string.Empty)">
+            <a href="@Url.Action("Index", ConstantKeys.CONTROLLER_NAME_DASHBOARD)">
+                <i class="fa fa-dashboard"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="@Html.Raw(controllerName == ConstantKeys.CONTROLLER_NAME_USERS ? "active" : string.Empty)">
+            <a href="@Url.Action("List", ConstantKeys.CONTROLLER_NAME_USERS)">
+                <i class="fa fa-users"></i>
+                <span>Users</span>
+            </a>
+        </li>
+        <li class="@Html.Raw(controllerName == ConstantKeys.CONTROLLER_NAME_ROLES ? "active" : string.Empty)">
+            <a href="@Url.Action("List", ConstantKeys.CONTROLLER_NAME_ROLES)">
+                <i class="fa fa-key"></i>
+                <span>Roles</span>
+            </a>
+        </li>
+        <li class="@Html.Raw(controllerName == ConstantKeys.CONTROLLER_NAME_CUSTOMFIELDS ? "active" : string.Empty)">
+            <a href="@Url.Action("List", ConstantKeys.CONTROLLER_NAME_CUSTOMFIELDS)">
+                <i class="fa fa-leaf"></i>
+                <span>Custom Fields</span>
+            </a>
+        </li>
+        <li class="@Html.Raw(controllerName == ConstantKeys.CONTROLLER_NAME_CATEGORIES ? "active" : string.Empty)">
+            <a href="@Url.Action("List", ConstantKeys.CONTROLLER_NAME_CATEGORIES)">
+                <i class="fa fa-folder"></i>
+                <span>Categories</span>
+            </a>
+        </li>
+
+        @{
+            var productGroup = new List<string>();
+            productGroup.Add("Products");
+            productGroup.Add("ProductVariants");
+            productGroup.Add("Sale");
+        }
+        <li class="@Html.Raw(productGroup.Contains(controllerName) ? "active" : "")">
+            <a class="dropdown-toggle">
+                <i class="fa fa-square-o"></i>
+                <span>Products</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                <li class="@Html.Raw( controllerName == "Products" ? "active" : "")">
+                    <a href="@Url.Action("List", "Products")">Products</a>
+                </li>
+                <li class="">
+                    <span>Variants</span>
+                    <ul>
+                        @foreach (var category in categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProductVariant))
+                        {
+                            <li class="@Html.Raw(Request.Params["category_id"] == category.Id.ToString() ? "active" : "")"><a href="@Url.Action("List", "ProductVariants", new { category_id = category.Id})">@category.Name</a></li>
+                        }
+                    </ul>
+                </li>
+                <li class="@Html.Raw( controllerName == "Sale" ? "active" : "")"><a href="@Url.Action("List", "ProductSale")">Sale</a></li>
+            </ul>
+            <!-- END Submenu -->
+        </li>
+        @{
+            var projectGroup = new List<string>();
+            projectGroup.Add("Projects");
+            projectGroup.Add("Departments");
+            projectGroup.Add("Floors");
+            projectGroup.Add("Rooms");
+            projectGroup.Add("Collections");
+        }
+        <li class="@Html.Raw(projectGroup.Contains(controllerName) ? "active" : "")">
+            <a class="dropdown-toggle">
+                <span>Homeclick</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                <li class="@Html.Raw(controllerName == "Projects" ? "active" : "")">@Html.ActionLink("Projects", "List", "Projects")</li>
+                <li class="@Html.Raw(controllerName == "Departments" ? "active" : "")">@Html.ActionLink("Departments", "List", "Departments")</li>
+                <li class="@Html.Raw(controllerName == "Floors" ? "active" : "")">@Html.ActionLink("Floors", "List", "Floors")</li>
+                <li class="@Html.Raw(controllerName == "Rooms" ? "active" : "")">@Html.ActionLink("Rooms", "List", "Rooms")</li>
+                <li class="@Html.Raw(controllerName == "Collections" ? "active" : "")">@Html.ActionLink("Collections", "List", "Collections")</li>
+            </ul>
+        </li>
+
+        <li class="@Html.Raw(controllerName == "slides" ? "active" : "")">
+            <a class="dropdown-toggle">
+                <i class="fa fa-square-o"></i>
+                <span>Slides</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul class="submenu">
+                @foreach (var category in db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Slide))
+                {
+                    <li><a href="@Url.Action("List", "Slides", new { categoryId = category.Id})">@category.Name</a></li>
+                }
+            </ul>
+        </li>
+
+        <li>
+            <a class="dropdown-toggle">
+                <i class="fa fa-square-o"></i>
+                <span>Manager</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+
+            <!-- BEGIN Submenu -->
+            <ul class="submenu">
+                <li data-page="filemanager"><a href="@Url.Action("List","FileManager")">File Manager</a></li>
+            </ul>
+            <!-- END Submenu -->
+        </li>
+    </ul>
+    <!-- END Navlist -->
+    <!-- BEGIN Sidebar Collapse Button -->
+    <div id="sidebar-collapse" class="visible-lg">
+        <i class="fa fa-angle-double-left"></i>
+    </div>
+    <!-- END Sidebar Collapse Button -->
+</div>

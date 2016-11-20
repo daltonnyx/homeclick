@@ -1,0 +1,116 @@
+﻿@using VCMS.Lib.Models
+@using VCMS.Lib.Common
+@using VCMS.Lib.Resources
+@model Post
+
+@{
+    ViewBag.Title = Strings.Collections;
+    ViewBag.FormName = "Create new collection";
+}
+
+<div class="content">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        if (Model != null)
+        {
+            @Html.HiddenFor(m => m.Id)
+        }
+        <div class="row">
+            <fieldset class="col-md-9">
+                <div class="form-group">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Title" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.TextBoxFor(model => model.Excerpt, new { @class = "form-control", placeholder = "Excerpt" })
+                </div>
+                <div class="form-group">
+                    @Html.TextAreaFor(model => model.Content, new { @class = "form-control text-editor" })
+                </div>
+            </fieldset>
+            <fieldset class="col-md-3">
+                <div class="form-group">
+                    @{
+                        var param = new Dictionary<string, object> {
+                            { ConstantKeys.FIELD_NAME, Html.NameFor(o => o.SelectedCategories).ToString()},
+                            { ConstantKeys.CATEGORIES, ViewData[ConstantKeys.CATEGORIES]},
+                            { ConstantKeys.SELECTED_CATEGORIES, Model != null ? Model.Categories.Select(o => o.Id) : new int[] { } },
+                            { "ContainerClass", "widget"}
+                            };
+                        @Html.Partial("Widgets/CategoriesCheckBoxList", param);
+                    }
+                </div>
+                <hr />
+                <div class="form-group">
+                    @{
+                        <h3>Preview Image</h3>
+                        param = new Dictionary<string, object>
+                        {
+                            { "File", Model?.ImageFile != null ? Model.ImageFile.FullFileName : string.Empty },
+                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.ImageId).ToString() },
+                            { "Multiple", false },
+                            { "Accept" , "image/*"},
+                            { "FileManagerId", "#lgx94" }
+                        };
+                        @Html.Partial("Widgets/SelectImages", param)
+                    }
+                </div>
+                <hr />
+                <div class="form-group">
+                    <h3>Options</h3>
+                    <label class="checkbox">
+                        @Html.CheckBoxFor(m => m.Featured) Featured
+                    </label>
+                    <label class="checkbox">
+                        @Html.CheckBoxFor(m => m.Status) Publish
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+        <hr />
+        <div class="clearfix">
+            <input type="submit" value="Create" class="btn btn-primary pull-right" />
+        </div>
+                        }
+</div>
+@{ 
+    var fileManagerParam = new Dictionary<string, object> {
+            { "ContainerId" , "lgx94"}
+
+    };
+
+    @Html.Partial("Widgets/FileManager", fileManagerParam)
+    }
+
+@Html.Partial("Widgets/TextEditorFull");
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+@section links {
+    @Html.RenderDelayed("TextEditorFull-style")
+    @Html.RenderDelayed("jquery-uploads-style")
+    @Html.RenderDelayed("FileManager-style")
+}
+
+@section scripts {
+    @Html.RenderDelayed("TextEditorFull-script")
+    @Html.RenderDelayed("jquery-uploads-js")
+    @Html.RenderDelayed("SelectImages-function")
+    @Html.RenderDelayed("SelectImages-script")
+    @Html.RenderDelayed("FileManager-script")
+}

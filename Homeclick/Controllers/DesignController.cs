@@ -1,4 +1,4 @@
-﻿using Homeclick.Models;
+﻿using VCMS.Lib.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace Homeclick.Controllers
     public class DesignController : Controller
     {
 
-        vinabits_homeclickEntities db = new vinabits_homeclickEntities();
+        ApplicationDbContext db = new ApplicationDbContext();
         //
         // GET: /Design/
         public ActionResult Index()
@@ -26,13 +26,13 @@ namespace Homeclick.Controllers
         {
             return View();
         }
-
+        /*
         public ActionResult getDepartments(int? id = null)
         {
-            var model = db.Departments.Where<Department>(d => d.ParentDepartmentId == id).ToList<Department>();
+            var model = db.Departments.Where(d => d.ParentDepartmentId == id).ToList();
             return PartialView("Departments", model);
         }
-
+        */
         public ActionResult getFloors(int? id)
         {
             var model = db.Floors.Where<Floor>(f => f.Department.Id == id).ToList<Floor>();
@@ -47,8 +47,24 @@ namespace Homeclick.Controllers
 
         public ActionResult Canvas(int? id)
         {
-            var model = db.Canvas.Find(id);
+            var categoryTypes = db.Category_types.ToList();
+
+            categoryTypes.Remove(categoryTypes.Find(o => o.Id == 17));
+            categoryTypes.Remove(categoryTypes.Find(o => o.Id == 18));
+
+            ViewBag.SelectedTypeId = categoryTypes.FirstOrDefault().Id;
+            ViewBag.CategoryTypes = categoryTypes;
+
+            var model = db.Rooms.Find(id);
+
             return PartialView(model);
         }
+
+        public ActionResult _CategoryOptions(int? CategoryTypeId)
+        {
+            var categories = db.Categories.Where(o => o.CategoryTypeId == CategoryTypeId).ToList();
+            return PartialView(categories);
+        }
+
 	}
 }

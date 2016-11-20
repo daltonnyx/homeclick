@@ -1,0 +1,122 @@
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Models
+@using VCMS.Lib.Resources;
+@model Product_Option
+
+@{
+    ViewBag.Title = ViewData["ProductName"];
+    ViewBag.FormName = "All Options";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="clearfix content">
+    <div class="clearfix btn-toolbar">
+        <div class="btn-group pull-right">
+            <a class="btn btn-circle show-tooltip" title="" href="#" data-original-title="Delete selected" data-toggle="modal" data-target="#deleteConfirmModal"><i class="fa fa-trash-o"></i></a>
+            <a class="btn btn-circle show-tooltip disabled" title="" href="#" data-original-title="Refresh"><i class="fa fa-repeat"></i></a>
+        </div>
+        <div class="btn-group pull-right">
+            <a class="btn btn-circle show-tooltip" data_original_title="Create new option for product" href="@Url.Action("Create", new { product_id = Request.Params["product_id"]})"><i class='fa fa-plus'></i></a>
+        </div>
+    </div>
+    <hr />
+
+    <table id="dataTable" class="table table-hover fill-head">
+        <thead>
+            <tr>
+                <th style="width:18px;">
+                    <input type="checkbox" />
+                </th>
+                <th>
+                    @Strings.Image
+                </th>
+                <th>
+                    @Strings.Name
+                </th>
+                <th>
+                    @Strings.Quantity
+                </th>
+                <th>
+                    @Strings.Status
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewData["Options"] as IEnumerable<Product_Option>)
+            {
+                var img = item.PreviewImage != null ? item.PreviewImage.FullFileName : "";
+
+                <tr class="option-@item.Id">
+                    <th style="width:18px;">
+                        <input type="checkbox" class="select-item" value="@item.Id"/>
+                    </th>
+                    <td>
+                        <div class="list-thumb">
+                            <img src="@Url.GetImageUploadFolder()@img" />
+                        </div>
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @Html.Raw(item.Product_Options_Details.FirstOrDefault(d => d.Name == "so_luong").Value ?? "Stocking")
+                    </td>
+                    <td>
+                        @item.Status
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@{
+    var fileManagerParam = new {
+            ContainerId = "lgx94"
+    };
+    @Html.Partial("Widgets/FileManager", fileManagerParam)
+}
+
+@Html.Partial("Widgets/DeleteConfirmModal")
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")"><i class="fa fa-home"></i> Home</a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">Products</a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("Edit", "Product", new { id = Request.Params["id"]})">@ViewBag.Title</a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+
+@section Styles {
+    @Styles.Render("~/bundles/manager/datatables/css")
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/manager/datatables")
+
+    <script>
+        var table = $('#dataTable');
+        var dataTable = table.DataTable({
+            "autoWidth": false,
+            "serverSide": false,
+            "responsive": false,
+            "paging":   false,
+            "ordering": false,
+            "info":     false,
+
+            "columnDefs": [
+                { "searchable": false, "orderable": false, "targets": 0 }
+            ],
+        });
+    </script>
+}

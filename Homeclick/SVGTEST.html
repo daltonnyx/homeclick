@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <link rel="stylesheet" href="Scripts/Plugins/ImageMap/mapify/jquery.mapify.css" />
+    <script src="Scripts/jquery-1.11.3.min.js"></script>
+    <script src="Scripts/Plugins/ImageMap/mapify/mapify.js"></script>
+</head>
+<body>
+    <object data="/Upload/svgEx.svg" type="image/svg+xml" id="alphasvg"></object>
+
+    <img src="/Upload/svgEx.svg" data-svg="alphasvg" width="200" height="200" border="0" usemap="#Map" />
+
+    <map name="Map" id="Map">
+        <area data-nbmembre="1" 
+              alt="Saint-Louis" 
+              title="Saint-Louis" href="#" shape="poly" coords="127.88096885813151,56.4414748603352,302.0968858131488,247.53725139664803,316.3861591695502,212.08849162011177,312.45259515570933,200.72482681564247,334.02076124567475,178.45193296089383,291.95017301038064,137.25483798882678,292.15778546712806,131.86534078212293,297.33425605536337,119.84218994413408,297.95570934256057,110.30596648044693,305.6179930795848,97.03865921787711,269.7910034602076,83.35709497206705,272.2768166089965,74.65077094972067,238.5204152249135,67.18721787709497,239.763321799308,62.21197765363128,208.4941176470588,56.4414748603352,203.73010380622839,72.78453631284916,185.29826989619377,54.12773184357541,190.06228373702422,39.409832402234635,169.7674740484429,18.68035754189944,127.88096885813151,56.4414748603352" style="outline: none;">
+    </map>
+
+    <script>
+        $(window).load(function () {
+            $("img[usemap]").mapify();
+        });
+    </script>
+</body>
+</html>

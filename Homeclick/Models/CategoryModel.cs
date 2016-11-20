@@ -9,7 +9,7 @@ namespace Homeclick.Models
     public partial class Category
     {
 
-        vinabits_homeclickEntities db = new vinabits_homeclickEntities();
+        vinabits_homeclickEntities db = new vinabits_homeclickEntities();     
 
         public static IList<Category_detail> detail(Category category)
         {
@@ -48,9 +48,11 @@ namespace Homeclick.Models
         {
             return this.Products.ToList();
         }
-        public IList<Post> getPost()
+
+        public IList<T> getItems<T>() where T: class
         {
-            return this.Posts.ToList();
+            var posts = ModelHelper.GetObjectListByCategory<T>(this.Id);
+            return posts;
         }
 
         public IList<Category> getDescendantCategories()
@@ -72,6 +74,40 @@ namespace Homeclick.Models
                             select product).Count<Product>() > 0 && cat.Category_type.name == descendantType
                           select cat).ToList<Category>();
             return descendant;
+        }
+
+        public IList<Category> getDescendantCategories(CategoryTypes categoryType)
+        {
+            IList<Category> descendant = new List<Category>();
+            string descendantType = categoryType.ToString().ToLower();
+
+            descendant = (from cat in db.Categories
+                          where (
+                            from product in cat.Products
+                            where (from cat2 in product.Categories
+                                   where cat2.Id == this.Id
+                                   select cat2).Count<Category>() > 0
+                            select product).Count<Product>() > 0 && cat.Category_type.name == descendantType
+                          select cat).ToList<Category>();
+            return descendant;
+        }
+
+        public IList<Category> GetCategoryChilds()
+        {
+            var list = ModelHelper.getChildren<Category>(typeof(Category).Name, typeof(Category).Name,this.Id).OrderBy(o => o.name).ToList();
+            var sortedList = list.OrderBy(o => o.Order).ToList();
+            return sortedList;
+        }
+
+
+        public string getActionLink()
+        {
+            string type = "Typology";
+            if (this.Category_type.name == "model")
+                type = "Model";
+            else if (this.Category_type.name == "collection")
+                return String.Format("/BoSuuTap/Detail/{0}", this.Id);
+            return String.Format("/Category/{1}/{0}",this.Id, type);
         }
     }
 }

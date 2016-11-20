@@ -1,0 +1,141 @@
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Models
+@using VCMS.Lib.Resources
+@model Room
+
+@{
+    ViewBag.Title = Strings.Rooms;
+    ViewBag.FormName = (Model != null) ? ((Model.Floor != null) ? Model.Floor.Name + " - " : string.Empty) + Model.Name : "Create new Floor";
+}
+
+<div class="content">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        if (Model != null)
+        {
+            @Html.HiddenFor(m => m.Id);
+        }
+        <div class="row">
+            <fieldset class="col-md-9">
+                <div class="form-group">
+                    <div class="form-group-title">
+                        <h3>Data</h3>
+                    </div>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Name" })
+                    @Html.ValidationMessageFor(m => m.Name)
+                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control", placeholder = "Description" })
+                    @Html.ValidationMessageFor(m => m.Description)
+                </div>
+                @if (Model != null)
+                {
+                    <div class="form-group">
+                        <div class="form-group-title">
+                            <h3>Collection</h3>
+                        </div>
+                        @if (Model.Collections.Count == 0)
+                        {
+                            <i>Empty!</i>
+                        }
+                        else
+                        {
+                            foreach (var collection in Model.Collections)
+                            {
+                                <div class="form-control">
+                                    <a href="@Url.Action("Edit", "Room", new { collection_id = collection.Id })">@collection.Title</a>
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+            </fieldset>
+
+            <fieldset class="col-lg-3">
+                <div class="form-group">
+                    <div class="form-group-title">
+                        <h3>Floor</h3>
+                    </div>
+                    @Html.DropDownList(ConstantKeys.PROJECTS, new SelectList(ViewData[ConstantKeys.PROJECTS] as IEnumerable<Project>, "Id", "Name", (Model?.Floor?.Department?.Project != null) ? Model.Floor.Department.Project.Id : 0), new { @class = "form-control-custom chosen", data_placeholder = "Select", data_child = "#" + ConstantKeys.DEPARTMENTS, style = "display:none" })
+                    @Html.CustomDropdownList(ConstantKeys.DEPARTMENTS, (ViewData[ConstantKeys.DEPARTMENTS] as IEnumerable<Department>).Select(o => new CustomSelectItem { Value = o.Id.ToString(), Text = o.Name, HtmlAttributes = new { data_parent = o.ProjectId } }), Model?.Floor?.DepartmentId?.ToString(), null, new { @class = "form-control-custom chosen", data_placeholder = "Select", data_child = "#" + Html.NameFor(o => o.FloorId), style = "display:none" })
+                    @Html.CustomDropdownListFor(m => m.FloorId, (ViewData[ConstantKeys.FLOORS] as IEnumerable<Floor>).Select(o => new CustomSelectItem { Value = o.Id.ToString(), Text = o.Name, HtmlAttributes = new { data_parent = o.DepartmentId } }), null, new { @class = "form-control-custom chosen", data_placeholder = "Select", style = "display:none" })
+                    @Html.ValidationMessageFor(m => m.FloorId)
+                </div>
+                <hr />
+                <div class="form-group">
+                    <h3>Image</h3>
+                    @{
+                        var param = new Dictionary<string, object>
+                        {
+                            { "File", Model?.ImageId != null ? Model.Image.FullFileName : string.Empty },
+                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.ImageId).ToString() },
+                            { "Multiple", false },
+                            { "Accept" , "image/*"},
+                            { "FileManagerId", "#lgx94" }
+                        };
+                        @Html.Partial("Widgets/SelectImages", param)
+                    }
+                </div>
+                <hr />
+                <div class="form-group">
+                    <h3>Svg File</h3>
+                    @{
+                        param = new Dictionary<string, object>
+                        {
+                            { "File", Model?.SvgFileId != null ? Model.SvgFile.FullFileName : string.Empty },
+                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.SvgFileId).ToString() },
+                            { "Multiple", false },
+                            { "Accept" , ".svg"},
+                            { "FileManagerId", "#lgx94" }
+                        };
+                        @Html.Partial("Widgets/SelectImages", param)
+                    }
+                </div>
+            </fieldset>
+        </div>
+        <hr />
+        <div class="clearfix">
+            <input type="submit" value="@Strings.SaveChanged" class="btn btn-primary pull-right" />
+        </div>
+    }
+</div>
+
+@{
+    var fileManagerParam = new Dictionary<string, object> {
+            { "ContainerId" , "lgx94"}
+    };
+    @Html.Partial("Widgets/FileManager", fileManagerParam)
+}
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+
+@section Styles {
+    <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/css/loading.css" rel="stylesheet" />
+    @Html.RenderDelayed("jquery-uploads-style")
+    @Html.RenderDelayed("FileManager-style")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
+    @Html.RenderDelayed("jquery-uploads-js")
+    @Html.RenderDelayed("SelectImages-function", true)
+    @Html.RenderDelayed("SelectImages-script")
+    @Html.RenderDelayed("FileManager-script")
+}

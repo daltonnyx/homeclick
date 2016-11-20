@@ -1,0 +1,60 @@
+﻿@using VCMS.Lib.Models
+@using VCMS.Lib.Resources
+@model RegisterViewModel
+
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="~/Areas/Manager/Content/Themes/FLATY/Bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/Themes/FLATY/flaty.css" />
+</head>
+
+<body class="login-page">
+    <div class="login-wrapper">
+        @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form", role = "form" }))
+        {
+            <h3>Sign up</h3>
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger input" })
+                <hr>
+            <div class="form-group">
+                <div class="controls">
+                </div>
+            </div>
+                <div class="form-group">
+                    <div class="controls">
+                        @Html.EditorFor(model=> model.Email, new { htmlAttributes = new { @class= "form-control", @placeholder = Strings.Email } })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="controls">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = Strings.Password } })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="controls">
+                        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @placeholder = Strings.RePassword } })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="controls">
+                        <button type="submit" class="btn btn-primary form-control">Sign up</button>
+                    </div>
+                </div>
+        }
+    </div>
+</body>
+</html>

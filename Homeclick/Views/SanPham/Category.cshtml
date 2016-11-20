@@ -1,0 +1,239 @@
+﻿@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_SharedLayout.cshtml";
+}
+
+<div class="part-page product-feature" id="list_product_feature">
+    <div class="title-page title-feature">
+        <h1 class="">@ViewBag.Title</h1>
+    </div>
+    <div class="order clearfix" style="height:42px; margin-bottom:10px;">
+        <div class="result-search">
+
+        </div>
+        <select id="select-order">
+            <option value="ASC">Giá thấp đến cao</option>
+            <option value="DES">Giá cao đến thấp</option>
+        </select>
+    </div>
+    <div class="content-product-feature">
+        <div class="feature-items row">
+
+        </div>
+    </div>
+    <div id="panigation" class="paginationjs-theme-blue">
+
+    </div>
+</div>
+
+@section breadcrumb {
+    <ul>
+        <li><a href="@Url.Action("Index","Home")">Home</a></li>
+        <li>Sản phẩm</li>
+    </ul>
+}
+
+@section styles {
+    <link href="~/Scripts/Plugins/noUiSlider/nouislider.min.css" rel="stylesheet" />
+    <link href="~/Scripts/Plugins/panigation/panigation.css" rel="stylesheet" />
+    <style>
+        #slider-snap {
+            margin: 20px 0;
+            padding: 0 16px;
+        }
+
+        .material-list li {
+            margin-left: 15px;
+            margin-top: 5px;
+        }
+
+            .material-list li input {
+                margin-right: 10px !important;
+            }
+
+        .paginationjs {
+            float: right;
+        }
+    </style>
+}
+
+@section scripts {
+    <script src="~/Scripts/Plugins/noUiSlider/nouislider.min.js"></script>
+    <script src="~/Scripts/Plugins/mixitup/jquery.mixitup.js"></script>
+    <script src="~/Scripts/Plugins/jlinq/jlinq.js"></script>
+    <script src="~/Scripts/Plugins/panigation/panigation.min.js"></script>
+    <script type="text/javascript">
+
+        //snap
+        var snapSlider = document.getElementById('slider-snap');
+
+        noUiSlider.create(snapSlider, {
+            start: [0, 10000000],
+            snap: true,
+            connect: true,
+            range: {
+                'min': 0,
+                '5%': 500000,
+                '20%': 2000000,
+                '45%': 4500000,
+                '60%': 6000000,
+                '75%': 7500000,
+                'max': 10000000
+            }
+        });
+
+        var snapValues = [
+	        document.getElementById('slider-snap-value-lower'),
+	        document.getElementById('slider-snap-value-upper')
+        ];
+
+        Number.prototype.format = function (n, x, s, c) {
+            var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+                num = this.toFixed(Math.max(0, ~~n));
+
+            return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
+        };
+
+        snapSlider.noUiSlider.on('update', function (values, handle) {
+            var val = parseInt(values[handle]);
+            snapValues[handle].innerHTML = val.format(0, 3, '.') + ' vnđ';
+            $(snapValues[handle]).data('value', values[handle]);
+
+            if (products) {
+                showProducts(filter(products));
+            }
+        });
+
+        $('#select-order').bind('change', function(){
+            showProducts(filter(products));
+        });
+
+        function filter(sourceData) {
+            var data = [],
+                dataResult = [],
+                min = parseInt($(snapValues[0]).data('value')),
+                max = parseInt($(snapValues[1]).data('value'));
+
+            if (min == max)
+                data = jlinq.from(sourceData).greater('value', min).select();
+            else
+                data = jlinq.from(sourceData).greaterEquals('value', min).lessEquals('value', max).select();
+
+            var selectedMetarials = [];
+            var checkers = $('.material-checker:checked');
+            for (var i = 0; i < checkers.length; i++) {
+                selectedMetarials[i] = parseInt($(checkers[i]).val());
+            }
+
+            if (selectedMetarials.length > 0) {
+                for (var i = 0; i < data.length; i++) {
+                    var has = false;
+                    for (var j = 0; j < data.length; j++) {
+                        var c = jlinq.from(data[i].materials).equals('id', selectedMetarials[j]).select();
+                        if (c.length > 0) {
+                            has = true;
+                            dataResult.push(data[i]);
+                            break;
+                        }
+                    }
+                }
+            }
+            else {
+                dataResult = data;
+            }
+            return dataResult;
+        }
+
+        function showProducts(data) {
+            data = jlinq.from(data).sort(($('#select-order').val() == 'ASC')? 'value' : '-value').select();
+
+            $('#panigation').toggle(data.length > pageSize);
+            $('#select-order').toggle(data.length > 0);
+
+            var container = $('.feature-items');
+            var h = container.height();
+            container.css('height', h);
+            container.children().fadeOut('fast');
+            $(this).delay('250').queue(function () {
+                if (data.length == 0) {
+                    $('.result-search').html('<span style="font-size: 20px; padding:0 7px; line-height: 42px;">Không tìm thấy sản phẩm nào...</span>');
+                }
+                else {
+                    $('.result-search').html('<span style="font-size: 20px; padding:0 7px; line-height: 42px;">' + data.length + ' sản phẩm</span>');
+
+                    $('#panigation').pagination({
+                        dataSource: data,
+                        pageSize: pageSize,
+                        autoHidePrevious: true,
+                        autoHideNext: true,
+                        callback: function (pagidata, pagination) {
+                            container.html('');
+                            for (var i = 0; i < pagidata.length; i++) {
+                                var item = '<div class="item-product col-xs-6 col-md-4 col-lg-3"">' +
+                                                '<div class="image" style="position:relative">' +
+                                                    '<a href="@Url.Action("Product_Detail","SanPham")' + '/' + pagidata[i].id + '"><img src="' + '@Url.GetImageUploadFolder()' + pagidata[i].image + '" alt="" /></a>' +
+                                                '</div>' +
+                                                '<div class="detail-item">' +
+                                                    '<h3 class="title-item"><a href="@Url.Action("Product_Detail","SanPham")' + '/' + pagidata[i].id + '">' + pagidata[i].name + '</a></h3>' +
+                                                    '<p>' + parseInt(pagidata[i].value).format(0, 3, '.') + ' vnđ</p>' +
+                                              '</div>' +
+                                          '</div>';
+                                var jItem = $(item);
+                                if (pagidata[i].sale > 0) {
+                                    var label = $('<label/>').addClass('label label-xlarge label-success')
+                                        .css('position', 'absolute')
+                                        .css('left', '0')
+                                        .html(pagidata[i].sale + '%');
+                                    jItem.children('.image').append(label);
+                                }
+                                $('.feature-items').append(jItem);
+                            }
+                        }
+                    })
+                }
+                container.css('height', 'auto');
+                $(this).dequeue();
+            });
+        }
+
+        function getMetarials(args) {
+            url = '@Url.Action("GetMetarialsJson")';
+            $.ajaxCall(url, { 'ids': args })
+                .done(function (data) {
+                    if (data) {
+                        $('.material-list').empty();
+                        for (var i = 0; i < data.length; i++) {
+                            var item = '<li><input class="filter material-checker" data-filter=".material-' + data[i].id + '" type="checkbox" value="' + data[i].id + '" />' + data[i].name + '</li>';
+                            $('.material-list').append(item);
+                        }
+
+                        $('.material-checker').bind('click', function () {
+                            showProducts(filter(products));
+                        });
+                    }
+                }).fail(function () {
+                    console.log('error', 'Failed to retrieve data!');
+                });
+        }
+
+        function getProducts(args) {
+            var url = '@Url.Action("ProductsJson")';
+            $.ajaxCall(url, { 'ids': args })
+                .done(function (data) {
+                    if (data) {
+                        products = data;
+                        showProducts(filter(data));
+                        getMetarials(args);
+                    }
+                });
+        }
+
+        var products = [],
+            pageSize = 16;
+
+        $(document).ready(function () {
+            var args = ['@Request.Params["category_id"]', '@Request.Params["typo_id"]'];
+            getProducts(args);
+        });
+    </script>
+}

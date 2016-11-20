@@ -1,57 +1,131 @@
-﻿
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+    ViewBag.Title = "Tự thiết kế";
+    Layout = null;
+    var url = "";
 }
-@Html.Partial("~/Views/Design/DesignSliderPartial.cshtml")
-<main id="main" class="site-main design">
-    <div class="container ">
-        <div class="row">
-            <div class="design-header">
-                <h3 class="design-title">Tự thiết kế</h3>
-                <p>We are offering you our tremendous choice of different kinds of furniture. It is totally safe for your health. It has passed many various tests without a single failure. This product has unique design and many special options which could indeed help you. You know, nowadays good design is a really important thing.For those people who don’t care about fashion we offer some interesting design versions which have simple design and functional options.</p>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    <style>
+        .content-page {
+            background: #f4f4f4;
+        }
+
+        #footer {
+            margin-top: 0px;
+        }
+
+        .owl-theme .owl-controls {
+            position: absolute;
+            width: 100%;
+            /*bottom: 25px;*/
+        }
+
+            .owl-theme .owl-controls .owl-dot span {
+                display: block;
+                width: 24px;
+                height: 24px;
+                margin: 5px 7px;
+                filter: Alpha(Opacity=100);
+                opacity: 1;
+                -webkit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                border-radius: 50%;
+                border: 2px solid #02bdb6;
+                background: #fff;
+            }
+
+            .owl-theme .owl-controls .owl-dot.active span, .owl-theme .owl-controls.clickable .owl-dot:hover span {
+                filter: Alpha(Opacity=100);
+                opacity: 1;
+                background: #02bdb6;
+            }
+
+        .slide-button {
+            height: 80px;
+            width: 200px;
+            background: #02bdb6;
+            position: absolute;
+            top: 33%;
+            right: 40px;
+            text-align: center;
+            line-height: 80px;
+            border-radius: 10px;
+        }
+
+            .slide-button a {
+                font-size: 28px;
+                color: white;
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+    </style>
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/jquery-1.11.3.min.js")
+    @Scripts.Render("~/bundles/bootstrap")
+
+</head>
+<body>
+    <div class="wapper">
+        @Html.Partial("_Header")
+        <main id="main" class="site-main">
+            <div class="page-bosuutap">
+                <div class="container breadcrumb">
+                    <ul>
+                        <li><a href="../">Home</a></li>
+                        <li>Tự thiết kế</li>
+                    </ul>
+                                </div>
+                <div class="row content-page">
+                    <div class="container">
+                        <div id="slider-home" class="owl-carousel">
+                            <div class="item">
+                                <img src="@url/upload/images/assets/tutk-01.jpg" title="" alt="">
+                            </div>
+                            <div class="item">
+                                <img src="@url/upload/images/assets/tutk-02.jpg" title="" alt="">
+                            </div>
+                            <div class="item">
+                                <img src="@url/upload/images/assets/tutk-03.jpg" title="" alt="">
+                            </div>
+                            <div class="item">
+                                <img src="@url/upload/images/assets/tutk-04.jpg" title="" alt="">
+                            </div>
+                            <div class="item">
+                                <img src="@url/upload/images/assets/tutk-05.jpg" title="" alt="">
+                                <div class="slide-button hvr-pulse-grow">
+                                    <a href="#">START NOW</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </main>
+        @Html.Partial("_Footer");
     </div>
-    <div class="design-content container">
-        <div class="row">
-            <div class="design-list-item">
-                <div class="design-item">
-                    <img src="~/Upload/Images/assets/design-icon-01.png" alt="" />
-                   <div class="design-item-content-ds">
-                       <h3 class="item-title-ds">Chọn mặt bằng</h3>
-                       <a class="button-choose-ds">Bước 1</a>
-                   </div>
-                </div>
-                <div class="design-item">
-                    <img src="~/Upload/Images/assets/design-icon-02.png" alt="" />
-                    <div class="design-item-content-ds">
-                        <h3 class="item-title-ds">Kéo thả</h3>
-                        <a class="button-choose-ds">Bước 2</a>
-                    </div>
-                 </div>
-                <div class="design-item">
-                    <img src="~/Upload/Images/assets/design-icon-03.png" alt="" />
-                    <div class="design-item-content-ds">
-                        <h3 class="item-title-ds">Save</h3>
-                        <a class="button-choose-ds">Bước 3</a>
-                    </div>
-                </div>
-                <div class="design-item">
-                    <img src="~/Upload/Images/assets/design-icon-04.png" alt="" />
-                    <div class="design-item-content-ds">
-                        <h3 class="item-title-ds">Gửi mail đặt hàng</h3>
-                        <a class="button-choose-ds">Bước 4</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer-design">
-        <div class="container">
-           <div class="row">
-               <a href="#">Bắt đầu</a>
-           </div>
-        </div>
-    </div>
-</main>
+
+    <script>
+        var menu = '@ViewContext.RouteData.Values["controller"]@ViewContext.RouteData.Values["action"]';
+        var currentMenu = $('li').filter('[data-menu="' + menu + '"]');
+        var parentMenu = currentMenu.parents('li');
+        currentMenu.addClass('active');
+        parentMenu.addClass('active')
+
+        var owl = $('.owl-carousel');
+        owl.owlCarousel({
+            nav: false,
+            slideSpeed: 300,
+            paginationSpeed: 400,
+            pagination: true,
+            items: 1,
+            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"]
+        });
+    </script>
+</body>
+</html>

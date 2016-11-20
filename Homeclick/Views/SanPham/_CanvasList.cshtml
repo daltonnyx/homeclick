@@ -1,0 +1,20 @@
+﻿@using VCMS.Lib.Models
+@model IEnumerable<Product>
+
+@foreach (Product product in Model)
+{
+    var detail = product.DetailsToDictionary();
+        <div class="product">
+            <div class="product-image">
+                <a href="#" class="product-link svg-item" data-svg="@detail["data"]" data-can-scale="@detail["scale"]">
+                    <img src="@detail["image"]" data-image="@detail["image"]" class="svg-item"
+                         data-name="@product.name" data-svg="@detail["data"]" data-can-scale="@detail["scale"]" data-zData="@detail["zdata"]" data-price="@detail["gia"]" />
+                </a>
+            </div>
+            <div class="product-title">
+                <a href="#" class="product-link svg-item" data-image="@detail["image"]" data-svg="@detail["scale"]" data-can-scale="@detail["scale"]">
+                    <h5>@product.name</h5>
+                </a>
+            </div>
+        </div>
+        }

@@ -1,10 +1,7 @@
-﻿@using Homeclick.Models
+﻿@using VCMS.Lib.Models
 @model IList<Department>
 
-
-
-
 @foreach(Department department in Model) { 
-    <option value="@department.Id">@department.name</option>
+    <option value="@department.Id">@department.Name</option>
 }
 

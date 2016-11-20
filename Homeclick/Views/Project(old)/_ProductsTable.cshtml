@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Homeclick.Models.ProjectLayout_Collection_Product_Link>
+   @{
+       var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+       var total = 0;
+       foreach (var item in Model)
+       {
+           total += item.TotalValue;
+       }
+
+   }
+<h3 class="section-header table-section-header">Sản phẩm trong Set</h3>
+<div class="total-html">Tổng: <span>@total.ToString("#,###", info.NumberFormat)</span>vnđ</div>
+<div class="category-product-detail clearfix" style="display:block;">
+
+    <table class="table-striped col-xs-12 table-product-detail">
+        <thead>
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Tổng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.ProductName
+                    </td>
+                    <td>
+                        @item.Quantity
+                    </td>
+                    <td>
+                        @item.ProductValue.ToString("#,###", info.NumberFormat) vnđ
+                    </td>
+                    <td>
+                        @item.TotalValue.ToString("#,###", info.NumberFormat) vnđ
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
