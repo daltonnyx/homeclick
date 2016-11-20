@@ -14,19 +14,21 @@ namespace VCMS.Lib.Models
     {
         public Product()
         {
-            Product_detail = new HashSet<Product_detail>();
+            Product_Details = new HashSet<Product_Detail>();
             Categories = new HashSet<Category>();
             Product_Options = new HashSet<Product_Option>();
             Files = new HashSet<File>();
         }
 
         [Key]
-        public new int Id { get; set; }
+        public int Id { get; set; }
 
         [StringLength(100)]
-        public string name { get; set; }
+        public string Name { get; set; }
 
-        public string content { get; set; }
+        public string Content { get; set; }
+        
+        public int? ProductTypeId { get; set; }
 
         [Column("status")]
         public bool Status { get; set; }
@@ -37,16 +39,18 @@ namespace VCMS.Lib.Models
         [StringLength(128)]
         public string ImageId { get; set; }
 
-        public string excerpt { get; set; }
+        public string Excerpt { get; set; }
 
-        public virtual ICollection<Product_detail> Product_detail { get; set; }
+        public virtual Product_Type ProductType { get; set; }
+
+        [ForeignKey("ImageId")]
+        public virtual File Image { get; set; }
+
+        public virtual ICollection<Product_Detail> Product_Details { get; set; }
 
         public virtual ICollection<Category> Categories { get; set; }
 
         public virtual ICollection<Product_Option> Product_Options { get; set; }
-
-        [ForeignKey("ImageId")]
-        public virtual File Image { get; set; }
 
         public virtual ICollection<File> Files { get; set; }
 
@@ -57,6 +61,10 @@ namespace VCMS.Lib.Models
 
     public partial class Product
     {
+
+        [NotMapped]
+        public Dictionary<string, bool> SelectedCategories { get; set; }
+
         public Sale CurrentSale
         {
             get
@@ -103,7 +111,7 @@ namespace VCMS.Lib.Models
         public Dictionary<string, object> DetailsToDictionary()
         {
             Dictionary<string, object> dic = new Dictionary<string, object>();
-            foreach (var detail in Product_detail)
+            foreach (var detail in Product_Details)
             {
                 if (!dic.ContainsKey(detail.Name))
                     dic.Add(detail.Name, detail.Value);
@@ -114,25 +122,35 @@ namespace VCMS.Lib.Models
 
     public enum UnitOfProduct { Default, Meter, SquareMeter }
 
-    /*5205555.
-     * 6
+
     public class ProductEntityConfiguration : EntityTypeConfiguration<Product>
     {
         public ProductEntityConfiguration()
         {
-            this.HasMany(e => e.Product_detail)
-                .WithOptional(e => e.Product)
+            this.HasMany(e => e.Product_Details)
+                .WithOptional(e => e.Product);
+
+            this.HasMany(e => e.Product_Options)
+                .WithRequired(e => e.Product)
                 .WillCascadeOnDelete();
 
             this.HasMany(e => e.Categories)
                 .WithMany(e => e.Products)
                 .Map(cs =>
                 {
-                    cs.MapLeftKey("ChildId");
-                    cs.MapRightKey("ParentId");
-                    cs.ToTable("Category_Product_Link");
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Product_Category_Link");
+                });
+
+            this.HasMany(e => e.Files)
+                .WithMany(e => e.Products)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Product_Files_Link");
                 });
         }
     }
-    */
 }

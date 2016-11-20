@@ -1,45 +1,68 @@
 ﻿@using VCMS.Lib.Resources
+@using VCMS.Lib.Common
 @using VCMS.Lib.Models
 
 @{
     ViewBag.Title = Strings.Products;
 }
 
-<p>
-    <a href="@Url.Action("Create")" class="btn btn-lime"><i class="fa fa-plus" aria-hidden="true"></i> @Strings.CreateNew</a>
-</p>
-@foreach (var pair in ViewBag.Dic as Dictionary<string, Dictionary<string, int>>)
-{
-    <p class="bg-white">
-        @Html.DropDownList(pair.Key, pair.Value.Select(o => new SelectListItem { Text = o.Key, Value = o.Value.ToString()}), "All - " + pair.Key, new { @class = "form-control chosen extra-search", data_key=pair.Key, tabindex = "-1", style = "display: none;"})
-    </p>
-}
+<div>
+    <div class="clearfix content m-b-15">
+        @using (Html.BeginForm("ListFilter", "Collections", FormMethod.Post))
+        {
+            @Html.DropDownList(ConstantKeys.CATEGORIES,
+                               new SelectList(ViewData[ConstantKeys.CATEGORIES] as IQueryable, "Id", "Name", null), "All Categories",
+                               new { @class = "extra-search form-control pull-left", style = "width:200px;" })
+            <input type="submit" class="btn pull-left m-l-15" value="Filter" />
+        }
+    </div>
+    <div class="clearfix content">
+        <div class="clearfix btn-toolbar">
+            <div class="btn-group pull-right">
+                <a class="btn btn-circle show-tooltip" title="" href="#" data-original-title="Delete selected" data-toggle="modal" data-target="#deleteConfirmModal"><i class="fa fa-trash-o"></i></a>
+                <a class="btn btn-circle show-tooltip disabled" title="" href="#" data-original-title="Refresh"><i class="fa fa-repeat"></i></a>
+            </div>
+            <div class="btn-group pull-right">
+                <a class="btn btn-circle show-tooltip" href="@Url.Action("Create")" data-original-title="Create new post"><i class="fa fa-plus"></i></a>
+            </div>
+        </div>
+        <hr />
+        <table id="dataTable" class="table table-hover fill-head">
+            <thead>
+                <tr>
+                    <th style="width:18px;">
+                        <input type="checkbox" />
+                    </th>
+                    <th>
+                        @Strings.Name
+                    </th>
+                    <th>
+                        @Strings.Image
+                    </th>
+                    <th>
+                        @Strings.Options
+                    </th>
+                    <th>
+                        @Strings.Categories
+                    </th>
+                    <th>
+                        @Strings.Author
+                    </th>
+                    <th>
+                        @Strings.Status
+                    </th>
+                    <th>
+                        @Strings.Time
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
 
-<table id="dataTable" class="table table-striped table-hover fill-head" >
-    <thead>
-        <tr>
-            <th>
-                @Strings.Name
-            </th>
-            <th>
-                @Strings.Image
-            </th>
-            <th>
-                @Strings.Options
-            </th>
-            <th>
-                @Strings.Status
-            </th>
-            <th>
-            </th>
-        </tr>
-    </thead>
-</table>
+@Html.Partial("Widgets/DeleteConfirmModal_", new { })
 
 @section breadcrumb {
-    @{
-        var viewName = Html.ViewContext.RouteData.GetRequiredString("action");
-    }
     <li>
         <a href="@Url.Action("Dashboard","Pages")">
             <i class="fa fa-home"></i> Home
@@ -52,92 +75,94 @@
 @section styles {
     @Styles.Render("~/bundles/manager/datatables/css")
     <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
-    }
+}
 
 @section scripts {
     @Scripts.Render("~/bundles/manager/datatables")
     <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
+    <script src="~/Areas/Manager/Content/lib/moment.js"></script>
 
     <script>
-        var thumbImg = function (data, type, full, meta) {
-            var fp = '@Url.GetImageUploadFolder()' + data;
-            return '<div class="list-thumb"><img src="' + fp + '"></div>';
-        }
-
-        var simple_linkBtns = function (data, type, full, meta) {
-            var param = '?id=' + data;
-            return   '<div class="table-action">' +
-                        '<a class="btn btn-sm show-tooltip" data-placement="top" data-original-title="Details" href="@Url.Action("Details")' + param + '" data-original-title="View"><i class="fa fa-search-plus"></i></a>' +
-                        '<a class="btn btn-sm show-tooltip" data-placement="top" data-original-title="Edit" href="@Url.Action("Edit")' + param + '" data-original-title="Edit"><i class="fa fa-edit"></i></a>' +
-                        '<a class="btn btn-sm btn-danger show-tooltip" data-placement="top" data-original-title="Delete" href="@Url.Action("Delete")' + param + '" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>' +
-                    '</div>';
-        }
-
-        $(document).ready(function () {
-            var table = $('#dataTable');
-            var dataTable = table.DataTable({
-                "autoWidth": false,
-                "serverSide": true,
-                "ajax": {
-                    "type": "POST",
-                    "url": '@Url.Action("DataHandler")',
-                    "contentType": 'application/json; charset=utf-8',
-                    'data': function (data)
-                    {
-                        var extraSearchs = $('.extra-search');
-                        if (extraSearchs.length > 0) {
-                            data.args = {};
-                            for (var i = 0; i < extraSearchs.length; i++) {
-                                var current = $(extraSearchs[i]);
-                                if (current.data('key') && current.val())
-                                    data.args[current.data('key')] = current.val();
-                            }
+        var dataTable = $('#dataTable').DataTable({
+            autoWidth: false,
+            serverSide: true,
+            ajax: {
+                type: "POST",
+                url: '@Url.Action("DataHandler")',
+                contentType: 'application/json; charset=utf-8',
+                data: function (data) {
+                    var extraSearchs = $('.extra-search');
+                    if (extraSearchs.length > 0) {
+                        data.args = {};
+                        for (var i = 0; i < extraSearchs.length; i++) {
+                            var current = $(extraSearchs[i]);
+                            if (current.attr('id') && current.val())
+                                data.args[current.attr('id')] = current.val();
                         }
-                        return data = JSON.stringify(data);
                     }
-                },
-
-                responsive: false,
-
-                "columns": [
-                   { "data": "img", "render": thumbImg },
-                   { "data": "name" },
-                   {
-                       "data": "options",
-                       "render": function (data, type, full, meta) {
-                           var item = "";
-                           for (var key in data) {
-                               item += '<p><strong>' + key + '</strong>: ' + data[key] + '<p>';
-                           }
-                           item += '<a class="btn-link" href="' + '@Url.Action("CreateOption")?productId=' + full.id + '"><i class="fa fa-plus" aria-hidden="true"></i>' + ' Add option</a>';
-                           return item;
-                       }
-                   },
-                   { "data": "status" },
-                   { "data": "id", "render": simple_linkBtns }],
-
-                "columnDefs": [{
-                    "searchable": false,
-                    "orderable": false,
-                    "targets": 0,
-                }, {
-                    "searchable": false,
-                    "orderable": false,
-                    "targets": 2,
-                }, {
-                    "searchable": false,
-                    "orderable": false,
-                    "targets": 3,
-                }],
-                "drawCallback": function (settings) {
-                    $('.show-tooltip').tooltip({ container: 'body', delay: { show: 500 } });
-                    $('.show-popover').popover();
+                    return JSON.stringify(data);
                 }
-            });
+            },
+            processing: true,
+            columns: [
+               { "data": '@ConstantKeys.ID', render: function (data, type, full, meta) { return '<input type="checkbox" class="select-item" value="' + data + '"/>' } },
+               { "data": '@ConstantKeys.NAME', render: function (data, type, full, meta) { return '<a href="@Url.Action("Edit")?id=' + full['@ConstantKeys.ID'] + '">' + data + '</a>'; } },
+               {
+                   data: '@ConstantKeys.PREVIEW_IMAGE',
+                   render: function (data, type, full, meta) {
+                       return '<div class="list-thumb "><img src="' + '@Url.GetImageUploadFolder()' + data + '"></div>';
+                   }
+               },
+               {
+                   data: '@ConstantKeys.PRODUCT_OPTIONS',
+                   render: function (data, type, full, meta) {
+                       var item = "";
+                       for (var i = 0; i < data.length; i++) {
+                           item += '<li><strong>' + data[i]['@ConstantKeys.NAME'] + '</strong>: ' + data[i]['@ConstantKeys.QUANTITY'] + '</li>';
+                       }
+                       item += '<li><a class="btn-link" href="' + '@Url.Action("List", "ProductOptions")?product_id=' + full['@ConstantKeys.ID'] + '"></i>' + ' View options</a></li>';
+                       return '<ul>' + item + '</ul>';
+                   }
+               },
+                              {
+                                  "data": '@ConstantKeys.CATEGORIES', render: function (data, type, full, meta) {
+                                      var result = '';
+                                      if (data)
+                                          for (var i = 0; i < data.length; i++) {
+                                              result += '<li><a href="@Url.Action("List")\?category_id=' + data[i]['@ConstantKeys.ID'] + '">' + data[i]['@ConstantKeys.NAME'] + '</a></li>'
+                                          }
+                                      return '<ul>' + result + '</ul>';
+                                  }
+                              },
+               { "data": '@ConstantKeys.AUTHOR' },
 
-            $('.extra-search').bind('change', function () {
-                dataTable.ajax.reload();
-            });
+               {
+                   "data": '@ConstantKeys.STATUS',
+                   render: function (data, type, full, meta) {
+                       return data ? 'Publish' : 'Private';
+                   }
+               },
+               {
+                   "data": '@ConstantKeys.TIME', render: function (data, type, full, meta) {
+                       return moment(data).format("MM/DD/YYYY HH:mm");
+                   }
+               },
+            ],
+            order: [[1, 'asc']],
+            columnDefs: [
+                { "searchable": false, "orderable": false, "targets": 0 },
+                { "searchable": false, "orderable": false, "targets": 2 },
+                { "searchable": false, "orderable": false, "targets": 3 },
+                { "searchable": false, "orderable": false, "targets": 4 },
+            ]
+        });
+
+        $('.table-refresh-btn').on('click', function () {
+            dataTable.ajax.reload();
+        });
+
+        $('#FilterButton').on('click', function () {
+            window.location.href('@Url.Action("List")/category_id=' + $('#@ConstantKeys.CATEGORIES').val());
         });
     </script>
 }

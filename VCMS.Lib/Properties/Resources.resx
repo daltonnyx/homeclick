@@ -117,10 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="UploadFolder" xml:space="preserve">
+    <value>Areas/Manager/Uploads/</value>
+  </data>
   <data name="UploadFolder_Image" xml:space="preserve">
     <value>Areas/Manager/Uploads/Images</value>
   </data>
   <data name="UploadFolder_Other" xml:space="preserve">
-    <value>Areas/Manager/Uploads/Other</value>
+    <value>Areas/Manager/Uploads/Others</value>
   </data>
 </root>

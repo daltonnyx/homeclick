@@ -111,6 +111,10 @@
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MvcCheckBoxList, Version=1.4.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcCheckBoxList.1.4.5\lib\net45\MvcCheckBoxList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -250,7 +254,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Manager\Content\css\loading.css" />
+    <Content Include="Areas\Manager\Content\css\utility.css" />
     <Content Include="Areas\Manager\Content\js\admin.js" />
+    <Content Include="Areas\Manager\Content\lib\panigation\panigation.css" />
+    <Content Include="Areas\Manager\Content\lib\panigation\panigation.min.js" />
     <Content Include="Areas\Manager\Uploads\Images\Layout1.jpg" />
     <Content Include="Areas\Manager\Uploads\Images\Layout2.jpg" />
     <Content Include="Areas\Manager\Uploads\Images\Layout3.jpg" />
@@ -453,6 +460,7 @@
     <Content Include="Areas\Manager\Uploads\Images\NoImageFound.png" />
     <Content Include="Areas\Manager\Views\Categories\Create.cshtml" />
     <Content Include="Areas\Manager\Views\Categories\List.cshtml" />
+    <Content Include="Areas\Manager\Views\Collections\Create.cshtml" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -572,10 +580,6 @@
     <Content Include="Areas\Manager\Views\ProductColors\Delete.cshtml" />
     <Content Include="Areas\Manager\Views\Products\List.cshtml" />
     <Content Include="Areas\Manager\Views\Products\Create.cshtml" />
-    <Content Include="Areas\Manager\Views\Products\Delete.cshtml" />
-    <Content Include="Areas\Manager\Views\Products\Edit.cshtml" />
-    <Content Include="Areas\Manager\Views\Products\_imageFile.cshtml" />
-    <Content Include="Areas\Manager\Views\Products\_Colors.cshtml" />
     <Content Include="Areas\Manager\Views\ProductColors\_ImageFile.cshtml" />
     <Content Include="Areas\Manager\Views\ProductColors\Edit.cshtml" />
     <Content Include="Areas\Manager\Views\ProductVariants\List.cshtml" />
@@ -584,8 +588,6 @@
     <Content Include="Areas\Manager\Views\ProductVariants\Edit.cshtml" />
     <Content Include="Areas\Manager\Views\FeatureProducts\List.cshtml" />
     <Content Include="Areas\Manager\Views\FeatureProducts\Add.cshtml" />
-    <Content Include="Areas\Manager\Views\Rooms\Index.cshtml" />
-    <Content Include="Areas\Manager\Views\Rooms\Add.cshtml" />
     <Content Include="Areas\Manager\Content\lib\fonts\arial.eot" />
     <Content Include="Areas\Manager\Content\lib\fonts\arial.otf" />
     <Content Include="Areas\Manager\Content\lib\fonts\arial.ttf" />
@@ -621,14 +623,9 @@
     <Content Include="Areas\Manager\Content\lib\fonts\UTM AvoBold_Italic.ttf" />
     <Content Include="Areas\Manager\Content\lib\fonts\UTM AvoItalic.ttf" />
     <Content Include="Areas\Manager\Content\lib\fonts\UTM Soraya.ttf" />
-    <Content Include="Areas\Manager\Views\Collections\Index.cshtml" />
-    <Content Include="Areas\Manager\Views\Collections\Create.cshtml" />
     <Content Include="Areas\Manager\Views\Shared\CreateCategory.cshtml" />
     <Content Include="Areas\Manager\Views\Shared\_recursive_Categories.cshtml" />
     <Content Include="Areas\Manager\Views\Collections\List.cshtml" />
-    <Content Include="Areas\Manager\Views\Collections\_imageFile.cshtml" />
-    <Content Include="Areas\Manager\Views\Collections\_product.cshtml" />
-    <Content Include="Areas\Manager\Views\Collections\Edit.cshtml" />
     <Content Include="Areas\Manager\Views\CategoryTypes\CreateCategory.cshtml" />
     <Content Include="Areas\Manager\Views\CategoryTypes\CreateType.cshtml" />
     <Content Include="Areas\Manager\Views\Shared\EditCategory.cshtml" />
@@ -645,9 +642,6 @@
     <Content Include="Areas\Manager\Views\ProductSale\Details.cshtml" />
     <Content Include="Areas\Manager\Views\ProductSale\AddProduct.cshtml" />
     <Content Include="Areas\Manager\Views\ProductSale\Edit.cshtml" />
-    <Content Include="Areas\Manager\Views\Products\CreateOption.cshtml" />
-    <Content Include="Areas\Manager\Views\Products\EditOption.cshtml" />
-    <Content Include="Areas\Manager\Views\Collections\AddOption.cshtml" />
     <Content Include="Areas\Manager\Views\Slides\List.cshtml" />
     <Content Include="Areas\Manager\Views\Slides\Create.cshtml" />
     <Content Include="Areas\Manager\Views\Slides\Edit.cshtml" />
@@ -655,7 +649,6 @@
     <Content Include="Areas\Manager\Views\Projects\Create.cshtml" />
     <Content Include="Areas\Manager\Views\Shared\_imageFile.cshtml" />
     <Content Include="Areas\Manager\Views\Projects\Edit.cshtml" />
-    <Content Include="Areas\Manager\Views\Projects\Details.cshtml" />
     <Content Include="Areas\Manager\Content\lib\jquery-ui-1.12.1\package.json" />
     <Content Include="Areas\Manager\Views\Shared\Widgets\ImageUpload.cshtml" />
     <Content Include="Areas\Manager\Views\Shared\Widgets\DeleteConfirmModal.cshtml" />
@@ -663,6 +656,31 @@
     <Content Include="Areas\Manager\Views\CustomFields\List.cshtml" />
     <Content Include="Areas\Manager\Views\Shared\Widgets\DeleteConfirmModalAjax.cshtml" />
     <Content Include="Areas\Manager\Views\Categories\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Posts\List.cshtml" />
+    <Content Include="Areas\Manager\Views\Posts\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\Widgets\TextEditorFull.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\Widgets\CategoriesCheckBoxList.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\Widgets\SelectImages.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\Widgets\FileManager.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\Widgets\Location.cshtml" />
+    <Content Include="Areas\Manager\Views\Departments\List.cshtml" />
+    <Content Include="Areas\Manager\Views\Departments\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Departments\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\Floors\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Floors\List.cshtml" />
+    <Content Include="Areas\Manager\Views\Floors\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\Rooms\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\Rooms\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Rooms\List.cshtml" />
+    <Content Include="Areas\Manager\Views\Collections\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\Widgets\CustomFields.cshtml" />
+    <Content Include="Areas\Manager\Views\Products\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductOptions\List.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductOptions\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\Widgets\CustomFields_.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\Widgets\SelectFiles.cshtml" />
+    <Content Include="Areas\Manager\Views\ProductOptions\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\Widgets\DeleteConfirmModal_.cshtml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1093,6 +1111,8 @@
     <Content Include="Views\Shared\_SharedLayout_NoSidebar.cshtml" />
     <Content Include="Views\Shared\_shareSidebar.cshtml" />
     <Content Include="Views\Project\Collection.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Project\_Sidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

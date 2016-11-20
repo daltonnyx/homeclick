@@ -1,5 +1,5 @@
 ﻿@using VCMS.Lib.Models
-@model Dictionary<Category, IEnumerable<Post>>
+@model IEnumerable<Post>
 
 @{
     ViewBag.Title = "List";
@@ -19,20 +19,16 @@
     </div>
 </section>
 
-@foreach (var pair in Model)
-{
-    var list = pair.Value;
     <section>
         <div class="category-title">
             <span>
-                @pair.Key.Name
+                Feature collection
             </span>
-            <a href="@Url.Action("Index", new { id = pair.Key.Id})">Xem thêm >></a>
         </div>
         <div class="grid-content clearfix">
-            @foreach (var item in pair.Value)
+            @foreach (var item in Model)
             {
-                var link = Url.Action("Detail", new { category_id = item.Categories.FirstOrDefault(o => o.CategoryParents.FirstOrDefault() == pair.Key).Id, collection_id = item.Id });
+                var link = Url.Action("Detail", new {collection_id = item.Id });
                 <div class="collection-item col-sm-4">
                     <div class="collection-inner">
                         <div class="image">
@@ -49,7 +45,7 @@
         </div>    
     </section>
     <hr style="margin: 20px -15px;" />
-}
+
 
 @section breadcrumb {
     <ul>

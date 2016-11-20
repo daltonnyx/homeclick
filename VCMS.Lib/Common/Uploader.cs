@@ -114,7 +114,7 @@ namespace VCMS.Lib.Common
                     var categoryG = await db.Categories.FindAsync((int)fileGroup);
                     newFile.Categories.Add(categoryG);
 
-                    if (fileExt == ".png" || fileExt == ".jpg")
+                    if (fileExt == ".png" || fileExt == ".jpg" || fileExt == ".gif")
                     {
                         var categoryT = await db.Categories.FindAsync((int)FileTypes.Image);
                         newFile.Categories.Add(categoryT);
@@ -133,11 +133,12 @@ namespace VCMS.Lib.Common
                     file.SaveAs(newPath);
 
                     //thumb
-                    using (Image img = Image.FromFile(newPath))
-                    {
-                        var thumb = img.CreateThumbnail(new Size(256, Convert.ToInt32((img.Height / (img.Width / 256)))));
-                        thumb.Save(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(newPath), "thumb", System.IO.Path.GetFileName(newPath)));
-                    }
+                    if (fileExt == ".png" || fileExt == ".jpg" || fileExt == ".gif")
+                        using (Image img = Image.FromFile(newPath))
+                        {
+                            var thumb = img.CreateThumbnail(new Size(256, Convert.ToInt32((img.Height / (img.Width / 256)))));
+                            thumb.Save(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(newPath), "thumb", System.IO.Path.GetFileName(newPath)));
+                        }
 
                     return newFile;
                 }

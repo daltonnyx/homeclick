@@ -29,5 +29,11 @@ namespace System.Web.Mvc
         {
             return helper.GetBaseUrl() + VCMS.Lib.Properties.Resources.UploadFolder_Image + "/";
         }
+
+        public static string GetFilePath(this UrlHelper helper, string fodel, string fileName)
+        {
+            var path = IO.Path.Combine("/" + VCMS.Lib.Properties.Resources.UploadFolder, fodel, fileName);
+            return path.Replace('\\','/');
+        }
     }
 }

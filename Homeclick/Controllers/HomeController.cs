@@ -54,7 +54,7 @@ namespace Homeclick.Controllers
             var result =db.Products.ToList();
             if (!String.IsNullOrEmpty(search_name))
             {
-                result=result.Where(p=>p.name.ToUpper().Contains(search_name.ToUpper())).ToList();
+                result=result.Where(p=>p.Name.ToUpper().Contains(search_name.ToUpper())).ToList();
                 
             }
             return View(result);

@@ -1,0 +1,56 @@
+﻿@using VCMS.Lib.Models
+@using VCMS.Lib.Common
+@using VCMS.Lib.Resources
+
+@model Dictionary<string, object>
+
+@{ 
+    var containerId = Model.ContainsKey("ContainerId") ? Model["ContainerId"] as string : string.Empty;
+    var containerClass = Model.ContainsKey("ContainerClass") ? Model["ContainerClass"] as string : string.Empty;
+    var cityFieldName = Model.ContainsKey("CityFieldName") ? Model["CityFieldName"] as string : string.Empty;
+    var cityFieldValue = Model.ContainsKey("CityFieldValue") ? (int)Model["CityFieldValue"]: 0;
+    var districtFielName = Model.ContainsKey("DistrictFielName") ? Model["DistrictFielName"] as string : string.Empty;
+    var districtFielValue = Model.ContainsKey("DistrictFielValue") ? (int)Model["DistrictFielValue"]  : 0;
+    var addressFielName = Model.ContainsKey("AddressFielName") ? Model["AddressFielName"] as string : string.Empty;
+    var addressFielValue = Model.ContainsKey("AddressFielValue") ? Model["AddressFielValue"] as string : string.Empty;
+    var cities = Model.ContainsKey("Cities") ? Model["Cities"] as IQueryable<City> : null;
+}
+<h3>Location</h3>
+<div id="@containerId" class="@containerClass">
+    @if (cities != null)
+    {
+        var disctrictSelectItems = new List<CustomSelectItem>();
+        foreach (var city in cities)
+        {
+            disctrictSelectItems.AddRange(city.Districts.Select(o => new CustomSelectItem {
+                Value = o.Id.ToString(),
+                Text = o.Name,
+                HtmlAttributes = new { data_city_id = o.CityId.ToString() }
+            }));
+        }
+        <div class="form-group">
+            @Html.DropDownList(cityFieldName, new SelectList(cities, "Id", "Name", cityFieldValue), "Select", new { @class = "form-control chosen" })
+        </div>
+        <div class="form-group">
+            @Html.CustomDropdownList(districtFielName, disctrictSelectItems, districtFielValue.ToString(), "Select", new { @class = "form-control chosen" })
+        </div>
+    }
+    @Html.TextBox(addressFielName, addressFielValue, new { @class = "form-control", placeholder= "Adress" })
+</div>
+
+@using (Html.Delayed("Location-script"))
+{
+    <script>
+        $('#@containerId').find('#@cityFieldName').on('change', function () {
+            var $container = $('#@containerId');
+            $container.find('#@districtFielName option').hide();
+            $container.find('#@districtFielName option').filter('[data-city-id="' + $(this).val() + '"]').show();
+            $container.find('#@districtFielName').trigger("chosen:updated");
+        }).trigger('change');
+    </script>
+}
+
+
+
+
+

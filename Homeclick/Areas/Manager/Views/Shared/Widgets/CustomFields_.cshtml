@@ -1,0 +1,113 @@
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Models
+@using VCMS.Lib.Resources
+
+@model object
+
+@{
+    var dic = Model.ToDictionary();
+    var CustomFields = dic["CustomFields"] as IEnumerable<CustomField>;
+    var Details = dic.ContainsKey("Details") ? dic["Details"] as IEnumerable<Entity_Detail> : new List<Entity_Detail>();
+
+    var detail = new Entity_Detail();
+    var i = 0;
+    foreach (var customField in CustomFields)
+    {
+        object value = null;
+
+        if (customField.Multiple)
+        {
+            var details = Details.Where(o => o.Name == customField.Name);
+            if (customField.FieldType == FieldTypes.File)
+            {
+                value = details.Select(o => new { DetailId = o.Id, FileName = o.File.Id + o.File.Extension });
+            }
+            else if (customField.FieldType == FieldTypes.Select)
+            {
+                value = details.Select(o => new CustomSelectItem { Value = o.Enum.Id.ToString(), Text = o.Enum.Name });
+            }
+        }
+        else
+        {
+            detail = Details.FirstOrDefault(o => o.Name == customField.Name);
+            if (detail != null)
+            {
+                if (customField.FieldType == FieldTypes.File)
+                {
+                    value = new { DetailId = detail?.Id, FileName = detail?.File?.Id + detail?.File?.Extension };
+                }
+                else if (customField.FieldType == FieldTypes.Select)
+                {
+                    value = new CustomSelectItem { Value = detail?.Enum.ToString(), Text = detail?.Enum.Name };
+                }
+                else
+                {
+                    value = detail?.Value;
+                }
+            }
+        }
+
+        var fieldName = string.Format("{0}[{1}]", dic["FieldName"] as string, i);
+
+        var containerClass = dic["ContainerClass"] as string;
+        var fileManagerId = dic.ContainsKey("FileManagerId") ? dic["FileManagerId"] : string.Empty;
+
+        <div class="@containerClass @Html.Raw(customField.Multiple ? string.Empty : "form-group-custom-field")">
+            @if (customField.DisplayLabel)
+            {
+                <h5>@customField.Label</h5>
+            }
+            @if (customField.FieldType == FieldTypes.Input)
+            {
+                if (detail?.Id != null)
+                {
+                    @Html.Hidden(fieldName + ".Id", detail?.Id)
+                }
+                @Html.Hidden(fieldName + ".Type", (int)FieldTypes.Input)
+                @Html.Hidden(fieldName + ".Name", customField.Name)
+                @Html.TextBox(fieldName + ".Value", value,  new { @class = "form-control", type = customField.ValueType, placeholder = customField.PlaceHolder })
+            }
+            else if (customField.FieldType == FieldTypes.Select)
+            {
+                if (!customField.Multiple)
+                {
+                    if (detail?.Id != null)
+                    {
+                        @Html.Hidden(fieldName + ".Id", detail?.Id)
+                    }
+                    @Html.Hidden(fieldName + ".Type", (int)FieldTypes.Select)
+                    @Html.Hidden(fieldName + ".Name", customField.Name)
+                    @Html.CustomDropdownList(fieldName + ".EnumId", customField.CustomField_Enums.Select(o => new CustomSelectItem { Value = o.Id.ToString(), Text = o.Name }), null, null, new { @class = "form-control-custom chosen", data_placeholder = customField.PlaceHolder })
+                }
+            }
+            else if (customField.FieldType == FieldTypes.File)
+            {
+                var param = new
+                {
+                    Value = value,
+                    FieldName = dic["FieldName"],
+                    Multiple = customField.Multiple,
+                    Accept = "image/*",
+                    IsCustomField = true,
+                    FileManagerId = fileManagerId,
+                    DetailName = customField.Name,
+                    StartIndex = i
+                };
+                @Html.Partial("Widgets/SelectFiles", param)
+
+            }
+        </div>
+        if (customField.Multiple)
+        {
+            var count = (value as IEnumerable<object>).Count();
+            i += count;
+        }
+        else
+        {
+            i++;
+        }
+    }
+}
+
+
+

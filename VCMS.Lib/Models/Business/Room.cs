@@ -12,6 +12,7 @@ namespace VCMS.Lib.Models
         public Room()
         {
             Canvas = new HashSet<Canva>();
+            Collections = new HashSet<Post>();
         }
 
         public int Id { get; set; }
@@ -28,6 +29,9 @@ namespace VCMS.Lib.Models
         [ForeignKey("Image")]
         public string ImageId {get;set;}
 
+        [ForeignKey("SvgFile")]
+        public string SvgFileId { get; set; }
+
         public int? FloorId { get; set; }
 
         public virtual ICollection<Post> Collections { get; set; }
@@ -37,5 +41,7 @@ namespace VCMS.Lib.Models
         public virtual Floor Floor { get; set; }
 
         public virtual File Image { get; set; }
+
+        public virtual File SvgFile { get; set; }
     }
 }

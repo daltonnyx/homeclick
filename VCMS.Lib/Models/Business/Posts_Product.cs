@@ -11,7 +11,7 @@ namespace VCMS.Lib.Models
     public partial class Post_Product : BaseModel
     {
         [Key]
-        public new int Id { get; set; }
+        public int Id { get; set; }
 
         public int Quantity { get; set; }
 
@@ -31,7 +31,7 @@ namespace VCMS.Lib.Models
         {
             get
             {
-                var totalValue = int.Parse(ProductOption.Product.Product_detail.FirstOrDefault(o => o.Name == ProductDetailTypes.Price).Value) * Quantity;
+                var totalValue = int.Parse(ProductOption.Product.Product_Details.FirstOrDefault(o => o.Name == ProductDetailTypes.Price).Value) * Quantity;
                 return totalValue;
             }
         }

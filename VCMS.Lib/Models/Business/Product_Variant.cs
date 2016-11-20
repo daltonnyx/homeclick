@@ -61,9 +61,6 @@ namespace VCMS.Lib.Models
                         case (int)ProductVarianTypes.Material:
                             type = ProductVarianTypes.Material;
                             break;
-                        case (int)ProductVarianTypes.Color:
-                            type = ProductVarianTypes.Color;
-                            break;
                     }
                 }
                 return type;
@@ -71,5 +68,5 @@ namespace VCMS.Lib.Models
         }
     }
 
-    public enum ProductVarianTypes { Default = -1, Material = 77, Color = 76 }
+    public enum ProductVarianTypes { Default = -1, Material = 77 }
 }

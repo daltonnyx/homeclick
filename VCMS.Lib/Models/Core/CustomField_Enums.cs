@@ -6,7 +6,8 @@ namespace VCMS.Lib.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class CustomField_Enums
+    [Table("CustomField_Enums")]
+    public partial class CustomField_Enum : BaseModel
     {
         public int Id { get; set; }
 
@@ -14,11 +15,6 @@ namespace VCMS.Lib.Models
         public string Name { get; set; }
 
         public int? CustomFieldId { get; set; }
-
-        [StringLength(128)]
-        public string CreateUserId { get; set; }
-
-        public DateTime? CreateTime { get; set; }
 
         public virtual CustomField CustomField { get; set; }
     }

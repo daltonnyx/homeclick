@@ -67,6 +67,11 @@ namespace VCMS.Lib.Models
                 return Id + Extension;
             }
         }
+
+        public string GetThumb()
+        {
+            return "";
+        }
     }
 
 

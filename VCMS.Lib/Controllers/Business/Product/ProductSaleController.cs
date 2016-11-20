@@ -68,7 +68,7 @@ namespace VCMS.Lib.Controllers
             sale.Products.Add(product);
             db.Entry(sale).State = System.Data.Entity.EntityState.Modified;
             if (db.SaveChanges() > 0)
-                return RedirectToAction("AddProduct", new { id = saleId, success = true, successObjectName = product.name});
+                return RedirectToAction("AddProduct", new { id = saleId, success = true, successObjectName = product.Name});
 
             return RedirectToAction("AddProduct", new { id = saleId });
         }

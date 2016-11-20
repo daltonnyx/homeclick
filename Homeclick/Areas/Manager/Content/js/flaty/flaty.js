@@ -60,11 +60,13 @@
     //----------------------- Chosen Select ---------------------//
     if (jQuery().chosen) {
         $(".chosen").chosen({
+            inherit_select_classes : true,
             no_results_text: "Oops, nothing found!",
             width: "100%"
         });
 
         $(".chosen-with-diselect").chosen({
+            inherit_select_classes: true,
             allow_single_deselect: true,
             width: "100%"
         });

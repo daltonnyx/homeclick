@@ -45,7 +45,8 @@ namespace Homeclick.Areas.Manager
             bundles.Add(new StyleBundle("~/bundles/manager/css").Include(
                  "~/areas/manager/content/css/flaty/flaty.css",
                  "~/areas/manager/content/css/flaty/flaty-responsive.css",
-                 "~/areas/manager/content/css/Admin.css"
+                 "~/areas/manager/content/css/utility.css",
+                 "~/areas/manager/content/css/admin.css"
                  ));
         }
 

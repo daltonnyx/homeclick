@@ -1,0 +1,191 @@
+﻿@*Default Usage:
+    var fileManagerParam = new {
+        ContainerId = "FileManager",
+        ControllerName = "FileManager",
+        ActionName = "GetFiles",
+    };
+    @Html.Partial("Widgets/FileManager", fileManagerParam)
+*@
+
+@using VCMS.Lib.Models
+@using VCMS.Lib.Common
+@using VCMS.Lib.Resources
+
+@model object
+
+@{
+    var dic = Model as IDictionary<string, object>;
+    if (dic == null)
+    {
+        dic = Model.ToDictionary();
+    }
+    var CcontainerId = dic.ContainsKey("ContainerId") ? dic["ContainerId"] : Html.RandomString(6);
+    var ControllerName = dic.ContainsKey("ControllerName") ? dic["ControllerName"] as string : "FileManager";
+    var ActionName = dic.ContainsKey("ActionName") ? dic["ActionName"] as string : "GetFiles";
+}
+
+<div id="@CcontainerId" class="modal fade file-manager modal-fullscreen" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog container">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Select file</h4>
+                <p>
+                    <div class="files-pagination">
+                    </div>
+                </p>
+            </div>
+            <div class="modal-body">
+                <div class="files" style="width:100%;">
+                    <div class="files-container">
+                        <ul class="file-list"></ul>
+                    </div>
+                </div>
+                <div class="file-info-col">
+                    <div class="file-info" style="display:none;">
+                        <div class="file-info-name">
+                            <strong>File name:</strong>
+                            <span></span>
+                        </div>
+                        <div class="file-info-height">
+                            <strong>Height:</strong>
+                            <span></span>
+                        </div>
+                        <div class="file-info-width">
+                            <strong>Width:</strong>
+                            <span></span>
+                        </div>
+                        <div class="file-info-time">
+                            <strong>Upload Time:</strong>
+                            <span></span>
+                        </div>
+                        <div class="file-info-path">
+                            <strong>Url:</strong>
+                            <span></span>
+                        </div>
+                        <div class="file-info-action">
+                            <strong>Action:</strong>
+                            <button class="btn-link btn-file-delete"><i class="fa fa-trash-o"></i> Delete file</button>
+                        </div>
+                        <hr />
+                    </div>
+                    <div class="bottom-control" style="position:absolute; bottom:0; left:0; padding:inherit; width:100%">
+                        <button type="button" class="btn btn-primary pull-right disabled" data-dismiss="modal">Insert</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.Delayed(isOnlyOne : "FileManagerFunction"))
+{
+    <script>
+        function getFiles($container, selectedFiles) {
+            $.ajax({
+                url: '@Url.Action(ActionName, ControllerName)',
+                method: 'POST',
+                success: function (data) {
+                    $container.find('ul.file-list').empty();
+                    for (var i = 0; i < data.length; i++) {
+                        var current = data[i];
+                        var baseImgeUrl = '@Url.GetImageUploadFolder()';
+                        if (current['thumb'] == true)
+                            baseImgeUrl += 'thumb/';
+                        var fileName = current['filename'] + current['ext'];
+
+                        var $li = $('<li/>');
+                        var $input = $('<input type="checkbox" class="file"/>').attr('id', current['filename']).data('ext', current['ext']).data('file', fileName).appendTo($li);
+                        var $label = $('<label/>').attr('for', current['filename']).appendTo($li);
+                        var $img = $('<img/>').attr('src', baseImgeUrl + fileName).appendTo($label);
+
+                        var fileIsSelected = $.inArray(fileName, selectedFiles) > -1;
+                        $input.prop('checked', fileIsSelected);
+
+                        $container.find('ul.file-list').append($li);
+
+                        $input.on('change', function () {
+                            if ($container.data('multiple') == false)
+                                $container.find('input.file:checked').not($(this)).prop('checked', false);
+
+                            if ($container.find('input.file:checked').length == 0) {
+                                $container.find('.file-info').fadeOut('fast');
+                                $container.find('.btn-primary').addClass('disabled');
+                            }
+                            else {
+                                $container.find('.file-info').fadeIn('fast');
+                                $container.find('.file-info .file-info-name span').text($input.attr('id') + $input.data('ext'));
+                                $container.find('.btn-primary').removeClass('disabled');
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+}
+
+@using (Html.Delayed())
+{
+    <script>
+        $('#@CcontainerId').on('show.bs.modal', function (e) {
+            var $container = $('#@CcontainerId');
+            var $handler = $(e.relatedTarget);
+            var multiple = $handler.data('multiple');
+            $container.data('target-container', $handler.data('container-id'));
+            $container.data('field-name', $handler.data('field-name'));
+            $container.data('multiple', multiple);
+
+            var $targetContainer = $('#' + $handler.data('container-id'));
+            var selectedFiles = [];
+            if (multiple) {
+                var chekboxs = $targetContainer.find('input[type=checkbox]');
+                for (var i = 0; i < chekboxs.length; i++) {
+                    selectedFiles.push($(chekboxs[i]).data('file'));
+                }
+            }
+            else {
+                var file = $targetContainer.find('.file').data('file');
+                selectedFiles.push(file);
+            }
+
+            getFiles($container, selectedFiles);
+        });
+
+        $('#@CcontainerId').find('.btn-primary').bind('click', function () {
+            var $container = $('#@CcontainerId');
+            var tagetContainerId = $container.data('target-container');
+            var multiple = $container.data('multiple');
+            if (multiple) {
+                var $targetContainer = $(document.getElementById(tagetContainerId));
+                $targetContainer.find('.file-list').empty();
+            }
+
+            var checkedItems = $container.find('input.file:checked');
+
+            for (var i = 0; i < checkedItems.length; i++) {
+                var current = $(checkedItems[i]);
+                addImg(tagetContainerId, multiple, { newFileName: current.attr('id'), ext: current.data('ext') }, $container.data('field-name'))
+            }
+        });
+
+        $('#@CcontainerId').find('.btn-file-delete').on('click', function () {
+            var $container = $('#@CcontainerId');
+            var checkedItems = $container.find('input.file:checked');
+            for (var i = 0; i < checkedItems.length; i++) {
+                var $current = $(checkedItems[i]);
+                $.ajax({
+                    url: '@Url.Action("Delete", "FileManager")',
+                    type: 'DELETE',
+                    data: { 'id': $current.attr('id') },
+                    traditional: true,
+                    success: function () {
+                        $current.parent().remove();
+                    }
+                });
+            }
+        });
+    </script>
+}

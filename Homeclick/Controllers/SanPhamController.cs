@@ -113,7 +113,7 @@ namespace Homeclick.Controllers
                 json.Add(new
                 {
                     id = item.Id,
-                    name = item.name,
+                    name = item.Name,
                     image = item.Image.FullFileName,
                     value = Convert.ToInt32(details["gia"]),
                     materials = materialList,
@@ -171,7 +171,7 @@ namespace Homeclick.Controllers
         public ViewResult Product_Detail(int? id)
         {
             var product = db.Products.Find(id);
-            ViewBag.Title = product.name;
+            ViewBag.Title = product.Name;
             return View(product);
         }
 
@@ -207,7 +207,7 @@ namespace Homeclick.Controllers
                 var images = new List<string>();
                 images.Add(option.PreviewImage.FullFileName);
                 images.AddRange(option.Files.Select(o => o.Id + o.Extension));
-                var quantity = int.Parse(option.Details[ProductDetailTypes.Quantity] ?? "0");
+                var quantity = int.Parse(option.Product_Options_Details.FirstOrDefault(o => o.Name == ProductDetailTypes.Quantity).Value ?? "0");
                 result = new { images = images, quantity = quantity };
             }
             return Json(result, JsonRequestBehavior.AllowGet);

@@ -1,0 +1,79 @@
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Models
+@using VCMS.Lib.Resources
+
+@model object
+
+@{
+    var dic = Model.ToDictionary();
+    var CustomFields = dic["CustomFields"] as IEnumerable<CustomField>;
+    var Details = dic.ContainsKey("Details") ? dic["Details"] as IEnumerable<Entity_Detail> : new List<Entity_Detail>();
+
+    var value = new object();
+    foreach (var customField in CustomFields)
+    {
+        if (customField.Multiple)
+        {
+            var details = Details.Where(o => o.Name == customField.Name);
+            if (customField.FieldType == FieldTypes.File)
+            {
+                value = details.Select(o => o.File.Id + o.File.Extension);
+            }
+            else if (customField.FieldType == FieldTypes.Select)
+            {
+                value = details.Select(o => new CustomSelectItem { Value = o.Enum.Id.ToString(), Text = o.Enum.Name });
+            }
+        }
+        else
+        {
+            var detail = Details.FirstOrDefault(o => o.Name == customField.Name);
+            if (customField.FieldType == FieldTypes.File)
+            {
+                value = detail?.File?.FullFileName;
+            }
+            else if (customField.FieldType == FieldTypes.Select)
+            {
+                value = new CustomSelectItem { Value = detail?.Enum.ToString(), Text = detail?.Enum.Name };
+            }
+            else
+            {
+                value = detail?.Value;
+            }
+        }
+
+        var fieldName = string.Format("{0}[{1}]", dic["FieldName"] as string, customField.Name);
+        var containerClass = dic["ContainerClass"] as string;
+        var fileManagerId = dic.ContainsKey("FileManagerId") ? dic["FileManagerId"] : string.Empty;
+
+        <div class="@containerClass">
+            @if (customField.DisplayLabel)
+            {
+                <h5>@customField.Label</h5>
+            }
+            @if (customField.FieldType == FieldTypes.Input)
+            {
+                @Html.Editor(fieldName, null, new { htmlAttributes = new { @class = "form-control", type = customField.ValueType, value = value, placeholder = customField.PlaceHolder } })
+            }
+            else if (customField.FieldType == FieldTypes.Select)
+            {
+                if (!customField.Multiple)
+                {
+
+                    @Html.CustomDropdownList(fieldName, customField.CustomField_Enums.Select(o => new CustomSelectItem { Value = o.Id.ToString(), Text = o.Name }), null, null, new { @class = "form-control-custom chosen", data_placeholder = customField.PlaceHolder })
+                }
+            }
+            else if (customField.FieldType == FieldTypes.File)
+            {
+                var param = new Dictionary<string, object> {
+                            { customField.Multiple ? "File" : "Files", value},
+                            { ConstantKeys.FIELD_NAME, fieldName },
+                            { "Multiple", customField.Multiple },
+                            { "Accept" , "image/*"},
+                            { "FileManagerId", fileManagerId }
+                        };
+                @Html.Partial("Widgets/SelectImages", param)
+            }
+        </div>
+    }
+}
+

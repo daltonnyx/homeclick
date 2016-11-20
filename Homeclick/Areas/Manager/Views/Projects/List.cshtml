@@ -1,5 +1,6 @@
 ﻿@using VCMS.Lib.Resources
 @using VCMS.Lib.Models
+@using VCMS.Lib.Common
 
 @{
     ViewBag.Title = Strings.Projects;
@@ -30,14 +31,12 @@
                 <th>
                     @Strings.Name
                 </th>
-                <th>
-                    @Strings.Status
-                </th>
             </tr>
         </thead>
     </table>
-
 </div>
+
+@Html.Partial("Widgets/DeleteConfirmModal")
 
 @section breadcrumb {
     <li>
@@ -81,14 +80,15 @@
             },
             responsive: false,
             columns: [
-               { "data": "id", render: function (data, type, full, meta) { return '<input type="checkbox" class="select-item" value="' + data + '"/>' } },
-               { "data": "name", render: function (data, type, full, meta) { return '<a href="@Url.Action("Edit")?project_id=' + full.id + '">' + data + '</a>'; } },
-               { "data": "status" }],
+               { "data": "@ConstantKeys.ID", render: function (data, type, full, meta) { return '<input type="checkbox" class="select-item" value="' + data + '"/>' } },
+               { "data": "@ConstantKeys.NAME", render: function (data, type, full, meta) { return '<a href="@Url.Action("Edit")?project_id=' + full["@ConstantKeys.ID"] + '">' + data + '</a>'; } }
+            ],
             order: [[1, 'asc']],
             columnDefs: [
                 { "searchable": false, "orderable": false, "targets": 0, }]
         });
 
         $('.extra-search').bind('change', dataTable.ajax.reload())
-</script>
+    </script>
+    @Html.RenderDelayed("deleteConfirmModal-script")
 }

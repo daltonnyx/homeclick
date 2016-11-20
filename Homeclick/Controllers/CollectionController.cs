@@ -22,17 +22,14 @@ namespace Homeclick.Controllers
 
         public ActionResult Index()
         {
-            var maxItem = 3;
-            var dic = new Dictionary<Category, IEnumerable<Post>>();
+            var featureCollection = new List<Post>();
             var categories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Collection);
             foreach (var category in categories)
             {
-                var posts = category.GetAllPost().PickRandom(maxItem);
-                dic.Add(category, posts);
+                featureCollection.AddRange(category.Posts.Where(o => o.Featured));
             }
-
             ViewBag.Slides = db.Categories.Find((int)SlideTypes.Collection).Slides;
-            return View(dic);
+            return View(featureCollection);
         }
 
         public ActionResult Category(int category_id, int? page)
@@ -44,10 +41,11 @@ namespace Homeclick.Controllers
             return View(list.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult Detail(int category_id, int collection_id)
+        public ActionResult Detail(int collection_id)
         {
-            var category = db.Categories.Find(category_id);
             var collection = db.Posts.Find(collection_id);
+            var category = db.Categories.Find(collection.Categories.FirstOrDefault().Id);
+
             if (category == null || collection == null)
                 return HttpNotFound();
 

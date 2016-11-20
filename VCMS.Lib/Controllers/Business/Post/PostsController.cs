@@ -14,69 +14,187 @@ using VCMS.Lib.Models.Datatables;
 
 namespace VCMS.Lib.Controllers
 {
-    public class PostsController : CategoriesController
+    using System.Globalization;
+    using static ConstantKeys;
+    public class PostsController : BaseController
     {
-        public PostViewModel ModelToViewModel(Post model)
+        public virtual IQueryable<Category> GetCategories(bool parentOnly = false)
         {
-            var viewModel = new PostViewModel
-            {
-                postId = model.Id,
-                title = model.Title,
-                excerpt = model.Excerpt,
-                htmlContent = model.Content,
-                previewImageId = model.ImageId,
-                previewImage = model.ImageFile.FullFileName,
-                categoryIds = model.Categories.Select(o => o.Id).ToArray(),   
-                status = model.Status
-            };
-            return viewModel;
+            var result = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.Postcat);
+            if (parentOnly)
+                return result.Where(o => o.CategoryParentId == null);
+            return result;
         }
 
-        public Post ViewModelToModel(PostViewModel viewModel)
+        public virtual ActionResult List(int? category_id)
         {
-            var model = db.Posts.Find(viewModel.postId);
-            if (model == null)
+            var categories = this.GetCategories();
+            var selectedCategory = category_id != null ? category_id.ToString() : categories.FirstOrDefault().Id.ToString();
+            if (category_id != null)
             {
-                model = new Post
-                {
-                    CreateUserId = User.Identity.GetUserId(),
-                    CreateTime = DateTime.Now,
-                };
+                var modelState = new ModelState { Value = new ValueProviderResult(new string[] { selectedCategory }, selectedCategory, CultureInfo.CurrentCulture) };
+                ModelState.Add(ConstantKeys.CATEGORIES, modelState);
             }
+            ViewData[ConstantKeys.CATEGORIES] = categories;
+            return View();
+        }
 
-            model.Title = viewModel.title;
-            model.Excerpt = viewModel.excerpt;
-            model.Content = viewModel.htmlContent;
-            model.ImageId = viewModel.previewImageId;
-            model.Status = viewModel.status;
-            model.Featured = false;
-            model.Alias = viewModel.title.ToUnsignString();
+        public virtual ActionResult Create()
+        {
+            ViewData[CATEGORIES] = GetCategories(true);
+            return View();
+        }
 
-            //Categories
-            var viewModelCategoryIds = viewModel.categoryIds.ToList();
-            foreach (var modelRoom in model.Categories.ToList())
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Create(Post model)
+        {
+            var messageCollection = new List<Message>();
+            if (ModelState.IsValid)
             {
-                var found = false;
-                foreach (var roomId in viewModel.categoryIds)
+                model.CreateUserId = User.Identity.GetUserId();
+                model.CreateTime = DateTime.UtcNow;
+                db.Posts.Add(model);
+                foreach (var item in model.SelectedCategories.Where(o => o.Value))
                 {
-                    if (modelRoom.Id == roomId)
+                    var category = db.Categories.Find(int.Parse(item.Key));
+                    category.Posts.Add(model);
+                }
+                db.SaveChanges();
+                messageCollection.Add(new Message { MessageType = MessageTypes.Success, MessageContent = "Create successfully!" });
+                TempData[ConstantKeys.ACTION_RESULT_MESSAGES] = messageCollection;
+                return RedirectToAction("Edit", new { id = model.Id });
+            }
+            ViewData[CATEGORIES] = GetCategories(true);
+            return View(model);
+        }
+
+
+        public virtual ActionResult Edit(int id)
+        {
+            var model = db.Posts.Find(id);
+            if (model == null)
+                return HttpNotFound();
+            ViewData[CATEGORIES] = GetCategories(true);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public virtual ActionResult Edit(Post model)
+        {
+            var messageCollection = new List<Message>();
+            if (ModelState.IsValid)
+            {
+                var modelTarget = db.Posts.Find(model.Id);
+
+                foreach (var item in model.SelectedCategories)
+                {
+                    var category = db.Categories.Find(int.Parse(item.Key));
+                    if (category.Posts.Select(o => o.Id).Contains(modelTarget.Id))
                     {
-                        found = true;
-                        viewModelCategoryIds.Remove(roomId);
-                        break;
+                        if (!item.Value)
+                            category.Posts.Remove(modelTarget);
+                    }
+                    else if (item.Value)
+                        category.Posts.Add(modelTarget);
+                }
+
+                modelTarget.Files.Clear();
+                if (model.SlideImages != null)
+                {
+                    foreach (var item in model.SlideImages)
+                    {
+                        var file = db.Files.Find(item);
+                        modelTarget.Files.Add(file);
                     }
                 }
-                if (!found)
-                    model.Categories.Remove(modelRoom);
-            }
 
-            foreach (var categoryId in viewModelCategoryIds)
-            {
-                var category = db.Categories.Find(categoryId);
-                if (category != null && !model.Categories.Contains(category))
-                    model.Categories.Add(category);
+                db.Entry(modelTarget).CurrentValues.SetValues(model);
+                db.Entry(modelTarget).Property("CreateUserId").IsModified = false;
+                db.Entry(modelTarget).Property("CreateTime").IsModified = false;
+                db.SaveChanges();
+
+                messageCollection.Add(new Message { MessageType = MessageTypes.Success, MessageContent = "Update successfully!" });
+                TempData[ConstantKeys.ACTION_RESULT_MESSAGES] = messageCollection;
+                return RedirectToAction("Edit", new { id = model.Id });
             }
-            return model;
+            ViewData[CATEGORIES] = GetCategories(true);
+            return View(model);
         }
+
+        [HttpPost]
+        public virtual ActionResult ListFilter(FormCollection collection)
+        {
+            return RedirectToAction("List", new { category_id = collection[ConstantKeys.CATEGORIES]});
+        }
+
+        [HttpPost]
+        public ActionResult DeleteConfirmed(int[] ids)
+        {
+            var messageCollection = new List<Message>();
+            foreach (var id in ids)
+            {
+                var model = db.Posts.Find(id);
+                db.Entry(model).State = System.Data.Entity.EntityState.Deleted;
+            }
+            db.SaveChanges();
+
+            messageCollection.Add(new Message { MessageType = MessageTypes.Success, MessageContent = "Delete successfully!" });
+            TempData[ConstantKeys.ACTION_RESULT_MESSAGES] = messageCollection;
+            return RedirectToAction("List");
+        }
+
+        #region[Datatables]
+        private IQueryable<Post> FilterDbSource(Dictionary<string, string> args)
+        {
+            var posts = db.Posts.AsQueryable();
+            if (args != null)
+                foreach (var arg in args)
+                {
+                    if (arg.Key.Contains(CATEGORIES))
+                    {
+                        int value;
+                        if (int.TryParse(arg.Value, out value))
+                            posts = posts.Where(o => o.Categories.Select(c => c.Id).Contains(value));
+                    }
+                }
+            return posts;
+        }
+
+        private DTResult<T> GetDtResult<T>(DTParameters param, Dictionary<string, string> args) where T : Dictionary<string, object>, new()
+        {
+            var dtsource = new List<T>();
+            var dbSource = FilterDbSource(args);
+            var o = new object();
+            foreach (var item in dbSource)
+            {
+                dtsource.Add(new T
+                {
+                    {ID, item.Id },
+                    {TITLE, item.Title },
+                    {EXCERPT, item.Excerpt },
+                    {AUTHOR, item.CreateUser?.UserName },
+                    {CATEGORIES, item.Categories.Select(c => new { id = c.Id, name = c.Name}) },
+                    {STATUS, item.Status },
+                    {TIME, item.CreateTime }
+                });
+            }
+            return JDatatables<T>.GetDTResult(param, dtsource);
+        }
+
+        public JsonResult DataHandler(DTParameters param, Dictionary<string, string> args)
+        {
+            try
+            {
+                var result = GetDtResult<Dictionary<string, object>>(param, args);
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message });
+            }
+        }
+        #endregion
     }
 }

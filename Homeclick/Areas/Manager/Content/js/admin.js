@@ -1,4 +1,15 @@
-﻿function CreateMessage(type, content) {
+﻿function randomString(length, chars) {
+    var mask = '';
+    if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz';
+    if (chars.indexOf('A') > -1) mask += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if (chars.indexOf('#') > -1) mask += '0123456789';
+    if (chars.indexOf('!') > -1) mask += '~`!@#$%^&*()_+-={}[]:";\'<>?,./|\\';
+    var result = '';
+    for (var i = length; i > 0; --i) result += mask[Math.floor(Math.random() * mask.length)];
+    return result;
+}
+
+function CreateMessage(type, content) {
     var result = '<div class="alert alert-' + type.toLowerCase() + '">' +
                     '<button class="close" data-dismiss="alert">×</button>' + content +
                  '</div>';
@@ -21,6 +32,22 @@ function hideChosenOption(chosen, opt) {
 }
 
 if (window.jQuery) {
+    $('select[data-child]').on('change', function () {
+        var $this = $(this);
+        var $child = $($this.data('child'));
+        if ($child) {
+            if ($child.data('default-value'))
+                $child.val($child.data('default-value'));
+            else
+                $child.val("");
+            $child.children().not('[value=""]').hide();
+            $child.children().filter('[data-parent="' + $this.val() + '"]').show();
+            if ($child.hasClass('chosen'))
+                $child.trigger('chosen:updated');
+        }
+    }).trigger('change');
+
+
     if (jQuery().validate) {
         if (jQuery().formToWizard) {
             $('.formToWizard').validate({ errorElement: 'em' });

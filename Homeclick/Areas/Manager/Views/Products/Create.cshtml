@@ -1,238 +1,105 @@
 ﻿@using VCMS.Lib.Models
-@using VCMS.Lib.Models
-@model ProductViewModel
+@using VCMS.Lib.Common
+@model Product
 
 @{
     ViewBag.Title = "Products";
     ViewBag.FormName = "Create";
-    Layout = "~/Areas/Manager/Views/Shared/_Layout_Form.cshtml";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
     var colors = ViewBag.Colors as IEnumerable<Product_Variant>;
     var categories = ViewBag.Categories as IEnumerable<Category>;
 }
-
-@if (ViewData["Success"] != null)
-{
-    if ((bool)ViewData["Success"])
+<div class="content">
+    @using (Html.BeginForm())
     {
-        <div class="alert alert-success">
-            <button class="close" data-dismiss="alert">×</button>
-            <strong>Success!</strong> The product has been added.
+        @Html.AntiForgeryToken()
+        <div class="row">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <fieldset class="col-md-9">
+                <div class="form-group">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Name" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.EditorFor(model => model.Excerpt, new { htmlAttributes = new { @class = "form-control", placeholder = "Excerpt" } })
+                    @Html.ValidationMessageFor(model => model.Excerpt, "", new { @class = "text-danger" })
+                </div>
+
+                @{
+                    var customFieldsParam = new
+                    {
+                        CustomFields = ViewData[ConstantKeys.CUSTOM_FIELDS],
+                        Details = Model?.Product_Details,
+                        FieldName = Html.NameFor(o => o.Product_Details).ToString(),
+                        ContainerClass = "form-group",
+                        FileManagerId = "#lgx94"
+                    };
+                    @Html.Partial("Widgets/CustomFields_", customFieldsParam);
+                }
+            </fieldset>
+
+            <fieldset class="col-md-3">
+                <div class="form-group">
+                    @{
+                        var param = new Dictionary<string, object> {
+                            { ConstantKeys.FIELD_NAME, Html.NameFor(o => o.SelectedCategories).ToString()},
+                            { ConstantKeys.CATEGORIES, ViewData[ConstantKeys.CATEGORIES]},
+                            { ConstantKeys.SELECTED_CATEGORIES, Model != null ? Model.Categories.Select(o => o.Id) : new int[] { } },
+                            { "ContainerClass", "widget"}
+                        };
+                        @Html.Partial("Widgets/CategoriesCheckBoxList", param);
+                    }
+                </div>
+                <hr />
+                <div class="form-group">
+                    <h3>Product Type</h3>
+                    @Html.DropDownListFor(m => m.ProductTypeId, (ViewData[ConstantKeys.PRODUCT_TYPES] as IEnumerable<Product_Type>).Select(o => new SelectListItem { Value = o.Id.ToString(), Text = o.Name}), new { @class="form-control-custom chosen", style="display:none;"})
+                </div>
+                <hr/>
+                <div class="form-group">
+                    @{
+                        <h3>Preview Image</h3>
+                        var paramPreviewImage = new Dictionary<string, object>
+                        {
+                            { "File", Model?.Image != null ? Model.Image.FullFileName : string.Empty },
+                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.ImageId).ToString() },
+                            { "Multiple", false },
+                            { "Accept" , "image/*"},
+                            { "FileManagerId", "#lgx94" }
+                        };
+                        @Html.Partial("Widgets/SelectImages", paramPreviewImage)
+                    }
+                </div>
+                <hr />
+                <div class="form-group">
+                    <h3>Options</h3>
+                    <label class="checkbox">
+                        @Html.CheckBoxFor(model => model.Featured, new { htmlAttributes = new { @class = "form-control" } }) Feature
+                    </label>
+                    <label class="checkbox">
+                        @Html.CheckBoxFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } }) Publish
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+        <hr />
+        <div class="clearfix">
+            <input type="submit" value="Create" class="btn btn-default pull-right" />
         </div>
     }
-}
+</div>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RoomIds, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="form-control-custom">
-                    @Html.DropDownListFor(model => model.RoomIds, ViewBag.Rooms as List<SelectListItem>, new { @class = "form-control chosen", multiple = "multiple", tabindex = "-1", style = "display: none;" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TypologyTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="form-control-custom">
-                    @Html.DropDownListFor(model => model.TypologyTypeId, new List<SelectListItem>(), new { @class = "form-control chosen-with-diselect", tabindex = "-1", style = "display: none;" })
-                </div>
-            </div>
-        </div>
-        @*
-        <div class="form-group">
-            <label class="col-md-2 control-label">Color</label>
-            <div class="col-md-10">
-                <div class="form-control-custom">
-                    <select data-placeholder="Select a color" class="form-control chosen-with-diselect" tabindex="-1" id="selColor" style="display: none;">
-                        <option value=""> </option>
-                        @foreach (var color in colors)
-                        {
-                            if (Model?.Colors != null)
-                            {
-                                <option @Html.Raw(Model.Colors.Contains(color.Id) ? " disabled='disabled' value='@color.Id'" : "value='@color.Id'")>@color.Parent.Name - @color.Name</option>
-                            }
-                            else
-                            {
-                                <option value="@color.Id">@color.Parent.Name - @color.Name</option>
-                            }
-                        }
-                    </select>
-                    <button id="addColorButton" class="btn btn-link"><i class="fa fa-plus" aria-hidden="true"></i> Add...</button>
-                </div>
-                <div id="colorField" class="form-control-custom">
-                    @if (Model?.Colors != null)
-                    {
-                        foreach (var color in Model.Colors)
-                        {
-                            Html.RenderAction("_Colors", new { colorId = color });
-                        }
-                    }
-                </div>
-            </div>
-        </div>
-        *@
-        <div class="form-group">
-            @Html.LabelFor(m => m.previewImageId, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                <div class="form-control-custom file-upload">
-                    <div class="file-upload-new img-thumbnail" @Html.Raw(Model?.previewImageId != null ? "style='display:none'" : "")>
-                        <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-                    </div>
-                    @if (Model?.previewImageId != null)
-                    {
-                        <div class="file-upload-result img-thumbnail">
-                            <img src="@Url.GetImageUploadFolder()@Model.previewImage">
-                            <input name="PreviewImage" type="hidden" value="@Model.previewImage">
-                            <input name="previewImageId" type="hidden" value="@Model.previewImageId">
-                        </div>
-                    }
-                    <div class="clearfix">
-                        <span class="btn btn-success fileinput-button pull-left">
-                            <i class="glyphicon glyphicon-plus"></i>
-                            <span>Select file...</span>
-                            <input id="fileupload" type="file" name="files" accept="image/*">
-                        </span>
-
-                        <span class="btn pull-left file-remove-btn" @Html.Raw(Model?.previewImageId != null ? "" : "style='display:none'")>
-                            Remove
-                        </span>
-
-                        <div id="fileuploadProgress" class="cssload-container" style="display:none">
-                            <div class="cssload-speeding-wheel"></div>
-                        </div>
-                    </div>
-                </div>
-                @Html.ValidationMessageFor(m => m.previewImageId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        @*
-        <div class="form-group">
-            @Html.LabelFor(m => m.imageFiles, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                <div class="form-control-custom">
-                    <div class="clearfix" style="margin-bottom:10px;">
-                        <span class="btn btn-success fileinput-button pull-left">
-                            <i class="glyphicon glyphicon-plus"></i>
-                            <span>Select files...</span>
-                            <input id="fileuploads" type="file" name="files" accept="image/jpg,image/png,image/jpeg,image/gif" multiple>
-                        </span>
-
-                        <div id="filesuploadProgress" class="cssload-container" style="display:none">
-                            <div class="cssload-speeding-wheel"></div>
-                        </div>
-                    </div>
-
-                    <div id="files" class="files">
-                        @if (Model?.imageFiles != null)
-                        {
-                            foreach (var imagefile in Model.imageFiles)
-                            {
-                                Html.RenderAction("_imageFile", new { id = imagefile.Key, colorId = imagefile.Value, colors = Model.Colors });
-                            }
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-        *@
-        <div class="form-group">
-            @Html.LabelFor(model => model.Warranty, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Warranty, new { htmlAttributes = new { @class = "form-control", Type = "number" } })
-                @Html.ValidationMessageFor(model => model.Warranty, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", Type = "number" } })
-                @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Weight, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Weight, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MadeIn, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MadeIn, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MadeIn, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UnitType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="form-control-custom">
-                    @Html.DropDownListFor(model => model.UnitType, Enum.GetValues(typeof(UnitOfProduct)).Cast<UnitOfProduct>().Select(o => new SelectListItem { Value = ((int)o).ToString(), Text = o.ToString() }), new { @class = "form-control chosen" })
-                    @Html.ValidationMessageFor(model => model.UnitType, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <label class="checkbox">
-                    @Html.CheckBoxFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
-                </label>
-                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+@{
+    var fileManagerParam = new Dictionary<string, object> {
+            { "ContainerId" , "lgx94"}
+    };
+    @Html.Partial("Widgets/FileManager", fileManagerParam)
 }
 
 @section breadcrumb {
-    @{
-        var viewName = Html.ViewContext.RouteData.GetRequiredString("action");
-    }
     <li>
-        <a href="@Url.Action("Dashboard","Pages")">
+        <a href="@Url.Action("Index","Dashboard")">
             <i class="fa fa-home"></i> Home
         </a>
         <span class="divider"><i class="fa fa-angle-right"></i></span>
@@ -246,172 +113,26 @@
     <li class="active">@ViewBag.FormName</li>
 }
 
-
 @section Styles {
     <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
     <link href="~/Areas/Manager/Content/css/loading.css" rel="stylesheet" />
-
-    <link href="~/Areas/Manager/Content/lib/jQueryFileUpload/css/jquery.fileupload.css" rel="stylesheet" />
-    <link href="~/Areas/Manager/Content/lib/jQueryFileUpload/css/jquery.fileupload-ui.css" rel="stylesheet" />
+    @Html.RenderDelayed("jquery-uploads-style")
+    @Html.RenderDelayed("FileManager-style")
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
     <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
+    @Html.RenderDelayed("jquery-uploads-js")
 
-    <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/vendor/jquery.ui.widget.js"></script>
-    <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/jquery.iframe-transport.js"></script>
-    <script src="~/Areas/Manager/Content/lib/jQueryFileUpload/js/jquery.fileupload.js"></script>
+    @Html.RenderDelayed("SelectImages-function")
+    @Html.RenderDelayed("SelectImages-script")
+
+    @Html.RenderDelayed("FileManager-script")
+
+    @Html.RenderDelayed("deleteConfirmModal-script")
 
     <script>
         
-        function getSelectedRoomIds() {
-            var roomIds = [];
-            var selected = $('#RoomIds :selected');
-            for (var i = 0; i < selected.length; i++) {
-                roomIds.push(selected[i].value);
-            }
-            return roomIds;
-        };
-
-        $(function () {
-           
-            $('#RoomIds').chosen().change(function () {
-                $('#TypologyTypeId').empty();
-                var selected = $('#RoomIds :selected');
-                if (selected.length > 0) {
-                    var url = '@Url.Action("GetTypologies")';
-                    var roomIds = getSelectedRoomIds();
-                    $.ajax({
-                        traditional: true,
-                        url: url,
-                        data: { 'roomIds': roomIds },
-                        success: function (data) {
-                            for (var i = 0; i < data.length; i++) {
-                                var item = $('<option />').val(data[i].id).text(data[i].name).appendTo('#TypologyTypeId');
-                            }
-                            $("#TypologyTypeId").trigger("chosen:updated");
-                        }
-                    });
-                }
-                else {
-                    $("#TypologyTypeId").trigger("chosen:updated");
-                }
-            });
-        });
-
-        //Multi upload----------------------------------------
-        $('#fileuploads').fileupload({
-            url: '@Url.Action("Uploads", "FileUpload")',
-            dataType: 'json',
-            formData: { fileGroup: @Convert.ToInt32(FileGroups.Other) },
-            maxFileSize: 999000,
-            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-            done: function (e, data) {
-                $.each(data.result, function (index, file) {
-                    $.ajax({
-                        traditional: true,
-                        url: '@Url.Action("_imageFile")',
-                        data: { 'id': file.newFileName, 'colorId': -1, 'colors': gscid()},
-                        success: function (data) {
-                            $('#files').append(data);
-                            $('.delete-image-btn').bind('click', imageDelete);
-                            $('#filesuploadProgress').fadeOut('fast');
-                        }
-                    });
-                });
-            },
-            always: function(e, data){
-                $('#filesuploadProgress').fadeOut('fast');
-            },
-            progressall: function (e, data) {
-                $('#filesuploadProgress').fadeIn('fast');
-            }
-        }).bind('fileuploadprocessfail', function (e, data) {
-            alert(data.files[data.index].error);
-        });
-        $('.delete-image-btn').bind('click', imageDelete);
-
-        var imageDelete = function () {
-            var p = $(this).parents('.image-file')
-            var f = p.data('file-id');
-            $.ajax({
-                url: '@Url.Action("Delete", "FileManager")',
-                type: 'DELETE',
-                data: { 'id': f },
-                traditional: true,
-                success: function () {
-                    $(p).remove();
-                }
-            });
-            event.preventDefault();
-        };
-        //-------------------------------------------------
-
-        //Single upload
-        //-------------------------------------------------
-        $('#fileupload').fileupload({
-            url:'@Url.Action("Uploads", "FileUpload")',
-            dataType: 'json',
-            formData: { fileGroup: @Convert.ToInt32(FileGroups.Other) },
-            maxFileSize: 999000,
-            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-            done: function (e, data) {
-                $.each(data.result, function (index, file) {
-                    var a = $('.file-upload-result input').val();
-                    if (a)
-                        $.ajax({
-                            url: '@Url.Action("Delete", "FileManager")',
-                            type: 'DELETE',
-                            data: { 'id': a },
-                            traditional: true,
-                            success: function () {
-                                $('.file-upload-result').remove();
-                                $('.file-upload-new').fadeIn('fast');
-                                $('.file-remove-btn').hide();
-                                addImg(file);
-                            }
-                        });
-                    else
-                        addImg(file);
-                });
-            },
-            always: function(e, data){
-                $('#fileuploadProgress').fadeOut('fast');
-            },
-            progressall: function (e, data) {
-                $('#fileuploadProgress').fadeIn('fast');
-            }
-        }).bind('fileuploadprocessfail', function (e, data) {
-            alert(data.files[data.index].error);
-        });;
-
-        $('.file-remove-btn').bind('click', function(){
-            var a = $('.file-upload-result input').val();
-            if (a) 
-                $.ajax({
-                url: '@Url.Action("Delete", "FileManager")',
-                type: 'DELETE',
-                data: { 'id': a },
-                traditional: true,
-                success: function () {
-                    $('.file-upload-result').remove();
-                    $('.file-upload-new').fadeIn('fast');
-                    $('.file-remove-btn').hide();
-                }
-            });
-        })
-
-        function addImg(file) {
-            $('.file-upload-new').hide();
-            $('.file-remove-btn').show();
-            var div = $('<div/>').hide().addClass('file-upload-result').addClass('img-thumbnail')
-            var img = $('<img/>').attr('src', '@Url.GetImageUploadFolder()' + file.newFileName + file.ext).appendTo(div);
-            var inp = $('<input/>').attr('name','previewImageId').attr('type','hidden').val(file.newFileName).appendTo(div);
-            div.prependTo('.file-upload').fadeIn('fast');
-        }
-        //-------------------------------------------------
-
     </script>
 }

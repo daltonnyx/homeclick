@@ -12,6 +12,11 @@ namespace Homeclick.Controllers
     {
         ApplicationDbContext db = new ApplicationDbContext();
 
+        public ActionResult _Sidebar()
+        {
+            var categories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProjectType);
+            return PartialView(categories);
+        }
 
         public ActionResult Index(int? category_id)
         {
@@ -81,6 +86,18 @@ namespace Homeclick.Controllers
             if (collection != null)
                 return PartialView(collection);
             return HttpNotFound();
+        }
+
+        [HttpPost]
+        public JsonResult GetCollections(int room_id)
+        {
+            var room = db.Rooms.Find(room_id);
+            var result = new List<object>();
+            foreach (var collection in room.Collections)
+            {
+                result.Add(new { id = collection.Id, name = collection.Title, image = collection.ImageFile.FullFileName });
+            }
+            return Json(result);
         }
     }
 }

@@ -14,14 +14,13 @@ namespace VCMS.Lib.Controllers
 {
     public class ProductVariantsController : BaseController
     {
-        public ActionResult List(int? categoryId)
+        public ActionResult List(int? category_id)
         {
-            if (categoryId == null)
+            if (category_id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var category = db.Categories.Find(categoryId);
+            var category = db.Categories.Find(category_id);
             if (category == null || category.CategoryTypeId != (int)CategoryTypes.ProductVariant)
                 return HttpNotFound();
-
             return View(category);
         }
 

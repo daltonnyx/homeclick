@@ -1,0 +1,33 @@
+﻿@using VCMS.Lib.Models
+@using VCMS.Lib.Common
+@using VCMS.Lib.Resources
+
+@model Dictionary<string, object>
+
+@{ 
+    var fieldName = Model[ConstantKeys.FIELD_NAME] as string;
+    var categories = Model[ConstantKeys.CATEGORIES] as IQueryable<Category>;
+    var selectedCategories = Model[ConstantKeys.SELECTED_CATEGORIES] as IEnumerable<int>;
+    var containerClass = Model.ContainsKey("ContainerClass") ? Model["ContainerClass"] as string : string.Empty;
+}
+
+<div class="@containerClass">
+    <h3>@Strings.Categories</h3>
+    @{
+        var categoryNodes = new List<EntityNode<Category>>();
+        foreach (var category in categories)
+        {
+            categoryNodes.AddRange(category.GetNodes(0));
+        }
+        foreach (var node in categoryNodes)
+        {
+            var isChecked = (selectedCategories != null) ? selectedCategories.Contains(node.Entity.Id) : false;
+            var style = "margin-left:" + (node.Depth * 15) + "px";
+            <label class="checkbox depth-@node.Depth" style="@style">
+                @Html.CheckBox(string.Format("{0}[{1}]", fieldName, node.Entity.Id), isChecked, new { @class = "" }) @node.Entity.Name
+            </label>
+        }
+    }
+</div>
+
+

@@ -61,6 +61,15 @@ namespace VCMS.Lib.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Areas/Manager/Uploads/.
+        /// </summary>
+        internal static string UploadFolder {
+            get {
+                return ResourceManager.GetString("UploadFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Areas/Manager/Uploads/Images.
         /// </summary>
         internal static string UploadFolder_Image {
@@ -70,7 +79,7 @@ namespace VCMS.Lib.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Areas/Manager/Uploads/Other.
+        ///   Looks up a localized string similar to Areas/Manager/Uploads/Others.
         /// </summary>
         internal static string UploadFolder_Other {
             get {

@@ -124,6 +124,27 @@ namespace VCMS.Lib.Controllers
         }
 
         [HttpPost]
+        public JsonResult GetFiles()
+        {
+            var files = db.Files.OrderByDescending(o => o.CreateTime);
+            var result = new List<object>();
+            foreach (var file in files)
+            {
+                var fullpath = "~/" + System.IO.Path.Combine(Properties.Resources.UploadFolder_Image, "thumb", file.FullFileName);
+                var hasThumb = false;
+                if (System.IO.File.Exists(Server.MapPath(fullpath)))
+                    hasThumb = true;
+                result.Add(new
+                {
+                    filename = file.Id,
+                    ext = file.Extension,
+                    thumb = hasThumb,
+                });
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public JsonResult DeleteFileByPath(string src)
         {
             var result = 0;

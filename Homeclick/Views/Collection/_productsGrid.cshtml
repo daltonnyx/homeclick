@@ -5,7 +5,6 @@
 @{
     var total = Model.Count();
     var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
-    var url = "";
 }
 <div id="product-grid" class="content-product-feature">
     <h6 class="number-items section-header">@total Sản phẩm</h6>
@@ -18,7 +17,7 @@
                         <a href="@Url.Action("Product_Detail","SanPham", new {@Id=@item.Id})"><img src="@Url.GetImageUploadFolder()@item.Image.Id@item.Image.Extension" alt="" /></a>
                     </div>
                     <div class="detail-item">
-                        <h5 class="title-item"><a href="@Url.Action("Product_Detail","SanPham", new {@Id=@item.Id})">@item.name</a></h5>
+                        <h5 class="title-item"><a href="@Url.Action("Product_Detail","SanPham", new {@Id=@item.Id})">@item.Name</a></h5>
                         <p>@Convert.ToInt32(details[ProductDetailTypes.Price]).ToString("#,###", info.NumberFormat) vnđ</p>
                     </div>
                 </div>

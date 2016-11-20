@@ -18,6 +18,7 @@ namespace VCMS.Lib.Models
             CategoryChildren = new HashSet<Category>();
             Products = new HashSet<Product>();
             CustomFields = new HashSet<CustomField>();
+            Posts = new HashSet<Post>();
         }
 
         public int Id { get; set; }
@@ -60,6 +61,8 @@ namespace VCMS.Lib.Models
         public virtual ICollection<Project> Projects { get; set; }
 
         public virtual ICollection<CustomField> CustomFields { get; set; }
+
+        public virtual ICollection<MenuItem> MenuItems { get; set; }
     }
 
     public partial class Category
@@ -140,5 +143,46 @@ namespace VCMS.Lib.Models
     {
         public T Entity { get; set; }
         public int Depth { get; set; }
+    }
+
+    public class CategoryEntityConfiguration : EntityTypeConfiguration<Category>
+    {
+        public CategoryEntityConfiguration()
+        {
+            this.HasMany(e => e.Children)
+                .WithOptional(e => e.CategoryParent);
+
+            this.HasMany(e => e.Projects)
+                .WithOptional(e => e.Category)
+                .HasForeignKey(e => e.CategoryId);
+
+            this.HasMany(e => e.Slides)
+                .WithOptional(e => e.Category)
+                .HasForeignKey(e => e.CategoryId);
+
+            this.HasMany(e => e.Category_details)
+                .WithOptional(e => e.Category)
+                .WillCascadeOnDelete();
+
+            this.HasMany(e => e.CustomFields)
+                .WithOptional(e => e.Category);
+
+            this.HasMany(e => e.CategoryParents)
+                .WithMany(e => e.CategoryChildren)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ChildId");
+                    cs.MapRightKey("ParentId");
+                    cs.ToTable("Category_Category_Link");
+                });
+            this.HasMany(e => e.Posts)
+                .WithMany(e => e.Categories)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Categories_Posts_Link");
+                });
+        }
     }
 }

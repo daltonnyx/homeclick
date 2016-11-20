@@ -46,13 +46,11 @@ namespace VCMS.Lib.Models
 
     public partial class Product_Option : BaseModel
     {
-        public Dictionary<string, string> Details
-        {
-            get
-            {
-                var dic = Product_Options_Details.ToDictionary(o => o.Name, o => o.Value);
-                return dic;
-            }
-       }
+        [NotMapped]
+        /// <summary>
+        /// Key: Category(Type variant) Id
+        /// Value: Array of Product_Variant Id
+        /// </summary>     
+        public Dictionary<string, int[]> variantTypes { get; set; }
     }
 }

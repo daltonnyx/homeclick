@@ -26,13 +26,13 @@
     </div>
 </div>
 
-@using (Html.Delayed("deleteConfirmModal-script"))
+@using (Html.Delayed())
 {
     <script>
         $('#deleteConfirmModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var form = $(this).find('.modal-body form');
-            var selects = $('.select-item:checked');
+            var selects = $('input[type="checkbox"].select-item:checked');
             for (var i = 0; i < selects.length; i++) {
                 var input = $('<input type="hidden" name="ids"/>').val($(selects[i]).val()).appendTo(form);
             }
@@ -41,8 +41,10 @@
 
         $('#deleteConfirmModal').on('click', '.btn-yes', function (e) {
             var $modalDiv = $(e.delegateTarget);
-            var form = $modalDiv.find('.modal-body form');
-            form.submit();
+            var $form = $modalDiv.find('.modal-body form');
+            var $input = $('<input type="hidden" name="returnUrl">').val(window.location.href);
+            $form.append($input);
+            $form.submit();
         });
     </script>
 }

@@ -10,10 +10,10 @@ namespace VCMS.Lib.Models
     {
         public CustomField()
         {
-            CustomField_Enums = new HashSet<CustomField_Enums>();
+            CustomField_Enums = new HashSet<CustomField_Enum>();
         }
-
-        public new int Id { get; set; }
+        [Key]
+        public int Id { get; set; }
 
         [StringLength(128)]
         public string Name { get; set; }
@@ -21,10 +21,17 @@ namespace VCMS.Lib.Models
         [StringLength(256)]
         public string Label { get; set; }
 
+        public bool DisplayLabel { get; set; }
+
         [StringLength(256)]
         public string PlaceHolder { get; set; }
 
         public int? Type { get; set; }
+
+        [StringLength(128)]
+        public string ValueType  { get; set; }
+
+        public bool Multiple { get; set; }
 
         public bool Status { get; set; }
 
@@ -32,7 +39,7 @@ namespace VCMS.Lib.Models
 
         public virtual Category Category { get; set; }
 
-        public virtual ICollection<CustomField_Enums> CustomField_Enums { get; set; }
+        public virtual ICollection<CustomField_Enum> CustomField_Enums { get; set; }
     }
 
     public partial class CustomField
@@ -40,5 +47,7 @@ namespace VCMS.Lib.Models
         public FieldTypes FieldType { get { return (FieldTypes)Type; } }
     }
 
-    public enum FieldTypes { Text, Number, Image, Select, Date }
+    public enum CustomFieldType { User = 125, Product = 126, ProductOption = 145}
+
+    public enum FieldTypes { Text, Number, File, Select, Date, Input }
 }

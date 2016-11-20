@@ -16,8 +16,9 @@ namespace VCMS.Lib.Models
         {
             return new ApplicationDbContext();
         }
+        //public virtual DbSet<Product_Option_Set> Product_Option_Sets { get; set; }
 
-        public virtual DbSet<CustomField_Enums> CustomField_Enums { get; set; }
+        public virtual DbSet<CustomField_Enum> CustomField_Enums { get; set; }
         public virtual DbSet<CustomField> CustomFields { get; set; }
 
         public virtual DbSet<User_Detail> User_Details { get; set; }
@@ -52,8 +53,8 @@ namespace VCMS.Lib.Models
         public virtual DbSet<Category_detail> Category_details { get; set; }
         public virtual DbSet<Category_Type> Category_types { get; set; }
         public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<Product_detail> Product_details { get; set; }
-        public virtual DbSet<Product_type> Product_types { get; set; }
+        public virtual DbSet<Product_Detail> Product_details { get; set; }
+        public virtual DbSet<Product_Type> Product_Types { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -72,61 +73,12 @@ namespace VCMS.Lib.Models
 
             //Category
             //--------------------------------------
-            modelBuilder.Entity<Category>().HasMany(e => e.Children)
-                .WithOptional(e => e.CategoryParent);
-
-            modelBuilder.Entity<Category>().HasMany(e => e.Projects)
-                .WithOptional(e => e.Category)
-                .HasForeignKey(e => e.CategoryId);
-
-            modelBuilder.Entity<Category>().HasMany(e => e.Slides)
-                .WithOptional(e => e.Category)
-                .HasForeignKey(e => e.CategoryId);
-
-            modelBuilder.Entity<Category>().HasMany(e => e.Category_details)
-                .WithOptional(e => e.Category)
-                .WillCascadeOnDelete();
-
-            modelBuilder.Entity<Category>().HasMany(e => e.CustomFields)
-                .WithOptional(e => e.Category);
-
-            modelBuilder.Entity<Category>().HasMany(e => e.CategoryParents)
-                .WithMany(e => e.CategoryChildren)
-                .Map(cs =>
-                {
-                    cs.MapLeftKey("ChildId");
-                    cs.MapRightKey("ParentId");
-                    cs.ToTable("Category_Category_Link");
-                });    
+            modelBuilder.Configurations.Add(new CategoryEntityConfiguration());
             //--------------------------------------
 
             //Product
             //--------------------------------------
-            modelBuilder.Entity<Product>().HasMany(e => e.Product_detail)
-                    .WithRequired(e => e.Product)
-                    .WillCascadeOnDelete();
-
-            modelBuilder.Entity<Product>().HasMany(e => e.Product_Options)
-                .WithRequired(e => e.Product)
-                .WillCascadeOnDelete();
-
-            modelBuilder.Entity<Product>().HasMany(e => e.Categories)
-                .WithMany(e => e.Products)
-                .Map(cs =>
-                {
-                    cs.MapLeftKey("ParentId");
-                    cs.MapRightKey("ChildId");
-                    cs.ToTable("Product_Category_Link");
-                });
-
-            modelBuilder.Entity<Product>().HasMany(e => e.Files)
-                .WithMany(e => e.Products)
-                .Map(cs =>
-                {
-                    cs.MapLeftKey("ParentId");
-                    cs.MapRightKey("ChildId");
-                    cs.ToTable("Product_Files_Link");
-                });
+            modelBuilder.Configurations.Add(new ProductEntityConfiguration());
             //--------------------------------------
 
             //Product Variant
@@ -167,37 +119,9 @@ namespace VCMS.Lib.Models
 
             //Post
             //--------------------------------------
-            modelBuilder.Entity<Post>()
-                .HasMany(o => o.Post_Details)
-                .WithOptional(o => o.Post)
-                .HasForeignKey(o => o.PostId);
-
-            modelBuilder.Entity<Post>()
-                .HasMany(e => e.Post_ProductOptions)
-                .WithOptional(o => o.Post)
-                .HasForeignKey(o => o.PostId);
-
-            modelBuilder.Entity<Post>()
-                .HasMany(e => e.Categories)
-                .WithMany(e => e.Posts)
-                .Map(cs =>
-                {
-                    cs.MapLeftKey("ParentId");
-                    cs.MapRightKey("ChildId");
-                    cs.ToTable("Posts_Category_Link");
-                });
-
-            modelBuilder.Entity<Post>()
-                .HasMany(e => e.Files)
-                .WithMany(e => e.Posts)
-                .Map(cs =>
-                {
-                    cs.MapLeftKey("ParentId");
-                    cs.MapRightKey("ChildId");
-                    cs.ToTable("Posts_Files_Link");
-                });
+            modelBuilder.Configurations.Add(new PostEntityConfiguration());
             //--------------------------------------
-            
+
             modelBuilder.Entity<Post_Product>()
                 .HasRequired(o => o.ProductOption)
                 .WithMany(o => o.Post_Products)
@@ -296,23 +220,14 @@ namespace VCMS.Lib.Models
                 .HasMany(e => e.Canvas)
                 .WithOptional(e => e.Room);
 
-            modelBuilder.Entity<Room>()
-                .HasMany(e => e.Collections)
-                .WithMany(e => e.Rooms).Map( cs =>
-                    {
-                        cs.MapLeftKey("ParentId");
-                        cs.MapRightKey("ChildId");
-                        cs.ToTable("Rooms_Posts_Link");
-                    }
-                );
             //Customfields
             //----------------------------------------
             modelBuilder.Entity<CustomField>()
                 .HasMany(e => e.CustomField_Enums)
                 .WithOptional(e => e.CustomField);
 
-            //modelBuilder.Configurations.Add(new CategoryEntityConfiguration());
-            //modelBuilder.Configurations.Add(new ProductEntityConfiguration());
+            //MenuItem
+            modelBuilder.Configurations.Add(new MenuItemEntityConfiguration());
         }
     }
 }

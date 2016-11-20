@@ -71,6 +71,10 @@
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MvcCheckBoxList, Version=1.4.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcCheckBoxList.1.4.5\lib\net45\MvcCheckBoxList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -99,6 +103,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\AuthorizationService.cs" />
+    <Compile Include="Common\HtmlHelper\DelayedInjectionBlock.cs" />
+    <Compile Include="Common\HtmlHelper\ScriptBlock.cs" />
     <Compile Include="Common\LinqToObjectsExtensionMethods.cs" />
     <Compile Include="Common\HierarchyNode.cs" />
     <Compile Include="Common\TemplateStrings.cs" />
@@ -110,15 +116,18 @@
     <Compile Include="Common\Uploader.cs" />
     <Compile Include="Common\UrlHelper.cs" />
     <Compile Include="Controllers\Business\Category\CategoriesController.cs" />
-    <Compile Include="Controllers\Business\Category\RoomsController.cs" />
+    <Compile Include="Controllers\Business\Product\ProductController .cs" />
+    <Compile Include="Controllers\Business\Project\CollectionsController.cs" />
+    <Compile Include="Controllers\Business\Project\FloorsController.cs" />
+    <Compile Include="Controllers\Business\Project\DepartmentsController.cs" />
+    <Compile Include="Controllers\Business\Project\RoomsController.cs" />
     <Compile Include="Controllers\Business\Project\ProjectsController.cs" />
     <Compile Include="Controllers\Business\SlidesController.cs" />
     <Compile Include="Controllers\Business\Post\PostsController.cs" />
     <Compile Include="Controllers\Business\Product\ProductVariantsController.cs" />
     <Compile Include="Controllers\Business\Product\ProductSaleController.cs" />
     <Compile Include="Controllers\Business\SaleController.cs" />
-    <Compile Include="Controllers\Business\Product\FeatureProductsController.cs" />
-    <Compile Include="Controllers\Business\Product\ProductsController.cs" />
+    <Compile Include="Controllers\Business\Product\ProductsOptionsController.cs" />
     <Compile Include="Controllers\Cores\FileManagerController.cs" />
     <Compile Include="Controllers\Cores\CustomFields.cs" />
     <Compile Include="Controllers\Cores\FileUploadController.cs" />
@@ -139,8 +148,10 @@
     <Compile Include="Models\Business\Floor.cs" />
     <Compile Include="Models\Business\Posts_Product.cs" />
     <Compile Include="Models\Business\Product.cs" />
-    <Compile Include="Models\Business\Product_detail.cs" />
-    <Compile Include="Models\Business\Product_type.cs" />
+    <Compile Include="Models\Business\Product_detail - Copy.cs" />
+    <Compile Include="Models\Business\Entity_Detail.cs" />
+    <Compile Include="Models\Business\Product_Type.cs" />
+    <Compile Include="Models\Business\MenuItem.cs" />
     <Compile Include="Models\Business\ViewModels\CategoryPCViewModel.cs" />
     <Compile Include="Models\Business\ViewModels\CategoryTypeViewModel.cs" />
     <Compile Include="Models\Business\ViewModels\Collections\PostProductOptionViewModel.cs" />
@@ -221,7 +232,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\Business\Collection\" />
-    <Folder Include="Controllers\Business\NewFolder1\" />
     <Folder Include="Models\Test\" />
     <Folder Include="Script\" />
   </ItemGroup>
