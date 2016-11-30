@@ -22,7 +22,7 @@
         </div>
 
         <div class="sumary col-sm-7 col-md-8">
-            <h3 class="single-product-title">@Model.Name</h3>
+            <h3 class="single-product-title">@Model.name</h3>
             <div class="sg-prince">
                 <div class="number-prince" @Html.Raw(Model.CurrentSale != null ? "style='text-decoration: line-through'" : "")>@Convert.ToInt32(details[ProductDetailTypes.Price]).ToString("#,###", info.NumberFormat) vnđ</div>
                 @if (Model.CurrentSale != null)
@@ -90,7 +90,7 @@
                 <h3 class="detail-product-title" hidden="hidden">Chi tiết</h3>
                 <div class="detail-product-content">
                     <h3>Chi tiết</h3>
-                    @{var escaped = new HtmlString(Model.Content);}
+                    @{var escaped = new HtmlString(Model.content);}
                     <p>@escaped</p>
                     <p><span>Kích thước:</span>@details[ProductDetailTypes.Size]</p>
                     <p><span>Trọng lượng:</span>@details[ProductDetailTypes.Weight] kg</p>
@@ -143,7 +143,7 @@
     <ul>
         <li><a href="@Url.Action("Index","Home")">Home</a></li>
         <li><a href="@Url.Action("Index")">Sản phẩm</a></li>
-        <li>@Model.Name</li>
+        <li>@Model.name</li>
     </ul>
 }
 

@@ -471,37 +471,32 @@ jQuery(document).ready(function($){
     jQuery(d).addClass('active');
   });
 
-  var fit_to_screen = function() {
-      var fit_screen = {};
-      canvas.getObjects().forEach(elem => {
-          fit_screen.minX = (fit_screen.minX == undefined || fit_screen.minX >= elem.left) ? elem.left : fit_screen.minX;
-          fit_screen.minY = (fit_screen.minY == undefined || fit_screen.minY >= elem.top) ? elem.top : fit_screen.minY;
-          fit_screen.maxX = (fit_screen.maxX == undefined || fit_screen.maxX <= (elem.left + elem.width * elem.scaleX)) ? (elem.left + elem.width * elem.scaleX) : fit_screen.maxX;
-          fit_screen.maxY = (fit_screen.maxY == undefined || fit_screen.maxY <= (elem.top + elem.height * elem.scaleY)) ? (elem.top + elem.height * elem.scaleY) : fit_screen.maxY;
-      });
-      fit_screen.getWidth = function(){
-          return this.maxX - this.minX;
-      };
-      fit_screen.getHeight = function(){
-          return this.maxY - this.minY;
-      };
-      fit_screen.getCenterPoint = function() {
-          return {x: (this.maxX - this.minX) / 2, y: (this.maxY - this.minY) / 2}
-      };
-      if( document.getElementById('tutorial').width / fit_screen.getWidth() < document.getElementById('tutorial').height / fit_screen.getHeight() ) {
-          z = document.getElementById('tutorial').width / fit_screen.getWidth();
-      }
-      else{
-          z = document.getElementById('tutorial').height / fit_screen.getHeight();
-      }
-      canvas.zoomToPoint(fit_screen.getCenterPoint(),z);
-      canvas.absolutePan({x : fit_screen.minX * z, y : fit_screen.minY * z});
-      updateControl(canvas.getActiveObject());
-  };
-
   jQuery(".toolbar div.fit-to-width").on('click', 'span.fit-to-width', function(event) {
-      event.preventDefault();
-      fit_to_screen();
+    var fit_screen = {};
+    canvas.getObjects().forEach(elem => {
+      fit_screen.minX = (fit_screen.minX == undefined || fit_screen.minX >= elem.left) ? elem.left : fit_screen.minX;
+      fit_screen.minY = (fit_screen.minY == undefined || fit_screen.minY >= elem.top) ? elem.top : fit_screen.minY;
+      fit_screen.maxX = (fit_screen.maxX == undefined || fit_screen.maxX <= (elem.left + elem.width * elem.scaleX)) ? (elem.left + elem.width * elem.scaleX) : fit_screen.maxX;
+      fit_screen.maxY = (fit_screen.maxY == undefined || fit_screen.maxY <= (elem.top + elem.height * elem.scaleY)) ? (elem.top + elem.height * elem.scaleY) : fit_screen.maxY;
+    });
+    fit_screen.getWidth = function(){
+      return this.maxX - this.minX;
+    };
+    fit_screen.getHeight = function(){
+      return this.maxY - this.minY;
+    };
+    fit_screen.getCenterPoint = function() {
+      return {x: (this.maxX - this.minX) / 2, y: (this.maxY - this.minY) / 2}
+    };
+    if( document.getElementById('tutorial').width / fit_screen.getWidth() < document.getElementById('tutorial').height / fit_screen.getHeight() ) {
+      z = document.getElementById('tutorial').width / fit_screen.getWidth();
+    }
+    else{
+      z = document.getElementById('tutorial').height / fit_screen.getHeight();
+    }
+    canvas.zoomToPoint(fit_screen.getCenterPoint(),z);
+    canvas.absolutePan({x : fit_screen.minX * z, y : fit_screen.minY * z});
+    updateControl(canvas.getActiveObject());
   });
 
   //Ruler
@@ -954,20 +949,6 @@ jQuery(document).ready(function($){
       });
   });
 
-  jQuery("#print").on("click", function (e) {
-      e.preventDefault();
-      fit_to_screen();
-      var dataURL = canvas.toDataURL({
-          format: 'png',
-          multiplier: 2
-      });
-      var $exportImg = $("#export-img");
-      var $exportModal = UIkit.modal("#export-modal");
-      $exportImg.attr("src", dataURL);
-      $exportModal.show();
-      
-  });
-
   jQuery("#loadJSON").click(function(e){//Load
     e.preventDefault();
     jQuery.get('/User/LoadCanvas', function (data, status, xhr) {
@@ -1265,7 +1246,6 @@ jQuery(document).ready(function($){
         return;
     }
     minusItemFromCart(cR);
- 
     canvas.remove(cR);
     jQuery(".object-button").css("display","none");
     jQuery(".dimession").css("display","none");
@@ -2201,7 +2181,7 @@ jQuery(document).ready(function($){
                  + '{{productTitle}}'
                  + '</h3>'
                  + '<p class="product-quantity">'
-                 + '{{productPrice}} <span class="text-right p-quantity">x {{productQuantity}}</span> = '
+                 + '{{productPrice}} <span class="text-right p-quantity">x {{productQuantity}}</span>'
                  + '<span class="p-total">{{productTotal}}</span>'
                  + '</p>'
                  + '</div>'
@@ -2246,27 +2226,17 @@ jQuery(document).ready(function($){
                + '</div>';
 
     var calculateSubTotal = function (cart) {
-        var subTotalDiv = '<p><span class="sub-total-title">Tổng cộng: </span>'
+        var subTotalDiv = '<p><span class="sub-total-title">Tổng cộng:</span>'
                         + '<span class="sub-total-value">' + String(cart.calcTotal()).addCommas().curencyPostfix("đ") + '</span>'
                         + '</p>';
-        var buttonCheckOut = '<p><a class="uk-button" id="checkout">Thanh toán</a></p>';
-        if(cart.calcTotal() != 0) {
-            if (jQuery('.sub-total').length == 0) {
-                jQuery("#furnitures .cart .cart").append('<div class="sub-total">' + subTotalDiv + '</div>');
-                jQuery("#furnitures .cart .cart").append(buttonCheckOut);
-            }
-            else {
-                jQuery("#furnitures .cart .cart").children('.sub-total').remove();
-                jQuery("#furnitures .cart .cart").find('#checkout').parent().remove();
-                jQuery("#furnitures .cart .cart").append('<div class="sub-total">' + subTotalDiv + '</div>');
-                jQuery("#furnitures .cart .cart").append(buttonCheckOut);
-            
-            }
+        if (jQuery('.sub-total').length == 0) {
+            jQuery("#furnitures .cart .cart").append('<div class="sub-total">' + subTotalDiv + '</div>');
         }
         else {
-            jQuery("#furnitures .cart .cart").children().remove();
+            jQuery("#furnitures .cart .cart").children('.sub-total').remove();
+            jQuery("#furnitures .cart .cart").append('<div class="sub-total">' + subTotalDiv + '</div>');
+            
         }
-
     }
 
     var addToWishListTab = function (obj) {
@@ -2476,33 +2446,6 @@ jQuery(document).ready(function($){
     $form_signup.find('input[type="submit"]').on('click', function (event) {
         event.preventDefault();
         //$form_signup.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
-    });
-
-    var $cart = jQuery('#furnitures .cart .cart').on("click", "#checkout", function (e) {
-        e.preventDefault();
-        if (window.confirm("Bạn có muốn thêm những sản phẩm trên vào giỏ hàng không?")) {
-            var cartData = cart.serialize();
-            jQuery.post("/Cart/MassiveAddtoCart", { cart: cartData }, function (data, textStatus, jqXHR) {
-                if (data == "success") {
-                    cart.clearProduct();
-                    UIkit.notify({
-                        message: '<i class="uk-icon-check"></i> Đã thêm vào giỏ hàng!',
-                        status: 'success',
-                        timeout: 2000,
-                        pos: 'top-center'
-                    });
-                    calculateSubTotal(cart);
-                }
-                else {
-                    UIkit.notify({
-                        message: '<i class="uk-icon-check"></i> Có lỗi xảy ra khi thêm giỏ hàng!s',
-                        status: 'error',
-                        timeout: 2000,
-                        pos: 'top-center'
-                    });
-                }
-            },'json');
-        }
     });
 
 });
@@ -2765,10 +2708,6 @@ Cart.prototype.addProduct = function (product) {
             this.cartData[i].Quantity++;
         }
     }
-}
-
-Cart.prototype.clearProduct = function () {
-    this.cartData.length = 0;
 }
 
 Cart.prototype.minusProduct = function (product) {

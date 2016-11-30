@@ -50,7 +50,7 @@ namespace Homeclick.Controllers
             if(type_id != null)
             {
                 products = (from product in products
-                            where product.ProductType.Id == type_id
+                            where product.Status == true
                             select product).ToList<Product>();
             }
             return PartialView(products);
