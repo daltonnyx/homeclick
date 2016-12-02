@@ -36,7 +36,7 @@ ol, ul {
 }
 .header .page-title {font-family: Arial;font-size: 24px;color:#fff;margin-bottom: 0;}
 .wall-control {background-color: #EDEDED;padding: 5px;border: 1px solid #b1b1b1;box-shadow: 1px 1px 2px 0px #a1a1a1;}
-.object-control {background:url('../Upload/Images/balloon.svg') left top / 100% 100% no-repeat transparent;z-index: 999999;padding: 15px 0px 0px;}
+.object-control {background: #fff;z-index: 999999;padding: 5px 0px 0px; border: 1px solid #ccc; box-shadow: 1px 1px 2px -1px #333;border-radius:0!important;}
 #tutorial {background-color:#fff;}
 input {
     max-width:none;
@@ -103,7 +103,7 @@ span.aqua {color:#12a9a4;}
 #funiture .product .product-image img {width:100%;height:auto;}
 #Funiture-list .product .product-image {width:100%;height:auto;overflow: hidden;border:1px solid #ccc;}
 #Funiture-list .product .product-title a h5 {width:100%;text-align: center;font-family: Avo;text-transform: uppercase;font-size: 13px;color:#666;}
-#Funiture-list {max-height: 520px;overflow-y: scroll;display:flex;flex-flow: row wrap;justify-content: flex-start;}
+#Funiture-list {max-height: 520px;overflow-y: auto;display:flex;flex-flow: row wrap;justify-content: flex-start;}
 #Funiture-list .product {margin: 1%;width: 23%;padding: 15px 0px;}
 #control-container.main-menu {
     padding: 10px 15px;

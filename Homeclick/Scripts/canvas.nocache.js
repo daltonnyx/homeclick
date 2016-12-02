@@ -125,6 +125,16 @@ jQuery(document).ready(function ($) {
     $("html").on("drop", function (event) {
         event.preventDefault();
         // pageX and pageY IN originalEvent but NOT event
+        //Disable for these state:
+        //isPermentPans 
+        //isPermentsZoom
+        //isHold
+        //isMoveObject
+        //isDrawMode
+        //isMeasure
+        //isCamera
+        if (isPermentPans || isPermentsZoom || isMeasure || isCamera || isHold)
+            return;
         var e = event.originalEvent;
 
         p = { x: e.pageX, y: e.pageY };
@@ -264,11 +274,12 @@ jQuery(document).ready(function ($) {
                 control = jQuery(".object-control"),
                 area = (pWall.calcArea() / 10000).toFixed(2);
             control.css({
-                "display": "block",
+                
                 "position": "absolute",
                 "left": m.x - (control.width() / 2) - 25 + "px",
                 "top": m.y - control.height() - 15 + "px"
             });
+            control.show(200);
             control.addClass('floor-control');
             control.find("h4.product-name").text(pWall.ProName);
             control.find(".product-area span.value").text(area + "m2");
@@ -300,16 +311,19 @@ jQuery(document).ready(function ($) {
             return;
         }
 
+        var controlLeft = (f.x - control.width() / 2 <= window.innerWidth - control.width()) ? f.x - control.width() / 2 : window.innerWidth - control.width();
+        var controlTop = (f.y - control.height() - 65 >= 0) ? f.y - control.height() - 65 : 0;
+
         control.find("h4.product-name").text("No Name");
         control.find(".product-image").html('');
         control.find(".product-price .value").text('');
         control.find('.product-price').css('display', 'block');
         control.css({
-            "display": "block",
             "position": "absolute",
-            "left": f.x - control.width() / 2 + "px",
-            "top": f.y - control.height() - 65 + "px"
+            "left": controlLeft + "px",
+            "top": controlTop + "px"
         });
+        control.show(200);
         jQuery(".width-dimession").text((obj.getWidth() / 100).toFixed(2) + ' m');
         jQuery(".height-dimession").text((obj.getHeight() / 100).toFixed(2) + ' m');
         updateControl(obj);
@@ -657,7 +671,7 @@ jQuery(document).ready(function ($) {
         if (isPermentsZoom == true || isDrawMode)
             return;
         jQuery(".wall-control").css("display", "none");
-        jQuery(".object-control").css("display", "none");
+        jQuery(".object-control").hide(200);
         jQuery(".dimession").css("display", "none");
         jQuery(".delete-button").css("display", "none");
         jQuery(".rotate-button").css("display", "none");
@@ -1043,6 +1057,7 @@ jQuery(document).ready(function ($) {
         pushHistory();
         var c = canvas.getActiveObject();
         var cC = fabric.Path.makeClone(c, cloneOffset, canvas); //Create whole new object with c.options not clone
+        addItemToCart(c);
         cloneOffset += 10;
     });
 
@@ -1075,7 +1090,7 @@ jQuery(document).ready(function ($) {
         jQuery(this).removeClass('button-group').addClass('button-ungroup');
         jQuery(this).find('i').removeClass('fa-object-group').addClass('fa-object-ungroup');
         canvas.add(groups);
-        jQuery(this).closest(".object-control").css("display", "none");
+        jQuery(this).closest(".object-control").hide(200);
         jQuery(".object-button").css("display", "none");
         jQuery(".dimession").css("display", "none");
         canvas.discardActiveGroup(); // Remove control border
@@ -1108,7 +1123,7 @@ jQuery(document).ready(function ($) {
         canvas.remove(group);
         jQuery(this).addClass('button-group').removeClass('button-ungroup');
         jQuery(this).find('i').addClass('fa-object-group').removeClass('fa-object-ungroup');
-        jQuery(this).closest(".object-control").css("display", "none");
+        jQuery(this).closest(".object-control").hide(200);
         jQuery(".object-button").css("display", "none");
         jQuery(".dimession").css("display", "none");
         canvas.discardActiveGroup(); // Remove control border
@@ -1235,7 +1250,7 @@ jQuery(document).ready(function ($) {
             canvas.remove(canvas._activeGroup._objects[0]); //Remove last object
             jQuery(".object-button").css("display", "none");
             jQuery(".dimession").css("display", "none");
-            jQuery(".object-control").css("display", "none");
+            jQuery(".object-control").hide(200);
             canvas.discardActiveGroup(); // Remove control border
             canvas.discardActiveObject(); // Need both discard
             return;
@@ -1245,7 +1260,7 @@ jQuery(document).ready(function ($) {
         canvas.remove(cR);
         jQuery(".object-button").css("display", "none");
         jQuery(".dimession").css("display", "none");
-        jQuery(".object-control").css("display", "none");
+        jQuery(".object-control").hide(200);
     };
 
     //Delete button
@@ -1266,9 +1281,7 @@ jQuery(document).ready(function ($) {
         var control = jQuery(".object-control");
         //if(pushHistory != undefined)
         pushHistory();
-        control.css({
-            "display": 'none'
-        });
+        control.hide(200);
         rF = canvas.getPointer(event);
     });
     canvas.on('mouse:up', function (event) { //Clear rotate evnt
@@ -2041,7 +2054,7 @@ jQuery(document).ready(function ($) {
 
             })
             .done(function (response) {
-                jQuery(".object-control").css("display", "none");
+                jQuery(".object-control").hide(200);
                 showPopUp(response);
             })
             .fail(function () {
