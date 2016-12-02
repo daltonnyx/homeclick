@@ -205,10 +205,22 @@ namespace VCMS.Lib.Controllers
                     }
                     else
                     {
-                        detail.CreateUserId = userId;
-                        detail.CreateTime = currentTimeUtc;
-                        detail.ProductId = model.Id;
-                        db.Entry(detail).State = System.Data.Entity.EntityState.Added;
+                        var detailTarget = modelTarget.Product_Details.FirstOrDefault(o => o.Name == detail.Name);
+                        if (detailTarget != null)
+                        {
+                            detailTarget.FileId = detail.FileId;
+                            db.Entry(detailTarget).Property("ProductId").IsModified = false;
+                            db.Entry(detailTarget).Property("CreateUserId").IsModified = false;
+                            db.Entry(detailTarget).Property("CreateTime").IsModified = false;
+                        }
+                        else
+                        {
+                            detail.CreateUserId = userId;
+                            detail.CreateTime = currentTimeUtc;
+                            detail.ProductId = model.Id;
+                            db.Entry(detail).State = System.Data.Entity.EntityState.Added;
+                            modelTarget.Product_Details.Add(detail);
+                        }
                     }
                 }
 

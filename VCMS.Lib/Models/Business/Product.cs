@@ -114,7 +114,17 @@ namespace VCMS.Lib.Models
             foreach (var detail in Product_Details)
             {
                 if (!dic.ContainsKey(detail.Name))
-                    dic.Add(detail.Name, detail.Value);
+                {
+                    if(detail.Type == "2")
+                    {
+                        dic.Add(detail.Name, detail.FileId);
+                    }
+                    else
+                    {
+                        dic.Add(detail.Name, detail.Value);
+                    }
+                }
+                    
             }
             return dic;
         }

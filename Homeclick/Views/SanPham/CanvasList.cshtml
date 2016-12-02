@@ -8,6 +8,10 @@
 @foreach (Product product in Model)
 {
     var detail = product.DetailsToDictionary();
+    if (detail.Keys.SingleOrDefault<string>(s => s == "data") == null)
+    {
+        continue;
+    }
     <div class="product">
         <div class="product-image">
             <a href="#"
@@ -15,7 +19,7 @@
                data-name="@product.Name"
                data-pid="@product.Id"
                data-init="@if (detail.Keys.SingleOrDefault<string>(s => s == "initScale") != null) {@detail["initScale"]} else { <text>0.18</text> }"
-               data-pid="@product.Id" data-svg="@Url.GetImageUploadFolder()/design/@if (detail.Keys.SingleOrDefault<string>(s => s == "data") != null) {@detail["data"]}"
+               data-pid="@product.Id" data-svg="@Url.GetImageUploadFolder()@(detail["data"]).svg"
                data-can-scale="@if (detail.Keys.SingleOrDefault<string>(s => s == "scale") != null) {@detail["scale"]}">
                 <img src="@Url.GetImageUploadFolder()@product.Image.FullFileName"
                      data-image="@Url.GetImageUploadFolder()@product.Image.FullFileName"
@@ -24,7 +28,7 @@
                      data-pid="@product.Id"
                      data-init="@if (detail.Keys.SingleOrDefault<string>(s => s == "initScale") != null) {@detail["initScale"]} else { <text>0.18</text> }"
                      data-name="@product.Name"
-                     data-svg="@Url.GetImageUploadFolder()/design/@if (detail.Keys.SingleOrDefault<string>(s => s == "data") != null) {@detail["data"]}"
+                     data-svg="@Url.GetImageUploadFolder()@(detail["data"]).svg"
                      data-can-scale="@if (detail.Keys.SingleOrDefault<string>(s => s == "scale") != null) {@detail["scale"]}"
                      data-zData="@if (detail.Keys.SingleOrDefault<string>(s => s == "zdata") != null) {@detail["zdata"]}"
                      data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null) {@detail["gia"]}" />
@@ -37,7 +41,7 @@
                data-pid="@product.Id"
                data-init="@if (detail.Keys.SingleOrDefault<string>(s => s == "initScale") != null) {@detail["initScale"]} else { <text>0.18</text> }"
                data-image="@Url.GetImageUploadFolder()@product.Image.FullFileName"
-               data-svg="@Url.GetImageUploadFolder()/design/@if (detail.Keys.SingleOrDefault<string>(s => s == "data") != null) {@detail["data"]}"
+               data-svg="@Url.GetImageUploadFolder()@(detail["data"]).svg"
                data-can-scale="@if (detail.Keys.SingleOrDefault<string>(s => s == "scale") != null) {@detail["scale"]}"
                data-zData="@if (detail.Keys.SingleOrDefault<string>(s => s == "zdata") != null) {@detail["zdata"]}"
                data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null) {@detail["gia"]}">
