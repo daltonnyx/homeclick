@@ -114,7 +114,7 @@ span.aqua {color:#12a9a4;}
 .main-canvas .zoom {font-family: Avo;border-radius:10px;color:#404040;text-transform: uppercase;background-color: #e3e6e6;padding:5px 10px;box-shadow: 1px 2px 5px -2px #404040;}
 
 .canvas-holder {margin-top:20px;border: 1px solid #ccc;}
-.zoom-value {text-align: center;}
+.zoom-value {text-align: center;width: 7%;padding: 5px 0px !important; margin-left:1em;}
 .control-container.toolbar {display:flex;flex-flow: row nowrap;background: none;}
 .control-container.toolbar div {display: inline-block;margin-left: 10px;margin-top:15px;}
 .control-container.toolbar div:not(.zoom) {width:50px;height:50px;background-color:#e3e6e6;border-radius: 10px; box-shadow: 1px 2px 5px -2px #404040;cursor: pointer;}
@@ -168,7 +168,8 @@ span.aqua {color:#12a9a4;}
     transition: 1s all;
 }
 .zoom-slider{
-    width:130px !important;
+    width:80% !important;
+    padding-left: 1em;
     display:inline-block!important;
 }
 

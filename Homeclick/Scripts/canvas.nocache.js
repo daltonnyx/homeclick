@@ -604,6 +604,7 @@ jQuery(document).ready(function ($) {
                 canvas.zoomToPoint(p, canvas.getZoom() - 0.1);
             else
                 canvas.zoomToPoint(p, canvas.getZoom() + 0.1);
+            zoom_change({ target: { value: parseInt(canvas.getZoom() * 100) } });
             canvas.renderAll();
         }
     });
@@ -801,6 +802,7 @@ jQuery(document).ready(function ($) {
             jQuery(".dimession").css("display", "none");
             jQuery(".delete-button").css("display", "none");
             jQuery(".rotate-button").css("display", "none");
+            fit_to_screen();
         }
     });
 
