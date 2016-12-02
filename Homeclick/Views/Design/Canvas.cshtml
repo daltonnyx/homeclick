@@ -102,8 +102,8 @@
                 </div>
                 <div class="zoom uk-vertical-align">
                     <span class="uk-vertical-align-middle">Zoom </span>
-                    <input type="range" min="10" max="500" step="10" class="zoom-slider uk-form-width-small uk-vertical-align-middle" value="100" name="zoom_slider" oninput="zoom_change(event)" />
-                    <input type="text" name="zoom_value" class="zoom-value uk-form-width-small uk-vertical-align-middle" value="100" />
+                    <input type="range" min="10" max="500" step="10" class="zoom-slider uk-form-width-small uk-vertical-align-middle" value="100" autocomplete="off" name="zoom_slider" oninput="zoom_change(event)" />
+                    <input type="text" name="zoom_value" class="zoom-value uk-form-width-small uk-vertical-align-middle" onchange="zoom_change(event)" autocomplete="off" value="100" />
                 </div>
                 <!-- 	<div class="control-container">
                         <a id="saveJSON" href="#">Save</a>

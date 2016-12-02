@@ -938,7 +938,7 @@ jQuery(document).ready(function ($) {
         
         var dataURL = canvas.toDataURL({
             format: 'png',
-            multiplier: 2,
+            multiplier: 1,
             width: polWall.width + borderFit,
             height: polWall.height + borderFit,
         });
@@ -1346,7 +1346,9 @@ jQuery(document).ready(function ($) {
                 }
                 z -= 0.05;
             }
+            
             canvas.zoomToPoint({ x: c.left, y: c.top }, z);
+            zoom_change({ target: { value: parseInt(z * 100) } }); // Update zoom input value
         }
         updateControl(oZ);
     });
@@ -2447,7 +2449,9 @@ jQuery(document).ready(function ($) {
 var zoom_change = function (e) { //Change zoom level
     var sl = e.target;
     var tx = document.getElementsByName("zoom_value");
+    var ts = document.getElementsByName("zoom_slider");
     tx[0].value = sl.value;
+    ts[0].value = sl.value;
 };
 
 
