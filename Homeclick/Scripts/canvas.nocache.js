@@ -462,8 +462,9 @@ jQuery(document).ready(function ($) {
         jQuery(d).addClass('active');
     });
 
-    var fit_to_screen = function () {
+    var fit_to_screen = function (fit) {
         var fit_screen = {};
+        fit = fit == undefined ? true : fit;
         canvas.getObjects().forEach(elem => {
             fit_screen.minX = (fit_screen.minX == undefined || fit_screen.minX >= elem.left) ? elem.left : fit_screen.minX;
             fit_screen.minY = (fit_screen.minY == undefined || fit_screen.minY >= elem.top) ? elem.top : fit_screen.minY;
@@ -479,7 +480,7 @@ jQuery(document).ready(function ($) {
         fit_screen.getCenterPoint = function () {
             return { x: (this.maxX - this.minX) / 2, y: (this.maxY - this.minY) / 2 }
         };
-        if (document.getElementById('tutorial').width / fit_screen.getWidth() < document.getElementById('tutorial').height / fit_screen.getHeight()) {
+        if (!fit || document.getElementById('tutorial').width / fit_screen.getWidth() < document.getElementById('tutorial').height / fit_screen.getHeight()) {
             z = document.getElementById('tutorial').width / fit_screen.getWidth();
         }
         else {
@@ -929,11 +930,20 @@ jQuery(document).ready(function ($) {
 
     jQuery("#print").on("click", function (e) {
         e.preventDefault();
-        fit_to_screen();
+        var borderFit = 100 // For fit whole polWall;
+        var oldWidth = canvas.getWidth(), oldHeight = canvas.getHeight();
+        fit_to_screen(false);
+        canvas.setWidth(polWall.width + borderFit);
+        canvas.setHeight(polWall.height + borderFit);
+        
         var dataURL = canvas.toDataURL({
             format: 'png',
-            multiplier: 2
+            multiplier: 2,
+            width: polWall.width + borderFit,
+            height: polWall.height + borderFit,
         });
+        canvas.setWidth(oldWidth);
+        canvas.setHeight(oldHeight);
         var $exportImg = $("#export-img");
         var $exportModal = UIkit.modal("#export-modal");
         $exportImg.attr("src", dataURL);
