@@ -310,20 +310,24 @@ jQuery(document).ready(function ($) {
             loadCameraControl(obj);
             return;
         }
+        control.show(200, function () {
+            var controlLeft = (f.x - control.width() / 2 <= window.innerWidth - control.width()) ? f.x - control.width() / 2 : window.innerWidth - control.width();
+            var controlTop = (f.y - control.height() - 65 >= 0) ? f.y - control.height() - 65 : 0;
+            control.css({
+                "position": "absolute",
+                "left": controlLeft + "px",
+                "top": controlTop + "px"
+            });
+        });
 
-        var controlLeft = (f.x - control.width() / 2 <= window.innerWidth - control.width()) ? f.x - control.width() / 2 : window.innerWidth - control.width();
-        var controlTop = (f.y - control.height() - 65 >= 0) ? f.y - control.height() - 65 : 0;
+        
 
         control.find("h4.product-name").text("No Name");
         control.find(".product-image").html('');
         control.find(".product-price .value").text('');
         control.find('.product-price').css('display', 'block');
-        control.css({
-            "position": "absolute",
-            "left": controlLeft + "px",
-            "top": controlTop + "px"
-        });
-        control.show(200);
+        
+        
         jQuery(".width-dimession").text((obj.getWidth() / 100).toFixed(2) + ' m');
         jQuery(".height-dimession").text((obj.getHeight() / 100).toFixed(2) + ' m');
         updateControl(obj);
@@ -809,14 +813,15 @@ jQuery(document).ready(function ($) {
             recreateCart();
             z = canvas.getZoom();
             canvas.renderAll();
+            canvas.discardActiveObject();
             undoStack.splice(0, undoStack.length - 1);
+            fit_to_screen();
             jQuery("#undo").attr("disabled", "disabled");
             jQuery(".wall-control").css("display", "none");
             jQuery(".object-control").css("display", "none");
             jQuery(".dimession").css("display", "none");
             jQuery(".delete-button").css("display", "none");
             jQuery(".rotate-button").css("display", "none");
-            fit_to_screen();
         }
     });
 
