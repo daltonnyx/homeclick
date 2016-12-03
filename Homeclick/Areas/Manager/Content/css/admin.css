@@ -16,7 +16,7 @@ li.active > a {
     Images
 ====================================*/
 img {
-    max-width: 100%;
+    width:100%;
 }
 
 #products {
@@ -95,6 +95,11 @@ table#DataTable > thead > tr > th:last-child {
     text-align: center;
     margin-bottom: 10px;
     overflow: hidden;
+}
+
+.file-upload .img-thumbnail img {
+    width:100%;
+    max-width:256px;
 }
 
 .text-danger > ul {

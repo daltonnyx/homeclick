@@ -16,7 +16,7 @@ using System.Data.SqlClient;
 
 namespace VCMS.Lib.Controllers
 {
-    public class FileManagerController : UserManageController
+    public class FileManagerController : BaseController
     {
         
         // GET: Manager/FileController
@@ -101,21 +101,15 @@ namespace VCMS.Lib.Controllers
             if (file != null)
                 try
                 {
+                    db.Entry(file).State = EntityState.Deleted;
                     db.Files.Remove(file);
-                    Uploader.DeleteFile(file, this);
-                    db.SaveChanges();
-                    result = "Success";
+                    var n = db.SaveChanges();
+                    if (n > 0)
+                        result = "Success";
                 }
                 catch (Exception ex)
                 {
-                    var sb = new StringBuilder();
-                    sb.AppendLine("Delete failure!");
-                    var innerException = ex.InnerException.InnerException;
-                    if (innerException as SqlException != null)
-                    {
-                        sb.AppendLine("Error code: " + ((ex.InnerException.InnerException) as SqlException).Number);
-                    }
-                    result = sb.ToString();
+                    result = ex.ToString();
                 }
             else
                 result = "Incorrect ID!";

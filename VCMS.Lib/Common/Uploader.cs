@@ -114,17 +114,11 @@ namespace VCMS.Lib.Common
                     var categoryG = await db.Categories.FindAsync((int)fileGroup);
                     newFile.Categories.Add(categoryG);
 
-                    if (fileExt == ".png" || fileExt == ".jpg" || fileExt == ".gif")
+                    if (fileExt == ".png" || fileExt == ".jpg" || fileExt == ".gif" || fileExt == ".svg")
                     {
                         var categoryT = await db.Categories.FindAsync((int)FileTypes.Image);
                         newFile.Categories.Add(categoryT);
                         destinationFolder = Properties.Resources.UploadFolder_Image;
-                    }
-                    else
-                    {
-                        var categoryT = await db.Categories.FindAsync((int)FileTypes.Other);
-                        newFile.Categories.Add(categoryT);
-                        destinationFolder = Properties.Resources.UploadFolder_Other;
                     }
 
                     db.Files.Add(newFile);
