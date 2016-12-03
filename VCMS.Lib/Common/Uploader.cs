@@ -119,6 +119,7 @@ namespace VCMS.Lib.Common
                         var categoryT = await db.Categories.FindAsync((int)FileTypes.Image);
                         newFile.Categories.Add(categoryT);
                         destinationFolder = Properties.Resources.UploadFolder_Image;
+
                     }
                     else
                     {
