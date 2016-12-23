@@ -36,6 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>6</LangVersion>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -44,6 +45,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
@@ -216,6 +218,7 @@
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\SanPhamController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -681,6 +684,7 @@
     <Content Include="Areas\Manager\Views\Shared\Widgets\SelectFiles.cshtml" />
     <Content Include="Areas\Manager\Views\ProductOptions\Create.cshtml" />
     <Content Include="Areas\Manager\Views\Shared\Widgets\DeleteConfirmModal_.cshtml" />
+    <None Include="Properties\PublishProfiles\File System.pubxml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1124,6 +1128,7 @@
     <Content Include="Scripts\Plugins\taggd-master\dist\taggd.css.map" />
     <Content Include="Scripts\Plugins\taggd-master\dist\taggd.min.js.map" />
     <Content Include="Scripts\Plugins\taggd-master\docs\options.md" />
+    <Content Include="Views\User\LoadWishlists.cshtml" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\SanPham\CanvasList.cshtml" />
     <Content Include="Views\SanPham\_CanvasList.cshtml" />

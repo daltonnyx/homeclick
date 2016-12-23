@@ -114,11 +114,12 @@ namespace VCMS.Lib.Common
                     var categoryG = await db.Categories.FindAsync((int)fileGroup);
                     newFile.Categories.Add(categoryG);
 
-                    if (fileExt == ".png" || fileExt == ".jpg" || fileExt == ".gif")
+                    if (fileExt == ".png" || fileExt == ".jpg" || fileExt == ".gif" || fileExt == ".svg")
                     {
                         var categoryT = await db.Categories.FindAsync((int)FileTypes.Image);
                         newFile.Categories.Add(categoryT);
                         destinationFolder = Properties.Resources.UploadFolder_Image;
+
                     }
                     else
                     {
@@ -129,6 +130,10 @@ namespace VCMS.Lib.Common
 
                     db.Files.Add(newFile);
                     await db.SaveChangesAsync();
+                    if(!System.IO.Directory.Exists(controller.Server.MapPath("~/" + destinationFolder)))
+                    {
+                        System.IO.Directory.CreateDirectory(controller.Server.MapPath("~/" + destinationFolder));
+                    }
                     var newPath = System.IO.Path.Combine(controller.Server.MapPath("~/" + destinationFolder), newFileName + fileExt);
                     file.SaveAs(newPath);
 

@@ -5,14 +5,15 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 //using Microsoft.AspNet.Identity.EntityFramework;
-using Homeclick.Models;
+//using Homeclick.Models;
+using VCMS.Lib.Models;
 using System.Web.Script.Serialization;
 
 namespace Homeclick.Controllers
 {
     public class UserController : Controller
     {
-        vinabits_homeclickEntities db = new vinabits_homeclickEntities();
+        ApplicationDbContext db = new ApplicationDbContext();
         //
         // GET: User
         public ActionResult Index()
@@ -27,12 +28,12 @@ namespace Homeclick.Controllers
                 if(id == null) { 
                     //save action goes here
                     string jsonData = data;
-                    User user = db.Users.Find(Convert.ToInt32(User.Identity.GetUserId()));
+                    ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
                     Canva canvas = db.Canvas.Create();
                     canvas.User = user;
                     canvas.Name = name;
                     canvas.UpdatedDate = DateTime.Now;
-                    canvas.json_data = jsonData;
+                    canvas.JsonData = jsonData;
                     db.Canvas.Add(canvas);
                     db.SaveChanges();
                     Response.StatusCode = 202;
@@ -42,7 +43,7 @@ namespace Homeclick.Controllers
                 {
                     Canva canvas = db.Canvas.Find(id);
                     canvas.Name = name;
-                    canvas.json_data = data;
+                    canvas.JsonData = data;
                     canvas.UpdatedDate = DateTime.Now;
                     db.SaveChanges();
                     Response.StatusCode = 202;
@@ -63,10 +64,10 @@ namespace Homeclick.Controllers
             if (User.Identity.GetUserId() != null)
                 {
                     //load action goes here
-                    User user = db.Users.Find(Convert.ToInt32(User.Identity.GetUserId()));
-                    IList<object> canvas = db.Canvas.Where(c => c.User.ID == user.ID).Select(c => new { id = c.Id, Name = c.Name, UpdatedDate = c.UpdatedDate }).ToList<dynamic>()
+                    ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+                    IList<object> canvas = db.Canvas.Where(c => c.User.Id == user.Id).Select(c => new { id = c.Id, Name = c.Name, UpdatedDate = c.UpdatedDate }).ToList<dynamic>()
                         //Convert date to string
-                        .Select(o => new { id = o.id, name = o.name, UpdatedDate = o.UpdatedDate.ToString("dd-MM-yyyy")}).ToList<object>();
+                        .Select(o => new { id = o.id, name = o.Name, UpdatedDate = o.UpdatedDate.ToString("dd-MM-yyyy")}).ToList<object>();
                     
                     //IList<object> jsObj = new List<object>();
                     //foreach(Canva c in canvas)
@@ -92,7 +93,7 @@ namespace Homeclick.Controllers
                 }
                 else
                 {
-                    var jsdata = new { id = canva.Id, json_data = canva.json_data, name = canva.Name };
+                    var jsdata = new { id = canva.Id, json_data = canva.JsonData, name = canva.Name };
                     Response.StatusCode = 200;
                     return Content(jsonSerializer.Serialize(jsdata));
                 }
@@ -104,15 +105,15 @@ namespace Homeclick.Controllers
             Response.ContentType = "text/plaintext";
             if (User.Identity.GetUserId() != null)
             {
-                int userId = Convert.ToInt32(User.Identity.GetUserId());
-                var wishlists = db.Wishlists.Where(w => w.User.ID == userId && w.Product.Id == id);
+                string userId = User.Identity.GetUserId();
+                var wishlists = db.Wishlists.Where(w => w.User.Id == userId && w.Product.Id == id).ToList<Wishlist>();
                 //
                 if(wishlists.Count() == 0)
                 {
                     Wishlist wishlist = db.Wishlists.Create();
                     wishlist.Product = db.Products.Find(id);
                     wishlist.User = db.Users.Find(userId);
-                    wishlist.title = "#" + DateTime.Now.ToString("dd-MM-yyyy") + "-" + wishlist.Product.name;
+                    wishlist.title = "#" + DateTime.Now.ToString("dd-MM-yyyy") + "-" + wishlist.Product.Name;
                     wishlist.created_date = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
                     db.Wishlists.Add(wishlist);
                     db.SaveChanges();
@@ -138,7 +139,7 @@ namespace Homeclick.Controllers
         {
             if (User.Identity.GetUserId() != null)
             {
-                int userid = Convert.ToInt32(User.Identity.GetUserId());
+                string userid = User.Identity.GetUserId();
                 IList<Wishlist> wishlists = db.Wishlists.Where(w => w.UserId == userid).ToList();
                 return PartialView(wishlists);
             }

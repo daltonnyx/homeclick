@@ -154,7 +154,7 @@
                 var $input = $('<input type="checkbox"/>').attr('id', makeId).data('file',fileName).appendTo($li);
                 var $label = $('<label/>').attr('for', makeId).appendTo($li);
                 switch(file.ext){
-                    case '.gif': case '.jpg': case '.png':
+                    case '.gif': case '.jpg': case '.png': case '.svg':
                         var $img = $('<img/>').attr('src','@Url.GetImageUploadFolder()' + fileName).appendTo($label);
                         break;
                     default:
@@ -176,7 +176,7 @@
             else {
                 var $div = $('<div class="file file-uploaded-single img-thumbnail"/>').data('file', fileName).hide();
                 switch(file.ext){
-                    case '.gif': case '.jpg': case '.png':
+                    case '.gif': case '.jpg': case '.png': case '.svg':
                         var $img = $('<img/>').attr('src', '@Url.GetImageUploadFolder()' + fileName).appendTo($div);
                         break;
                     default:
