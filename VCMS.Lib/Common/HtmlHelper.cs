@@ -70,20 +70,24 @@ namespace System.Web.Mvc
 
         private static MvcHtmlString CustomDropdownList(this HtmlHelper htmlHelper, ModelMetadata metadata, string name, string optionLabel, IEnumerable<CustomSelectItem> list, string selectedValue, IDictionary<string, object> htmlAttributes)
         {
-            string fullName = htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
-            if (String.IsNullOrEmpty(fullName))
-            {
-                throw new ArgumentException("name");
-            }
-
             TagBuilder dropdown = new TagBuilder("select");
-            dropdown.Attributes.Add("id", fullName.Replace('[','_').Replace(']', '_'));
-            dropdown.Attributes.Add("name", fullName);
+
+            if (name != string.Empty)
+            {
+                string fullName = htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
+                if (String.IsNullOrEmpty(fullName))
+                {
+                    throw new ArgumentException("name");
+                }
+
+                dropdown.Attributes.Add("id", fullName.Replace('[', '_').Replace(']', '_'));
+                dropdown.Attributes.Add("name", fullName);
+                dropdown.MergeAttributes(htmlHelper.GetUnobtrusiveValidationAttributes(name, metadata));
+            }
             //dropdown.MergeAttribute("data-val", "true");
             //dropdown.MergeAttribute("data-val-required", "Mandatory field.");
             //dropdown.MergeAttribute("data-val-number", "The field must be a number.");
             dropdown.MergeAttributes(htmlAttributes); //dropdown.MergeAttributes(new RouteValueDictionary(htmlAttributes));
-            dropdown.MergeAttributes(htmlHelper.GetUnobtrusiveValidationAttributes(name, metadata));
 
             //option label
             if (optionLabel != null)

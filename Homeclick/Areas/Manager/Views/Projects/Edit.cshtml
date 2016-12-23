@@ -48,7 +48,7 @@
                             { "DistrictFielName" , Html.NameFor(m => m.DistrictId).ToString()},
                             { "DistrictFielValue" , Model.DistrictId},
                             { "AddressFielName", "Address" },
-                            { "AddressFielValue", "" },
+                            { "AddressFielValue", Model.Address },
                             { "Cities", ViewData[ConstantKeys.CITIES] }
                         };
                         @Html.Partial("Widgets/Location", locationParam);
