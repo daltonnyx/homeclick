@@ -761,6 +761,8 @@
     <Content Include="Scripts\Plugins\Map\markerclustererplus\src\markerclusterer_packaged.js" />
     <Content Include="Scripts\Plugins\mixitup\jquery.mixitup.js" />
     <Content Include="Scripts\Plugins\mixitup\jquery.mixitup.pagination.min.js" />
+    <Content Include="Scripts\Plugins\mixitup\mixitup.min.js" />
+    <Content Include="Scripts\Plugins\mixitup\mock-api.js" />
     <Content Include="Scripts\Plugins\noUiSlider\nouislider.css" />
     <Content Include="Scripts\Plugins\noUiSlider\nouislider.js" />
     <Content Include="Scripts\Plugins\noUiSlider\nouislider.min.css" />
@@ -785,6 +787,27 @@
     <Content Include="Scripts\Plugins\slick\slick.css" />
     <Content Include="Scripts\Plugins\slick\slick.js" />
     <Content Include="Scripts\Plugins\slick\slick.min.js" />
+    <Content Include="Scripts\Plugins\taggd-master\dist\taggd.css" />
+    <Content Include="Scripts\Plugins\taggd-master\dist\taggd.js" />
+    <Content Include="Scripts\Plugins\taggd-master\dist\taggd.min.js" />
+    <Content Include="Scripts\Plugins\taggd-master\src\scripts\Tag.js" />
+    <Content Include="Scripts\Plugins\taggd-master\src\scripts\Taggd.js" />
+    <Content Include="Scripts\Plugins\taggd-master\src\scripts\util\event-emitter.js" />
+    <Content Include="Scripts\Plugins\taggd-master\src\scripts\util\object-is.js" />
+    <Content Include="Scripts\Plugins\taggd-master\src\scripts\util\type-error-message.js" />
+    <Content Include="Scripts\Plugins\taggd-master\src\styles\taggd.css" />
+    <Content Include="Scripts\Plugins\taggd-master\tests\assets\1024x512.jpg" />
+    <Content Include="Scripts\Plugins\taggd-master\tests\assets\512x256.jpg" />
+    <Content Include="Scripts\Plugins\taggd-master\tests\behavior\Tag.js" />
+    <Content Include="Scripts\Plugins\taggd-master\tests\behavior\Taggd.editor.js" />
+    <Content Include="Scripts\Plugins\taggd-master\tests\behavior\Taggd.js" />
+    <Content Include="Scripts\Plugins\taggd-master\tests\functions.js" />
+    <Content Include="Scripts\Plugins\taggd-master\tests\manual\assets\layout.css" />
+    <Content Include="Scripts\Plugins\taggd-master\tests\manual\basic.html" />
+    <Content Include="Scripts\Plugins\taggd-master\tests\manual\editor.html" />
+    <Content Include="Scripts\Plugins\taggd-master\tests\manual\themes\taggd-classic.css" />
+    <Content Include="Scripts\Plugins\taggd-master\tests\units\Tag.js" />
+    <Content Include="Scripts\Plugins\taggd-master\tests\units\Taggd.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -1098,6 +1121,9 @@
     <Content Include="Views\Collection\_productsTable.cshtml" />
     <Content Include="Views\Cart\_headerWidget.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Scripts\Plugins\taggd-master\dist\taggd.css.map" />
+    <Content Include="Scripts\Plugins\taggd-master\dist\taggd.min.js.map" />
+    <Content Include="Scripts\Plugins\taggd-master\docs\options.md" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\SanPham\CanvasList.cshtml" />
     <Content Include="Views\SanPham\_CanvasList.cshtml" />
@@ -1113,6 +1139,7 @@
     <Content Include="Views\Project\Collection.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\_Sidebar.cshtml" />
+    <Content Include="Views\Project\Map.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

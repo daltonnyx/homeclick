@@ -22,7 +22,7 @@
                         <a href="@Url.Action("Product_Detail","SanPham", new { Id = product.Id})"><img src="@Url.GetImageUploadFolder()@product.Image.FullFileName" alt="" /></a>
                     </div>
                     <div class="detail-item">
-                        <h3 class="title-item"><a href="@Url.Action("Product_Detail","SanPham", new { Id = product.Id})">@product.name</a></h3>
+                        <h3 class="title-item"><a href="@Url.Action("Product_Detail","SanPham", new { Id = product.Id})">@product.Name</a></h3>
                         <p>@Convert.ToInt32(details["gia"]).ToString("#,###", info.NumberFormat) vnđ</p>
                     </div>
                 </div>

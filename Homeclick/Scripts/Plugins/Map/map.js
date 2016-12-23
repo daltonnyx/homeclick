@@ -1,4 +1,4 @@
-﻿var styles = [{ "featureType": "landscape.natural", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "color": "#e0efef" }] }, { "featureType": "poi", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "hue": "#1900ff" }, { "color": "#c0e8e8" }] }, { "featureType": "road", "elementType": "geometry", "stylers": [{ "lightness": 100 }, { "visibility": "simplified" }] }, { "featureType": "road", "elementType": "labels", "stylers": [{ "visibility": "off" }] }, { "featureType": "transit.line", "elementType": "geometry", "stylers": [{ "visibility": "on" }, { "lightness": 700 }] }, { "featureType": "water", "elementType": "all", "stylers": [{ "color": "#7dcdcd" }] }];
+﻿var styles = [];
 
 var pics = null;
 var infoWindow = null;
@@ -18,7 +18,7 @@ var markerIcon2 = {
 
 };
 
-function mapInit(jsonData)
+function mapInit()
 {
     var styledMap = new google.maps.StyledMapType(styles, { name: "Styled Map" });
 
@@ -38,7 +38,6 @@ function mapInit(jsonData)
 
     map.mapTypes.set(customMapTypeId, styledMap);
     map.setMapTypeId(customMapTypeId);
-    setMarkers(jsonData);
     /*
     addYourLocationButton(map);
 
@@ -82,24 +81,20 @@ function mapInit(jsonData)
     });
 }
 
-function addMarker(location, id) {
+function addMarker(location, data) {
     var marker = new google.maps.Marker({
         position: location,
         map: map,
         //icon: markerIcon,
-        id: id
+        data: data
     });
     markers.push(marker);
 }
 
 function setMapOnAll(map) {
-    console.log('clear','clear');
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(map);
     }
-    markers = [];
-    titles = [];
-    markerCluster.clearMarkers();
 }
 
 function clearMarkers() {
@@ -107,12 +102,12 @@ function clearMarkers() {
 }
 
 function showMarkers(jsonMarkersData) {
-    markerCluster.clearMarkers();
+    clearMarkers();
     var result = [];
     for (var i = 0; i < markers.length; i++) {
         var found = false;
         for (var j = 0; j < jsonMarkersData.length; j++) {
-            if (markers[i].id == jsonMarkersData[j].id) {
+            if (markers[i]['data']['id'] == jsonMarkersData[j]['id']) {
                 result.push(markers[i]);
                 found = true;
                 break;
@@ -122,6 +117,8 @@ function showMarkers(jsonMarkersData) {
             markers[i].setMap(null);
         }
     }
+    markerCluster.clearMarkers();
+
     markerCluster = new MarkerClusterer(map, result);
 }
 
@@ -142,10 +139,11 @@ function setMarkers(jsonMarkersData) {
 
         // Creating a marker and putting it on the map
         geocoder = new google.maps.Geocoder();
+        var adrress = data.address;
         geocoder.geocode({ 'address': data.address }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 var latLng = results[0].geometry.location;
-                addMarker(latLng, jsonMarkersData[markers.length].id);
+                addMarker(latLng, jsonMarkersData[markers.length]);
 
                 if (markers.length == jsonMarkersData.length) {
                     for (var i = 0; i < markers.length; i++) {
@@ -176,7 +174,6 @@ var markerClickFunction = function(data, latlng) {
                                 
                                 '<div class="project-tile-overlay">' +
                                     '<a href="' + data.link + '" class="button tiny">Xem chi tiết <i class="fa fa-search" aria-hidden="true"></i></a>' +
-
                                 '</div>' +
                                 '</div>' +
                         '</div>';
@@ -185,9 +182,6 @@ var markerClickFunction = function(data, latlng) {
         infoWindow.setContent(infoHtml);
         infoWindow.setPosition(latlng);
         infoWindow.open(map);
-        /*
-        calculateAndDisplayRoute(latlng);
-        */
     };
 };
 
@@ -267,21 +261,3 @@ function addYourLocationButton(map) {
     controlDiv.index = 1;
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
 }
-
-//Filters
-function filterByField(data, fieldName, fieldValue) {
-    return jLinq.from(data).contains(fieldName, fieldValue).select()
-}
-
-function filterByCity(data, city) {
-    return jLinq.from(data).match("city", city).select();
-}
-
-function filterByType(data, type) {
-    return jLinq.from(data).match("type", type).select()
-}
-
-function filterByStatu(data, statu) {
-    return jLinq.from(data).match("statu", statu).select();
-}
-

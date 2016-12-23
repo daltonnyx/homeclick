@@ -57,40 +57,6 @@ namespace Homeclick.Controllers
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetProjectsData(int? category_id)
-        {
-            IEnumerable<Project> projects;
-
-            projects = category_id == null || category_id == -1 ? db.Projects.ToList() :
-                                db.Projects.Where(o => o.CategoryId == category_id).ToList();
-
-            var json = new List<object>();
-            foreach (var project in projects)
-            {
-                json.Add(new
-                {
-                    id = project.Id,
-                    name = project.Name,
-                    image = project.Image,
-                    address = project.Address,
-                    city = project.CityId,
-                    state = project.StateId,
-
-                    i = project.Investor,
-                    a = project.ArchitetualDesignAgency,
-                    v = project.ViewDesignAgency,
-                    f = project.FurnitureDesignAgency,
-                    c = project.ConstructionAgency,
-                    d = project.DistributionAgency,
-                    m = project.Manager,
-
-                    statu = Convert.ToInt32(project.Completed),
-                    type = project.CategoryId,
-                });
-            }
-            return Json(json, JsonRequestBehavior.AllowGet);
-        }
-
         public JsonResult GetStates(int city_id)
         {
             var states = db.States.Where(o => o.CityId == city_id);
