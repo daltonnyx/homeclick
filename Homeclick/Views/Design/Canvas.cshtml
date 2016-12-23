@@ -38,11 +38,16 @@
                     <li class="tab-list product-fur">
                         <div class="product-list">
                             <div class="product-select">
-                                @Html.DropDownList("CategoryTypeSelect", new SelectList(CategoryTypes, "Id", "name"), new { @id = "CategoryTypeSelect" })
-                                <select id="CategorySelect">
-                                    @{Html.RenderAction("_CategoryOptions",new { categoryTypeId = CategoryTypes.FirstOrDefault().Id });}
+                                
+                                <select id="CategoryTypeSelect">
+                                    <option value="">All</option>
+                                    @{Html.RenderAction("_CategoryOptions", new { categoryTypeId = 2 });}
                                 </select>
-                            </div>
+                                <select id="CategorySelect">
+                                    <option value="">All</option>
+                                    @{Html.RenderAction("_CategoryOptions", new { categoryTypeId = 1 });}
+                                </select>
+</div>
 
                             <div id="Funiture-list">
                                 @Html.Action("CanvasList", "SanPham")
@@ -402,21 +407,23 @@
 
             $('#CategoryTypeSelect').on('change', function (event) {
                 var v = this.options[this.selectedIndex].value;
-                GetHtmlView('/Design/_CategoryOptions?categoryTypeId=' + v, 'CategorySelect');
+                var c = $('#CategorySelect').val();
+                GetHtmlView('/Sanpham/canvasList?room=' + v + '&type=' + c, 'Funiture-list');
             });
 
             $('#CategorySelect').on('change', function (event) {
-                var v = this.options[this.selectedIndex].value;
-                GetHtmlView('/Sanpham/canvasList?cat_id=' + v, 'Funiture-list');
+                var c = this.options[this.selectedIndex].value;
+                var v = $('CategoryTypeSelect').val();
+                GetHtmlView('/Sanpham/canvasList?type=' + c + '&room=' + v, 'Funiture-list');
             });
 
-            $('#CategorySelect').bind("DOMSubtreeModified", function () {
-                var v = this.options;
-                if (v.selectedIndex != -1) {
-                    var v = this.options[this.selectedIndex].value;
-                    GetHtmlView('/Sanpham/canvasList?cat_id=' + v, 'Funiture-list');
-                }
-            });
+            //$('#CategorySelect').bind("DOMSubtreeModified", function () {
+            //    var v = this.options;
+            //    if (v.selectedIndex != -1) {
+            //        var v = this.options[this.selectedIndex].value;
+            //        GetHtmlView('/Sanpham/canvasList?cat_id=' + v, 'Funiture-list');
+            //    }
+            //});
 
             $('#saveJSON').click(function () {
 

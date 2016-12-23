@@ -95,7 +95,7 @@ position: absolute; width:16px;height:16px;left: 0;top: 0;z-index: 999;display: 
 span.slogan {padding-left:15px;font-family: Soraya;font-size: 35px;vertical-align: bottom;position: relative;	top: -20px;}
 span.aqua {color:#12a9a4;}
 .product-select {padding:15px 10px;}
-#CategoryTypeSelect,#CategorySelect {padding: 5px;font-family: Avo;min-width: 140px;text-align: center;font-size: 14px;color:#666;}
+#CategoryTypeSelect,#CategorySelect {padding: 5px;font-family: Avo;min-width: 140px;text-align: center;font-size: 14px;color:#666; max-width:50%;}
 .uk-tab .uk-active a {color:#fff !important;/*border-top-right-radius: 10px !important;border-top-left-radius: 10px !important;*/background-color: #12a9a4 !important;}
 .uk-tab > li > a {padding-left:0.7em;padding-right:0.7em;font-size: 13px;border: 0!important;margin: 0 !important;}
 .uk-tab > li > a:hover {color:#fff;background-color: #12a9a4;}
