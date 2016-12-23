@@ -98,6 +98,14 @@
                         </div>
                     </div>
                 </div>
+                @if (Model.Room?.Image != null)
+                {
+                    <div class="form-group">
+                        <div id="imgdiv">
+                            <img id="image" class="img" src="@Url.GetImageUploadFolder()/@Model.Room.Image.FullFileName" />
+                        </div>
+                    </div>
+                }
             </fieldset>
             <fieldset class="col-md-3">
                 <div class="form-group">
@@ -195,6 +203,7 @@
     @Html.RenderDelayed("TextEditorFull-style")
     @Html.RenderDelayed("jquery-uploads-style")
     @Html.RenderDelayed("FileManager-style")
+    <link href="~/Scripts/Plugins/taggd-master/src/styles/taggd.css" rel="stylesheet"/>
 }
 
 @section scripts {
@@ -204,7 +213,17 @@
     @Html.RenderDelayed("SelectImages-function")
     @Html.RenderDelayed("SelectImages-script")
     @Html.RenderDelayed("FileManager-script")
+
+    <script src="~/Scripts/Plugins/taggd-master/dist/taggd.js"></script>
     <script>
+        $(document).ready(function () {
+            var image = document.getElementById('image');
+            var taggd = new Taggd(image);
+            taggd.enableEditorMode();
+            taggd.
+        });
+
+
         function deleteProduct(productOptionId) {
             $('#@ConstantKeys.PRODUCT_OPTIONS option[value="' + productOptionId + '"]').prop('disabled', false);
             if ($('#@ConstantKeys.PRODUCT_OPTIONS').hasClass('chosen'))

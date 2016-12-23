@@ -4,23 +4,15 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_SharedLayout.cshtml";
     var categories = ViewBag.Categories as IEnumerable<Homeclick.Models.Category>;
-    var categoryValue = Request.RequestContext.RouteData.Values["category_id"];
+    var category_id = Request.Params["category_id"];
 }
 
     <div class="main-body">
-        <div id="projectsGrid" class="clearfix">
-            @foreach (var item in Model)
-            {
-                <div class="project-tile col-xs-6 col-md-4">
-                    <div class="project-tile-image fullscreener fsr-container">
-                        <img width="650" height="420" src="http://masterithaodien.masteri.com.vn/Data/Sites/1/Banner/banner-gioi-thieu.jpg" class="attachment-project-image size-project-image wp-post-image fsr-image fsr-hidden" alt="Helsinki-Central-Library">
-                    </div>
-                    <div class="project-tile-overlay">
-                        <h4>@item.Name</h4>
-                        <a href="' + link + '" class="button tiny">Xem chi tiết <i class="fa fa-search" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            }
+        <div id="container" class="clearfix" data-ref="container">
+
+            <div class="gap" data-ref="first-gap"></div>
+            <div class="gap"></div>
+            <div class="gap"></div>
         </div>
 
         <div class="control-bar">
@@ -43,143 +35,145 @@
         #projectsGrid {
             overflow:hidden;
         }
-        .mix {
-            display: none;
-        }
-        
+
     </style>
 }
 
 @section scripts {
-    <script src="~/Scripts/Plugins/mixitup/jquery.mixitup.js"></script>
-    <script src="~/Scripts/Plugins/mixitup/jquery.mixitup.pagination.min.js"></script>
+    <script src="~/Scripts/Plugins/mixitup/mixitup.min.js"></script>
+    <script type='text/javascript' src="~/Scripts/Plugins/jlinq/jlinq.js"></script>
 
     <script>
-    (function ($) {
-        $.fn.toggleAtrr = function (atrr) {
-            if ($(this).attr('checked'))
-                $(this).removeAttr('checked')
-            else
-                $(this).attr('checked', 'checked');
-        };
-    })(jQuery);
+        var aip = null,
+            mixer = null,
+            data = [],
+            container = document.querySelector('[data-ref="container"]');
+            firstGap = document.querySelector('[data-ref="first-gap"]');
+            var mixState = true;
 
-    var citySelection = $('#projectCitiesSelection');
-    var statesSelection = $('#statesSelection');
+            $('.category-link').bind('click', function (event) {
+                if (mixState) {
+                    var $selectedCategory = $('.category-link.active');
+                    $selectedCategory.removeClass('active');
 
-    var statuCheckers = [
-        $('#statu-true'),
-        $('#statu-false')
-    ];
+                    selectedCategory = this;
+                    $(selectedCategory).addClass('active');
 
-    var filterTextBox = $('#filterTextBox');
-    var filterButton = $('#filterButton');
-    var projectsGrid = $('#projectsGrid');
+                    var category = $(selectedCategory).data('category');
 
-    citySelection.bind("change", function () {
-        //Get states
-        statesSelection.html('');
-        var item = '<option selected value="">Quận</option>';
-        statesSelection.append(item)
+                    filters = [];
+                    var selectedCategory = $('li.category-link.active[data-category]');
+                    if (category && selectedCategory.length != 0)
+                        filters.push({ 'fieldName': 'type', 'fieldValue': selectedCategory.data('category') });
 
-        if ($(this).val()) {
-            var url = '@Url.Action("GetStates", "JSON")';
-            var states = $.getJsonFromUrl(url, { 'city_id': citySelection.val() })
+                    selectChanged(data, filters);
+                }
+                event.preventDefault();
+            });
 
-            for (var i = 0; i < states.length; i++) {
-                item = '<option value="' + states[i].id + '">' + states[i].name + '</option>';
-                statesSelection.append(item);
+
+
+            $("#filterButton").on('click', function () {
+                var filters = [];
+
+                var selectedCategory = $('li.category-link.active[data-category]');
+                if (selectedCategory.length != 0)
+                    filters.push({ 'fieldName': 'type', 'fieldValue': selectedCategory.data('category'), 'valueType': 'int' });
+
+                var $stateSlect = $("#states");
+                if ($stateSlect.val())
+                    filters.push({ 'fieldName': 'state', 'fieldValue': $stateSlect.val() });
+
+                var statusValue = $('input[name="status"]:checked').val();
+                filters.push({ 'fieldName': 'statu', 'fieldValue': statusValue, 'valueType': 'int' });
+
+                var nameValue = $('#filterTextBox').val();
+                if (nameValue)
+                    filters.push({ 'fieldName': 'name', 'fieldValue': nameValue, 'valueType': 'string' });
+
+                selectChanged(data, filters);
+                event.preventDefault();
+            });
+
+            function selectChanged(data, filters) {
+                var result = data;
+
+                for (var i = 0; i < filters.length; i++) {
+                    if (filters[i]['valueType'] == "string")
+                        result = jLinq.from(result).contains(filters[i]['fieldName'], filters[i]['fieldValue']).select();
+                    else
+                        result = jLinq.from(result).equals(filters[i]['fieldName'], parseInt(filters[i]['fieldValue'])).select();
+                }
+                return mixer.dataset(result);
             }
-        }
-        selectChanged();
-    });
 
-    statesSelection.bind("change", function () {
+            function render(item) {
+                var obj = '<div class="project-tile col-sm-6 col-md-4" data-ref="item">' +
+                            '<div class="project-tile-image">' +
+                                '<img width="650" height="420" src="' + item.image + '" class="attachment-project-image size-project-image" alt="">' +
+                            '</div>' +
+                            '<div class="project-tile-overlay">' +
+                                '<h4>' + item.name + '</h4>' +
+                                '<a href="' + item.link + '" class="button tiny">Xem chi tiết <i class="fa fa-search" aria-hidden="true"></i></a>' +
+                            '</div>' +
+                        '</div>'
+                return obj;
+            }
 
-        selectChanged();
-    });
+            jQuery(document).ready(function ($) {
+                var url = '@Url.Action("GetProjectsData")';
 
-    statuCheckers[0].bind("change", function () {
-        $(this).toggleAtrr('checked')
-        selectChanged();
-    });
+                var selectedCategory = $('li.category-link.active[data-category]');
 
-    statuCheckers[1].bind("change", function () {
-        $(this).toggleAtrr('checked')
-        selectChanged();
-    });
+                data = $.getJsonFromUrl(url, { 'category_id': '-1' });
 
-    filterButton.bind("click", function () {
-        selectChanged();
-    });
+                for (var i = 0; i < data.length; i++) {
+                    data[i]['image'] = '@Url.GetImageUploadFolder()' + '/' + data[i]['image'];
+                    data[i]['link'] = '@Url.Action("details")?project_id=' + data[i]['id'];
+                }
 
-    filterTextBox.bind("change", function () {
-        selectChanged();
-    });
+                var currentData = (selectedCategory.length != 0) ?
+                    jLinq.from(data).equals('type', parseInt(selectedCategory.first().data("category"))).select()
+                    : data;
 
-    function selectChanged() {
-        var citySelectionVal = citySelection.val();
-        var statesSelectionVal = statesSelection.val();
-        var filterTextBoxVal = filterTextBox.val();
-        var filter = '';
+                for (var i = 0; i < currentData.length; i++) {
+                    var obj = render(currentData[i]);
+                    $('#container').prepend(obj);
+                }
 
+                mixer = mixitup(container, {
+                    animation: {
+                        queue: true,
+                        queueLimit: 5
+                    },
+                    selectors: {
+                        target: '[data-ref="item"]'
+                    },
+                    layout: {
+                        siblingAfter: firstGap
+                    },
+                    load: {
+                        dataset: currentData
+                    },
+                    data: {
+                        uidKey: 'id'
+                    },
+                    render: {
+                        target: function (item) {
+                            return render(item);
+                        }
+                    },
+                    callbacks: {
+                        onMixStart: function () {
+                            mixState = false;
+                        },
+                        onMixEnd: function(){
+                            mixState = true;
+                        }
+                    }
+                })
 
-        if (filterTextBoxVal) {
-            var manageradiorel = $('input[name="a"]:checked').val();
-            var dataAttrVal = '[data-' + manageradiorel + '*="' + filterTextBox.val().replace(/ /, '-') + '"]';
-            filterTextBox.attr('data-filter', dataAttrVal);
-            filter = filterTextBox.attr('data-filter');
-        }
-        else
-            filterTextBox.attr('data-filter', '');
+            });
 
-        if (category_id != -1)
-            filter = ".category-" + category_id;
-
-        if (citySelection.val()) {
-            filter = filter + ".city-" + citySelectionVal;  
-        }
-
-        if (statesSelectionVal) {
-            filter = filter + ".state-" + statesSelectionVal;
-        }
-
-        if (statuCheckers[0].attr('checked') && statuCheckers[1].attr('checked')) {
-
-        }
-        else if (statuCheckers[0].attr('checked')) {
-            filter = filter + ".status-" + statuCheckers[0].val();
-        }
-        else if (statuCheckers[1].attr('checked')) {
-            filter = filter + ".status-" + statuCheckers[1].val();
-        }
-
-        if (filter == '')
-            filter = 'all';
-
-        container.mixItUp('filter', filter);
-    }
-
-    var container = $('#projectsGrid');
-    var category_id = '@Request.Params["category_id"]';
-
-    $('.category-link').bind('click', function () {
-        category_id = $(this).data('category');
-        var catLinks = $('.category-link');
-        catLinks.removeClass('active');
-        catLinks = catLinks.filter('[data-category=' + category_id + ']');
-        catLinks.addClass('active');
-        selectChanged();
-        event.preventDefault();
-    });
-
-    jQuery(document).ready(function ($) {
-        container.mixItUp({
-            pagination: {
-                limit: 6,
-                generatePagers: !0,
-            },
-        });
-    });
-</script>
+    </script>
 }

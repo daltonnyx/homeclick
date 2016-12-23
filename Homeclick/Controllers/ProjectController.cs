@@ -15,6 +15,9 @@ namespace Homeclick.Controllers
         public ActionResult _Sidebar()
         {
             var categories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProjectType);
+            ViewData["cities"] = db.Cities;
+            ViewData["states"] = db.Districts;
+
             return PartialView(categories);
         }
 
@@ -98,6 +101,32 @@ namespace Homeclick.Controllers
                 result.Add(new { id = collection.Id, name = collection.Title, image = collection.ImageFile.FullFileName });
             }
             return Json(result);
+        }
+
+        [HttpGet]
+        public JsonResult GetProjectsData(int? category_id)
+        {
+            IEnumerable<Project> projects;
+
+            projects = category_id == null || category_id == -1 ? db.Projects.ToList() :
+                                db.Projects.Where(o => o.CategoryId == category_id).ToList();
+
+            var json = new List<object>();
+            foreach (var project in projects)
+            {
+                json.Add(new
+                {
+                    id = project.Id,
+                    name = project.Name,
+                    image = project.PreviewImage.FullFileName,
+                    address = project.Address,
+                    state = project.DistrictId,
+
+                    statu = Convert.ToInt32(project.Status),
+                    type = project.CategoryId,
+                });
+            }
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
     }
 }

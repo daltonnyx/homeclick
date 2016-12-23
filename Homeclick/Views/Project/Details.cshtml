@@ -4,6 +4,22 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_SharedLayout_NoSidebar.cshtml";
 }
+<style>
+    .owl-controls {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        transform: translatey(-50%);
+        margin-top: 0!important;
+    }
+    .owl-prev {
+            float: left;
+    }
+    .owl-next{
+        float: right;
+    }
+</style>
+
 <div class="page-title m-l-15 m-r-15">
     <h1>@Model.Name</h1>
 </div>
@@ -24,7 +40,7 @@
     </div>
     <hr/>
     <h4>Mặt bằng</h4>
-@Html.DropDownList("departments", new SelectList(Model.Departments, "Id", "Name", null), new { })
+@Html.DropDownList("departments", new SelectList(Model.Departments, "Id", "Name", null), new { style="width:100%; margin-bottom:7px;" })
 @{
     var floors = new List<Floor>();
     foreach (var department in Model.Departments)
@@ -42,7 +58,7 @@
         });
     }
 }
-@Html.CustomDropdownList("floors", floorSelectlistItems, null, null, new { })
+@Html.CustomDropdownList("floors", floorSelectlistItems, null, null, new { style = "width:100%; margin-bottom:15px;" })
 @{
     var rooms = new List<Room>();
     foreach (var floor in floors)
@@ -81,12 +97,15 @@
 </div>
 
 <div class="col-md-9">
-    <div class="layout-image" style="width: 100%;">
+    <div class="layout-image m-b-15" style="width: 100%;">
         <img />
     </div>
-    <div id="Collections">
+    <div class="clearfix col-sm-4" style="z-index:9999">
+        <div id="Collections">
 
+        </div>
     </div>
+
     <div id="CollectionDetails">
 
     </div>
@@ -136,48 +155,59 @@
         }).trigger('change');
 
         $collections.on('change', function () {
-
         }).trigger('change');
 
-        var collectionClick = function () {
+
+
+        function collectionClick(id) {
             $('#CollectionDetails').empty();
             $.ajax({
                 url: '@Url.Action("Collection")',
-                data: { 'collection_id': $(this).data('id') },
+                data: { 'collection_id': id },
                 method: 'POST',
                 success: function (data) {
                     $('#CollectionDetails').html(data);
-                    $(".owl-carousel").owlCarousel({
-                        slideSpeed: 300,
-                        paginationSpeed: 400,
-                        singleItem: true
-                    });
                 }
             });
         };
+
         $('.layout-item').on('click', function (event) {
             var $div = $(this);
             var layoutImg = $div.find('img')
             $('.layout-image img').attr('src', $div.find('img').attr('src'));
             $('#Collections').empty();
+            $('#CollectionDetails').empty();
+
             $.ajax({
                 url: '@Url.Action("GetCollections")',
                 data: { 'room_id': $div.data('id') },
                 method: 'POST',
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
-                        var collectionCard = '<div class="collection-card col-xs-6 col-sm-4 col-md-4 col-lg-4" data-id="' + data[i].id + '">' +
+                        var collectionCard = '<div class="collection-card" data-id="' + data[i].id + '">' +
                                                 '<img style="height:auto; width:100%" src="@Url.GetImageUploadFolder()' + data[i].image +'"/>' +
-                                                '<span>' + data[i].name +'</span>' +
                                             '</div>';
                         $('#Collections').append(collectionCard);
                     }
+                    $("#Collections").owlCarousel({
+                        navigation: true,
+                        pagination: false,
+                        slideSpeed: 300,
+                        paginationSpeed: 400,
+                        singleItem: true,
+                        afterMove: function (elem) {
+                            var current = this.currentItem;
+                            var id = elem.find(".owl-item").eq(current).find(".collection-card").data('id');
+                            collectionClick(id);
+                        }
+                    });
 
-                    $('.collection-card').on('click', collectionClick);
+                    collectionClick($('.collection-card').first().data('id'));
                 }
-            });
+            });      
         })
 
+        $('.layout-item').first().click();
     </script>
 
 }

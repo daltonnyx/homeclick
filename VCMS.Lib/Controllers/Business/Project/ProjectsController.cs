@@ -76,6 +76,7 @@ namespace VCMS.Lib.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Project model)
         {
+            
             var messageCollection = new List<Message>();
             if (ModelState.IsValid)
             {
