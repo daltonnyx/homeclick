@@ -221,7 +221,7 @@ span.aqua {color:#12a9a4;}
 }
 
 
-.cd-user-modal {
+.save-modal, .load-modal, .cd-user-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -237,7 +237,31 @@ span.aqua {color:#12a9a4;}
   -moz-transition: opacity 0.3s 0, visibility 0 0.3s;
   transition: opacity 0.3s 0, visibility 0 0.3s;
 }
-.cd-user-modal.is-visible {
+.load-modal .load-table {
+    padding: 1em;
+}
+.load-modal .load-table h3 {
+    margin-top: 5px;
+}
+#canvas-load-table {
+    width: 100%;
+}
+
+#canvas-load-table tr td, #canvas-load-table tr th {
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+#save-export-img {
+    float:right;
+    margin-right: 15px;
+}
+
+#canvas-load-table tr td {
+    padding: 0px;
+}
+
+.load-modal.is-visible, .save-modal.is-visible, .cd-user-modal.is-visible {
   visibility: visible;
   opacity: 1;
   -webkit-transition: opacity 0.3s 0, visibility 0 0;
@@ -252,7 +276,7 @@ span.aqua {color:#12a9a4;}
   transform: translateY(0);
 }
 
-.cd-user-modal-container {
+.save-modal-container, .load-modal-container, .cd-user-modal-container {
   position: relative;
   width: 90%;
   max-width: 600px;
@@ -301,6 +325,8 @@ span.aqua {color:#12a9a4;}
   color: #505260;
 }
 @media only screen and (min-width: 600px) {
+  .load-modal-container,
+  .save-modal-container,
   .cd-user-modal-container {
     margin: 4em auto;
   }

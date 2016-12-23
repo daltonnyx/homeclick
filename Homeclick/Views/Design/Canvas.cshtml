@@ -56,7 +56,7 @@
                     </li>
                     <li class="tab-list wishlist">
                       <div class="wishlist">
-
+                          @Html.Action("LoadWishlists", "User")
                       </div>
                     </li>
                     <li class="tab-list cart">
@@ -70,7 +70,8 @@
         <div class="uk-width-7-10 main-canvas">
             <div class="seperator-big"></div>
             <div class="control-container main-menu">
-                <button class="uk-button" id="saveJSON"">save</button>
+                <button class="uk-button" id="saveJSON">save</button>
+                <button class="uk-button" id="loadJSON">load</button>
                 <button class="uk-button" id="new">Refresh</button>
                 <button class="uk-button" id="print">Export</button>
                 @* <button class="uk-button" id="search">search</button> *@
@@ -225,16 +226,16 @@
                 <!-- log in form -->
                 <form class="cd-form">
                     <p class="fieldset">
-                        <label class="image-replace cd-username" for="signin-email">Username</label>
-                        <input class="full-width has-padding has-border" id="signin-email" name="UserName" type="text" placeholder="Username">
-                        <span class="cd-error-message">Error message here!</span>
+                        <label class="image-replace cd-username" for="signin-email">Email</label>
+                        <input class="full-width has-padding has-border" id="signin-email" name="Email" type="text" placeholder="Email">
+                        <span class="cd-error-message">Email or Password was wrong!</span>
                     </p>
 
                     <p class="fieldset">
                         <label class="image-replace cd-password" for="signin-password">Password</label>
                         <input class="full-width has-padding has-border" id="signin-password" name="Password" type="password" placeholder="Password">
                         <a href="#0" class="hide-password">Show</a>
-                        <span class="cd-error-message">Error message here!</span>
+                        <span class="cd-error-message">Email or Password was wrong!</span>
                     </p>
 
                     <p class="fieldset">
@@ -307,9 +308,49 @@
             <a href="#0" class="cd-close-form">Close</a>
         </div> <!-- cd-user-modal-container -->
     </div> <!-- cd-user-modal -->
+    <div class="load-modal">
+        <div class="load-modal-container">
+            <div class="load-table">
+                <h3>Mở thiết kế</h3>
+                <table class="open-table" id="canvas-load-table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tiêu đề</th>
+                            <th>Cập nhật cuối</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="save-modal">
+        <div class="save-modal-container">
+            <div id="form-save">
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <input type="text" name="canva_name" id="save-name" class="full-width has-padding has-border" placeholder="Tên thiết kế" />
+                    </p>
+                    <p class="fieldset">
+                        <input class="full-width has-padding" type="submit" value="Lưu thiết kế">
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
     <div id="export-modal" class="uk-modal">
         <div class="uk-modal-dialog">
             <a class="uk-modal-close uk-close"></a>
+            <select id="res-list" name="res_list">
+                <option value="">default</option>
+                <option value="1280">1280w</option>
+                <option value="1920">1920w</option>
+                <option value="2048">2048w</option>
+            </select>
+            <button class="uk-button uk-button-primary" id="save-export-img">Save as</button>
             <img src="" id="export-img">
         </div>
     </div>

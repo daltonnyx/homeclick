@@ -389,7 +389,7 @@ jQuery(document).ready(function ($) {
 
 
     //   //Setting wall
-    var svgLink = 'http://localhost:1868/areas/manager/' + $("#canvas-data").val();
+    var svgLink = window.location.protocol + '//' + window.location.host + '/areas/manager/' + $("#canvas-data").val();
     var polWall = {};
     fabric.GroupLiPolygon.fromURL(svgLink, {
         originX: "left",
@@ -949,27 +949,53 @@ jQuery(document).ready(function ($) {
         });
     });
 
-    jQuery("#print").on("click", function (e) {
-        e.preventDefault();
+    var getExportImage = function(width) {
         var borderFit = 100 // For fit whole polWall;
         var oldWidth = canvas.getWidth(), oldHeight = canvas.getHeight();
         fit_to_screen(false);
         canvas.setWidth(polWall.width + borderFit);
         canvas.setHeight(polWall.height + borderFit);
-        
+        var multiple = width == undefined ? 1 : width / canvas.getWidth();
         var dataURL = canvas.toDataURL({
             format: 'png',
-            multiplier: 1,
+            multiplier: multiple,
             width: polWall.width + borderFit,
             height: polWall.height + borderFit,
         });
         canvas.setWidth(oldWidth);
         canvas.setHeight(oldHeight);
+        return dataURL;
+    };
+
+    jQuery("#print").on("click", function (e) {
+        e.preventDefault();
+        var dataURL = getExportImage();
         var $exportImg = $("#export-img");
         var $exportModal = UIkit.modal("#export-modal");
         $exportImg.attr("src", dataURL);
         $exportModal.show();
 
+    });
+
+    jQuery("#res-list").on("change", function (e) {
+        e.preventDefault();
+        var width = jQuery(e.target).val();
+        var dataURL = getExportImage(width);
+        var $exportImg = $("#export-img");
+        $exportImg.attr("src", dataURL);
+    });
+
+    jQuery("#save-export-img").on("click", function (e) {
+        // Construct the <a> element
+        var link = document.createElement("a");
+        link.download = "image.png";
+        // Construct the uri
+        link.href = $("#export-img").attr("src");
+        document.body.appendChild(link);
+        link.click();
+        // Cleanup the DOM
+        document.body.removeChild(link);
+        delete link;
     });
 
     jQuery("#loadJSON").click(function (e) {//Load
@@ -2103,7 +2129,7 @@ jQuery(document).ready(function ($) {
                 });
             }
         })
-        .fail(function (response, status, xhr) {
+        .fail(function (xhr, status, response) {
             if (xhr.status == 403) {
                 $form_modal.addClass('is-visible');
                 login_selected();
@@ -2423,7 +2449,7 @@ jQuery(document).ready(function ($) {
         //$form_login.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
 
         jQuery(this).addClass('loading');
-        jQuery.post('/Account/AjaxLogin', { model: $form_login.find('form').serialize() }, function (data, status, xhr) {
+        jQuery.post('/Account/ApiLogin', $form_login.find('form').serialize(), function (data, status, xhr) {
             $save_modal.addClass('is-visible');
             $form_modal.removeClass('is-visible');
         }).fail(function () {

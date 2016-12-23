@@ -173,6 +173,7 @@
     <Compile Include="Models\Business\ViewModels\Product\FeatureProductViewModel.cs" />
     <Compile Include="Models\Business\ViewModels\Product\ProductOptionViewModel.cs" />
     <Compile Include="Models\Business\ViewModels\SaleViewModel.cs" />
+    <Compile Include="Models\Business\Wishlist.cs" />
     <Compile Include="Models\Core\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Core\ApplicationUser.cs" />
