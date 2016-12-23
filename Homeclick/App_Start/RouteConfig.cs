@@ -17,7 +17,7 @@ namespace Homeclick
                 "Manager_Redirect",
                 "Manager",
                 new { area = "Manager", controller = "Dashboard", action = "Index" }
-            );
+            ).DataTokens.Add("area","Manager");
 
             routes.MapRoute(
                 name: "Default",

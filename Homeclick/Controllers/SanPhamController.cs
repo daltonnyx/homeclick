@@ -37,20 +37,22 @@ namespace Homeclick.Controllers
             return View(listcategory);
         }
 
-        public ActionResult CanvasList(int? cat_id, int? type_id)
+        public ActionResult CanvasList(int? room, int? type)
         {
             IList<Product> products = (from product in db.Products
                                        where product.Status == true
                                       select product).ToList<Product>();
 
-            if(cat_id != null)
-            {
-                products = db.Categories.Find(cat_id).Products.Where<Product>(p => p.Status == true).ToList<Product>();
-            }
-            if(type_id != null)
+            if(room != null)
             {
                 products = (from product in products
-                            where product.Status == true
+                            where product.Categories.Select<Category,int>(c => c.Id).ToList<int>().Contains(room.Value)
+                            select product).ToList<Product>();
+            }
+            if(type != null)
+            {
+                products = (from product in products
+                            where product.Categories.Select<Category,int>(c => c.Id).ToList<int>().Contains(type.Value)
                             select product).ToList<Product>();
             }
             return PartialView(products);
