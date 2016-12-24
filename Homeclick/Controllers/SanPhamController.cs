@@ -52,7 +52,7 @@ namespace Homeclick.Controllers
             if(type != null)
             {
                 products = (from product in products
-                            where product.Categories.Select<Category,int>(c => c.Id).ToList<int>().Contains(type.Value)
+                            where product.ProductType.Id == type
                             select product).ToList<Product>();
             }
             return PartialView(products);
