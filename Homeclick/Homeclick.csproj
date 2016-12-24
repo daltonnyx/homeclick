@@ -1131,7 +1131,6 @@
     <Content Include="Views\User\LoadWishlists.cshtml" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\SanPham\CanvasList.cshtml" />
-    <Content Include="Views\SanPham\_CanvasList.cshtml" />
     <Content Include="Views\Project\Details.cshtml" />
     <Content Include="Views\SanPham\AjaxProductDetail.cshtml" />
     <Content Include="Views\SanPham\Category.cshtml" />

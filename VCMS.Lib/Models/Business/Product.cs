@@ -1,6 +1,7 @@
 namespace VCMS.Lib.Models
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -127,6 +128,17 @@ namespace VCMS.Lib.Models
                     
             }
             return dic;
+        }
+
+        public IEnumerable<SimpleProductOptionViewModel> SimpleProductOptions()
+        {
+            IList<SimpleProductOptionViewModel> options = new List<SimpleProductOptionViewModel>();
+
+            foreach(Product_Option option in this.Product_Options)
+            {
+                options.Add(new SimpleProductOptionViewModel { Id = option.Id, Name = option.Name, Description = option.Description, PreviewImage = option.PreviewImage.FullFileName, Status = option.Status });
+            }
+            return options;
         }
     }
 
