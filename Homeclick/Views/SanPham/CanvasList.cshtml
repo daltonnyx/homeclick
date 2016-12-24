@@ -1,4 +1,5 @@
 ﻿@using VCMS.Lib.Models
+@using Newtonsoft.Json
 @model IEnumerable<Product>
 
 @{
@@ -8,6 +9,7 @@
 @foreach (Product product in Model)
 {
     var detail = product.DetailsToDictionary();
+    string variants = JsonConvert.SerializeObject(product.SimpleProductOptions());
     if (detail.Keys.SingleOrDefault<string>(s => s == "data") == null)
     {
         continue;
@@ -20,12 +22,14 @@
                data-pid="@product.Id"
                data-init="@if (detail.Keys.SingleOrDefault<string>(s => s == "initScale") != null) {@detail["initScale"]} else { <text>0.18</text> }"
                data-pid="@product.Id" data-svg="@Url.GetImageUploadFolder()@(detail["data"]).svg"
+               data-variants="@variants"
                data-can-scale="@if (detail.Keys.SingleOrDefault<string>(s => s == "scale") != null) {@detail["scale"]}">
                 <img src="@Url.GetImageUploadFolder()@product.Image.FullFileName"
                      data-image="@Url.GetImageUploadFolder()@product.Image.FullFileName"
                      class="svg-item"
                      data-name="@product.Name"
                      data-pid="@product.Id"
+                     data-variants="@variants"
                      data-init="@if (detail.Keys.SingleOrDefault<string>(s => s == "initScale") != null) {@detail["initScale"]} else { <text>0.18</text> }"
                      data-name="@product.Name"
                      data-svg="@Url.GetImageUploadFolder()@(detail["data"]).svg"
@@ -39,6 +43,7 @@
                class="product-link svg-item"
                data-name="@product.Name"
                data-pid="@product.Id"
+               data-variants="@variants"
                data-init="@if (detail.Keys.SingleOrDefault<string>(s => s == "initScale") != null) {@detail["initScale"]} else { <text>0.18</text> }"
                data-image="@Url.GetImageUploadFolder()@product.Image.FullFileName"
                data-svg="@Url.GetImageUploadFolder()@(detail["data"]).svg"

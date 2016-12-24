@@ -577,3 +577,20 @@ span.aqua {color:#12a9a4;}
 #furnitures div.cart .product + .product {
     border-top: 1px dotted #666;
 }
+
+.product-area .label, .product-area span, .product-price .label, .product-price span {color: #666;padding-left:0px; font-size: 12px;}
+
+.object-control .product-detail > * {line-height: 24px;}
+
+.product-link {
+    height: 24px;
+}
+
+.product-options {
+    padding-right: 15px;
+}
+
+#product-options {
+    width: 100%;
+    padding: 3px 5px;
+}

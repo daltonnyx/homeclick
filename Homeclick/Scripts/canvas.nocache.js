@@ -23,7 +23,7 @@ jQuery(document).ready(function ($) {
     // init object and variable
     var canvas = new fabric.Canvas('tutorial');
     var canvasObj = $("#tutorial");
-    var p, isDragable = false, src, srcW, srcH, srcName, srcImage, initScale, srcPId, srcZdata, srcPrice, srcScale, centerX, centerY, _isInside = false, srcOnWall;
+    var p, isDragable = false, src, srcW, srcH, srcName, srcVariants, srcImage, initScale, srcPId, srcZdata, srcPrice, srcScale, centerX, centerY, _isInside = false, srcOnWall;
     const srcMultiple = 1;
     var isInside = function (p, obj) {
         if (typeof (p) == 'undefined' || p == null)
@@ -94,6 +94,7 @@ jQuery(document).ready(function ($) {
         srcName = $(event.target).data("name");
         srcScale = $(event.target).data("can-scale");
         srcPId = $(event.target).data('pid');
+        srcVariants = $(event.target).data('variants');
         srcZdata = $(event.target).data("zdata");
         srcImage = $(event.target).data('image');
         srcPrice = $(event.target).data('price');
@@ -152,6 +153,7 @@ jQuery(document).ready(function ($) {
                 obj.zData = srcZdata;
                 obj.realImage = srcImage;
                 obj.pId = srcPId;
+                obj.variants = srcVariants;
                 obj.price = srcPrice;
                 obj.scale(initScale);
                 obj.initScale = initScale;
@@ -281,7 +283,8 @@ jQuery(document).ready(function ($) {
             });
             control.show(200);
             control.addClass('floor-control');
-            control.find("h4.product-name").text(pWall.ProName);
+            control.find("h4.product-name").text(pWall.ProName == undefined ? pWall.ProName : "San");
+            control.find(".product-options").css("display", "none");
             control.find(".product-area span.value").text(area + "m2");
             control.find(".product-price .value").text(currencyFormat(area * pWall.floorPrice));
         }
@@ -326,7 +329,7 @@ jQuery(document).ready(function ($) {
         control.find(".product-image").html('');
         control.find(".product-price .value").text('');
         control.find('.product-price').css('display', 'block');
-        
+        control.find(".product-options").css("display", "block");
         
         jQuery(".width-dimession").text((obj.getWidth() / 100).toFixed(2) + ' m');
         jQuery(".height-dimession").text((obj.getHeight() / 100).toFixed(2) + ' m');
@@ -340,6 +343,15 @@ jQuery(document).ready(function ($) {
             $(realImg).css('width', '100%');
             control.find(".product-image").html(realImg);
         }
+
+        if (typeof obj.variants != 'undefined' && obj.variants != undefined) {
+            var $optionsSelect = $("#product-options");
+            $optionsSelect.html('');
+            for (var i = 0; i < obj.variants.length; i++) {
+                $optionsSelect.append('<option value="' + i + '">' + obj.variants[i].Name + '</option>')
+            }
+        }
+
         if (typeof obj.price != 'undefined' && obj.price.length > 0)
             control.find('.product-price .value').text(currencyFormat(obj.price));
         if (canvas._activeGroup != null) //Disable width, height and color control when multiple objects is selected
@@ -908,6 +920,7 @@ jQuery(document).ready(function ($) {
                   'price',
                   'pId',
                   'realImage',
+                  'variants',
                   'isLock',
                   'initScale',
                   'scale',
@@ -2511,6 +2524,7 @@ fabric.Path.makeClone = function (o, cOffset, ca) { // Custom clone object funct
         c.ProName = o.ProName;
         c.zData = o.zData;
         c.realImage = o.realImage;
+        c.variants = o.variants;
         c.price = o.price;
         c.isLock = o.isLock;
         c.pId = o.pId;
