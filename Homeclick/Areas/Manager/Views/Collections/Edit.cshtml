@@ -32,16 +32,16 @@
                 <div class="form-group">
                     <h3>Slide Images</h3>
                     @{
-                        var paramFiles = new Dictionary<string, object>
+                        var paramFiles = new
                         {
-                            { "Files", Model?.Files != null ? Model.Files.Select(o => o.FullFileName) : null },
-                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.SlideImages).ToString() },
-                            { "Multiple", true },
-                            { "Accept" , "image/*"},
-                            { "FileManagerId", "#lgx94" },
-                            { "ContainerId", "Images" }
+                            Value = Model?.Files != null ? Model.Files.Select(o => o.FullFileName) : null,
+                            FieldName = Html.NameFor(m => m.SlideImages).ToString(),
+                            Multiple = true ,
+                            Accept = "image/*",
+                            FileManagerId = "#lgx94",
+                            ContainerId = "Images"
                         };
-                        @Html.Partial("Widgets/SelectImages", paramFiles)
+                        @Html.Partial("Widgets/SelectFiles", paramFiles)
                     }
                 </div>
                 <hr />
@@ -104,6 +104,11 @@
                         <div id="imgdiv">
                             <img id="image" class="img" src="@Url.GetImageUploadFolder()/@Model.Room.Image.FullFileName" />
                         </div>
+                        <div>
+                            <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="360" data-slider-step="1" data-slider-value="14" />
+                            <span class="btn btn-default" da data-action="add-image" data-toggle="modal" data-target="#lgx94" data-field-name="popupImages" data-is-customfield="true" data-multiple="false"><i class="fa fa-image"></i></span>
+                            <span class="btn btn-default" data-action="delete"><i class="fa fa-trash"></i></span>
+                        </div>
                     </div>
                 }
             </fieldset>
@@ -142,15 +147,14 @@
                 <div class="form-group">
                     @{
                         <h3>Preview Image</h3>
-                        param = new Dictionary<string, object>
+                        @Html.Partial("Widgets/SelectFiles",
+                        new
                         {
-                            { "File", Model?.ImageFile != null ? Model.ImageFile.FullFileName : string.Empty },
-                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.ImageId).ToString() },
-                            { "Multiple", false },
-                            { "Accept" , "image/*"},
-                            { "FileManagerId", "#lgx94" }
-                        };
-                        @Html.Partial("Widgets/SelectImages", param)
+                            Value = Model?.ImageFile != null ? Model.ImageFile.FullFileName : string.Empty,
+                            FieldName = Html.NameFor(m => m.ImageId).ToString(),
+                            Accept = "image/*",
+                            FileManagerId = "#lgx94"
+                        })
                     }
                 </div>
                 <hr />
@@ -203,7 +207,23 @@
     @Html.RenderDelayed("TextEditorFull-style")
     @Html.RenderDelayed("jquery-uploads-style")
     @Html.RenderDelayed("FileManager-style")
-    <link href="~/Scripts/Plugins/taggd-master/src/styles/taggd.css" rel="stylesheet"/>
+    <link href="~/Content/lib/bootstrap-slider-master/dist/css/bootstrap-slider.css" rel="stylesheet" />
+    <link href="~/Content/lib/taggd-master/dist/taggd.css" rel="stylesheet" />
+    <style>
+        .taggd__button {
+            width: 0;
+            height: 0;
+            background-color: transparent;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 30px solid black;
+        }
+        .taggd-clicked {
+            border-bottom: 30px solid red;
+        }
+        
+    </style>
+
 }
 
 @section scripts {
@@ -213,16 +233,91 @@
     @Html.RenderDelayed("SelectImages-function")
     @Html.RenderDelayed("SelectImages-script")
     @Html.RenderDelayed("FileManager-script")
-
-    <script src="~/Scripts/Plugins/taggd-master/dist/taggd.js"></script>
+    <script src="~/Content/lib/bootstrap-slider-master/dist/bootstrap-slider.js"></script>
+    <script src="~/Content/lib/taggd-master/dist/taggd.js"></script>
     <script>
         $(document).ready(function () {
             var image = document.getElementById('image');
-            var taggd = new Taggd(image);
+            var settings = {
+                show: 'none',
+                hide: 'mouseleave',
+            };
+
+            //var taggd = $(image).taggd();
+            var taggd = new Taggd(image, settings);
+
             taggd.enableEditorMode();
-            taggd.
         });
 
+        var lastTaggdButtonClicked = null;
+        function taggdButtonClicked(elem) {
+            if (lastTaggdButtonClicked)
+                $(lastTaggdButtonClicked).removeClass("taggd-clicked")
+
+            $(elem).addClass("taggd-clicked");
+
+            var rotateVal = $(elem).data("rotate");
+            $('#ex1').slider('setValue', rotateVal);
+
+            lastTaggdButtonClicked = elem;
+        };
+
+        //Slider
+        var slider = $('#ex1').slider({
+            formatter: function (value) {
+                return 'Current value: ' + value;
+            }
+        }).change(function (evt) {
+            var newValue = evt.value.newValue;
+            var oldValue = evt.value.oldValue;
+            if (lastTaggdButtonClicked) {
+                $(lastTaggdButtonClicked).css({
+                    "transform": "rotate(" + newValue + "deg)"
+                });
+                $(lastTaggdButtonClicked).data("rotate", newValue);
+            }
+        });
+
+        //Delete marker
+        $('span[data-action="delete"').on("click", function () {
+            if (lastTaggdButtonClicked) {
+                $(lastTaggdButtonClicked).remove();
+            }
+        });
+        $('span[data-action="add-image"').on("click", function () {
+            var handler = $(this);
+            if (lastTaggdButtonClicked) {
+                if (!$(lastTaggdButtonClicked).attr("id")) {
+                    var random = randomString(5, 'Aa');
+                    $(lastTaggdButtonClicked).attr("id", random);
+                    $(lastTaggdButtonClicked).data("insert-target", "#" + random);
+                }
+                $(this).data("container-id", $(lastTaggdButtonClicked).attr("id"));
+            }
+        });
+
+        $('form').submit(function (evt) {
+            var inputs = $('input[name="popupImages"]');
+            for (var i = 0; i < inputs.length; i++) {
+                var $parent = $(inputs[i]).parents(".taggd__button");
+                $parent.addClass('form-group-custom-field');
+                var parentId = $parent.data("id");
+                var json = {};
+                json.positionX = parseFloat($parent.css("left")) / 1000;
+                json.positionY = parseFloat($parent.css("top")) / 1000;
+                json.rotate = $parent.data("rotate");
+                json.image = $(inputs[i]).val();
+
+                var jsonStr = JSON.stringify(json).replace(/"/g, "'");
+
+                $parent.append('<input name="Post_Details[0].Id" value="' + parentId != null ? parentId : 0 + '"/>')
+                $parent.append('<input name="Post_Details[0].Name" value="popupImages"/>')
+                $parent.append('<input name="Post_Details[0].Value" value="' + jsonStr + '"/>')
+
+                $(inputs[i]).val(json);
+                refreshForm('#' + $parent.attr('id'));
+            }
+        });
 
         function deleteProduct(productOptionId) {
             $('#@ConstantKeys.PRODUCT_OPTIONS option[value="' + productOptionId + '"]').prop('disabled', false);

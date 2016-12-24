@@ -1551,8 +1551,9 @@ var Tag = function (_EventEmitter) {
 
     var _this = (0, _possibleConstructorReturn3.default)(this, (Tag.__proto__ || (0, _getPrototypeOf2.default)(Tag)).call(this));
 
-    _this.buttonElement = document.createElement('button');
+    _this.buttonElement = document.createElement('span');
     _this.buttonElement.classList.add('taggd__button');
+    _this.buttonElement.addEventListener("click", function () { taggdButtonClicked(this); });
 
     _this.popupElement = document.createElement('span');
     _this.popupElement.classList.add('taggd__popup');
