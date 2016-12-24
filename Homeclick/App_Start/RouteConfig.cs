@@ -16,9 +16,8 @@ namespace Homeclick
             routes.MapRoute(
                 "Manager_Redirect",
                 "Manager",
-                new {controller = "Dashboard", action = "Index" },
-                namespaces: new string[] { "VCMS.Lib" }
-            );
+                new { area = "Manager", controller = "Dashboard", action = "Index" }
+            ).DataTokens.Add("area","Manager");
 
             routes.MapRoute(
                 name: "Default",
