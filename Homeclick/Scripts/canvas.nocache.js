@@ -873,6 +873,13 @@ jQuery(document).ready(function ($) {
 
     });
 
+    $("#product-options").on("change", function (e) {
+        e.preventDefault();
+        index = $(e.target).val();
+        $productImage = $(".object-control .product-image img");
+        $productImage.attr("src", window.location.protocol + '//' + window.location.host + '/areas/manager/uploads/images/' + canvas.getActiveObject().variants[index].PreviewImage);
+    });
+
     $save_modal.click(function (event) {
         if ($(event.target).is($save_modal) || $(event.target).is('.cd-close-form')) {
             $save_modal.removeClass('is-visible');
@@ -2085,30 +2092,28 @@ jQuery(document).ready(function ($) {
     ////////////////            End Camera Section            //////////////////
     ////////////////////////////////////////////////////////////////////////////
 
-    jQuery(".object-control .product-container").on('click', '.view-detail', function (event) {
-        event.preventDefault();
-        var activeObj = canvas.getActiveObject();
-        if (activeObj == null && activeObj == undefined) return;
-        var pId = activeObj.pId;
-        if (pId != undefined) {
-            jQuery.ajax({
-                url: '/homeclick/SanPham/AjaxProductDetail/' + pId.toString(),
-                type: 'get',
-                dataType: 'html',
-
-            })
-            .done(function (response) {
-                jQuery(".object-control").hide(200);
-                showPopUp(response);
-            })
-            .fail(function () {
-                alert("Something was wrong! Try again later!")
-            })
-            .always(function () {
-                console.log("complete");
-            });
-
-        }
+    $(".object-control").on("click", ".view-detail", function (e) {
+        e.preventDefault();
+        var productId = canvas.getActiveObject().pId;
+        var targetId = "quickview-container";
+        $(e.delegateTarget).hide(200);
+        $.ajax({
+            url: "/sanPham/ajaxproductdetail?id=" + productId,
+            type: 'GET',
+            dataType: 'html',
+            data: {},
+        }).done(function (data) {
+            console.log("success");
+            var e = document.getElementById(targetId);
+            $(e).html(data);
+            UIkit.modal("#quickview-modal").show();
+        })
+        .fail(function () {
+            console.log("error");
+        })
+        .always(function () {
+            console.log("complete");
+        });
     });
 
     jQuery(".object-control .product-container").on("click", ".add-to-wishlist", function (e) {

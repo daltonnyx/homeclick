@@ -48,7 +48,7 @@
                    data-can-scale="@if (detail.Keys.SingleOrDefault<string>(s => s == "scale") != null) {@detail["scale"]}"
                    data-zData="@if (detail.Keys.SingleOrDefault<string>(s => s == "zdata") != null) {@detail["zdata"]}"
                    data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null) {@detail["gia"]}">
-                    <h3 class="product-title">@wishlist.Product.Name</h3>
+                    <h3 class="product-title" data-pid="@wishlist.Product.Id">@wishlist.Product.Name</h3>
                 </a>
                 <a href="#" class="uk-button wishlist-remove">Xóa</a>
             </div>
