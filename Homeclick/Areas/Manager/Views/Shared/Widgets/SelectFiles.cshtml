@@ -24,7 +24,7 @@
     var IsCustomField = dic.ContainsKey("IsCustomField") ? (bool)dic["IsCustomField"] : false;
     var DetailName = dic.ContainsKey("DetailName") ? dic["DetailName"] as string : string.Empty;
     var StartIndex = dic.ContainsKey("StartIndex") ? (int)dic["StartIndex"] : -1;
-    var ContainerId = dic.ContainsKey("ContainerId") ? (string)dic["ContainerId"] : Html.RandomString(random.Next(5, 10) + ((IsCustomField) ? StartIndex : 0));
+    var ContainerId = dic.ContainsKey("ContainerId") ? (string)dic["ContainerId"] : Guid.NewGuid().ToString().Replace("-", "_");
 }
 
     <div id="@ContainerId" data-is-customfield="@IsCustomField.ToString().ToLower()" @Html.Raw(DetailName !=string.Empty ? string.Format("data-detail-name='{0}'", DetailName) : string.Empty)>
