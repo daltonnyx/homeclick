@@ -98,7 +98,7 @@
 
 <div class="col-md-9">
     <div class="layout-image m-b-15" style="width: 100%;">
-        <img />
+        <img id="image"/>
     </div>
     <div class="clearfix col-sm-4" style="z-index:9999">
         <div id="Collections">
@@ -121,11 +121,14 @@
 @section styles {
     @Styles.Render("~/content/lib/owl-carousel/css")
     <link rel="stylesheet" href="~/Scripts/Plugins/slick/slick-theme.css" />
+    <link href="~/Content/lib/taggd-master/dist/taggd.css" rel="stylesheet" />
 }
 
 @section scripts {
     @Scripts.Render("~/content/lib/owl-carousel/js")
     <script src="~/Scripts/Plugins/slick/slick.min.js"></script>
+    <script src="~/Content/lib/taggd-master/dist/taggd.js"></script>
+
     <script>
         var $departments = $('#departments'),
 		    $floors = $('#floors'),
@@ -157,8 +160,6 @@
         $collections.on('change', function () {
         }).trigger('change');
 
-
-
         function collectionClick(id) {
             $('#CollectionDetails').empty();
             $.ajax({
@@ -169,6 +170,7 @@
                     $('#CollectionDetails').html(data);
                 }
             });
+
         };
 
         $('.layout-item').on('click', function (event) {
@@ -208,6 +210,9 @@
         })
 
         $('.layout-item').first().click();
+
+        $('a')
+
     </script>
 
 }

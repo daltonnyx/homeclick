@@ -9,7 +9,6 @@
 
     <div class="main-body">
         <div id="container" class="clearfix" data-ref="container">
-
             <div class="gap" data-ref="first-gap"></div>
             <div class="gap"></div>
             <div class="gap"></div>
@@ -35,7 +34,6 @@
         #projectsGrid {
             overflow:hidden;
         }
-
     </style>
 }
 
@@ -128,7 +126,7 @@
                 data = $.getJsonFromUrl(url, { 'category_id': '-1' });
 
                 for (var i = 0; i < data.length; i++) {
-                    data[i]['image'] = '@Url.GetImageUploadFolder()' + '/' + data[i]['image'];
+                    data[i]['image'] = '@Url.GetImageUploadFolder()' + data[i]['image'];
                     data[i]['link'] = '@Url.Action("details")?project_id=' + data[i]['id'];
                 }
 

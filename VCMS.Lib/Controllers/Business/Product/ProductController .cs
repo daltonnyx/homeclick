@@ -187,7 +187,7 @@ namespace VCMS.Lib.Controllers
                 var exceptDetailIds = existDetailId.Except(model.Product_Details.Select(o => o.Id)).ToList();
                 foreach (var exceptDetailId in exceptDetailIds)
                 {
-                    var details = db.Product_Options_Details.Find(exceptDetailId);
+                    var details = db.Product_details.Find(exceptDetailId);
                     if (details != null)
                         db.Entry(details).State = System.Data.Entity.EntityState.Deleted;
                 }

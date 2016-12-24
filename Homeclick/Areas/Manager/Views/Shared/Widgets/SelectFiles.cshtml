@@ -104,6 +104,10 @@
         {
             <div class="file-upload-empty" @Html.Raw((Value != null) ? "style='display:none'" : "")>
                 <span><i>No selected file</i></span>
+                @if (IsCustomField)
+                {
+                    <input type="hidden" name="@(string.Format("{0}[{1}]", FieldName, 0) + ".Name")" value="empty" />
+                }
             </div>
         }
 
