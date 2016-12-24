@@ -1133,6 +1133,7 @@
     <Content Include="Content\lib\taggd-master\dist\taggd.min.js.map" />
     <Content Include="Content\lib\taggd-master\docs\options.md" />
     <Content Include="Views\User\LoadWishlists.cshtml" />
+    <Content Include="Views\Design\_ProductTypes.cshtml" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\SanPham\CanvasList.cshtml" />
     <Content Include="Views\Project\Details.cshtml" />
