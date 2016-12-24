@@ -206,7 +206,7 @@ fabric.LiPolygon = fabric.util.createClass(fabric.Polygon,{ //Need to assign cla
     for (var i = 2; i <= lop.length - 1; i++) {
       Stotal += this.retangleArea(lop[0],lop[i - 1],lop[i]);
     };
-    return Stotal - Ssub;
+    return Math.abs(Stotal - Ssub);
 
   },
   retangleArea: function(a,b,c){
