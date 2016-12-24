@@ -91,6 +91,21 @@ namespace Homeclick.Controllers
             return HttpNotFound();
         }
 
+        public JsonResult CollectionImages(int? collection_id)
+        {
+            var list = new List<string>();
+
+            if (collection_id != null)
+            {
+                var collection = db.Posts.Find(collection_id);
+                foreach (var item in collection.Post_Details.Where(o => o.Name == "popupImages"))
+                {
+                    list.Add(item.Value);
+                }
+            }
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult GetCollections(int room_id)
         {

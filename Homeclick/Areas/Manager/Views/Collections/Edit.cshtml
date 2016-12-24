@@ -29,21 +29,22 @@
                     @Html.TextAreaFor(model => model.Content, new { @class = "form-control text-editor" })
                 </div>
                 <hr />
-                <div class="form-group">
-                    <h3>Slide Images</h3>
-                    @{
-                        var paramFiles = new
-                        {
-                            Value = Model?.Files != null ? Model.Files.Select(o => o.FullFileName) : null,
-                            FieldName = Html.NameFor(m => m.SlideImages).ToString(),
-                            Multiple = true ,
-                            Accept = "image/*",
-                            FileManagerId = "#lgx94",
-                            ContainerId = "Images"
-                        };
-                        @Html.Partial("Widgets/SelectFiles", paramFiles)
-                    }
-                </div>
+                @*
+    <div class="form-group">
+        <h3>Slide Images</h3>
+        @{
+            var paramFiles = new
+            {
+                Value = Model?.Files != null ? Model.Files.Select(o => o.FullFileName) : null,
+                FieldName = Html.NameFor(m => m.SlideImages).ToString(),
+                Multiple = true ,
+                Accept = "image/*",
+                FileManagerId = "#lgx94",
+                ContainerId = "Images"
+            };
+            @Html.Partial("Widgets/SelectFiles", paramFiles)
+        }
+                </div>*@
                 <hr />
                 <div class="form-group">
                     <h3>Products</h3>
@@ -303,8 +304,8 @@
                 $parent.addClass('form-group-custom-field');
                 var parentId = $parent.data("id");
                 var json = {};
-                json.positionX = parseFloat($parent.css("left")) / 1000;
-                json.positionY = parseFloat($parent.css("top")) / 1000;
+                json.positionX = parseFloat($parent.css("left"));
+                json.positionY = parseFloat($parent.css("top"));
                 json.rotate = $parent.data("rotate");
                 json.image = $(inputs[i]).val();
 
