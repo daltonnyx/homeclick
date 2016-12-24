@@ -13,16 +13,18 @@
 @model object
 
 @{ 
+    var random = new Random();
+
     var dic = Model.ToDictionary();
     var Value = dic.ContainsKey("Value") ? dic["Value"] : null;
     var FieldName = dic["FieldName"] as string;
     var Multiple = dic.ContainsKey("Multiple") ? (bool)dic["Multiple"] : false;
-    var ContainerId = dic.ContainsKey("ContainerId") ? (string)dic["ContainerId"] : Html.RandomString(32);
     var Accept = dic.ContainsKey("Accept") ? dic["Accept"] as string : string.Empty;
     var FileManagerId = dic.ContainsKey("FileManagerId") ? dic["FileManagerId"] as string : null;
     var IsCustomField = dic.ContainsKey("IsCustomField") ? (bool)dic["IsCustomField"] : false;
     var DetailName = dic.ContainsKey("DetailName") ? dic["DetailName"] as string : string.Empty;
     var StartIndex = dic.ContainsKey("StartIndex") ? (int)dic["StartIndex"] : -1;
+    var ContainerId = dic.ContainsKey("ContainerId") ? (string)dic["ContainerId"] : Html.RandomString(random.Next(5, 10) + ((IsCustomField) ? StartIndex : 0));
 }
 
     <div id="@ContainerId" data-is-customfield="@IsCustomField.ToString().ToLower()" @Html.Raw(DetailName !=string.Empty ? string.Format("data-detail-name='{0}'", DetailName) : string.Empty)>
@@ -71,15 +73,15 @@
             {
                 if (!Multiple && Value != null)
                 {
-                    var fileDic = Value.ToDictionary();
-                    var fileName = fileDic.ContainsKey("FileName") ? fileDic["FileName"].ToString() : string.Empty;
-                    var fieldName = string.Format("{0}[{1}]", FieldName, StartIndex);
 
-                    var fileId = Path.GetFileNameWithoutExtension(fileName);
                     <div class="file-uploaded-single img-thumbnail">
-                        <img src="@Url.GetImageUploadFolder()@fileName">
                         @if (IsCustomField)
                         {
+                            var fileDic = Value.ToDictionary();
+                            var fileName = fileDic.ContainsKey("FileName") ? fileDic["FileName"].ToString() : string.Empty;
+                            var fieldName = string.Format("{0}[{1}]", FieldName, StartIndex);
+                            var fileId = Path.GetFileNameWithoutExtension(fileName);
+                            <img src="@Url.GetImageUploadFolder()@fileName">
                             if (fileDic.ContainsKey("DetailId"))
                             {
                                 <input type="hidden" name="@(fieldName + ".Id")" value="@fileDic["DetailId"]" />
@@ -90,7 +92,9 @@
                         }
                         else
                         {
-                            <input type="hidden" name="@fieldName" value="@fileId" />
+                            var fileId = Path.GetFileNameWithoutExtension(Value.ToString());
+                            <img src="@Url.GetImageUploadFolder()@Value.ToString()">
+                            <input type="hidden" name="@FieldName" value="@fileId" />
                         }
                     </div>
                 }
@@ -147,7 +151,6 @@
             $container.find('.file-upload-empty').hide();
             $container.find('.file-remove-btn').show();
             var isCustomField = $container.data('is-customfield');
-
             if (isMultiple) {
                 var makeId = randomString(32,'A#');
                 var $li = $('<li class="file"/>');
@@ -192,12 +195,14 @@
                 }
                 else
                     var $inp = $('<input type="hidden"/>').attr('data-file', fileName).attr('name', fieldName).val(file.newFileName).appendTo($div);
-
-                $container.find('.file-uploaded').html($div);
+                if ($container.data("insert-target"))
+                    $($container.data("insert-target")).html($div);
+                else
+                    $container.find('.file-uploaded').html($div);
                 $div.prependTo($container.find('.file-uploaded')).fadeIn('fast');
             }
 
-            refreshForm(containerDivId);
+            refreshForm('#' + containerDivId);
         }
 
         function removeImg(containerDivId, isMultiple) {
@@ -218,11 +223,11 @@
                 $container.find('.file-remove-btn').hide();
             }
 
-            refreshForm(containerDivId);
+            refreshForm('#' + containerDivId);
         }
 
-        function refreshForm(containerDivId){
-            var $container = $('#' + containerDivId);
+        function refreshForm(container){
+            var $container = $(container);
             var $form = $container.parents('form');
             var $formGroupCustoms = $form.find('.form-group-custom-field');
             for (var i = 0; i < $formGroupCustoms.length; i++) {
@@ -246,6 +251,7 @@
 @using (Html.Delayed())
 {
     <script>
+        var fileupload = $('#@ContainerId').find('.fileupload');
         $('#@ContainerId').find('.fileupload').fileupload({
             url:'@Url.Action("Uploads", "FileUpload")',
             dataType: 'json',
