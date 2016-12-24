@@ -71,7 +71,7 @@
             }
             else
             {
-                if (!Multiple && Value != null)
+                if (Value != null)
                 {
 
                     <div class="file-uploaded-single img-thumbnail">
@@ -98,18 +98,20 @@
                         }
                     </div>
                 }
+                else
+                {
+                    <div class="file-upload-empty" @Html.Raw((Value != null) ? "style='display:none'" : "")>
+                        <span><i>No selected file</i></span>
+                        @if (IsCustomField)
+                        {
+                            <input type="hidden" name="@(string.Format("{0}[{1}]", FieldName, 0) + ".FileId")" value="" />
+                            <input type="hidden" name="@(string.Format("{0}[{1}]", FieldName, 0) + ".Type")" value="" />
+                            <input type="hidden" name="@(string.Format("{0}[{1}]", FieldName, 0) + ".Name")" value="" />
+                        }
+                    </div>
+                }
             }
         </div>
-        @if (!Multiple)
-        {
-            <div class="file-upload-empty" @Html.Raw((Value != null) ? "style='display:none'" : "")>
-                <span><i>No selected file</i></span>
-                @if (IsCustomField)
-                {
-                    <input type="hidden" name="@(string.Format("{0}[{1}]", FieldName, 0) + ".Name")" value="empty" />
-                }
-            </div>
-        }
 
         <div class="clearfix m-t-15">
             @if (FileManagerId != null || FileManagerId != string.Empty)
