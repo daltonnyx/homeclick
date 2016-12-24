@@ -133,8 +133,7 @@ namespace VCMS.Lib.Models
         public IEnumerable<SimpleProductOptionViewModel> SimpleProductOptions()
         {
             IList<SimpleProductOptionViewModel> options = new List<SimpleProductOptionViewModel>();
-
-            foreach(Product_Option option in this.Product_Options)
+            foreach (Product_Option option in this.Product_Options)
             {
                 options.Add(new SimpleProductOptionViewModel { Id = option.Id, Name = option.Name, Description = option.Description, PreviewImage = option.PreviewImage.FullFileName, Status = option.Status });
             }

@@ -17,7 +17,7 @@
     var Value = dic.ContainsKey("Value") ? dic["Value"] : null;
     var FieldName = dic["FieldName"] as string;
     var Multiple = dic.ContainsKey("Multiple") ? (bool)dic["Multiple"] : false;
-    var ContainerId = dic.ContainsKey("ContainerId") ? (string)dic["ContainerId"] : Html.RandomString(32);
+    var ContainerId = dic.ContainsKey("ContainerId") ? (string)dic["ContainerId"] : Html.RandomString(12);
     var Accept = dic.ContainsKey("Accept") ? dic["Accept"] as string : string.Empty;
     var FileManagerId = dic.ContainsKey("FileManagerId") ? dic["FileManagerId"] as string : null;
     var IsCustomField = dic.ContainsKey("IsCustomField") ? (bool)dic["IsCustomField"] : false;
@@ -212,7 +212,7 @@
                     $container.find('.file-remove-btn').hide();
             }
             else {
-                var $input = $('#@ContainerId').find('.file-uploaded-single input');
+                var $input = $('#' + containerDivId).find('.file-uploaded-single input');
                 $input.parent().remove();
                 $container.find('.file-upload-empty').fadeIn('fast');
                 $container.find('.file-remove-btn').hide();
