@@ -145,6 +145,7 @@ jQuery(document).ready(function ($) {
         if (isInside(p, canvasObj) == true && isDragable && src != null) {
             fabric.loadSVGFromURL(src, function (objects, options) {
                 var obj = fabric.util.groupSVGElements(objects, options);
+                initScale = initScale != 0 ? initScale / obj.getWidth() : 1;
                 obj.pathToFill = []; //set pathToFill property
                 obj.srcSVG = src;
                 obj.ProName = srcName;
