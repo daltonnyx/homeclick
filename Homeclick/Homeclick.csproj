@@ -689,6 +689,7 @@
     <Content Include="Areas\Manager\Views\ProductOptions\Create.cshtml" />
     <Content Include="Areas\Manager\Views\Shared\Widgets\DeleteConfirmModal_.cshtml" />
     <None Include="Properties\PublishProfiles\File System.pubxml" />
+    <None Include="Properties\PublishProfiles\file.pubxml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />

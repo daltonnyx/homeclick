@@ -104,9 +104,9 @@
                         <span><i>No selected file</i></span>
                         @if (IsCustomField)
                         {
-                            <input type="hidden" name="@(string.Format("{0}[{1}]", FieldName, 0) + ".FileId")" value="" />
-                            <input type="hidden" name="@(string.Format("{0}[{1}]", FieldName, 0) + ".Type")" value="@((int)FieldTypes.File)" />
-                            <input type="hidden" name="@(string.Format("{0}[{1}]", FieldName, 0) + ".Name")" value="@DetailName" />
+                            <input type="hidden" name="@(string.Format("{0}[{1}]", FieldName, StartIndex) + ".FileId")" value="" />
+                            <input type="hidden" name="@(string.Format("{0}[{1}]", FieldName, StartIndex) + ".Type")" value="@((int)FieldTypes.File)" />
+                            <input type="hidden" name="@(string.Format("{0}[{1}]", FieldName, StartIndex) + ".Name")" value="@DetailName" />
                         }
                     </div>
                 }

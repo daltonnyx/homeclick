@@ -1,0 +1,28 @@
+@font-face {
+	font-family: 'arial';
+	src: url('arial.eot');
+	src: local('☺'), url('arial.woff') format('woff'), url('arial.ttf') format('truetype'), url('arial.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'arial';
+	src: url('arialbd.eot');
+	src: local('☺'), url('arialbd.woff') format('woff'), url('arialbd.ttf') format('truetype'), url('arialbd.svg') format('svg');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'arial';
+	src: url('arialbi.eot');
+	src: local('☺'), url('arialbi.woff') format('woff'), url('arialbi.ttf') format('truetype'), url('arialbi.svg') format('svg');
+	font-weight: bold;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'arial';
+	src: url('fonts/ariali.eot');
+	src: local('☺'), url('ariali.woff') format('woff'), url('ariali.ttf') format('truetype'), url('ariali.svg') format('svg');
+	font-weight: normal;
+	font-style: italic;
+}

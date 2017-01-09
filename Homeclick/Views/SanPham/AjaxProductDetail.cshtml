@@ -63,7 +63,7 @@
                     <h3>Chi tiết</h3>
                     @{var escaped = new HtmlString(Model.Content);}
                     <p>@escaped</p>
-                    <p><span>Kích thước:</span>@details[ProductDetailTypes.Size]</p>
+                    <p><span>Kích thước:</span>@(details["width"])cm x @(details["length"])cm x @(details["height"])cm</p>
                     <p><span>Trọng lượng:</span>@details[ProductDetailTypes.Weight] kg</p>
                     <p><span>Bảo hành:</span>@details[ProductDetailTypes.Warranty] Tháng</p>
                     <p><span>Xuất xứ:</span>@details[ProductDetailTypes.MadeIn]</p>
