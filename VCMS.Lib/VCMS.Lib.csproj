@@ -107,6 +107,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\AjaxChildActionOnlyAttribute.cs" />
     <Compile Include="Common\AuthorizationService.cs" />
     <Compile Include="Common\HtmlHelper\DelayedInjectionBlock.cs" />
     <Compile Include="Common\HtmlHelper\ScriptBlock.cs" />

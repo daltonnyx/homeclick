@@ -1,6 +1,7 @@
 ﻿@using VCMS.Lib.Models
 @using VCMS.Lib.Common
 @using VCMS.Lib.Resources
+@using Newtonsoft.Json
 @model Post
 
 @{
@@ -102,8 +103,17 @@
                 @if (Model.Room?.Image != null)
                 {
                     <div class="form-group">
-                        <div id="imgdiv">
-                            <img id="image" class="img" src="@Url.GetImageUploadFolder()/@Model.Room.Image.FullFileName" />
+                        <div id="imgdiv" class="taggd">
+                            <img id="image" class="img" style="width:100%;" src="@Url.GetImageUploadFolder()/@Model.Room.Image.FullFileName" />
+                            @foreach (var item in Model.Post_Details.Where(o => o.Name == "popupImages"))
+                            {
+                                string json = item.Value.Replace('\'','"');
+                                var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+                                <span class="taggd__button" style="left:@values["positionX"]%;top:@values["positionY"]%;transform:rotate(@values["rotate"]deg)" data-id="@item.Id" data-rotate="@values["rotate"]" data-image="@values["image"]" onclick="taggdButtonClicked(this);">
+                                    <input name="popupImages" value="@values["image"]" type="hidden" />
+                                </span>
+                            }
                         </div>
                         <div>
                             <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="360" data-slider-step="1" data-slider-value="14" />
@@ -117,10 +127,10 @@
                 <div class="form-group">
                     @{
                         var param = new Dictionary<string, object> {
-                            { ConstantKeys.FIELD_NAME, Html.NameFor(o => o.SelectedCategories).ToString()},
-                            { ConstantKeys.CATEGORIES, ViewData[ConstantKeys.CATEGORIES]},
-                            { ConstantKeys.SELECTED_CATEGORIES, Model.Categories.Select(o => o.Id) },
-                            { "ContainerClass", "widget"}
+                                { ConstantKeys.FIELD_NAME, Html.NameFor(o => o.SelectedCategories).ToString()},
+                                { ConstantKeys.CATEGORIES, ViewData[ConstantKeys.CATEGORIES]},
+                                { ConstantKeys.SELECTED_CATEGORIES, Model.Categories.Select(o => o.Id) },
+                                { "ContainerClass", "widget"}
                             };
                         @Html.Partial("Widgets/CategoriesCheckBoxList", param);
                     }
@@ -245,12 +255,31 @@
             };
 
             //var taggd = $(image).taggd();
-            var taggd = new Taggd(image, settings);
+            //var taggd = new Taggd(image, settings);
 
-            taggd.enableEditorMode();
+            //taggd.enableEditorMode();
         });
 
         var lastTaggdButtonClicked = null;
+        var $slider = $('#ex1');
+        if ($slider.length > 0) {
+            //Slider
+            var slider = $('#ex1').slider({
+                formatter: function (value) {
+                    return 'Current value: ' + value;
+                }
+            }).change(function (evt) {
+                var newValue = evt.value.newValue;
+                var oldValue = evt.value.oldValue;
+                if (lastTaggdButtonClicked) {
+                    $(lastTaggdButtonClicked).css({
+                        "transform": "rotate(" + newValue + "deg)"
+                    });
+                    $(lastTaggdButtonClicked).data("rotate", newValue);
+                }
+            });
+        };
+
         function taggdButtonClicked(elem) {
             if (lastTaggdButtonClicked)
                 $(lastTaggdButtonClicked).removeClass("taggd-clicked")
@@ -258,26 +287,10 @@
             $(elem).addClass("taggd-clicked");
 
             var rotateVal = $(elem).data("rotate");
-            $('#ex1').slider('setValue', rotateVal);
+            $slider.slider('setValue', rotateVal);
 
             lastTaggdButtonClicked = elem;
         };
-
-        //Slider
-        var slider = $('#ex1').slider({
-            formatter: function (value) {
-                return 'Current value: ' + value;
-            }
-        }).change(function (evt) {
-            var newValue = evt.value.newValue;
-            var oldValue = evt.value.oldValue;
-            if (lastTaggdButtonClicked) {
-                $(lastTaggdButtonClicked).css({
-                    "transform": "rotate(" + newValue + "deg)"
-                });
-                $(lastTaggdButtonClicked).data("rotate", newValue);
-            }
-        });
 
         //Delete marker
         $('span[data-action="delete"').on("click", function () {
@@ -297,23 +310,54 @@
             }
         });
 
+        $('#image').click(function () {
+            var $img = $(this);
+            var ratio = this.naturalWidth / $img.width();
+            var x = (((event.pageX - $img.offset().left) * ratio) / this.naturalWidth * 100);
+            var y = (((event.pageY - $img.offset().top) * ratio) / this.naturalHeight * 100);
+            addLabel(x, y, 0);
+        });
+
+        function addLabel(x, y, r, i) {
+            var $taggd = $('.taggd').first();
+
+            var $label = $('<label class="taggd__button"/>')
+                .css({
+                    "left": x + "%",
+                    "top": y + "%",
+                    "transform": "rotate(" + r + "deg)"
+                }).data("rotate", r);
+
+            if (i)
+                $label.data("image", i + ".jpg");
+
+            $taggd.append($label);
+            $label.on("click", function () {
+                taggdButtonClicked(this);
+            });
+        }
+
         $('form').submit(function (evt) {
             var inputs = $('input[name="popupImages"]');
             for (var i = 0; i < inputs.length; i++) {
                 var $parent = $(inputs[i]).parents(".taggd__button");
-                $parent.addClass('form-group-custom-field');
-                var parentId = $parent.data("id");
-                var json = {};
-                json.positionX = parseFloat($parent.css("left"));
-                json.positionY = parseFloat($parent.css("top"));
-                json.rotate = $parent.data("rotate");
-                json.image = $(inputs[i]).val();
+                var $divContainer = $parent.parent();
+                var $img = $divContainer.find('#image');
 
+                $parent.addClass('form-group-custom-field');
+
+                var parentId = $parent.data("id");
+                var json = {
+                    positionX: parseFloat($parent.css("left")) / $img.width() * 100,
+                    positionY: parseFloat($parent.css("top")) / $img.height() * 100,
+                    rotate: $parent.data("rotate"),
+                    image: $(inputs[i]).val()
+                };
                 var jsonStr = JSON.stringify(json).replace(/"/g, "'");
 
-                $parent.append('<input name="Post_Details[0].Id" value="' + parentId != null ? parentId : 0 + '"/>')
-                $parent.append('<input name="Post_Details[0].Name" value="popupImages"/>')
-                $parent.append('<input name="Post_Details[0].Value" value="' + jsonStr + '"/>')
+                $parent.append('<input name="Post_Details[0].Id" type="hiden" value="' + (parentId != null ? parentId : 0) + '"/>')
+                $parent.append('<input name="Post_Details[0].Name" type="hiden" value="popupImages"/>')
+                $parent.append('<input name="Post_Details[0].Value" type="hiden" value="' + jsonStr + '"/>')
 
                 $(inputs[i]).val(json);
                 refreshForm('#' + $parent.attr('id'));

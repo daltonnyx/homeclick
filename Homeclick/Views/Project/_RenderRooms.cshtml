@@ -1,0 +1,18 @@
+﻿@using VCMS.Lib.Models
+@model IEnumerable<Room>
+
+@foreach (var item in Model)
+{
+    <div class="layout-item" data-title="@item.Name" data-id="@item.Id">
+        <div class="card card-shadow" data-content="@item.Id" data-name="@item.Name" data-image="@item.Image">
+            <div>
+                <a>
+                    <img style="height:auto; width:100%" src="@Url.GetImageUploadFolder()@item.Image.FullFileName" alt="@item.Description" />
+                </a>
+            </div>
+            <div class="card-title">
+                <span>@item.Name</span>
+            </div>
+        </div>
+    </div>
+}

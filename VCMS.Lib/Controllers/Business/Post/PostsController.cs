@@ -115,7 +115,7 @@ namespace VCMS.Lib.Controllers
                 var exceptDetailIds = existDetailId.Except(model.Post_Details.Select(o => o.Id)).ToList();
                 foreach (var exceptDetailId in exceptDetailIds)
                 {
-                    var details = db.Product_Options_Details.Find(exceptDetailId);
+                    var details = db.Post_Details.Find(exceptDetailId);
                     if (details != null)
                         db.Entry(details).State = System.Data.Entity.EntityState.Deleted;
                 }
@@ -127,7 +127,7 @@ namespace VCMS.Lib.Controllers
                     {
                         var detailTarget = modelTarget.Post_Details.FirstOrDefault(o => o.Id == detail.Id);
                         db.Entry(detailTarget).CurrentValues.SetValues(detail);
-                        db.Entry(detailTarget).Property("ProductId").IsModified = false;
+                        db.Entry(detailTarget).Property("PostId").IsModified = false;
                         db.Entry(detailTarget).Property("CreateUserId").IsModified = false;
                         db.Entry(detailTarget).Property("CreateTime").IsModified = false;
                     }

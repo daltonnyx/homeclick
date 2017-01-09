@@ -40,7 +40,7 @@
     </div>
     <hr/>
     <h4>Mặt bằng</h4>
-@Html.DropDownList("departments", new SelectList(Model.Departments, "Id", "Name", null), new { style="width:100%; margin-bottom:7px;" })
+@Html.DropDownList("departments", new SelectList(Model.Departments, "Id", "Name", null), new { style = "width:100%; margin-bottom:7px;" })
 @{
     var floors = new List<Floor>();
     foreach (var department in Model.Departments)
@@ -78,22 +78,9 @@
 }
 
 <div id="layoutContainer">
-    @foreach (var item in rooms.Where(o => o.FloorId == floors.FirstOrDefault().Id))
-    {
-        <div class="layout-item" data-title="@item.Name" data-id="@item.Id">
-            <div class="card card-shadow" data-content="@item.Id" data-name="@item.Name" data-image="@item.Image">
-                <div>
-                    <a>
-                        <img style="height:auto; width:100%" src="@Url.GetImageUploadFolder()@item.Image.FullFileName" alt="@item.Description" />
-                    </a>
-                </div>
-                <div class="card-title">
-                    <span>@item.Name</span>
-                </div>
-            </div>
-        </div>
-    }
+    @Html.Action("_RenderRooms", new { floor_id = floors.FirstOrDefault().Id})
 </div>
+
 </div>
 
 <div class="col-md-9">
@@ -156,10 +143,11 @@
         var $departments = $('#departments'),
 		    $floors = $('#floors'),
             $floorsOptions = $floors.find('option'),
-            $rooms = $('#rooms'),
-            $roomsOptions = $rooms.find('option'),
-            $collections = $('#collections'),
+            $rooms = $('#layoutContainer'),
+            $collections = $('#Collections'),
             $collectionsOptions = $collections.find('option');
+
+        var pageLoaded = false;
 
         $departments.on('change', function () {
             $floors.empty();
@@ -168,22 +156,30 @@
             for (var i = filterResult.length - 1; i >= 0; i--) {
                 $(filterResult[i]).prependTo($floors);
             }
+            $floors.change();
         }).trigger('change');
 
         $floors.on('change', function () {
-            $rooms.empty();
-            var str = '[data-' + $(this).attr('id') + '="' + $(this).val() + '"]';
-            var filterResult = $roomsOptions.filter(str);
-            for (var i = filterResult.length - 1; i >= 0; i--) {
-                $(filterResult[i]).prependTo($rooms);
-            }
-            $rooms.trigger('change');
-        }).trigger('change');
-
-        $collections.on('change', function () {
-        }).trigger('change');
+            var param = { 'floor_id': $(this).val() };
+            $.ajax({
+                url: '@Url.Action("_RenderRooms")',
+                data: param,
+                method: 'POST',
+                success: function (data) {
+                    $rooms.html(data);
+                    var $roomsChildren = $rooms.children();
+                    if ($roomsChildren.length > 0) {
+                        $roomsChildren.on('click', layoutClick);
+                        $roomsChildren.first().click();
+                    }
+                }
+            });
+        });
 
         function collectionClick(id) {
+            if (!id)
+                return;
+
             $('#CollectionDetails').empty();
             $.ajax({
                 url: '@Url.Action("Collection")',
@@ -212,11 +208,19 @@
             });
         };
 
-        $('.layout-item').on('click', function (event) {
+        var layoutClick = function (event) {
             var $div = $(this);
             var layoutImg = $div.find('img')
+
             $('.layout-image img').attr('src', $div.find('img').attr('src'));
-            $('#Collections').empty();
+
+            //Destroy Owl carousel
+            $collections.empty();
+            if (typeof $collections.data('owlCarousel') != 'undefined') {
+                $collections.data('owlCarousel').destroy();
+                $collections.removeClass('owl-carousel');
+            }
+
             $('#CollectionDetails').empty();
 
             $.ajax({
@@ -224,13 +228,18 @@
                 data: { 'room_id': $div.data('id') },
                 method: 'POST',
                 success: function (data) {
+
+                    if (data.length == 0)
+                        return;
+
                     for (var i = 0; i < data.length; i++) {
                         var collectionCard = '<div class="collection-card" data-id="' + data[i].id + '">' +
                                                 '<img style="height:auto; width:100%" src="@Url.GetImageUploadFolder()' + data[i].image +'"/>' +
                                             '</div>';
-                        $('#Collections').append(collectionCard);
+                        $collections.append(collectionCard);
                     }
-                    $("#Collections").owlCarousel({
+
+                    $collections.owlCarousel({
                         navigation: true,
                         pagination: false,
                         slideSpeed: 300,
@@ -245,7 +254,9 @@
                     collectionClick($('.collection-card').first().data('id'));
                 }
             });
-        })
+        }
+
+        $('.layout-item').on('click', layoutClick);
 
         $('.layout-item').first().click();
 
@@ -258,6 +269,10 @@
 
             //var taggd = $(image).taggd();
             var taggd = new Taggd(image, settings);
+
+            if (pageLoaded) {
+                $floors.trigger('change');
+            }
         });
 
         function addLabel(x,y,r,i) {

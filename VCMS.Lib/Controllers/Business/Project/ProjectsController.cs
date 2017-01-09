@@ -88,10 +88,11 @@ namespace VCMS.Lib.Controllers
                 TempData[ConstantKeys.ACTION_RESULT_MESSAGES] = messageCollection;
                 return RedirectToAction("Edit", new { project_id = model.Id });
             }
+
             ViewBag.Categories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProjectType); ;
             ViewData[ConstantKeys.CITIES] = GetCities();
             ViewData[ConstantKeys.DISTRICTS] = GetDistricts();
-            return View();
+            return View(model);
         }
 
         [HttpPost]

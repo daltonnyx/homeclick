@@ -73,15 +73,11 @@ namespace Homeclick.Controllers
             return View(listproduct);
         }
 
-        public List<Product> FilterByCategory(string[] args)
+        public IEnumerable<Product> FilterByCategory(int category_id, int? product_type_id = null)
         {
-            var products = db.Products.ToList();
-            foreach (var arg in args)
-            {
-                int number;
-                if (int.TryParse(arg,out number))
-                    products = products.Where(o => o.Categories.Select(e => e.Id).ToList().Contains(number)).ToList();
-            }
+            var products = db.Products.Where(o => o.Categories.FirstOrDefault().Id == category_id);
+            if (product_type_id != null)
+                products = products.Where(o => o.ProductTypeId == product_type_id);
             return products;
         }
 
@@ -90,14 +86,14 @@ namespace Homeclick.Controllers
         /// </summary>
         /// <param name="ids">categories id</param>
         /// <returns></returns>
-        public JsonResult ProductsJson(string[] ids)
+        public JsonResult ProductsJson(int category_id, int? product_type_id = null)
         {
-            var list = this.FilterByCategory(ids);
+            var products = FilterByCategory(category_id, product_type_id);
             var json = new List<object>();
-            foreach (var item in list)
+            foreach (var item in products)
             {
                 var details = item.DetailsToDictionary();
-                var typo = item.Categories.FirstOrDefault(o => o.CategoryTypeId == (int)CategoryTypes.Typology);
+                var typo = item.Typology;
 
                 var materialList = new List<object>();
                 var tList = new List<Product>();
@@ -132,10 +128,10 @@ namespace Homeclick.Controllers
         /// <param name="typo_id">Id of the category</param>
         /// <param name="model_id">If 'category_id' is -1 and 'model_id' has been set, this will getting materials contained in the model</param>
         /// <returns></returns>       
-        public JsonResult GetMetarialsJson(string[] ids)
+        public JsonResult GetMetarialsJson(int category_id, int? product_type_id = null)
         {
             var resuilt = new List<object>();
-            var products = this.FilterByCategory(ids);
+            var products = FilterByCategory(category_id, product_type_id);
             var cMaterials = GetCMaterialOfProducts(products);
 
             foreach (var cMaterial in cMaterials)

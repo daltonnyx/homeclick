@@ -1,4 +1,9 @@
-﻿function randomString(length, chars) {
+﻿Number.prototype.round = function (p) {
+    p = p || 10;
+    return parseFloat(this.toFixed(p));
+};
+
+function randomString(length, chars) {
     var mask = '';
     if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz';
     if (chars.indexOf('A') > -1) mask += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';

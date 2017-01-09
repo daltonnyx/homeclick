@@ -196,9 +196,9 @@
             });
         }
 
-        function getMetarials(args) {
+        function getMetarials(category_id, product_type_id) {
             url = '@Url.Action("GetMetarialsJson")';
-            $.ajaxCall(url, { 'ids': args })
+            $.ajaxCall(url, { 'category_id': category_id, 'product_type_id': product_type_id })
                 .done(function (data) {
                     if (data) {
                         $('.material-list').empty();
@@ -216,14 +216,14 @@
                 });
         }
 
-        function getProducts(args) {
+        function getProducts(category_id, product_type_id) {
             var url = '@Url.Action("ProductsJson")';
-            $.ajaxCall(url, { 'ids': args })
+            $.ajaxCall(url, { 'category_id': category_id, 'product_type_id': product_type_id })
                 .done(function (data) {
                     if (data) {
                         products = data;
                         showProducts(filter(data));
-                        getMetarials(args);
+                        getMetarials(category_id, product_type_id);
                     }
                 });
         }
@@ -232,8 +232,7 @@
             pageSize = 16;
 
         $(document).ready(function () {
-            var args = ['@Request.Params["category_id"]', '@Request.Params["typo_id"]'];
-            getProducts(args);
+            getProducts('@Request.Params["category_id"]', '@Request.Params["typo_id"]');
         });
     </script>
 }
