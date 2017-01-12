@@ -208,11 +208,11 @@
                                 $('#@containerId').find('.file-uploaded-single').remove();
                                 $('#@containerId').find('.file-upload-new').fadeIn('fast');
                                 $('#@containerId').find('.file-remove-btn').hide();
-                                addImg('@containerId', @multiple.ToString().ToLower(), file, @fieldName);
+                                addImg('@containerId', @multiple.ToString().ToLower(), file, '@fieldName');
                             }
                         });
                     else
-                        addImg('@containerId', @multiple.ToString().ToLower(), file, @fieldName);
+                        addImg('@containerId', @multiple.ToString().ToLower(), file, '@fieldName');
                 });
             },
             always: function(e, data){
