@@ -697,6 +697,9 @@
     <Content Include="Scripts\canvas.nocache.js" />
     <Content Include="Scripts\fabric.min.js" />
     <Content Include="Scripts\groupLiPolygon.js" />
+    <Content Include="Scripts\imgmap.js" />
+    <Content Include="Scripts\imgmap_interface.js" />
+    <Content Include="Scripts\imgmap_packed.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
@@ -714,6 +717,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\lang_en.js" />
     <Content Include="Scripts\lipolygon.class.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\masonry.pkgd.min.js" />

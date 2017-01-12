@@ -6,6 +6,8 @@
 @{
     ViewBag.Title = Strings.Floors;
     ViewBag.FormName = (Model != null) ? ((Model.Department != null) ?  Model.Department.Name + " - " : string.Empty) + Model.Name : "Create new Floor";
+    var roomList = Model.Rooms.Select<Room, string>(r => r.Id.ToString() + "-" + r.Name).ToList<string>();
+    var roomStr = string.Join(",", roomList);
 }
 
 <div class="content">
@@ -27,6 +29,47 @@
                     @Html.ValidationMessageFor(m => m.Name)
                     @Html.TextBoxFor(m => m.Description, new { @class = "form-control", placeholder = "Description" })
                     @Html.ValidationMessageFor(m => m.Description)
+                    @{
+                        var param = new Dictionary<string, object>
+                        {
+                            { "File", Model?.structureId != null ? Model.Structure.FullFileName : string.Empty },
+                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.structureId).ToString() },
+                            { "Multiple", false },
+                            { "Accept" , "image/*"},
+                            { "FileManagerId", "#lgx94" }
+                        };
+                        @Html.Partial("Widgets/SelectImages", param)
+                    }
+                    <a id="mapping-dlg" class="btn btn-primary" data-toggle="modal" data-target="#mapping-modal" href="#">Room mapping</a>
+                    
+                        <div id="button_container" style="display:block">
+                            <!-- buttons come here -->
+                            <a onclick="myimgmap.addNewArea()" title="Add new area"><i class="fa fa-plus"></i></a>
+                            <a onclick="myimgmap.removeArea(myimgmap.currentid)" title="Delete selected area"><i class="fa fa-minus"></i></a>
+                            <a id="i_preview" onclick="myimgmap.togglePreview();" title="Preview image map"><i class="fa fa-amazon"></i></a>
+                            <a onclick="gui_htmlShow()" title="Get image map HTML"></a>
+                            <label for="dd_zoom">Zoom:</label>
+                            <select onchange="gui_zoom(this)" id="dd_zoom">
+                                <option value='0.25'>25%</option>
+                                <option value='0.5'>50%</option>
+                                <option value='1' selected="1">100%</option>
+                                <option value='2'>200%</option>
+                                <option value='3'>300%</option>
+                            </select>
+                            <label for="dd_output">Output:</label>
+                            <input type="hidden" id="dd_output" onchange="return gui_outputChanged(this)" value="imagemap" readonly />
+                            <div>
+                                
+                               
+                            </div>
+                        </div>
+                        <div id="form_container"></div>
+
+                        <div id="pic_container"></div>
+
+                        <div id="output_help" style="display:none;"></div>
+                        <textarea id="html_container" name="@Html.NameFor( f => f.Outputstr)" style="display:none;"></textarea>
+                    
                 </div>
                 @if (Model != null)
                 {
@@ -42,6 +85,7 @@
                             {
                                 foreach (var room in Model.Rooms)
                                 {
+                                    
                                 <div class="form-control">
                                     <a href="@Url.Action("Edit", "Rooms", new { room_id = room.Id })">@room.Name</a>
                                 </div>
@@ -69,6 +113,13 @@
     }
 </div>
 
+@{
+    var fileManagerParam = new Dictionary<string, object> {
+            { "ContainerId" , "lgx94"}
+    };
+    @Html.Partial("Widgets/FileManager", fileManagerParam)
+}
+
 @section breadcrumb {
     <li>
         <a href="@Url.Action("Dashboard","Pages")">
@@ -88,9 +139,185 @@
 
 @section Styles {
     <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/css/loading.css" rel="stylesheet" />
+    @Html.RenderDelayed("jquery-uploads-style")
+    @Html.RenderDelayed("FileManager-style")
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
+    @Html.RenderDelayed("jquery-uploads-js")
+    @Html.RenderDelayed("SelectImages-function", true)
+    @Html.RenderDelayed("SelectImages-script")
+    @Html.RenderDelayed("FileManager-script")
+    @Scripts.Render("~/Scripts/imgmap.js")
+
+    <script type="text/javascript">
+        var roomStr = '@roomStr';
+    </script>
+    @Scripts.Render("~/Scripts/imgmap_interface.js")
+    <script type="text/javascript">
+        (function ($) {
+            $srcImg = $('input[name="structureId"]').parent().find("img");
+            gui_loadImage($srcImg.attr("src"));
+            
+        })(jQuery);
+
+        
+    </script>
 }
+
+
+
+<style>
+.source_desc {
+	clear: left;
+	float: left;
+	width: 200px;
+}
+
+.source_url {
+	float: left;
+	width: 250px;
+	height: 24px;
+}
+.source_url INPUT, .source_url SELECT {
+	font-size: 95%;
+	width: 240px;
+	padding: 0 0 0 1px;
+}
+
+A.source_accept {
+	display: block;
+	float: left;
+	padding-left: 18px;
+	color: #888888!important;
+	background-image: url(accept.gif);
+	background-repeat: no-repeat;
+	background-position: left center;
+	font-size: 90%;
+	letter-spacing: -1px;
+	border: none!important;
+}
+A.source_accept:hover {
+	color: #333333!important;
+}
+
+#img_area_form {
+	margin: 5px 0px;
+	padding: 0;
+	border: 0;
+}
+
+#form_container {
+	white-space: nowrap;
+	overflow: auto;
+	height: 88px;
+	border-top: solid 1px #bfc1c5;
+}
+
+#form_container INPUT, #form_container SELECT {
+	border: 1px solid black;
+	font-size: 10px;
+	margin: 0;
+	padding: 0 0 0 1px;
+}
+
+.img_area {
+	display: block;
+	vertical-align: middle;
+	line-height: 20px;
+	height: 20px;
+}
+
+.img_id {
+	font-weight: bold;
+	width: 25px;
+	padding: 0px 3px;
+	text-align: right;
+	border: none!important;
+	background: none;
+}
+.img_active {
+	border: none!important;
+}
+.img_coords {
+	width: 72px;
+}
+.img_href {
+	width: 82px;
+}
+.img_alt {
+	width: 82px;
+}
+.img_target {
+	width: 82px;
+}
+
+#pic_container {
+	position: relative;
+	width: 100%;
+	height: 300px;
+	border: solid 0px #efefef;
+	overflow: auto;
+}
+
+
+#pic_container .imgmap_label {
+	font: bold 10px Arial;
+	color: #100;
+	padding: 1px 2px;
+}
+
+#status_container {
+	font-weight: bold!important;
+	font-size: 90%;
+	color: #e95949;
+	width: 100%;
+}
+
+#button_container {
+	padding: 5px;
+	line-height: 22px;
+	
+}
+#button_container select,
+#button_container img,
+#button_container > div,
+#button_container label
+{
+	float: left;
+}
+#button_container img {
+	margin: 2px 2px;
+	cursor: pointer;
+}
+
+#fieldset_html {
+	text-align: left;
+}
+
+#html_container {
+	border: 1px solid black;
+	margin: 5px 0;
+	padding: 1px 0 0 1px;
+	height: 100px;
+	width: 100%;
+}
+
+#more_actions {
+	background-color: #E7E7E7;
+	border: solid 1px #888;
+	padding: 5px;
+	width: 120px;
+	line-height: 15px;
+}
+#more_actions div div,
+#more_actions div a {
+	text-decoration: none;
+	color: #000;
+	float: left;
+	padding: 0 3px;
+}
+</style>
