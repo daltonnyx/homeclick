@@ -12,12 +12,28 @@
         transform: translatey(-50%);
         margin-top: 0!important;
     }
+
     .owl-prev {
             float: left;
     }
+
     .owl-next{
         float: right;
     }
+
+    .layout-preview-image {
+        max-width: 250px;
+        display: none;
+        position: absolute;
+        width: 250px;
+        margin-top: 40px;
+        transform: translateX(-50%);
+        border: 3px solid white;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    }
+
 </style>
 
 <div class="page-title m-l-15 m-r-15">
@@ -145,9 +161,27 @@
             $floorsOptions = $floors.find('option'),
             $rooms = $('#layoutContainer'),
             $collections = $('#Collections'),
-            $collectionsOptions = $collections.find('option');
+            $collectionsOptions = $collections.find('option'),
+            $collectionDetails = $('#CollectionDetails'),
+            $layerImg = $('.layout-image img');
+        ;
 
         var pageLoaded = false;
+
+        function owlCarouselDestroyer(){
+            $collections.empty();
+            if (typeof $collections.data('owlCarousel') != 'undefined') {
+                $collections.data('owlCarousel').destroy();
+                $collections.removeClass('owl-carousel');
+            }
+        }
+
+        function clearDetails() {
+            $('.taggd .taggd__button').remove();
+            $layerImg.attr('src', '');
+            $collectionDetails.empty();
+            owlCarouselDestroyer();
+        }
 
         $departments.on('change', function () {
             $floors.empty();
@@ -167,9 +201,14 @@
                 method: 'POST',
                 success: function (data) {
                     $rooms.html(data);
+                    clearDetails();
+
+                    if (data == "")
+                        return;
+
                     var $roomsChildren = $rooms.children();
                     if ($roomsChildren.length > 0) {
-                        $roomsChildren.on('click', layoutClick);
+                        $roomsChildren.on('click', roomClick);
                         $roomsChildren.first().click();
                     }
                 }
@@ -179,25 +218,22 @@
         function collectionClick(id) {
             if (!id)
                 return;
-
-            $('#CollectionDetails').empty();
+            $collectionDetails.empty();
             $.ajax({
                 url: '@Url.Action("Collection")',
                 data: { 'collection_id': id },
                 method: 'POST',
                 success: function (data) {
-                    $('#CollectionDetails').html(data);
+                    $collectionDetails.html(data);
                 }
             });
+
             $.ajax({
                 url: '@Url.Action("CollectionImages")',
                 data: { 'collection_id': id },
                 method: 'POST',
                 success: function (data) {
-                    var $tags = $('.taggd .taggd__button');
-                    for (var i = 0; i < $tags.length; i++) {
-                        $($tags[i]).remove();
-                    }
+                    $('.taggd .taggd__button').remove();;
 
                     for (var i = 0; i < data.length; i++) {
                         var str = data[i].replace(/'/g, '"');
@@ -208,20 +244,15 @@
             });
         };
 
-        var layoutClick = function (event) {
+        var roomClick = function (event) {
             var $div = $(this);
             var layoutImg = $div.find('img')
 
-            $('.layout-image img').attr('src', $div.find('img').attr('src'));
+            $layerImg.attr('src', $div.find('img').attr('src'));
 
-            //Destroy Owl carousel
-            $collections.empty();
-            if (typeof $collections.data('owlCarousel') != 'undefined') {
-                $collections.data('owlCarousel').destroy();
-                $collections.removeClass('owl-carousel');
-            }
+            owlCarouselDestroyer();
 
-            $('#CollectionDetails').empty();
+            $collectionDetails.empty();
 
             $.ajax({
                 url: '@Url.Action("GetCollections")',
@@ -229,8 +260,10 @@
                 method: 'POST',
                 success: function (data) {
 
-                    if (data.length == 0)
+                    if (data.length == 0) {
+                        var $tags = $('.taggd .taggd__button').remove();
                         return;
+                    }
 
                     for (var i = 0; i < data.length; i++) {
                         var collectionCard = '<div class="collection-card" data-id="' + data[i].id + '">' +
@@ -256,11 +289,47 @@
             });
         }
 
-        $('.layout-item').on('click', layoutClick);
+        //Add arrow to image layer
+        function addLabel(x, y, r, i) {
+            var $taggd = $('.taggd');
+            var $label = $('<label class="taggd__button"/>')
+                .css({
+                    "left": x + "%",
+                    "top": y + "%",
+                    "transform": "rotate(" + r + "deg)"
+                }).data("image", i + ".jpg");
 
-        $('.layout-item').first().click();
+            var imagePath = '@Url.GetImageUploadFolder()' + $label.data('image');
+
+            $taggd.append($label);
+
+            var $div = $('<div class="layout-preview-image"/>')
+                .css("left", x + "%")
+                .css("top", y + "%")
+                .appendTo($taggd);
+            var $priewImage = $('<img/>').attr('src', imagePath).appendTo($div);
+
+
+            $label.mouseover(function () {
+                $div.show();
+            });
+
+            $label.mouseleave(function () {
+                $div.hide();
+            });
+
+            $label.on("click", function () {
+                $modal.css('display', 'block');
+                $modalImg.attr('src',imagePath);
+            });
+
+        }
 
         $(document).ready(function () {
+            $('.layout-item').on('click', roomClick);
+
+            $('.layout-item').first().click();
+
             var image = document.getElementById('image');
             var settings = {
                 show: 'none',
@@ -273,31 +342,19 @@
             if (pageLoaded) {
                 $floors.trigger('change');
             }
+            pageLoaded = false;
         });
 
-        function addLabel(x,y,r,i) {
-            var $taggd = $('.taggd').first();
-            var $label = $('<label class="taggd__button"/>')
-                .css({
-                    "left": x + "%",
-                    "top": y + "%",
-                    "transform": "rotate(" + r + "deg)"
-                }).data("image", i + ".jpg");
-            $taggd.append($label);
-            $label.on("click", function () {
-                modal.style.display = "block";
-                modalImg.src = '@Url.GetImageUploadFolder()' + $(this).data('image');
-            });
-        }
 
-        var modal = document.getElementById('myModal');
-        var modalImg = document.getElementById("img01");
+        //Popup image
+        var $modal = $('#myModal'),
+            $modalImg = $("#img01"),
         // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-    </script>
+            $span = $(".close").first();
 
+        // When the user clicks on <span> (x), close the modal
+        $span.on('click', function () {
+            $modal.css('display', 'none');
+        });
+    </script>
 }
