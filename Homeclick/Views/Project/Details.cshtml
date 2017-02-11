@@ -42,14 +42,7 @@
 
 <div class="col-md-3">
     <div class="clearfix">
-        <h4>Chi Tiết</h4>
-        <p><strong>Loại dự án: </strong>Chung cư</p>
-        <p><strong>Chủ đầu tư: </strong>Chung cư</p>
-        <p><strong>Vị trí: </strong>Chung cư</p>
-        <p><strong>Quy mô diện tích: </strong>Chung cư</p>
-        <p><strong>Tổng số căn hộ: </strong>Chung cư</p>
-        <p><strong>Năm khởi công: </strong>Chung cư</p>
-        <p><strong>Website: </strong>http://masterithaodien.masteri.com.vn/</p>
+        @Html.Raw(Model.HtmlContent)
         <div>
             <img src="@Url.GetImageUploadFolder()@Model.PreviewImage.FullFileName" />
         </div>

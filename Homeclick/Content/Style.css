@@ -888,7 +888,6 @@ header {
 
 .quantity {
     height: 35px;
-    width: 100px;
     line-height: 35px;
     position: relative;
     display: inline-block;

@@ -36,7 +36,7 @@
                                     Text = o.Name,
                                 });
                                 }
-                            @Html.CustomDropdownList("projectCitiesSelection", citySelectList, null, null, new { data_child = "#states" })
+                            @Html.CustomDropdownList("projectCitiesSelection", citySelectList, null, "Thành phố", new { data_child = "#states" })
                         </li>
                         <li>
                             @{
@@ -48,7 +48,7 @@
                                     HtmlAttributes = new { data_parent = o.CityId }
                                 });
                             }
-                            @Html.CustomDropdownList("states", stateSelectList, null, null)
+                            @Html.CustomDropdownList("states", stateSelectList, null, "Quận huyện")
                         </li>
                     </ul>
                 </div>

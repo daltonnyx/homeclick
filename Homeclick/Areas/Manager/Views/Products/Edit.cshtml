@@ -38,6 +38,20 @@
                     };
                     @Html.Partial("Widgets/CustomFields_", customFieldsParam);
                 }
+                <div class="form-group">
+                    <label>Options</label>
+                    <ul>
+                        @{
+                            foreach (var option in Model.Product_Options)
+                            {
+                                <li>
+                                    @Html.ActionLink(option.Name, "Edit", "ProductOptions", new { id = option.Id }, new { target ="_blank"})
+                                </li>
+                            }
+                        }
+                    </ul>
+                    @Html.ActionLink("Add option", "Create","ProductOptions", new { product_id = Model.Id} , new { target = "_blank" })
+                </div>
             </fieldset>
 
             <fieldset class="col-md-3">

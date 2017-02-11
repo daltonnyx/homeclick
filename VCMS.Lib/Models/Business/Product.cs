@@ -75,6 +75,7 @@ namespace VCMS.Lib.Models
             }
         }
 
+        //Temp
         public Category Typology {
             get
             {

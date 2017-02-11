@@ -1,5 +1,5 @@
 ﻿@using VCMS.Lib.Models;
-@model IEnumerable<Category>
+@model IEnumerable<Product_Type>
 
 @{
     ViewBag.Title = "Typologies";
@@ -8,11 +8,11 @@
 
 <div class="all-tpologies">
     <div class="typologies clearfix">
-        @foreach (var category in Model)
+        @foreach (var type in Model)
         {
-            if (category.Details.ContainsKey("icon"))
+            if (type.ImageId != null)
             {
-                var categories = category.CategoryParents.ToList();
+                var categories = type.Categories.ToList();
                 var models = "";
                 for (var j = 0; j < categories.Count; j++)
                 {
@@ -22,9 +22,9 @@
                         models = models + " ";
                     }
                 }
-                <div class="col-xs-4 col-md-3 item-image-tp mix @models" data-myorder="@category.Order" data-type="@category.Id">
-                    <a class="typology-link" href="#"><img src="@Url.GetImageUploadFolder()@category.Details["icon"]" /></a>
-                    <span>@category.Name</span>
+                <div class="col-xs-4 col-md-3 item-image-tp mix @models" data-type="@type.Id">
+                    <a class="typology-link" href="#"><img src="@Url.GetFilePath("images",type.Image.FullFileName)" /></a>
+                    <span>@type.Name</span>
                 </div>
             }
         }

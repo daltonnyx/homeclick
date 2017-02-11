@@ -170,7 +170,7 @@ namespace VCMS.Lib.Controllers
                 foreach (var item in model.SelectedCategories)
                 {
                     var category = db.Categories.Find(int.Parse(item.Key));
-                    if (category.Posts.Select(o => o.Id).Contains(modelTarget.Id))
+                    if (category.Products.Select(o => o.Id).Contains(modelTarget.Id))
                     {
                         if (!item.Value)
                             category.Products.Remove(modelTarget);

@@ -56,7 +56,7 @@
                         </div>
                     </td>
                     <td>
-                        @item.Name
+                        @Html.ActionLink(item.Name, "Edit", new { id = item.Id})
                     </td>
                     <td>
                         @Html.Raw(item.Product_Options_Details.FirstOrDefault(d => d.Name == "so_luong").Value ?? "Stocking")

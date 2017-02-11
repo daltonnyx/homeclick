@@ -92,32 +92,40 @@ namespace Homeclick.Controllers
             var json = new List<object>();
             foreach (var item in products)
             {
-                var details = item.DetailsToDictionary();
-                var typo = item.Typology;
-
-                var materialList = new List<object>();
-                var tList = new List<Product>();
-                tList.Add(item);
-                var materials = GetCMaterialOfProducts(tList);
-
-                foreach (var material in materials)
+                try
                 {
-                    materialList.Add(new
+                    var details = item.DetailsToDictionary();
+                    var typo = item.ProductType;
+
+                    var materialList = new List<object>();
+                    var tList = new List<Product>();
+                    tList.Add(item);
+                    var materials = GetCMaterialOfProducts(tList);
+
+                    foreach (var material in materials)
                     {
-                        id = material.Id
-                    });
-                }
+                        materialList.Add(new
+                        {
+                            id = material.Id
+                        });
+                    }
 
-                json.Add(new
+                    json.Add(new
+                    {
+                        id = item.Id,
+                        name = item.Name,
+                        image = item.Image.FullFileName,
+                        value = Convert.ToInt32(details["gia"]),
+                        materials = materialList,
+                        typo = typo.Id,
+                        sale = item.CurrentSale != null ? item.CurrentSale.Percent : 0
+                    });
+
+                }
+                catch (Exception ex)
                 {
-                    id = item.Id,
-                    name = item.Name,
-                    image = item.Image.FullFileName,
-                    value = Convert.ToInt32(details["gia"]),
-                    materials = materialList,
-                    typo = typo.Id,
-                    sale = item.CurrentSale != null ? item.CurrentSale.Percent : 0
-                });
+                    continue;
+                }
             }
             return Json(json, JsonRequestBehavior.AllowGet);     
         }
@@ -204,7 +212,10 @@ namespace Homeclick.Controllers
             {
                 var images = new List<string>();
                 images.Add(option.PreviewImage.FullFileName);
-                images.AddRange(option.Files.Select(o => o.Id + o.Extension));
+                foreach (var detail in option.Product_Options_Details.Where(o => o.Name == "images"))
+                {
+                    images.Add(detail.File.FullFileName);
+                }
                 var quantity = int.Parse(option.Product_Options_Details.FirstOrDefault(o => o.Name == ProductDetailTypes.Quantity).Value ?? "0");
                 result = new { images = images, quantity = quantity };
             }

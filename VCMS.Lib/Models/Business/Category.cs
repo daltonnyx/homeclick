@@ -19,6 +19,7 @@ namespace VCMS.Lib.Models
             Products = new HashSet<Product>();
             CustomFields = new HashSet<CustomField>();
             Posts = new HashSet<Post>();
+            ProductTypes = new HashSet<Product_Type>();
         }
 
         public int Id { get; set; }
@@ -63,6 +64,8 @@ namespace VCMS.Lib.Models
         public virtual ICollection<CustomField> CustomFields { get; set; }
 
         public virtual ICollection<MenuItem> MenuItems { get; set; }
+
+        public virtual ICollection<Product_Type> ProductTypes { get; set; } 
     }
 
     public partial class Category
@@ -175,6 +178,7 @@ namespace VCMS.Lib.Models
                     cs.MapRightKey("ParentId");
                     cs.ToTable("Category_Category_Link");
                 });
+
             this.HasMany(e => e.Posts)
                 .WithMany(e => e.Categories)
                 .Map(cs =>
@@ -182,6 +186,15 @@ namespace VCMS.Lib.Models
                     cs.MapLeftKey("ParentId");
                     cs.MapRightKey("ChildId");
                     cs.ToTable("Categories_Posts_Link");
+                });
+
+            this.HasMany(e => e.ProductTypes)
+                .WithMany(e => e.Categories)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("ParentId");
+                    cs.MapRightKey("ChildId");
+                    cs.ToTable("Categories_Product_Types");
                 });
         }
     }

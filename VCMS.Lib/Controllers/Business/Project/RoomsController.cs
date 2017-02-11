@@ -60,7 +60,7 @@ namespace VCMS.Lib.Controllers
                 messageCollection.Add(new Message { MessageType = MessageTypes.Success, MessageContent = "Create successfully!" });
                 TempData[ConstantKeys.ACTION_RESULT_MESSAGES] = messageCollection;
 
-                return RedirectToAction("Edit", new { floor_id = model.Id });
+                return RedirectToAction("Edit", new { room_id = model.Id });
             }
             ViewData[ConstantKeys.PROJECTS] = this.GetProjects();
             ViewData[ConstantKeys.DEPARTMENTS] = this.GetDepartments();

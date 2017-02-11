@@ -19,17 +19,12 @@
         }
         <div class="row">
             <fieldset class="col-md-9">
+                <legend>Data</legend>
                 <div class="form-group">
-                    <div class="form-group-title">
-                        <h3>Data</h3>
-                    </div>
                     @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Department name" })
                     @Html.ValidationMessageFor(m => m.Name)
                 </div>
                 <div class="form-group">
-                    <div class="form-group-title">
-                        <h3>Data</h3>
-                    </div>
                     @Html.TextBoxFor(m => m.Description, new { @class = "form-control", placeholder = "Department description" })
                     @Html.ValidationMessageFor(m => m.Description)
                 </div>
@@ -54,7 +49,7 @@
                     <div class="form-group-title">
                         <h3>Project</h3>
                     </div>
-                    @Html.DropDownListFor(m => m.ProjectId, new SelectList(ViewData[ConstantKeys.PROJECTS] as IEnumerable<Project>, "Id", "Name", null), new { @class="chosen d-n"})
+                    @Html.DropDownListFor(m => m.ProjectId, new SelectList(ViewData[ConstantKeys.PROJECTS] as IEnumerable<Project>, "Id", "Name", null), new { @class="chosen", style="display:none;"})
                     @Html.ValidationMessageFor(m => m.ProjectId)
                 </div>
             </fieldset>

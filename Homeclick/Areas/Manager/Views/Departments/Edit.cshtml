@@ -52,6 +52,9 @@
                                 </div>
                                 }
                             }
+                        <p>
+                            @Html.ActionLink("Add Floor", "Create", "Floors", null , new { target = "_blank"})
+                        </p>
                     </div>
                 }
             </fieldset>
@@ -61,7 +64,7 @@
                     <div class="form-group-title">
                         <h3>Project</h3>
                     </div>
-                    @Html.DropDownListFor(m => m.ProjectId, new SelectList(ViewData[ConstantKeys.PROJECTS] as IEnumerable<Project>, "Id", "Name", null), new { @class="chosen d-n"})
+                    @Html.DropDownListFor(m => m.ProjectId, new SelectList(ViewData[ConstantKeys.PROJECTS] as IEnumerable<Project>, "Id", "Name", null), new { @class = "chosen", style="display:none;" })
                     @Html.ValidationMessageFor(m => m.ProjectId)
                 </div>
             </fieldset>
