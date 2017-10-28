@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using VCMS.Lib.Common;
@@ -32,7 +33,7 @@ namespace VCMS.Lib.Controllers
             return db.Product_Types;
         }
 
-        private List<Product_Detail> DicToDetails(Dictionary<string,object> dic, IEnumerable<CustomField> customfields)
+        private List<Product_Detail> DicToDetails(Dictionary<string, object> dic, IEnumerable<CustomField> customfields)
         {
             var result = new List<Product_Detail>();
             foreach (var item in dic)
@@ -118,13 +119,16 @@ namespace VCMS.Lib.Controllers
 
                 var userId = User.Identity.GetUserId();
                 var currentTimeUtc = DateTime.UtcNow;
+                model.Product_Details.Clear();
+                model.Product_Details = this.FormToDictMapping(Request.Form);
 
                 //Add details
                 foreach (var detail in model.Product_Details)
                 {
-                        detail.CreateUserId = userId;
-                        detail.CreateTime = currentTimeUtc;
-                        db.Entry(detail).State = System.Data.Entity.EntityState.Added;
+                    detail.Product = model;
+                    detail.CreateUserId = userId;
+                    detail.CreateTime = currentTimeUtc;
+                    db.Entry(detail).State = System.Data.Entity.EntityState.Added;
                 }
 
                 model.CreateUserId = User.Identity.GetUserId();
@@ -182,35 +186,9 @@ namespace VCMS.Lib.Controllers
                 var userId = User.Identity.GetUserId();
                 var currentTimeUtc = DateTime.UtcNow;
 
-                //Remove absent details
-                var existDetailId = modelTarget.Product_Details.Select(o => o.Id);
-                var exceptDetailIds = existDetailId.Except(model.Product_Details.Select(o => o.Id)).ToList();
-                foreach (var exceptDetailId in exceptDetailIds)
-                {
-                    var details = db.Product_Options_Details.Find(exceptDetailId);
-                    if (details != null)
-                        db.Entry(details).State = System.Data.Entity.EntityState.Deleted;
-                }
 
-                //Modify or add details
-                foreach (var detail in model.Product_Details)
-                {
-                    if (detail.Id != 0)
-                    {
-                        var detailTarget = modelTarget.Product_Details.FirstOrDefault(o => o.Id == detail.Id);
-                        db.Entry(detailTarget).CurrentValues.SetValues(detail);
-                        db.Entry(detailTarget).Property("ProductId").IsModified = false;
-                        db.Entry(detailTarget).Property("CreateUserId").IsModified = false;
-                        db.Entry(detailTarget).Property("CreateTime").IsModified = false;
-                    }
-                    else
-                    {
-                        detail.CreateUserId = userId;
-                        detail.CreateTime = currentTimeUtc;
-                        detail.ProductId = model.Id;
-                        db.Entry(detail).State = System.Data.Entity.EntityState.Added;
-                    }
-                }
+                modelTarget.Product_Details = this.FormToDictMapping(Request.Form);
+
 
                 db.Entry(modelTarget).CurrentValues.SetValues(model);
                 db.Entry(modelTarget).Property("CreateUserId").IsModified = false;
@@ -226,6 +204,39 @@ namespace VCMS.Lib.Controllers
             ViewData[ConstantKeys.CUSTOM_FIELDS] = customfields;
             ViewData[ConstantKeys.PRODUCT_TYPES] = this.GetProductTypes();
             return View(model);
+        }
+
+        private ICollection<Product_Detail> FormToDictMapping(System.Collections.Specialized.NameValueCollection form) {
+            List<Product_Detail> details = new List<Product_Detail>();
+            Regex IdPattern = new Regex(@"Product_Details\[(\d{1,})\].Name");
+            int ProductId = form.AllKeys.Contains("Id") ?  Convert.ToInt32(form["Id"]) : 0;
+            foreach (string key in form.AllKeys)
+            {
+                if(IdPattern.IsMatch(key))
+                {
+                    string name = form[key];
+                    var detail = db.Product_details.FirstOrDefault<Product_Detail>(d => d.ProductId == ProductId && d.Name == name);
+                    string indicator = IdPattern.Match(key).Groups[1].Value;
+                    if (detail == null)
+                    {
+                        detail = db.Product_details.Create();
+                        detail.Name = form[string.Format("Product_Details[{0}].Name", indicator)];
+                    }
+                    detail.Type = form[string.Format("Product_Details[{0}].Type", indicator)];
+                    detail.Value = form[string.Format("Product_Details[{0}].Value", indicator)];
+                    if(form.AllKeys.Contains(string.Format("Product_Details[{0}].FileId", indicator)))
+                    {
+                        detail.FileId = form[string.Format("Product_Details[{0}].FileId", indicator)];
+                    }
+                    if (form.AllKeys.Contains(string.Format("Product_Details[{0}].EnumId", indicator)))
+                    {
+                        detail.EnumId = Convert.ToInt32(form[string.Format("Product_Details[{0}].EnumId", indicator)]);
+                    }
+                    details.Add(detail);
+                
+                }
+            }
+            return details;
         }
 
         public List<SelectListItem> Rooms
@@ -246,6 +257,18 @@ namespace VCMS.Lib.Controllers
                     .Select(o => new SelectListItem { Text = o.Name, Value = (o.Id).ToString() }).ToList();
                 return rooms;
             }
+        }
+
+        
+        public ActionResult Delete(string id)
+        {
+            int Id = Convert.ToInt32(id);
+            if (Id == 0)
+                return RedirectToAction("List");
+            Product ProductToDelete = db.Products.Find(Id);
+            db.Entry<Product>(ProductToDelete).State = System.Data.Entity.EntityState.Deleted;
+            db.SaveChanges();
+            return RedirectToAction("List");
         }
 
         #region [Options]
