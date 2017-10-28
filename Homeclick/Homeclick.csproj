@@ -198,6 +198,7 @@
       <CustomToolNamespace>Resource</CustomToolNamespace>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\ExtendAreaViewEngine.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Manager\Bundles.cs" />
