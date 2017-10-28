@@ -17,7 +17,7 @@
     var Value = dic.ContainsKey("Value") ? dic["Value"] : null;
     var FieldName = dic["FieldName"] as string;
     var Multiple = dic.ContainsKey("Multiple") ? (bool)dic["Multiple"] : false;
-    var ContainerId = dic.ContainsKey("ContainerId") ? (string)dic["ContainerId"] : Html.RandomString(32);
+    var ContainerId = Html.RandomString(5);
     var Accept = dic.ContainsKey("Accept") ? dic["Accept"] as string : string.Empty;
     var FileManagerId = dic.ContainsKey("FileManagerId") ? dic["FileManagerId"] as string : null;
     var IsCustomField = dic.ContainsKey("IsCustomField") ? (bool)dic["IsCustomField"] : false;
@@ -31,7 +31,7 @@
             {
                 <div class="file-uploaded-border">
                     <ol class="file-list">
-                        @if (Multiple && Value != null)
+                        @if (Value != null)
                         {
                             var files = Value as IEnumerable<object>;
                             foreach (var obj in files)
@@ -51,6 +51,10 @@
                                             {
                                                 <input type="hidden" name="@(fieldName + ".Id")" value="@fileDic["DetailId"]" />
                                             }
+                                            else
+                                            {
+                                                <input type="hidden" name="@(fieldName + ".Id")" value="0" />
+                                            }
                                             <input type="hidden" name="@(fieldName + ".FileId")" value="@fileId" />
                                             <input type="hidden" name="@(fieldName + ".Type")" value="@((int)FieldTypes.File)" />
                                             <input type="hidden" name="@(fieldName + ".Name")" value="@DetailName" />
@@ -69,7 +73,7 @@
             }
             else
             {
-                if (!Multiple && Value != null)
+                if (Value != null)
                 {
                     var fileDic = Value.ToDictionary();
                     var fileName = fileDic.ContainsKey("FileName") ? fileDic["FileName"].ToString() : string.Empty;
@@ -186,6 +190,7 @@
                 if (isCustomField){
                     var detailName = $container.data('detail-name');
                     fieldName = fieldName + '[0]';
+                    $('<input type="hidden"/>').attr('name', fieldName + ".Id").val(0).appendTo($div);
                     $('<input type="hidden"/>').attr('name', fieldName + ".FileId").val(file.newFileName).appendTo($div);
                     $('<input type="hidden"/>').attr('name', fieldName + ".Name").val(detailName).appendTo($div);
                     $('<input type="hidden"/>').attr('name', fieldName + ".Type").val(@((int)FieldTypes.File)).appendTo($div);
@@ -246,40 +251,42 @@
 @using (Html.Delayed())
 {
     <script>
-        $('#@ContainerId').find('.fileupload').fileupload({
-            url:'@Url.Action("Uploads", "FileUpload")',
-            dataType: 'json',
-            formData: { fileGroup: @Convert.ToInt32(FileGroups.Other) },
-            maxFileSize: 999000,
-            //acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-            done: function (e, data) {
-                $.each(data.result, function (index, file) {
-                    var a = $('#@ContainerId .file-uploaded-single input').val();
-                    if (a)
-                        $.ajax({
-                            url: '@Url.Action("Delete", "FileManager")',
-                            type: 'DELETE',
-                            data: { 'id': a },
-                            traditional: true,
-                            success: function () {
-                                $('#@ContainerId').find('.file-uploaded-single').remove();
-                                $('#@ContainerId').find('.file-upload-new').fadeIn('fast');
-                                $('#@ContainerId').find('.file-remove-btn').hide();
-                                addImg('@ContainerId', @Multiple.ToString().ToLower(), file, '@FieldName');
-                            }
-                        });
-                    else
-                        addImg('@ContainerId', @Multiple.ToString().ToLower(), file, '@FieldName');
-                });
-            },
-            always: function(e, data){
-                $('#@ContainerId').find('.fileuploadProgress').fadeOut('fast');
-            },
-            progressall: function (e, data) {
-                $('#@ContainerId').find('.fileuploadProgress').fadeIn('fast');
-            }
-        }).bind('fileuploadprocessfail', function (e, data) {
-            alert(data.files[data.index].error);
+        $(document).ready(function ($) {
+            $('#@ContainerId .fileupload').fileupload({
+                url: '@Url.Action("Uploads", "FileUpload")',
+                dataType: 'json',
+                formData: { fileGroup: @Convert.ToInt32(FileGroups.Other) },
+                maxFileSize: 999000,
+                //acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+                done: function (e, data) {
+                    $.each(data.result, function (index, file) {
+                        var a = $('#@ContainerId .file-uploaded-single input').val();
+                        if (a)
+                            $.ajax({
+                                url: '@Url.Action("Delete", "FileManager")',
+                                type: 'DELETE',
+                                data: { 'id': a },
+                                traditional: true,
+                                success: function () {
+                                    $('#@ContainerId').find('.file-uploaded-single').remove();
+                                    $('#@ContainerId').find('.file-upload-new').fadeIn('fast');
+                                    $('#@ContainerId').find('.file-remove-btn').hide();
+                                    addImg('@ContainerId', @Multiple.ToString().ToLower(), file, '@FieldName');
+                                }
+                            });
+                        else
+                            addImg('@ContainerId', @Multiple.ToString().ToLower(), file, '@FieldName');
+                    });
+                },
+                always: function (e, data) {
+                    $('#@ContainerId').find('.fileuploadProgress').fadeOut('fast');
+                },
+                progressall: function (e, data) {
+                    $('#@ContainerId').find('.fileuploadProgress').fadeIn('fast');
+                }
+            }).bind('fileuploadprocessfail', function (e, data) {
+                alert(data.files[data.index].error);
+            });
         });
     </script>
 }

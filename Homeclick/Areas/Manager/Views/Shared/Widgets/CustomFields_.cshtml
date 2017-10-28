@@ -36,7 +36,7 @@
                 {
                     value = new { DetailId = detail?.Id, FileName = detail?.File?.Id + detail?.File?.Extension };
                 }
-                else if (customField.FieldType == FieldTypes.Select)
+                else if (customField.FieldType == FieldTypes.Select && detail.Enum != null)
                 {
                     value = new CustomSelectItem { Value = detail?.Enum.ToString(), Text = detail?.Enum.Name };
                 }
@@ -61,7 +61,11 @@
             {
                 if (detail?.Id != null)
                 {
-                    @Html.Hidden(fieldName + ".Id", detail?.Id)
+                    @Html.Hidden(fieldName + ".Id", detail.Id)
+                }
+                else
+                {
+                    @Html.Hidden(fieldName + ".Id", "0")
                 }
                 @Html.Hidden(fieldName + ".Type", (int)FieldTypes.Input)
                 @Html.Hidden(fieldName + ".Name", customField.Name)
@@ -74,6 +78,10 @@
                     if (detail?.Id != null)
                     {
                         @Html.Hidden(fieldName + ".Id", detail?.Id)
+                    }
+                    else
+                    {
+                        @Html.Hidden(fieldName + ".Id", "0")
                     }
                     @Html.Hidden(fieldName + ".Type", (int)FieldTypes.Select)
                     @Html.Hidden(fieldName + ".Name", customField.Name)
