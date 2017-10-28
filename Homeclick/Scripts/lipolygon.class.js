@@ -177,37 +177,14 @@ fabric.LiPolygon = fabric.util.createClass(fabric.Polygon,{ //Need to assign cla
     });
   },
   calcArea: function() {
-    var j,j1,j2,x1,x2,y1t,y2t,Stotal = 0,Ssub = 0;
-    var lop = [];
-    var k = this.points.length;
-    while(k--) { lop[k] = this.points[k]; }
-    //lop.push(this.points[0]);
-    for (var i = 0; i <= lop.length - 1; i++) {
-      j = (i == lop.length - 1) ? 0 : i + 1;
-      j1 = ((j + 1) == lop.length) ? 0 : j + 1;
-      j2 = ((j1 + 1) == lop.length) ? 0 : j1 + 1;
-      var pi = lop[i],
-          pj = lop[j],
-          pj1 = lop[    j1],
-          pj2 = lop[j2];
-      var a = (pj1.y - pj.y) / (pj1.x - pj.x),
-          b = pj.y - (a * pj.x);
-      x1 = pi.x;
-      x2 = pj2.x;
-      y1t = a * x1 + b;
-      y2t = a * x2 + b;
-      if((y1t - pi.y) * (y2t - pj2.y) < 0)
-      {
-        Ssub += this.retangleArea(pj,pj1,pj2);
-        lop.splice(j1,1);
-        i--;
-      }
-    };
-    for (var i = 2; i <= lop.length - 1; i++) {
-      Stotal += this.retangleArea(lop[0],lop[i - 1],lop[i]);
-    };
-    return Stotal - Ssub;
-
+    var vertices = this.points;
+    var area = 0.0;
+    for(var i = 0; i < vertices.length;i++) {
+      var j = (i + 1) % vertices.length;
+      area += vertices[i].x * vertices[j].y;
+      area -= vertices[i].y * vertices[j].x;
+    }
+    return Math.abs(area * 2.05);
   },
   retangleArea: function(a,b,c){
     var s;
@@ -230,20 +207,31 @@ fabric.LiPolygon = fabric.util.createClass(fabric.Polygon,{ //Need to assign cla
     this.callSuper('setFill',pattern);
   },
   containsPoint: function(f){
-    var isInside = false;
     var pointCount = this.points.length - 1,points = this.points;
-    var j = pointCount;
+    var intersectCount = 0;
     //console.log(points);
     for (var i = 0; i <= pointCount; i++) {
-      if ((points[i].y < f.y && points[j].y >= f.y
-          || points[j].y < f.y && points[i].y >= f.y)
-    &&  (points[i].x <= f.x || points[j].x <= f.x)) {
-      if (points[i].x + (f.y - points[i].y) / (points[j].y - points[i].y) * (points[j].x - points[i].x) < f.x)
-        isInside = !isInside;
+      var vertex1 = points[i];
+      var vertex2 = points[ (i + 1) % this.points.length ];
+      if(this.rayInterSectSide(f, vertex1, vertex2)) {
+        intersectCount++;
       }
-      j = i;
     }
-    return isInside;
+    return intersectCount % 2 != 0;
+  },
+  rayInterSectSide: function(f, a, b) {
+    if (a.y <= b.y) {
+            if (f.y <= a.y || f.y > b.y ||
+                f.x >= a.x && f.x >= b.x) {
+                return false;
+            } else if (f.x < a.x && f.x < b.x) {
+                return true;
+            } else {
+                return (f.y - a.y) / (f.x - a.x) > (b.y - b.y) / (b.x - a.x);
+            }
+        } else {
+            return this.rayInterSectSide(f, b, a);
+        }
   }
 });
 

@@ -22,10 +22,11 @@ fabric.GroupLiPolygon = fabric.util.createClass(fabric.Group,{
   },
 	getActiveObject: function(f){
 		f = this.toLocalPoint(f,'center','center');
+		f = {x: f.x / this.scaleX, y: f.y / this.scaleY}; // Scale out the point to original axis
 		//console.log(f);
-		for (var i = this._objects.length - 1; i >= 0; i--) {
+		for (var i = this._objects.length - 2; i >= 0; i--) {
 			  //  console.log(i + " " +this._objects[i].containsPoint(this._objects[i].toLocalPoint(f,'center','center')));
-			if(this._objects[i].type == 'liPolygon' && this._objects[i].containsPoint(this._objects[i].toLocalPoint(f,'center','center')))
+			if(this._objects[i].type == 'liPolygon' && this._objects[i].containsPoint(this._objects[i].toLocalPoint(f,"center","center")))
 				return this._objects[i];
 		};
 	},
@@ -282,18 +283,46 @@ fabric.GroupLiPolygon.fromURL = function(url, options, callback) {
 		//parsing goes here
 		var polyArr = [],
 		svgData = xhr.responseXML.documentElement;
-		var boundary = svgData.getElementById('JLVA-GRD'),
+		svgData.removeAttribute('viewBox'); //Elliminate out scale of image
+		svgData.imageScale = 5;
+		document.body.appendChild(svgData);
+		var boundary = document.getElementById('JLVA-GRD'),
 				matrixTrans = boundary.getAttribute('transform');
 				//matrixArray = matrixTrans.
 		var groupList = boundary.querySelectorAll('g'); // getElementByTagName doesnt work
 		//Get boundary array
 		for (var i = 0; i < groupList.length; i++) {
 
-				var polyline = groupList[i].querySelector('polyline'),
+				var polyline = groupList[i].querySelector('polyline');
 
-						pointStr = polyline.getAttribute('points'),
+				//If use polygon
+				if(polyline == null) {
+			  	polyline = groupList[i].querySelector('polygon');
+				}
 
-						pointArray = pointStr.split(/\s+/);
+				//If use rect
+				if(polyline == null) {
+					polyline = groupList[i].querySelector('rect');
+					if(polyline == null) continue;
+					var get_x = parseFloat(polyline.getAttribute('x')),
+							get_y = parseFloat(polyline.getAttribute('y')),
+							get_width = parseFloat(polyline.getAttribute('width')),
+							get_height = parseFloat(polyline.getAttribute('height'));
+					polyArr.push([
+						{x: get_x,             y: get_y},
+						{x: get_x + get_width, y: get_y},
+						{x: get_x + get_width, y: get_y + get_height},
+						{x: get_x,             y: get_y + get_height},
+						{x: get_x,             y: get_y},
+					]);
+					continue;
+				}
+
+
+
+				var pointStr = polyline.getAttribute('points');
+
+				var pointArray = pointStr.split(/\s+/);
 
 				var pointObjArray = [];
 
@@ -307,33 +336,51 @@ fabric.GroupLiPolygon.fromURL = function(url, options, callback) {
 				polyArr.push(pointObjArray);
 
 		}
-		applyMatrixTransform(polyArr,[5.5840655,0,0,5.5840655,-1387.2827,-1681.9091]);
+		//For right scale
+		//applyMatrixTransform(polyArr,[5.5840655,0,0,5.5840655,-1387.2827,-1681.9091]);
+		//Create a Group for boundaries
 		polWall = new fabric.GroupLiPolygon(polyArr, options, [0.00000001]);
 		polWall.childOptions = options;
+
+
+
+		//Use temporary canvas to render png images
+		var tempCanvas = document.createElement('CANVAS');
+
+		//Get width/height from boundary Wall
+
+		var g_wall = document.getElementById('ID-WALL----EXST');
+		var wallRect = g_wall.getBoundingClientRect();
+		var boundaryRect = boundary.getBoundingClientRect();
+		//Add more 5px for get all border
+		tempCanvas.width = (wallRect.width + 5) * svgData.imageScale;
+		tempCanvas.height = (wallRect.height + 5) * svgData.imageScale;
+
+		//Calculate offset of image and boundary
+		var imgOffset = {
+			left: wallRect.left - boundaryRect.left,
+			top: wallRect.top - boundaryRect.top,
+		};
+		//Remove it from svg for create Wall image
 		svgData.removeChild(boundary);
-		var xmlSerializer = new XMLSerializer();
-		fabric.loadSVGFromString(xmlSerializer.serializeToString(svgData),function(objects,options){
-		    var obj = fabric.util.groupSVGElements(objects, options);
-			 obj.scale(1).cloneAsImage(function(clone){
-			        clone.origin = obj.toObject();
-					polWall.add(clone);
-					polWall._objects[polWall._objects.length - 1].set({
-						originX: "left",
-		                originY: "top",
-						left: clone.getWidth() / 2 * -1 - 8,
-						top: clone.getHeight() / 2 * -1 + 3
-					});
-					callback(polWall);
 
-			 });
-
-			// polWall._objects[polWall._objects.length - 1].set({
-			// 	left: obj.getWidth() / 2 * -1 - 8,
-			// 	top: obj.getHeight() / 2 * -1 + 3
-			// });
+		//Remove temporary object
+		document.body.removeChild(svgData);
+		drawInlineSVG(svgData, tempCanvas.getContext('2d'), function(){
+			fabric.Image.fromURL(tempCanvas.toDataURL(), function(img) {
+				//Add it to group
+				img.scale(1/svgData.imageScale);
+				polWall.add(img);
+				polWall._objects[polWall._objects.length - 1].set({
+					originX: "left",
+					originY: "top",
+					left: polWall.getWidth() / -2 + imgOffset.left,
+					top: polWall.getHeight() / -2 + imgOffset.top
+				});
+				polWall.scale(2.05);
+				callback(polWall);
+			});
 		});
-
-
 
 	}
 	xhr.onerror = function (err) {
@@ -342,6 +389,35 @@ fabric.GroupLiPolygon.fromURL = function(url, options, callback) {
 	xhr.open('GET',url);
 	xhr.responseType = 'document';
 	xhr.send();
+}
+
+
+//Convert to Image and drawing on a Canvas
+function drawInlineSVG(svgElement, ctx, callback){
+	svgElement.setAttribute("transform", "scale(" + svgElement.imageScale+ ")");
+  var svgURL = new XMLSerializer().serializeToString(svgElement);
+  var img  = new Image();
+  img.onload = function(){
+    ctx.drawImage(this, 0, 0);
+    callback();
+    }
+  img.src = 'data:image/svg+xml; charset=utf8, '+encodeURIComponent(svgURL);
+  }
+
+function encodeOptimizedSVGDataUri(svgElement) {
+	var svgString = new XMLSerializer().serializeToString(svgElement);
+	var	txt = svgString
+        .replace('<svg',(~svgString.indexOf('xmlns')?'<svg':'<svg xmlns="http://www.w3.org/2000/svg"'))
+        .replace(/"/g, '\'')
+        .replace(/%/g, '%25')
+        .replace(/#/g, '%23')
+        .replace(/{/g, '%7B')
+        .replace(/}/g, '%7D')
+        .replace(/</g, '%3C')
+        .replace(/>/g, '%3E')
+        .replace(/\s+/g,' ');
+
+	return "data:image/svg+xml,"+txt;
 }
 
 fabric.GroupLiPolygon.fromObject = function (object, callback) {
@@ -370,8 +446,8 @@ fabric.GroupLiPolygon.fromObject = function (object, callback) {
 		var pl = new fabric.GroupLiPolygon(pointArr, object.childOptions, [1]);
 		pl.cart = object.cart;
 		return pl;
-        
-		
+
+
 };
 
 fabric.Canvas.getHistory = function(savedCanvas, canvas) {
