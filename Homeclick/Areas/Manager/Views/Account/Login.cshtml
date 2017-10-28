@@ -1,4 +1,4 @@
-﻿@using VCMS.Lib.Resources;
+﻿﻿@using VCMS.Lib.Resources;
 @model VCMS.Lib.Models.LoginViewModel
 
 @{
@@ -10,15 +10,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" href="~/Areas/Manager/Content/Themes/FLATY/Bootstrap.min.css" />
-    <link rel="stylesheet" href="~/Areas/Manager/Content/Themes/FLATY/flaty.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Areas/Manager/Content/css/flaty/flaty.css" />
 </head>
 
 <body class="login-page">
     <div class="login-wrapper">
         @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form", role = "form" }))
         {
-            <h3>Login to your account</h3>
+            <h3>Login</h3>
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger input" })
             <hr>
@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @type="Password", @placeholder = Strings.Password })
+                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @type = "Password", @placeholder = Strings.Password })
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
             </div>
