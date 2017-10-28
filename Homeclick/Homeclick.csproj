@@ -682,6 +682,7 @@
     <Content Include="Areas\Manager\Views\Shared\Widgets\SelectFiles.cshtml" />
     <Content Include="Areas\Manager\Views\ProductOptions\Create.cshtml" />
     <Content Include="Areas\Manager\Views\Shared\Widgets\DeleteConfirmModal_.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1099,6 +1100,7 @@
     <Content Include="Views\Collection\_productsTable.cshtml" />
     <Content Include="Views\Cart\_headerWidget.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Design\_ProductTypes.cshtml" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\SanPham\CanvasList.cshtml" />
     <Content Include="Views\SanPham\_CanvasList.cshtml" />

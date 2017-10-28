@@ -113,10 +113,24 @@ namespace VCMS.Lib.Models
             Dictionary<string, object> dic = new Dictionary<string, object>();
             foreach (var detail in Product_Details)
             {
-                if (!dic.ContainsKey(detail.Name))
-                    dic.Add(detail.Name, detail.Value);
+                if (!dic.ContainsKey(detail.Name)) {
+                    if (detail.Name == "data" || detail.Name == "pattern")
+                    {
+                        dic.Add(detail.Name, detail.FileId);
+                    }
+                    else
+                    {
+                        dic.Add(detail.Name, detail.Value);
+                    }
+                    
+                }
             }
             return dic;
+        }
+
+        public List<VCMS.Lib.Models.Product_Variant> SimpleProductOptions()
+        {
+            return new List<VCMS.Lib.Models.Product_Variant>();
         }
     }
 
