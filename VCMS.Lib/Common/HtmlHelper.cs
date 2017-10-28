@@ -18,10 +18,8 @@ namespace System.Web.Mvc
 
         public static string RandomString(this HtmlHelper htmlHelper, int length)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            var random = new Random();
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
+            Guid generated = Guid.NewGuid();
+            return generated.ToString().Substring(0, length);
         }
 
         public static MvcHtmlString ImageFor<TModel, TProperty>(
