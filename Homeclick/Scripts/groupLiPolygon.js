@@ -7,6 +7,7 @@ fabric.GroupLiPolygon = fabric.util.createClass(fabric.Group,{
 		for (var i = 0; i <= pointArray.length - 1; i++) {
 			var object = new fabric.LiPolygon(pointArray[i],options,lineWidths);
 			object.ProName = this.ProName;
+			object.floorPrice = 0;
 			this._objects.push(object);
 		};
 		options['padding'] = 4294967295;
@@ -365,8 +366,9 @@ fabric.GroupLiPolygon.fromURL = function(url, options, callback) {
 		svgData.removeChild(boundary);
 
 		//Remove temporary object
-		document.body.removeChild(svgData);
+
 		drawInlineSVG(svgData, tempCanvas.getContext('2d'), function(){
+			document.body.removeChild(svgData);
 			fabric.Image.fromURL(tempCanvas.toDataURL(), function(img) {
 				//Add it to group
 				img.scale(1/svgData.imageScale);
@@ -394,14 +396,17 @@ fabric.GroupLiPolygon.fromURL = function(url, options, callback) {
 
 //Convert to Image and drawing on a Canvas
 function drawInlineSVG(svgElement, ctx, callback){
-	svgElement.setAttribute("transform", "scale(" + svgElement.imageScale+ ")");
-  var svgURL = new XMLSerializer().serializeToString(svgElement);
+	svgElement.style.transform =  "scale(" + svgElement.imageScale+ ")";
+	svgElement.style.transformOrigin = "0px 0px 0px";
+	svgElement.setAttribute("width", ctx.canvas.width);
+	svgElement.setAttribute("height", ctx.canvas.height);
+  //var svgURL = new XMLSerializer().serializeToString(svgElement);
   var img  = new Image();
   img.onload = function(){
     ctx.drawImage(this, 0, 0);
     callback();
     }
-  img.src = 'data:image/svg+xml; charset=utf8, '+encodeURIComponent(svgURL);
+  img.src = encodeOptimizedSVGDataUri(svgElement);
   }
 
 function encodeOptimizedSVGDataUri(svgElement) {
@@ -417,7 +422,7 @@ function encodeOptimizedSVGDataUri(svgElement) {
         .replace(/>/g, '%3E')
         .replace(/\s+/g,' ');
 
-	return "data:image/svg+xml,"+txt;
+	return "data:image/svg+xml;utf8,"+txt;
 }
 
 fabric.GroupLiPolygon.fromObject = function (object, callback) {

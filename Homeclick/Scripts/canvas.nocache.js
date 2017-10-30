@@ -24,6 +24,7 @@ jQuery(document).ready(function ($) {
     canvasObj[0].height = canvasObj[0].parentElement.clientHeight;
     // init object and variable
     var canvas = new fabric.Canvas('tutorial');
+    canvas.backgroundColor = "#ffffff";
     var p, isDragable = false, src, srcW, srcH, srcName, srcVariants, srcImage, initScale, srcPId, srcZdata, srcPrice, srcScale, centerX, centerY, _isInside = false, srcOnWall;
     const srcMultiple = 1;
     var isInside = function (p, obj) {
@@ -156,7 +157,7 @@ jQuery(document).ready(function ($) {
                 obj.realImage = srcImage;
                 obj.pId = srcPId;
                 obj.variants = srcVariants;
-                obj.price = srcPrice;
+                obj.price = parseFloat(srcPrice);
                 obj.scale(initScale);
                 obj.initScale = initScale;
                 obj.set({
@@ -168,7 +169,7 @@ jQuery(document).ready(function ($) {
                     centeredScaling: true,
                     centeredRotation: true
                 });
-                obj.paths.forEach(elem => {
+                obj.paths.forEach(function(elem){
                     elem.strokeWidth = 1.3 / initScale;
                 });
 
@@ -243,7 +244,7 @@ jQuery(document).ready(function ($) {
 
         canvas.renderAll();
     });
-    var loadWallControl = function (e) {//Load Wall control
+    var loadWallControl = function (e) { //Load Wall control
         if (typeof pWall == 'undefined' || pWall == null)
             return;
         var f = canvas.getPointer(e),
@@ -274,21 +275,25 @@ jQuery(document).ready(function ($) {
         //     return;
         // }
         //else {
-            var m = { x: e.pageX, y: e.pageY }, //Load floor control
-                control = jQuery(".object-control"),
-                area = (pWall.calcArea() / 10000).toFixed(2);
-            control.css({
+            //var m = { x: e.pageX, y: e.pageY }, //Load floor control
+        var control = jQuery(".object-control"),
+            area = (pWall.calcArea() * Math.pow(srcMultiple, 2) / 10000).toFixed(2);
+        control.css({
 
-                "position": "absolute",
-                "left": m.x - (control.width() / 2) - 25 + "px",
-                "top": m.y - control.height() - 15 + "px"
-            });
-            control.show(200);
-            control.addClass('floor-control');
-            control.find("h4.product-name").text(pWall.proName != undefined ? pWall.proName : "San");
-            control.find(".product-options").css("display", "none");
-            control.find(".product-area span.value").text(area + "m2");
-            control.find(".product-price .value").text(currencyFormat(area * pWall.floorPrice));
+            "position": "absolute",
+            "left": m.x - (control.width() / 2) - 25 + "px",
+            "top": m.y - control.height() - 15 + "px"
+        });
+        jQuery("#object-color").spectrum("set", pWall.hexCode || "#dddddd");
+        control.show(200);
+        control.addClass('floor-control');
+        control.find("h4.product-name").text(pWall.proName != undefined ? pWall.proName : "San");
+        control.find(".product-options").css("display", "none");
+        control.find("#button-color").css("display", "inline-block");
+        control.find("#button-remove").css("display", "inline-block");
+        control.find("#button-lock").css("display", "none");
+        control.find(".product-area span.value").text(area + "m2");
+        control.find(".product-price .value").text(currencyFormat(area * pWall.floorPrice));
         //}
         //pWall = null;
     };
@@ -332,7 +337,7 @@ jQuery(document).ready(function ($) {
         control.find(".product-price .value").text('');
         control.find('.product-price').css('display', 'block');
         control.find(".product-options").css("display", "block");
-
+        jQuery("#object-color").spectrum("set", obj.hexCode);
         jQuery(".width-dimession").text((obj.getWidth() / 100).toFixed(2) + ' m');
         jQuery(".height-dimession").text((obj.getHeight() / 100).toFixed(2) + ' m');
         updateControl(obj);
@@ -496,7 +501,7 @@ jQuery(document).ready(function ($) {
     var fit_to_screen = function (fit) {
         var fit_screen = {};
         fit = fit == undefined ? true : fit;
-        canvas.getObjects().forEach(elem => {
+        canvas.getObjects().forEach(function(elem){
             fit_screen.minX = (fit_screen.minX == undefined || fit_screen.minX >= elem.left) ? elem.left : fit_screen.minX;
             fit_screen.minY = (fit_screen.minY == undefined || fit_screen.minY >= elem.top) ? elem.top : fit_screen.minY;
             fit_screen.maxX = (fit_screen.maxX == undefined || fit_screen.maxX <= (elem.left + elem.width * elem.scaleX)) ? (elem.left + elem.width * elem.scaleX) : fit_screen.maxX;
@@ -604,28 +609,36 @@ jQuery(document).ready(function ($) {
     //End Ruler,
 
     //Zoom toolbar
-    jQuery(".toolbar div.zoom-pointer").on('click', 'span.zoom-pointer', function (event) {
+    jQuery(".toolbar div.zoom-in-pointer").on('click', 'span.zoom-pointer', function (event) {
         resetState();
         isPermentsZoom = true;
-        getCanvasElement(canvas).addClass('zoomin');
+        isreverseZoom = false;
+        getCanvasElement(canvas).addClass('zoomin').removeClass('out');
         var d = event.delegateTarget;
         jQuery(d).addClass('active');
     });
     var isPermentsZoom = false;
-
-    jQuery(document).on('keydown', function (event) {
-        if (event.keyCode == 17) {
-            isreverseZoom = true;
-            getCanvasElement(canvas).addClass('out');
-        }
+    jQuery(".toolbar div.zoom-out-pointer").on('click', 'span.zoom-pointer', function (event) {
+        resetState();
+        isPermentsZoom = true;
+        isreverseZoom = true;
+        getCanvasElement(canvas).addClass('zoomin out');
+        var d = event.delegateTarget;
+        jQuery(d).addClass('active');
     });
+    // jQuery(document).on('keydown', function (event) {
+    //     if (event.keyCode == 17) {
+    //         isreverseZoom = true;
+    //         getCanvasElement(canvas).addClass('out');
+    //     }
+    // });
 
-    jQuery(document).on('keyup', function (event) {
-        if (event.keyCode == 17) {
-            isreverseZoom = false;
-            getCanvasElement(canvas).removeClass('out');
-        }
-    });
+    // jQuery(document).on('keyup', function (event) {
+    //     if (event.keyCode == 17) {
+    //         isreverseZoom = false;
+    //         getCanvasElement(canvas).removeClass('out');
+    //     }
+    // });
 
     canvas.on('mouse:down', function (event) {
         if (isDrawMode) return;
@@ -973,15 +986,16 @@ jQuery(document).ready(function ($) {
     });
 
     var getExportImage = function(width) {
-        var borderFit = 100 // For fit whole polWall;
+        var borderFit = 0 // For fit whole polWall;
         var oldWidth = canvas.getWidth(), oldHeight = canvas.getHeight();
-        fit_to_screen(false);
+        fit_to_screen();
         canvas.setWidth(polWall.width + borderFit);
         canvas.setHeight(polWall.height + borderFit);
         var multiple = width == undefined ? 1 : width / canvas.getWidth();
         var dataURL = canvas.toDataURL({
-            format: 'png',
+            format: 'jpeg',
             multiplier: multiple,
+            quality: 1,
             width: polWall.width + borderFit,
             height: polWall.height + borderFit,
         });
@@ -1280,7 +1294,15 @@ jQuery(document).ready(function ($) {
         //if(pushHistory != undefined)
         pushHistory();
         var c = canvas.getActiveObject();
-        if (c.pathToFill.length > 0) {
+        if(c.type == "GroupLiPolygon" && pWalltmp != null) {
+        	pWalltmp.hexCode = hexCode;
+        	pWalltmp.floorPrice = 0;
+        	pWalltmp.proName = "Sàn";
+        	pWalltmp.set({
+        		fill: hexCode
+        	});
+        }
+        else if (c.pathToFill.length > 0) {
             c.hexCode = hexCode; //reference for clone
             for (var i = 0; i < c.pathToFill.length; i++) {
                 var j = c.pathToFill[i];
@@ -1294,13 +1316,24 @@ jQuery(document).ready(function ($) {
         //if(pushHistory != undefined)
         pushHistory();
         var cR = canvas.getActiveObject();
-        if (cR != null && cR.type == 'GroupLiPolygon')
+        if (cR != null && cR.type == 'GroupLiPolygon' && pWalltmp != null) {
+        	pWalltmp.setFill("#ddd");
+        	pWalltmp.hexCode = "#dddddd";
+        	pWalltmp.proName = "Sàn";
+        	pWalltmp.floorPrice = 0;
+        	if(pWalltmp.pId != undefined)
+        		minusItemFromCart({pId: pWalltmp.pId, quantity: pWalltmp.area});
+        	jQuery(".object-control").hide(200);
+        	canvas.renderAll();
             return;
+        }
         if (canvas._activeGroup != null) // For group
         {
             for (var i = canvas._activeGroup._objects.length - 1; i >= 0; i--) {
+                minusItemFromCart(canvas._activeGroup._objects[i]);
                 canvas.remove(canvas._activeGroup._objects[i]);
             }
+            minusItemFromCart(canvas._activeGroup._objects[0]);
             canvas.remove(canvas._activeGroup._objects[0]); //Remove last object
             jQuery(".object-button").css("display", "none");
             jQuery(".dimession").css("display", "none");
@@ -1322,7 +1355,7 @@ jQuery(document).ready(function ($) {
         deleteObject();
     });
 
-    jQuery(document).on('keyup', (e) => {
+    jQuery(document).on('keyup', function(e) {
         if (e.keyCode == 46) {
             deleteObject();
         }
@@ -1696,12 +1729,14 @@ jQuery(document).ready(function ($) {
     /////////////////            Begin floor section          //////////////////
     ////////////////////////////////////////////////////////////////////////////
 
-    var pattern = null, floorPrice = 0, isFillPattern = false, floorName = '';
+    var pattern = null, floorPrice = 0, isFillPattern = false, floorName = '', floorId, floorImage;
 
     $(document).on("mousedown", "*[data-pattern]", function (event) {
         pattern = $(this).data('pattern');
         floorPrice = $(this).data('price');
         floorName = $(this).data('name');
+        floorId = $(this).data('pid');
+        floorImage = $(this).data('image');
         isFillPattern = true;
     });
 
@@ -1713,7 +1748,10 @@ jQuery(document).ready(function ($) {
         if (typeof (pWall) == 'undefined')
             return;
         var price = floorPrice,
-            area = (pWall.calcArea() * Math.pow(srcMultiple, 2) / 1000000).toFixed(2);
+        	pid = floorId,
+        	name = floorName,
+        	image = floorImage,
+            area = (pWall.calcArea() * Math.pow(srcMultiple, 2) / 10000).toFixed(2);
         if (pattern) {
             var src = pattern;
             fabric.Image.fromURL(src, function (img) {
@@ -1729,7 +1767,16 @@ jQuery(document).ready(function ($) {
         //   canvas.renderAll();
         // }
         pWall.floorPrice = price;
-        pWall.proName = floorName;
+        pWall.proName = name;
+        pWall.pId = pid;
+        pWall.area = area;
+        addItemToCart({
+        	pId: pid,
+            ProName: name,
+            realImage: image,
+            price: parseFloat(price),
+            quantity: parseFloat(area)
+        });
         jQuery(".object-control").find(".product-price .value").text(currencyFormat(area * pWall.floorPrice));
         pattern = null;
         floorPrice = 0;
@@ -1740,6 +1787,8 @@ jQuery(document).ready(function ($) {
         pattern = null;
         floorPrice = 0;
         isFillPattern = false;
+        floorId = undefined;
+        floorImage = '';
     });
 
     ////////////////////////////////////////////////////////////////////////////
@@ -2194,7 +2243,7 @@ jQuery(document).ready(function ($) {
         undoStack.push(historyObject);
         if (undoStack.length > 1)
             document.getElementById("undo").removeAttribute("disabled");
-    }
+    };
 
     //Add item to Cart
     /**
@@ -2298,7 +2347,7 @@ jQuery(document).ready(function ($) {
             Name: obj.ProName,
             ImgUrl: obj.realImage,
             Price: obj.price,
-            Quantity: 1
+            Quantity: obj.quantity || 1
         });
         if (cart.checkProduct(product)) {
             cart.addProduct(product);
@@ -2321,10 +2370,12 @@ jQuery(document).ready(function ($) {
 
     var minusItemFromCart = function (obj) {
         var product = cart.getProduct(obj.pId);
-
-        if (product.Quantity > 1) {
-            cart.minusProduct(product);
-            jQuery("#furnitures .cart .cart #cart-product-" + product.Id).find(".product-quantity span").text('x' + cart.getProduct(product.Id).Quantity);
+        var quantity = obj.quantity || 1;
+        if (product.Quantity > quantity) {
+            cart.minusProduct(product, quantity);
+            jQuery("#furnitures .cart .cart #cart-product-" + product.Id).find(".product-quantity span.p-quantity").text('x' + cart.getProduct(product.Id).Quantity);
+        	jQuery("#furnitures .cart .cart #cart-product-" + product.Id).find(".product-quantity span.p-total")
+                .text(String(cart.getProduct(product.Id).Quantity * cart.getProduct(product.Id).Price).addCommas().curencyPostfix("đ"));
         }
         else {
             cart.deleteProduct(product);
@@ -2762,7 +2813,7 @@ Cart.prototype.checkProduct = function (product) {
 Cart.prototype.addProduct = function (product) {
     for (var i = this.cartData.length - 1; i >= 0; i--) {
         if (this.cartData[i].Id == product.Id) {
-            this.cartData[i].Quantity++;
+            this.cartData[i].Quantity += parseFloat(product.Quantity);
         }
     }
 }
@@ -2771,10 +2822,10 @@ Cart.prototype.clearProduct = function () {
     this.cartData.length = 0;
 }
 
-Cart.prototype.minusProduct = function (product) {
+Cart.prototype.minusProduct = function (product, quantity) {
     for (var i = this.cartData.length - 1; i >= 0; i--) {
         if (this.cartData[i].Id == product.Id) {
-            this.cartData[i].Quantity--;
+            this.cartData[i].Quantity -= quantity;
         }
     }
 }
