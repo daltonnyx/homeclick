@@ -507,6 +507,13 @@ span.aqua {
   line-height: 50px;
 }
 
+.control-container.toolbar div span .fa {
+  font-size: 24px;
+  text-align: center;
+  width: 100%;
+  line-height: 50px;
+}
+
 .control-container.toolbar div span.icon .fa {
   font-size: 27px;
   vertical-align: middle;
@@ -541,6 +548,8 @@ span.aqua {
 
 .grab {
   cursor: grab !important;
+	cursor: url(hand.cur) 0 0, grab !important;
+  cursor: url(hand.cur) 0 0, -webkit-grab !important;
 }
 
 .zoomin {
@@ -1138,4 +1147,7 @@ span.aqua {
 #product-options {
   width: 100%;
   padding: 3px 5px;
+}
+#button-color {
+  margin-top: 3px;
 }
