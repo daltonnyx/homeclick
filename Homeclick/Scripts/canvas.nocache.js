@@ -547,6 +547,9 @@ jQuery(document).ready(function ($) {
     var drawLine;
 
     canvas.on("mouse:up", function (e) {
+        if(e.e.which != 1) {
+          return;
+        }
         if (!isMeasure)
             return;
         if (!isDrawing) {
