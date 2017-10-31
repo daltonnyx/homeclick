@@ -22,7 +22,7 @@
         </div>
 
         <div class="sumary col-sm-7 col-md-8">
-            <h3 class="single-product-title">@Model.name</h3>
+            <h3 class="single-product-title">@Model.Name</h3>
             <div class="sg-prince">
                 <div class="number-prince" @Html.Raw(Model.CurrentSale != null ? "style='text-decoration: line-through'" : "")>@Convert.ToInt32(details[ProductDetailTypes.Price]).ToString("#,###", info.NumberFormat) vnđ</div>
                 @if (Model.CurrentSale != null)
