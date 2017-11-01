@@ -24,8 +24,15 @@ namespace VCMS.Lib.Models
 
         public int? DepartmentId { get; set; }
 
+        [ForeignKey("Structure")]
+        public string structureId { get; set; }
+
+        public string Outputstr { get; set; }
+
         public virtual Department Department { get; set; }
 
         public virtual ICollection<Room> Rooms { get; set; }
+
+        public virtual File Structure { get; set; }
     }
 }

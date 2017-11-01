@@ -1,6 +1,4 @@
-﻿@using VCMS.Lib.Common;
-@using VCMS.Lib.Models;
-@using VCMS.Lib.Models;
+﻿@using VCMS.Lib.Models;
 
 @model Product
 
@@ -90,9 +88,9 @@
                 <h3 class="detail-product-title" hidden="hidden">Chi tiết</h3>
                 <div class="detail-product-content">
                     <h3>Chi tiết</h3>
-                    @{var escaped = new HtmlString(Model.content);}
+                    @{var escaped = new HtmlString(Model.Content);}
                     <p>@escaped</p>
-                    <p><span>Kích thước:</span>@details[ProductDetailTypes.Size]</p>
+                    <p><span>Kích thước:</span>@(details.ContainsKey(ProductDetailTypes.Size) ? details[ProductDetailTypes.Size] : 0)</p>
                     <p><span>Trọng lượng:</span>@details[ProductDetailTypes.Weight] kg</p>
                     <p><span>Bảo hành:</span>@details[ProductDetailTypes.Warranty] Tháng</p>
                     <p><span>Xuất xứ:</span>@details[ProductDetailTypes.MadeIn]</p>
@@ -143,7 +141,7 @@
     <ul>
         <li><a href="@Url.Action("Index","Home")">Home</a></li>
         <li><a href="@Url.Action("Index")">Sản phẩm</a></li>
-        <li>@Model.name</li>
+        <li>@Model.Name</li>
     </ul>
 }
 

@@ -37,20 +37,22 @@ namespace Homeclick.Controllers
             return View(listcategory);
         }
 
-        public ActionResult CanvasList(int? cat_id, int? type_id)
+        public ActionResult CanvasList(int? room, int? type)
         {
             IList<Product> products = (from product in db.Products
                                        where product.Status == true
                                       select product).ToList<Product>();
 
-            if(cat_id != null)
-            {
-                products = db.Categories.Find(cat_id).Products.Where<Product>(p => p.Status == true).ToList<Product>();
-            }
-            if(type_id != null)
+            if(room != null)
             {
                 products = (from product in products
-                            where product.Status == true
+                            where product.Categories.Select<Category,int>(c => c.Id).ToList<int>().Contains(room.Value)
+                            select product).ToList<Product>();
+            }
+            if(type != null)
+            {
+                products = (from product in products
+                            where product.ProductType.Id == type
                             select product).ToList<Product>();
             }
             return PartialView(products);
@@ -71,15 +73,11 @@ namespace Homeclick.Controllers
             return View(listproduct);
         }
 
-        public List<Product> FilterByCategory(string[] args)
+        public IEnumerable<Product> FilterByCategory(int category_id, int? product_type_id = null)
         {
-            var products = db.Products.ToList();
-            foreach (var arg in args)
-            {
-                int number;
-                if (int.TryParse(arg,out number))
-                    products = products.Where(o => o.Categories.Select(e => e.Id).ToList().Contains(number)).ToList();
-            }
+            var products = db.Products.Where(o => o.Categories.FirstOrDefault().Id == category_id);
+            if (product_type_id != null)
+                products = products.Where(o => o.ProductTypeId == product_type_id);
             return products;
         }
 
@@ -88,38 +86,46 @@ namespace Homeclick.Controllers
         /// </summary>
         /// <param name="ids">categories id</param>
         /// <returns></returns>
-        public JsonResult ProductsJson(string[] ids)
+        public JsonResult ProductsJson(int category_id, int? product_type_id = null)
         {
-            var list = this.FilterByCategory(ids);
+            var products = FilterByCategory(category_id, product_type_id);
             var json = new List<object>();
-            foreach (var item in list)
+            foreach (var item in products)
             {
-                var details = item.DetailsToDictionary();
-                var typo = item.Categories.FirstOrDefault(o => o.CategoryTypeId == (int)CategoryTypes.Typology);
-
-                var materialList = new List<object>();
-                var tList = new List<Product>();
-                tList.Add(item);
-                var materials = GetCMaterialOfProducts(tList);
-
-                foreach (var material in materials)
+                try
                 {
-                    materialList.Add(new
+                    var details = item.DetailsToDictionary();
+                    var typo = item.ProductType;
+
+                    var materialList = new List<object>();
+                    var tList = new List<Product>();
+                    tList.Add(item);
+                    var materials = GetCMaterialOfProducts(tList);
+
+                    foreach (var material in materials)
                     {
-                        id = material.Id
-                    });
-                }
+                        materialList.Add(new
+                        {
+                            id = material.Id
+                        });
+                    }
 
-                json.Add(new
+                    json.Add(new
+                    {
+                        id = item.Id,
+                        name = item.Name,
+                        image = item.Image.FullFileName,
+                        value = Convert.ToInt32(details["gia"]),
+                        materials = materialList,
+                        typo = typo.Id,
+                        sale = item.CurrentSale != null ? item.CurrentSale.Percent : 0
+                    });
+
+                }
+                catch (Exception ex)
                 {
-                    id = item.Id,
-                    name = item.Name,
-                    image = item.Image.FullFileName,
-                    value = Convert.ToInt32(details["gia"]),
-                    materials = materialList,
-                    typo = typo.Id,
-                    sale = item.CurrentSale != null ? item.CurrentSale.Percent : 0
-                });
+                    continue;
+                }
             }
             return Json(json, JsonRequestBehavior.AllowGet);     
         }
@@ -130,10 +136,10 @@ namespace Homeclick.Controllers
         /// <param name="typo_id">Id of the category</param>
         /// <param name="model_id">If 'category_id' is -1 and 'model_id' has been set, this will getting materials contained in the model</param>
         /// <returns></returns>       
-        public JsonResult GetMetarialsJson(string[] ids)
+        public JsonResult GetMetarialsJson(int category_id, int? product_type_id = null)
         {
             var resuilt = new List<object>();
-            var products = this.FilterByCategory(ids);
+            var products = FilterByCategory(category_id, product_type_id);
             var cMaterials = GetCMaterialOfProducts(products);
 
             foreach (var cMaterial in cMaterials)
@@ -206,7 +212,10 @@ namespace Homeclick.Controllers
             {
                 var images = new List<string>();
                 images.Add(option.PreviewImage.FullFileName);
-                images.AddRange(option.Files.Select(o => o.Id + o.Extension));
+                foreach (var detail in option.Product_Options_Details.Where(o => o.Name == "images"))
+                {
+                    images.Add(detail.File.FullFileName);
+                }
                 var quantity = int.Parse(option.Product_Options_Details.FirstOrDefault(o => o.Name == ProductDetailTypes.Quantity).Value ?? "0");
                 result = new { images = images, quantity = quantity };
             }

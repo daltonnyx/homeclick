@@ -39,19 +39,19 @@
                 <hr />
                 <div class="form-group">
                     @{
-                        var locationParam = new Dictionary<string, object>
+                        var locationParam = new
                         {
-                            { "ContainerId", "form-widget-location" },
-                            { "ContainerClass", "" },
-                            { "CityFieldName", "CityId" },
-                            { "CityFieldValue", Model.District.CityId },
-                            { "DistrictFielName" , Html.NameFor(m => m.DistrictId).ToString()},
-                            { "DistrictFielValue" , Model.DistrictId},
-                            { "AddressFielName", "Address" },
-                            { "AddressFielValue", "" },
-                            { "Cities", ViewData[ConstantKeys.CITIES] }
+                            ContainerId = "form-widget-location",
+                            ContainerClass = "",
+                            CityFieldName = "CityId",
+                            CityFieldValue = Model?.District?.CityId,
+                            DistrictFielName = Html.NameFor(m => m.DistrictId).ToString(),
+                            DistrictFielValue = Model?.DistrictId,
+                            AddressFielName = "Address",
+                            AddressFielValue = Model?.Address,
+                            Cities = ViewData[ConstantKeys.CITIES]
                         };
-                        @Html.Partial("Widgets/Location", locationParam);
+                        @Html.Partial("Widgets/Location", locationParam.ToDictionary());
                     }
                 </div>
                 <hr />

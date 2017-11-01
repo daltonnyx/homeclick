@@ -19,7 +19,7 @@
             <ul class="nav">
                 @foreach (var item in Model)
                 {
-                    var children = item.CategoryChildren;
+                    var children = item.ProductTypes;
 
                     <li class="@Html.Raw(item.Id == categoryId ? "active" : "")" data-category="@item.Id">
                         <a href="@Url.Action("Category", new { category_id = item.Id })">@item.Name</a>

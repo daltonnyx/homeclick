@@ -13,6 +13,8 @@
 @model object
 
 @{ 
+    var random = new Random();
+
     var dic = Model.ToDictionary();
     var Value = dic.ContainsKey("Value") ? dic["Value"] : null;
     var FieldName = dic["FieldName"] as string;
@@ -23,6 +25,7 @@
     var IsCustomField = dic.ContainsKey("IsCustomField") ? (bool)dic["IsCustomField"] : false;
     var DetailName = dic.ContainsKey("DetailName") ? dic["DetailName"] as string : string.Empty;
     var StartIndex = dic.ContainsKey("StartIndex") ? (int)dic["StartIndex"] : -1;
+    var ContainerId = dic.ContainsKey("ContainerId") ? (string)dic["ContainerId"] : Guid.NewGuid().ToString().Replace("-", "_");
 }
 
     <div id="@ContainerId" data-is-customfield="@IsCustomField.ToString().ToLower()" @Html.Raw(DetailName !=string.Empty ? string.Format("data-detail-name='{0}'", DetailName) : string.Empty)>
@@ -75,15 +78,15 @@
             {
                 if (Value != null)
                 {
-                    var fileDic = Value.ToDictionary();
-                    var fileName = fileDic.ContainsKey("FileName") ? fileDic["FileName"].ToString() : string.Empty;
-                    var fieldName = string.Format("{0}[{1}]", FieldName, StartIndex);
 
-                    var fileId = Path.GetFileNameWithoutExtension(fileName);
                     <div class="file-uploaded-single img-thumbnail">
-                        <img src="@Url.GetImageUploadFolder()@fileName">
                         @if (IsCustomField)
                         {
+                            var fileDic = Value.ToDictionary();
+                            var fileName = fileDic.ContainsKey("FileName") ? fileDic["FileName"].ToString() : string.Empty;
+                            var fieldName = string.Format("{0}[{1}]", FieldName, StartIndex);
+                            var fileId = Path.GetFileNameWithoutExtension(fileName);
+                            <img src="@Url.GetImageUploadFolder()@fileName">
                             if (fileDic.ContainsKey("DetailId"))
                             {
                                 <input type="hidden" name="@(fieldName + ".Id")" value="@fileDic["DetailId"]" />
@@ -94,18 +97,26 @@
                         }
                         else
                         {
-                            <input type="hidden" name="@fieldName" value="@fileId" />
+                            var fileId = Path.GetFileNameWithoutExtension(Value.ToString());
+                            <img src="@Url.GetImageUploadFolder()@Value.ToString()">
+                            <input type="hidden" name="@FieldName" value="@fileId" />
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="file-upload-empty" @Html.Raw((Value != null) ? "style='display:none'" : "")>
+                        <span><i>No selected file</i></span>
+                        @if (IsCustomField)
+                        {
+                            <input type="hidden" name="@(string.Format("{0}[{1}]", FieldName, StartIndex) + ".FileId")" value="" />
+                            <input type="hidden" name="@(string.Format("{0}[{1}]", FieldName, StartIndex) + ".Type")" value="@((int)FieldTypes.File)" />
+                            <input type="hidden" name="@(string.Format("{0}[{1}]", FieldName, StartIndex) + ".Name")" value="@DetailName" />
                         }
                     </div>
                 }
             }
         </div>
-        @if (!Multiple)
-        {
-            <div class="file-upload-empty" @Html.Raw((Value != null) ? "style='display:none'" : "")>
-                <span><i>No selected file</i></span>
-            </div>
-        }
 
         <div class="clearfix m-t-15">
             @if (FileManagerId != null || FileManagerId != string.Empty)
@@ -151,14 +162,13 @@
             $container.find('.file-upload-empty').hide();
             $container.find('.file-remove-btn').show();
             var isCustomField = $container.data('is-customfield');
-
             if (isMultiple) {
                 var makeId = randomString(32,'A#');
                 var $li = $('<li class="file"/>');
                 var $input = $('<input type="checkbox"/>').attr('id', makeId).data('file',fileName).appendTo($li);
                 var $label = $('<label/>').attr('for', makeId).appendTo($li);
                 switch(file.ext){
-                    case '.gif': case '.jpg': case '.png':
+                    case '.gif': case '.jpg': case '.png': case '.svg':
                         var $img = $('<img/>').attr('src','@Url.GetImageUploadFolder()' + fileName).appendTo($label);
                         break;
                     default:
@@ -180,7 +190,7 @@
             else {
                 var $div = $('<div class="file file-uploaded-single img-thumbnail"/>').data('file', fileName).hide();
                 switch(file.ext){
-                    case '.gif': case '.jpg': case '.png':
+                    case '.gif': case '.jpg': case '.png': case '.svg':
                         var $img = $('<img/>').attr('src', '@Url.GetImageUploadFolder()' + fileName).appendTo($div);
                         break;
                     default:
@@ -197,12 +207,14 @@
                 }
                 else
                     var $inp = $('<input type="hidden"/>').attr('data-file', fileName).attr('name', fieldName).val(file.newFileName).appendTo($div);
-
-                $container.find('.file-uploaded').html($div);
+                if ($container.data("insert-target"))
+                    $($container.data("insert-target")).html($div);
+                else
+                    $container.find('.file-uploaded').html($div);
                 $div.prependTo($container.find('.file-uploaded')).fadeIn('fast');
             }
 
-            refreshForm(containerDivId);
+            refreshForm('#' + containerDivId);
         }
 
         function removeImg(containerDivId, isMultiple) {
@@ -223,11 +235,11 @@
                 $container.find('.file-remove-btn').hide();
             }
 
-            refreshForm(containerDivId);
+            refreshForm('#' + containerDivId);
         }
 
-        function refreshForm(containerDivId){
-            var $container = $('#' + containerDivId);
+        function refreshForm(container){
+            var $container = $(container);
             var $form = $container.parents('form');
             var $formGroupCustoms = $form.find('.form-group-custom-field');
             for (var i = 0; i < $formGroupCustoms.length; i++) {

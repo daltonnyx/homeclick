@@ -1,0 +1,172 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_SharedLayout.cshtml";
+    var url = "";
+    var categories = ViewBag.Categories as IEnumerable<Homeclick.Models.Category>;
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div id="gmap" style='overflow:hidden;height:682px; width:100%;'>
+            <div id='gmap_canvas' style="height:682px;width:100%;">
+            </div>
+            <div>
+                <small>
+                    <a href="http://embedgooglemaps.com"></a>
+                </small>
+            </div>
+        </div>
+        <div class="main-body">
+            <div id="projectsGrid" class="clearfix">
+
+            </div>
+
+            <div id="projectsLoading" class="loading" style="display: none;">
+                <img class="loadingImg" src="@url/Content/loading.gif" height="150" width="150" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section breadcrumb {
+    <ul>
+        <li><a href="../">Home</a></li>
+        <li>Dự án</li>
+    </ul>
+}
+
+@section styles {
+    <link href="~/Content/Project.css" rel="stylesheet" />
+    <style>
+        #gmap_canvas img {
+            max-width: none !important;
+            background: none !important;
+        }
+
+        #gmap_canvas .info .info-body img {
+            max-height: 200px !important;
+        }
+
+        #gmap_canvas .info h3 {
+            font-family: 'Roboto Condensed', sans-serif;
+            margin-bottom: 15px;
+            color: #02bdb6;
+        }
+
+        #gmap_canvas img[src="https://maps.gstatic.com/mapfiles/transparent.png"] {
+            width:13px!important;
+            height:13px!important;
+            top:17px!important;
+            right:40px!important;
+        }
+        .gm-style-iw {
+            width: auto !important;
+            top: 15px !important;
+            background-color: #fff;
+            box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
+            border-radius: 2px 2px 0 0;
+            left: 20px !important;
+        }
+
+        .info {
+            padding: 10px;
+            margin-bottom: 0px;
+        }
+
+    </style>
+
+}
+
+@section scripts {
+    <script type='text/javascript' src="~/Scripts/Plugins/Map/map.js"></script>
+    <script type='text/javascript' src="~/Scripts/Plugins/jlinq/jlinq.js"></script>
+    <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBB5V34f3crBWyutuwFCy73IzRCdIwqUrI'></script>
+    <script type='text/javascript' src="~/Scripts/Plugins/Map/markerclustererplus/src/markerclusterer.min.js"></script>
+
+    <script>
+        var jsonData = [];
+        var currentJsonData = [];
+
+        var selectedCategory = $('.category-list .category-link').first();
+        $('.category-link').bind('click', function (event) {
+            var $selectedCategory = $('.category-link.active');
+            $selectedCategory.removeClass('active');
+
+            selectedCategory = this;
+            $(selectedCategory).addClass('active');
+
+            var category = $(selectedCategory).data('category');
+            if (category == null)
+                currentJsonData = jsonData;
+
+            filters = [];
+            var selectedCategory = $('li.category-link.active[data-category]');
+            if (selectedCategory.length != 0)
+                filters.push({ 'fieldName': 'type', 'fieldValue': selectedCategory.data('category') });
+
+            selectChanged(currentJsonData, filters);
+            event.preventDefault();
+        });
+
+        $("#filterButton").on('click', function () {
+            categoryChanged();
+            event.preventDefault();
+        });
+
+        function categoryChanged() {
+            var filters = [];
+
+            var selectedCategory = $('li.category-link.active[data-category]');
+            if (selectedCategory.length != 0)
+                filters.push({ 'fieldName': 'type', 'fieldValue': selectedCategory.data('category'), 'valueType': 'int' });
+
+            var $stateSlect = $("#states");
+            if ($stateSlect.val())
+                filters.push({ 'fieldName': 'state', 'fieldValue': $stateSlect.val() });
+
+            var statusValue = $('input[name="status"]:checked').val();
+            filters.push({ 'fieldName': 'statu', 'fieldValue': statusValue, 'valueType': 'int' });
+
+            var nameValue = $('#filterTextBox').val();
+            if (nameValue)
+                filters.push({ 'fieldName': 'name', 'fieldValue': nameValue, 'valueType': 'string' });
+
+            selectChanged(jsonData, filters);
+        }
+
+        function selectChanged(data, filters) {
+            var result = data;
+
+            for (var i = 0; i < filters.length; i++) {
+                if (filters[i]['valueType'] == "string")
+                    result = jLinq.from(result).contains(filters[i]['fieldName'], filters[i]['fieldValue']).select();
+                else
+                    result = jLinq.from(result).equals(filters[i]['fieldName'], parseInt(filters[i]['fieldValue'])).select();
+            }
+            showMarkers(result);
+        }
+
+        var category_id = '@Request.RequestContext.RouteData.Values["category_id"]';
+
+        jQuery(document).ready(function ($) {
+            var url = '@Url.Action("GetProjectsData")';
+
+            var selectedCategory = $('li.category-link.active[data-category]');
+
+            var data = $.getJsonFromUrl(url, { 'category_id': selectedCategory.data['category'] });
+            for (var i = 0; i < data.length; i++) {
+                data[i]['image'] = '@Url.GetImageUploadFolder()' + '/' + data[i]['image'];
+                data[i]['link'] = '@Url.Action("details")?project_id=' + data[i]['id'];
+            }
+
+            jsonData = data;
+            currentJsonData = jsonData;
+
+            mapInit();
+            setMarkers(jsonData);
+        });
+    </script>
+}
+
+

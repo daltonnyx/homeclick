@@ -90,10 +90,10 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item" data-menu="ProjectIndex">
+                    <li class="nav-item @Html.Raw(controllerName == "project" ? "active" : "")" data-menu="ProjectIndex">
                         @Html.ActionLink("Dự án", "Index", "Project")
                         <ul class="nav-submenu">
-                            <li class="nav-submenu-item nav-item" data-menu="ProjectMap">@Html.ActionLink("Bản đồ", "Map", "Project")</li>
+                            <li class="nav-submenu-item nav-item @Html.Raw((controllerName == "project" && actionName == "map") ? "active" : "")" data-menu="ProjectMap">@Html.ActionLink("Bản đồ", "Map", "Project")</li>
                             @foreach (var category in categories.Where(o => o.CategoryTypeId == (int)Homeclick.Models.CategoryTypes.ProjectType).ToList())
                             {
                                 <li class="nav-submenu-item category-link" data-category="@category.Id"><a href="@Url.Action("Index", "Project", new { category_id = category.Id})">@category.Name</a></li>

@@ -54,6 +54,46 @@ namespace VCMS.Lib.Controllers
             }
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult CheckAuth()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                Response.StatusCode = 202;
+                return Content("");
+            }
+            else
+            {
+                Response.StatusCode = 403;
+                return Content("{\"message\":\"forbiden!\"}");
+            }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ApiLogin(LoginViewModel model)
+        {
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var result = SignInManager.PasswordSignIn(model.Email, model.Password, model.RememberMe, shouldLockout: true);
+            switch (result)
+            {
+                case SignInStatus.Failure:
+                    Response.StatusCode = 403;
+                    Response.ContentType = "application/json";
+                    return Content("{\"message\":\"Email or Password was wrong!\"}");
+                case SignInStatus.Success:
+                    Response.StatusCode = 200;
+                    Response.ContentType = "application/json";
+                    return Content("{\"message\":\"success\"}");
+                default:
+                    Response.StatusCode = 500;
+                    Response.ContentType = "application/json";
+                    return Content("{\"message\":\"something wrong!\"}");
+            }
+        }
+
         [AllowAnonymous]
         public ActionResult Register()
         {

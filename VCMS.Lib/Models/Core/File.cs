@@ -26,7 +26,7 @@ namespace VCMS.Lib.Models
 
         public string Extension { get; set; }
 
-        public long Size { get; set; }
+        public long? Size { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
 

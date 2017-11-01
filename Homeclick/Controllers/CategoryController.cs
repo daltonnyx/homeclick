@@ -26,7 +26,7 @@ namespace Homeclick.Controllers
 
         public ActionResult Typologies()
         {
-            var typologies = db.Categories.Where(c => c.CategoryTypeId == (int)CategoryTypes.Typology).ToList();
+            var typologies = db.Product_Types;
             return View(typologies);
         }
     }

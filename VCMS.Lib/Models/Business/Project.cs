@@ -24,6 +24,8 @@ namespace VCMS.Lib.Models
 
         public int? DistrictId { get; set; }
 
+        public string Address { get; set; }
+
         [StringLength(128)]
         public string PreviewImageId { get; set; }
 

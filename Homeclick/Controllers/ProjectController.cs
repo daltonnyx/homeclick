@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using VCMS.Lib.Common;
 
 namespace Homeclick.Controllers
 {
@@ -15,6 +16,9 @@ namespace Homeclick.Controllers
         public ActionResult _Sidebar()
         {
             var categories = db.Categories.Where(o => o.CategoryTypeId == (int)CategoryTypes.ProjectType);
+            ViewData["cities"] = db.Cities;
+            ViewData["states"] = db.Districts;
+
             return PartialView(categories);
         }
 
@@ -44,36 +48,7 @@ namespace Homeclick.Controllers
 
             return View();
         }
-        /*
-        public ActionResult _CollectionDetails(int collection_id)
-        {
-            var query = string.Format("SELECT * FROM dbo.ProjectLayout_Collection_Product_Link WHERE ParentId = '{0}'", collection_id);
-            var tableItems = db.Database.SqlQuery<ProjectLayout_Collection_Product_Link>(query).ToList();
-            
-            var products = new List<Product>();
 
-            foreach (var product in tableItems)
-            {
-                var temp_p = db.Products.Find(product.ChildId);
-                var temp_t = temp_p.ToArray();
-                var detail = temp_t["Product_detail"] as Dictionary<string, object>;
-                
-                products.Add(temp_p);
-
-                product.ProductName = temp_p.name;
-                product.ProductValue = Convert.ToInt32(detail["gia"]);
-                product.TotalValue = product.Quantity * product.ProductValue;
-            }
-
-            ViewBag.Products = products;
-            ViewBag.TableItems = tableItems;
-
-            var l = db.ProjectLayout_Collections.ToList();
-            var v = l.SingleOrDefault(o => o.Id == collection_id);
-       
-            return PartialView(v);
-        }
-        */
         public ActionResult Details(int? category_id, int? project_id)
         {
             var project = db.Projects.Find(project_id);
@@ -88,6 +63,28 @@ namespace Homeclick.Controllers
             return HttpNotFound();
         }
 
+        public JsonResult CollectionImages(int? collection_id)
+        {
+            var list = new List<string>();
+            if (collection_id != null)
+            {
+                var collection = db.Posts.Find(collection_id);
+                foreach (var item in collection.Post_Details.Where(o => o.Name == "popupImages"))
+                {
+                    list.Add(item.Value);
+                }
+            }
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+
+        [AjaxChildActionOnly]
+        public PartialViewResult _RenderRooms(int? floor_id)
+        {
+            var floor = db.Floors.Find(floor_id);
+            var rooms = floor.Rooms;
+            return PartialView(rooms);
+        }
+
         [HttpPost]
         public JsonResult GetCollections(int room_id)
         {
@@ -98,6 +95,32 @@ namespace Homeclick.Controllers
                 result.Add(new { id = collection.Id, name = collection.Title, image = collection.ImageFile.FullFileName });
             }
             return Json(result);
+        }
+
+        [HttpGet]
+        public JsonResult GetProjectsData(int? category_id)
+        {
+            IEnumerable<Project> projects;
+
+            projects = category_id == null || category_id == -1 ? db.Projects.ToList() :
+                                db.Projects.Where(o => o.CategoryId == category_id).ToList();
+
+            var json = new List<object>();
+            foreach (var project in projects)
+            {
+                json.Add(new
+                {
+                    id = project.Id,
+                    name = project.Name,
+                    image = project.PreviewImage.FullFileName,
+                    address = project.Address,
+                    state = project.DistrictId,
+
+                    statu = Convert.ToInt32(project.Status),
+                    type = project.CategoryId,
+                });
+            }
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -1,6 +1,7 @@
 namespace VCMS.Lib.Models
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -74,6 +75,7 @@ namespace VCMS.Lib.Models
             }
         }
 
+        //Temp
         public Category Typology {
             get
             {

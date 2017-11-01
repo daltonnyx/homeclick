@@ -28,7 +28,9 @@
   font-family: Soraya;
   src: url('../fonts/UTM Soraya.ttf');
 }
-
+.label {
+    color:#333;
+}
 /* =========================================*/
 html {
   overflow: hidden;

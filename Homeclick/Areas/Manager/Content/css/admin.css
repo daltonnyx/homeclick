@@ -48,6 +48,9 @@ img {
         position: relative;
         transform: translateX(-50%);
     }
+    .img-thumbnail img {
+        min-width: 200px;
+    }
 
 .form-control, .form-control-custom, .fileupload, .image-preview img {
     /*max-width:350px;*/

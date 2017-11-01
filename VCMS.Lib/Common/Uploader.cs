@@ -119,10 +119,15 @@ namespace VCMS.Lib.Common
                         var categoryT = await db.Categories.FindAsync((int)FileTypes.Image);
                         newFile.Categories.Add(categoryT);
                         destinationFolder = Properties.Resources.UploadFolder_Image;
+
                     }
 
                     db.Files.Add(newFile);
                     await db.SaveChangesAsync();
+                    if(!System.IO.Directory.Exists(controller.Server.MapPath("~/" + destinationFolder)))
+                    {
+                        System.IO.Directory.CreateDirectory(controller.Server.MapPath("~/" + destinationFolder));
+                    }
                     var newPath = System.IO.Path.Combine(controller.Server.MapPath("~/" + destinationFolder), newFileName + fileExt);
                     file.SaveAs(newPath);
 

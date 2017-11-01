@@ -38,7 +38,7 @@
                     <li class="tab-list product-fur">
                         <div class="product-list">
                             <div class="product-select">
-
+                                
                                 <select id="CategoryTypeSelect">
                                     <option value="">All</option>
                                     @{Html.RenderAction("_CategoryOptions", new { categoryTypeId = 2 });}
@@ -61,7 +61,7 @@
                     </li>
                     <li class="tab-list wishlist">
                       <div class="wishlist">
-                          @*Html.Action("LoadWishlists", "User")*@
+                          @Html.Action("LoadWishlists", "User")
                       </div>
                     </li>
                     <li class="tab-list cart">
@@ -168,7 +168,7 @@
                             </div>
                             <div class="product-options"><select id="product-options"></select></div>
                             <div class="product-area"><span class="label">Diện tích: </span><span class="value"></span></div>
-                            <div class="product-price"><span class="label">Giá (VND): </span><span class="value"></span></div>
+                            @*<div class="product-price"><span class="label">Giá (VND): </span><span class="value"></span></div>*@
                         </div>
                         <div class="product-link uk-width-1-1">
                             <a href="" class="add-to-wishlist uk-button-small"><i class="fa fa-star"></i> Add to wishlist</a>
@@ -369,10 +369,10 @@
 
     <div id="quickview-modal" class="uk-modal">
         <div class="uk-modal-dialog">
-            <a class="uk-modal-close uk-close"></a>
+            <a class="uk-modal-close uk-close"></a>  
             <div id="quickview-container" class="uk-fluid-container">
 
-            </div>
+            </div>      
         </div>
     </div>
     @Scripts.Render("~/bundles/modernizr")

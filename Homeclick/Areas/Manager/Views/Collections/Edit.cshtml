@@ -1,6 +1,7 @@
 ﻿@using VCMS.Lib.Models
 @using VCMS.Lib.Common
 @using VCMS.Lib.Resources
+@using Newtonsoft.Json
 @model Post
 
 @{
@@ -29,21 +30,22 @@
                     @Html.TextAreaFor(model => model.Content, new { @class = "form-control text-editor" })
                 </div>
                 <hr />
-                <div class="form-group">
-                    <h3>Slide Images</h3>
-                    @{
-                        var paramFiles = new Dictionary<string, object>
-                        {
-                            { "Files", Model?.Files != null ? Model.Files.Select(o => o.FullFileName) : null },
-                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.SlideImages).ToString() },
-                            { "Multiple", true },
-                            { "Accept" , "image/*"},
-                            { "FileManagerId", "#lgx94" },
-                            { "ContainerId", "Images" }
-                        };
-                        @Html.Partial("Widgets/SelectImages", paramFiles)
-                    }
-                </div>
+                @*
+    <div class="form-group">
+        <h3>Slide Images</h3>
+        @{
+            var paramFiles = new
+            {
+                Value = Model?.Files != null ? Model.Files.Select(o => o.FullFileName) : null,
+                FieldName = Html.NameFor(m => m.SlideImages).ToString(),
+                Multiple = true ,
+                Accept = "image/*",
+                FileManagerId = "#lgx94",
+                ContainerId = "Images"
+            };
+            @Html.Partial("Widgets/SelectFiles", paramFiles)
+        }
+                </div>*@
                 <hr />
                 <div class="form-group">
                     <h3>Products</h3>
@@ -98,15 +100,37 @@
                         </div>
                     </div>
                 </div>
+                @if (Model.Room?.Image != null)
+                {
+                    <div class="form-group">
+                        <div id="imgdiv" class="taggd">
+                            <img id="image" class="img" style="width:100%;" src="@Url.GetImageUploadFolder()/@Model.Room.Image.FullFileName" />
+                            @foreach (var item in Model.Post_Details.Where(o => o.Name == "popupImages"))
+                            {
+                                string json = item.Value.Replace('\'','"');
+                                var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+                                <span class="taggd__button" style="left:@values["positionX"]%;top:@values["positionY"]%;transform:rotate(@values["rotate"]deg)" data-id="@item.Id" data-rotate="@values["rotate"]" data-image="@values["image"]" onclick="taggdButtonClicked(this);">
+                                    <input name="popupImages" value="@values["image"]" type="hidden" />
+                                </span>
+                            }
+                        </div>
+                        <div>
+                            <input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="360" data-slider-step="1" data-slider-value="14" />
+                            <span class="btn btn-default" da data-action="add-image" data-toggle="modal" data-target="#lgx94" data-field-name="popupImages" data-is-customfield="true" data-multiple="false"><i class="fa fa-image"></i></span>
+                            <span class="btn btn-default" data-action="delete"><i class="fa fa-trash"></i></span>
+                        </div>
+                    </div>
+                }
             </fieldset>
             <fieldset class="col-md-3">
                 <div class="form-group">
                     @{
                         var param = new Dictionary<string, object> {
-                            { ConstantKeys.FIELD_NAME, Html.NameFor(o => o.SelectedCategories).ToString()},
-                            { ConstantKeys.CATEGORIES, ViewData[ConstantKeys.CATEGORIES]},
-                            { ConstantKeys.SELECTED_CATEGORIES, Model.Categories.Select(o => o.Id) },
-                            { "ContainerClass", "widget"}
+                                { ConstantKeys.FIELD_NAME, Html.NameFor(o => o.SelectedCategories).ToString()},
+                                { ConstantKeys.CATEGORIES, ViewData[ConstantKeys.CATEGORIES]},
+                                { ConstantKeys.SELECTED_CATEGORIES, Model.Categories.Select(o => o.Id) },
+                                { "ContainerClass", "widget"}
                             };
                         @Html.Partial("Widgets/CategoriesCheckBoxList", param);
                     }
@@ -134,15 +158,14 @@
                 <div class="form-group">
                     @{
                         <h3>Preview Image</h3>
-                        param = new Dictionary<string, object>
+                        @Html.Partial("Widgets/SelectFiles",
+                        new
                         {
-                            { "File", Model?.ImageFile != null ? Model.ImageFile.FullFileName : string.Empty },
-                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.ImageId).ToString() },
-                            { "Multiple", false },
-                            { "Accept" , "image/*"},
-                            { "FileManagerId", "#lgx94" }
-                        };
-                        @Html.Partial("Widgets/SelectImages", param)
+                            Value = Model?.ImageFile != null ? Model.ImageFile.FullFileName : string.Empty,
+                            FieldName = Html.NameFor(m => m.ImageId).ToString(),
+                            Accept = "image/*",
+                            FileManagerId = "#lgx94"
+                        })
                     }
                 </div>
                 <hr />
@@ -195,6 +218,23 @@
     @Html.RenderDelayed("TextEditorFull-style")
     @Html.RenderDelayed("jquery-uploads-style")
     @Html.RenderDelayed("FileManager-style")
+    <link href="~/Content/lib/bootstrap-slider-master/dist/css/bootstrap-slider.css" rel="stylesheet" />
+    <link href="~/Content/lib/taggd-master/dist/taggd.css" rel="stylesheet" />
+    <style>
+        .taggd__button {
+            width: 0;
+            height: 0;
+            background-color: transparent;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 30px solid black;
+        }
+        .taggd-clicked {
+            border-bottom: 30px solid red;
+        }
+        
+    </style>
+
 }
 
 @section scripts {
@@ -204,7 +244,126 @@
     @Html.RenderDelayed("SelectImages-function")
     @Html.RenderDelayed("SelectImages-script")
     @Html.RenderDelayed("FileManager-script")
+    <script src="~/Content/lib/bootstrap-slider-master/dist/bootstrap-slider.js"></script>
+    <script src="~/Content/lib/taggd-master/dist/taggd.js"></script>
     <script>
+        $(document).ready(function () {
+            var image = document.getElementById('image');
+            var settings = {
+                show: 'none',
+                hide: 'mouseleave',
+            };
+
+            //var taggd = $(image).taggd();
+            //var taggd = new Taggd(image, settings);
+
+            //taggd.enableEditorMode();
+        });
+
+        var lastTaggdButtonClicked = null;
+        var $slider = $('#ex1');
+        if ($slider.length > 0) {
+            //Slider
+            var slider = $('#ex1').slider({
+                formatter: function (value) {
+                    return 'Current value: ' + value;
+                }
+            }).change(function (evt) {
+                var newValue = evt.value.newValue;
+                var oldValue = evt.value.oldValue;
+                if (lastTaggdButtonClicked) {
+                    $(lastTaggdButtonClicked).css({
+                        "transform": "rotate(" + newValue + "deg)"
+                    });
+                    $(lastTaggdButtonClicked).data("rotate", newValue);
+                }
+            });
+        };
+
+        function taggdButtonClicked(elem) {
+            if (lastTaggdButtonClicked)
+                $(lastTaggdButtonClicked).removeClass("taggd-clicked")
+
+            $(elem).addClass("taggd-clicked");
+
+            var rotateVal = $(elem).data("rotate");
+            $slider.slider('setValue', rotateVal);
+
+            lastTaggdButtonClicked = elem;
+        };
+
+        //Delete marker
+        $('span[data-action="delete"').on("click", function () {
+            if (lastTaggdButtonClicked) {
+                $(lastTaggdButtonClicked).remove();
+            }
+        });
+        $('span[data-action="add-image"').on("click", function () {
+            var handler = $(this);
+            if (lastTaggdButtonClicked) {
+                if (!$(lastTaggdButtonClicked).attr("id")) {
+                    var random = randomString(5, 'Aa');
+                    $(lastTaggdButtonClicked).attr("id", random);
+                    $(lastTaggdButtonClicked).data("insert-target", "#" + random);
+                }
+                $(this).data("container-id", $(lastTaggdButtonClicked).attr("id"));
+            }
+        });
+
+        $('#image').click(function () {
+            var $img = $(this);
+            var ratio = this.naturalWidth / $img.width();
+            var x = (((event.pageX - $img.offset().left) * ratio) / this.naturalWidth * 100);
+            var y = (((event.pageY - $img.offset().top) * ratio) / this.naturalHeight * 100);
+            addLabel(x, y, 0);
+        });
+
+        function addLabel(x, y, r, i) {
+            var $taggd = $('.taggd').first();
+
+            var $label = $('<label class="taggd__button"/>')
+                .css({
+                    "left": x + "%",
+                    "top": y + "%",
+                    "transform": "rotate(" + r + "deg)"
+                }).data("rotate", r);
+
+            if (i)
+                $label.data("image", i + ".jpg");
+
+            $taggd.append($label);
+            $label.on("click", function () {
+                taggdButtonClicked(this);
+            });
+        }
+
+        $('form').submit(function (evt) {
+            var inputs = $('input[name="popupImages"]');
+            for (var i = 0; i < inputs.length; i++) {
+                var $parent = $(inputs[i]).parents(".taggd__button");
+                var $divContainer = $parent.parent();
+                var $img = $divContainer.find('#image');
+
+                $parent.addClass('form-group-custom-field');
+
+                var parentId = $parent.data("id");
+                var json = {
+                    positionX: parseFloat($parent.css("left")) / $img.width() * 100,
+                    positionY: parseFloat($parent.css("top")) / $img.height() * 100,
+                    rotate: $parent.data("rotate"),
+                    image: $(inputs[i]).val()
+                };
+                var jsonStr = JSON.stringify(json).replace(/"/g, "'");
+
+                $parent.append('<input name="Post_Details[0].Id" type="hiden" value="' + (parentId != null ? parentId : 0) + '"/>')
+                $parent.append('<input name="Post_Details[0].Name" type="hiden" value="popupImages"/>')
+                $parent.append('<input name="Post_Details[0].Value" type="hiden" value="' + jsonStr + '"/>')
+
+                $(inputs[i]).val(json);
+                refreshForm('#' + $parent.attr('id'));
+            }
+        });
+
         function deleteProduct(productOptionId) {
             $('#@ConstantKeys.PRODUCT_OPTIONS option[value="' + productOptionId + '"]').prop('disabled', false);
             if ($('#@ConstantKeys.PRODUCT_OPTIONS').hasClass('chosen'))

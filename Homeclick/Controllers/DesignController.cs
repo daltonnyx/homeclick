@@ -68,8 +68,8 @@ namespace Homeclick.Controllers
 
         public ActionResult _ProductTypes()
         {
-            var product_types = db.Product_Types.ToList();
-            return PartialView(product_types);
+            var types = db.Product_Types.ToList<Product_Type>();
+            return PartialView(types);
         }
 
     }

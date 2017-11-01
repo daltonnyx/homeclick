@@ -5,10 +5,12 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+//using Homeclick.Models;
 using Microsoft.AspNet.Identity;
 //using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
-using Homeclick.Models;
+//using Homeclick.Models;
+using VCMS.Lib.Models;
 
 namespace Homeclick.Controllers
 {
@@ -349,6 +351,14 @@ namespace Homeclick.Controllers
             get
             {
                 return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+
+        public override Models.CategoryTypes CategoryType
+        {
+            get
+            {
+                throw new NotImplementedException();
             }
         }
 

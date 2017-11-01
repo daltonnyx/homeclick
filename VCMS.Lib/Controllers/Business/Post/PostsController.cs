@@ -110,6 +110,37 @@ namespace VCMS.Lib.Controllers
                     }
                 }
 
+                //Remove absent details
+                var existDetailId = modelTarget.Post_Details.Select(o => o.Id);
+                var exceptDetailIds = existDetailId.Except(model.Post_Details.Select(o => o.Id)).ToList();
+                foreach (var exceptDetailId in exceptDetailIds)
+                {
+                    var details = db.Post_Details.Find(exceptDetailId);
+                    if (details != null)
+                        db.Entry(details).State = System.Data.Entity.EntityState.Deleted;
+                }
+
+                //Modify or add details
+                foreach (var detail in model.Post_Details)
+                {
+                    if (detail.Id != 0)
+                    {
+                        var detailTarget = modelTarget.Post_Details.FirstOrDefault(o => o.Id == detail.Id);
+                        db.Entry(detailTarget).CurrentValues.SetValues(detail);
+                        db.Entry(detailTarget).Property("PostId").IsModified = false;
+                        db.Entry(detailTarget).Property("CreateUserId").IsModified = false;
+                        db.Entry(detailTarget).Property("CreateTime").IsModified = false;
+                    }
+                    else
+                    {
+                        detail.CreateUserId = User.Identity.GetUserId();
+                        detail.CreateTime = DateTime.UtcNow;
+                        detail.PostId = model.Id;
+                        db.Entry(detail).State = System.Data.Entity.EntityState.Added;
+                        modelTarget.Post_Details.Add(detail);
+                    }
+                }
+
                 db.Entry(modelTarget).CurrentValues.SetValues(model);
                 db.Entry(modelTarget).Property("CreateUserId").IsModified = false;
                 db.Entry(modelTarget).Property("CreateTime").IsModified = false;
