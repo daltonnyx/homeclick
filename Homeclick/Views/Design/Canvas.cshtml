@@ -131,7 +131,7 @@
                   </div>
               </div>
             </div>
-            <input type="hidden" value="@Model.CanvasData" id="canvas-data" />
+            <input type="hidden" value="@Url.GetImageUploadFolder()@Model.SvgFile.FullFileName" id="canvas-data" />
             <div class="canvas-holder" id="canvas-holder">
                 <canvas id="tutorial" width="914" height="600" draggable="true"></canvas>
                 <div class="delete-button object-button"></div>

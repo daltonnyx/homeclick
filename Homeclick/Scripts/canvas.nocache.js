@@ -408,7 +408,7 @@ jQuery(document).ready(function ($) {
 
 
     //   //Setting wall
-    var svgLink = window.location.protocol + '//' + window.location.host + '/homeclick/areas/manager/' + $("#canvas-data").val();
+    var svgLink =  $("#canvas-data").val();
     var polWall = {};
     fabric.GroupLiPolygon.fromURL(svgLink, {
         originX: "left",
