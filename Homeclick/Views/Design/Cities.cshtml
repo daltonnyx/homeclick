@@ -1,0 +1,7 @@
+﻿@using VCMS.Lib.Models
+@model IList<City>
+
+@foreach (City city in Model)
+{
+    <option value="@city.Id">@city.Name</option>
+}

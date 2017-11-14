@@ -1,0 +1,7 @@
+﻿@using VCMS.Lib.Models
+@model IList<Project>
+
+@foreach (Project project in Model)
+{
+    <option value="@project.Id">@project.Name</option>
+}

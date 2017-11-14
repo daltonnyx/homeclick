@@ -26,18 +26,49 @@ namespace Homeclick.Controllers
         {
             return View();
         }
-        /*
+
+        [HttpGet]
         public ActionResult getDepartments(int? id = null)
         {
-            var model = db.Departments.Where(d => d.ParentDepartmentId == id).ToList();
+            var model = db.Departments.Where(d => d.ProjectId == id).ToList();
             return PartialView("Departments", model);
         }
-        */
+
+        [HttpGet]
+        public ActionResult getProjects(int? id = null)
+        {
+            var model = db.Projects.Where(d => d.DistrictId == id).ToList();
+            return PartialView("Projects", model);
+        }
+
+        [HttpGet]
+        public ActionResult getDistricts(int? id = null)
+        {
+            var model = db.Districts.Where(d => d.CityId == id).ToList();
+            return PartialView("Districts", model);
+        }
+
+        [HttpGet]
+        public ActionResult getCities()
+        {
+            var model = db.Cities.ToList<City>();
+            return PartialView("Cities", model);
+        }
+
+        [HttpGet]
         public ActionResult getFloors(int? id)
         {
             var model = db.Floors.Where<Floor>(f => f.Department.Id == id).ToList<Floor>();
             return PartialView("Floors", model);
         }
+
+        [HttpGet]
+        public ActionResult getRooms(int? id)
+        {
+            var model = db.Rooms.Where<Room>(f => f.FloorId == id).ToList<Room>();
+            return PartialView("Rooms", model);
+        }
+
         public ActionResult Floor(int? floor_id)
         {
             floor_id = Convert.ToInt16(Request["floor"].ToString());

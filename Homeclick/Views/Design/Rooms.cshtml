@@ -1,0 +1,8 @@
+﻿@using VCMS.Lib.Models
+@model IList<Room>
+
+@foreach (Room room in Model)
+{
+    <option value="@room.Id">@room.Name</option>
+}
+

@@ -1139,6 +1139,10 @@
     <Content Include="Content\lib\taggd-master\docs\options.md" />
     <Content Include="Views\User\LoadWishlists.cshtml" />
     <Content Include="Views\Design\_ProductTypes.cshtml" />
+    <Content Include="Views\Design\Cities.cshtml" />
+    <Content Include="Views\Design\Projects.cshtml" />
+    <Content Include="Views\Design\Districts.cshtml" />
+    <Content Include="Views\Design\Rooms.cshtml" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\SanPham\CanvasList.cshtml" />
     <Content Include="Views\Project\Details.cshtml" />

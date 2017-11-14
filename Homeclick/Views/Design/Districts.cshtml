@@ -1,0 +1,7 @@
+﻿@using VCMS.Lib.Models
+@model IList<District>
+
+@foreach (District district in Model)
+{
+    <option value="@district.Id">@district.Name</option>
+}
