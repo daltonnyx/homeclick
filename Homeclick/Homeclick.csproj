@@ -1159,6 +1159,7 @@
     <Content Include="Views\Project\_Sidebar.cshtml" />
     <Content Include="Views\Project\Map.cshtml" />
     <Content Include="Views\Project\_RenderRooms.cshtml" />
+    <Content Include="Views\Shared\Layout_html.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
