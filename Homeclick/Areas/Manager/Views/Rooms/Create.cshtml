@@ -28,25 +28,27 @@
                     @Html.TextBoxFor(m => m.Description, new { @class = "form-control", placeholder = "Description" })
                     @Html.ValidationMessageFor(m => m.Description)
                 </div>
-               
-                <div class="form-group">
-                    <div class="form-group-title">
-                        <h3>Collection</h3>
-                    </div>
-                    @if (Model == null || Model.Collections.Count == 0)
-                    {
-                        <i>Empty!</i>
-                    }
-                    else
-                    {
-                        foreach (var collection in Model.Collections)
+                @if (Model != null)
+                {
+                    <div class="form-group">
+                        <div class="form-group-title">
+                            <h3>Collection</h3>
+                        </div>
+                        @if (Model.Collections.Count == 0)
                         {
-                            <div class="form-control">
-                                <a href="@Url.Action("Edit", "Room", new { collection_id = collection.Id })">@collection.Title</a>
-                            </div>
+                            <i>Empty!</i>
                         }
-                    }
-                </div>
+                        else
+                        {
+                            foreach (var collection in Model.Collections)
+                            {
+                                <div class="form-control">
+                                    <a href="@Url.Action("Edit", "Room", new { collection_id = collection.Id })">@collection.Title</a>
+                                </div>
+                            }
+                        }
+                    </div>
+                }
             </fieldset>
 
             <fieldset class="col-lg-3">
@@ -54,49 +56,10 @@
                     <div class="form-group-title">
                         <h3>Floor</h3>
                     </div>
-                    <select id="@ConstantKeys.PROJECTS" name="@ConstantKeys.PROJECTS" data-parentof="#@ConstantKeys.DEPARTMENTS" data-fetch="@Url.GetBaseUrl()/manager/rooms/getdepartmentasync/" class="form-control-custom chosen" style="display:none" data-placeholder="Select">
-                        @foreach (Project project in ViewData[ConstantKeys.PROJECTS] as IEnumerable<Project>)
-                        {
-                            <option value="@project.Id" @if (project.Id == Model?.Floor?.Department?.ProjectId) { @Html.Raw("selected")  }>@project.Name</option>
-                        }
-                    </select>
-                    <select id="@ConstantKeys.DEPARTMENTS" name="@ConstantKeys.DEPARTMENTS" data-parentof="#@Html.NameFor(n => n.FloorId)" data-fetch="@Url.GetBaseUrl()/manager/rooms/getfloorasync/" class="form-control-custom chosen" style="display:none" data-placeholder="Select">
-                        
-                    </select>
-                    <select id="@Html.NameFor(n =>n.FloorId)" name="@Html.NameFor(n => n.FloorId)" class="form-control-custom chosen" data-placeholder="Select" style="display:none">
-                        
-                    </select>
+                    @Html.DropDownList(ConstantKeys.PROJECTS, new SelectList(ViewData[ConstantKeys.PROJECTS] as IEnumerable<Project>, "Id", "Name", null), new { @class = "form-control-custom chosen", data_placeholder = "Select", data_child = "#" + ConstantKeys.DEPARTMENTS, style = "display:none" })
+                    @Html.CustomDropdownList(ConstantKeys.DEPARTMENTS, (ViewData[ConstantKeys.DEPARTMENTS] as IEnumerable<Department>).Select(o => new CustomSelectItem { Value = o.Id.ToString(), Text = o.Name, HtmlAttributes = new { data_parent = o.ProjectId } }), Model?.Floor?.DepartmentId?.ToString(), null, new { @class = "form-control-custom chosen", data_placeholder = "Select", data_child = "#" + Html.NameFor(o => o.FloorId), style = "display:none" })
+                    @Html.CustomDropdownListFor(m => m.FloorId, (ViewData[ConstantKeys.FLOORS] as IEnumerable<Floor>).Select(o => new CustomSelectItem { Value = o.Id.ToString(), Text = o.Name, HtmlAttributes = new { data_parent = o.DepartmentId } }), null, new { @class = "form-control-custom chosen", data_placeholder = "Select", style = "display:none" })
                     @Html.ValidationMessageFor(m => m.FloorId)
-                </div>
-                <hr />
-                <div class="form-group">
-                    <h3>Image</h3>
-                    @{
-                        var param = new Dictionary<string, object>
-                        {
-                            { "File", Model?.ImageId != null ? Model.Image.FullFileName : string.Empty },
-                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.ImageId).ToString() },
-                            { "Multiple", false },
-                            { "Accept" , "image/*"},
-                            { "FileManagerId", "#lgx94" }
-                        };
-                        @Html.Partial("Widgets/SelectImages", param)
-                    }
-                </div>
-                <hr />
-                <div class="form-group">
-                    <h3>Svg File</h3>
-                    @{
-                        param = new Dictionary<string, object>
-                        {
-                            { "File", Model?.SvgFileId != null ? Model.SvgFile.FullFileName : string.Empty },
-                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.SvgFileId).ToString() },
-                            { "Multiple", false },
-                            { "Accept" , ".svg"},
-                            { "FileManagerId", "#lgx94" }
-                        };
-                        @Html.Partial("Widgets/SelectImages", param)
-                    }
                 </div>
             </fieldset>
         </div>
@@ -126,41 +89,9 @@
 
 @section Styles {
     <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
-    <link href="~/Areas/Manager/Content/css/loading.css" rel="stylesheet" />
-    @Html.RenderDelayed("jquery-uploads-style")
-    @Html.RenderDelayed("FileManager-style")
 }
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
-    @Html.RenderDelayed("jquery-uploads-js")
-    @Html.RenderDelayed("SelectImages-function", true)
-    @Html.RenderDelayed("SelectImages-script")
-    @Html.RenderDelayed("FileManager-script")
-    <script type="text/javascript">
-            jQuery(document).ready(function ($) {
-                $("select[data-parentof]").on("change", function (event, params) {
-                    var url = $(this).data("fetch"), childElm = $(this).data("parentof");
-                    $.ajax({
-                        url: url + this.value,
-                        method: "GET",
-                        contentType: "application/json",
-                        beforeSend: function () {
-                            $(childElm).children().remove();
-                            $(childElm).val(0).trigger("change");
-                        }
-                    }).done(function (data, status, xhr) {
-                        if (typeof data == "object" && data.length > 0) {
-                            $(childElm).append('<option value="0">Select</option>');
-                            for (var i = 0; i < data.length; i++) {
-                                $(childElm).append('<option value="' + data[i].Id + '">' + data[i].Name + '</option>');
-                            }
-                        }
-                    }).always(function () {
-                        $(childElm).trigger("chosen:updated");
-                    });
-                });
-            });
-    </script>
 }
