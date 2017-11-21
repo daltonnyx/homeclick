@@ -1069,7 +1069,13 @@ jQuery(document).ready(function ($) {
             var JSONData = JSON.parse(jsonString.json_data);
             jQuery('#canvas-id').val(jsonString.id);
             $save_modal.find('#save-name').val(jsonString.name);
-            canvas.loadFromJSON(JSONData, canvas.renderAll.bind(canvas), function (o, object) { //o js json object, object is fabric object
+            canvas.loadFromJSON(JSONData, function () {
+                setTimeout(function () {
+                    $load_modal.removeClass('is-visible');
+                    canvas.renderAll();
+                }, 400); //Waiting everything done
+
+            }, function (o, object) { //o js json object, object is fabric object
                 if (object.type == 'GroupLiPolygon') {
                     polWall = object;
                     cart.deserialize(polWall.cart);

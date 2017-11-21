@@ -262,7 +262,6 @@
     <Content Include="Areas\Manager\Content\js\admin.js" />
     <Content Include="Areas\Manager\Content\lib\panigation\panigation.css" />
     <Content Include="Areas\Manager\Content\lib\panigation\panigation.min.js" />
-    <Content Include="Areas\Manager\Uploads\Images\Layout1.jpg" />
     <Content Include="Areas\Manager\Uploads\Images\Layout2.jpg" />
     <Content Include="Areas\Manager\Uploads\Images\Layout3.jpg" />
     <Content Include="Areas\Manager\Uploads\Images\Layout4.jpg" />
@@ -480,8 +479,6 @@
     <Content Include="Content\front-to-back.css" />
     <Content Include="Content\js\homeclick.js" />
     <Content Include="Content\lib\bootstrap-slider-master\dist\bootstrap-slider.js" />
-    <Content Include="Content\lib\bootstrap-slider-master\dist\bootstrap-slider.min.js" />
-    <Content Include="Content\lib\bootstrap-slider-master\dist\css\bootstrap-slider.css" />
     <Content Include="Content\lib\bootstrap-slider-master\dist\css\bootstrap-slider.min.css" />
     <Content Include="Content\lib\font-awesome\css\font-awesome.css" />
     <Content Include="Content\lib\font-awesome\css\font-awesome.min.css" />
@@ -689,6 +686,7 @@
     <Content Include="Areas\Manager\Views\Shared\Widgets\SelectFiles.cshtml" />
     <Content Include="Areas\Manager\Views\ProductOptions\Create.cshtml" />
     <Content Include="Areas\Manager\Views\Shared\Widgets\DeleteConfirmModal_.cshtml" />
+    <None Include="Properties\PublishProfiles\file.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
