@@ -38,8 +38,36 @@
                 </div>
                 <hr />
                 <div class="form-group">
-                    @Html.DropDownList("cities", new SelectList(ViewData[ConstantKeys.CITIES] as IEnumerable<City>, "Id", "Name", Model?.District?.CityId), "Select", new { @class = "form-control-custom chosen", data_child = "#" + Html.NameFor(o => o.DistrictId) })
-                    @Html.CustomDropdownListFor(m => m.DistrictId, (ViewData[ConstantKeys.DISTRICTS] as IEnumerable<District>).Select(o => new CustomSelectItem { Value = o.Id.ToString(), Text = o.Name, HtmlAttributes = new { data_parent = o.CityId} }), null, new { @class = "form-control-custom chosen", data_placeholder = "Select" })
+                    @{
+                        var locationParam = new
+                        {
+                            ContainerId = "form-widget-location",
+                            ContainerClass= "",
+                            CityFieldName = "CityId",
+                            CityFieldValue = Model?.District?.CityId,
+                            DistrictFielName = Html.NameFor(m => m.DistrictId).ToString(),
+                            DistrictFielValue = Model?.DistrictId,
+                            AddressFielName = "Address",
+                            AddressFielValue = Model?.Address,
+                            Cities = ViewData[ConstantKeys.CITIES]
+                        };
+                        @Html.Partial("Widgets/Location", locationParam.ToDictionary());
+                    }
+                </div>
+                <hr />
+                <div class="form-group">
+                    @{
+                        <h3>Preview Image</h3>
+                        var param = new Dictionary<string, object>
+                        {
+                            { "File", Model?.PreviewImage != null ? Model.PreviewImage.FullFileName : string.Empty },
+                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.PreviewImageId).ToString() },
+                            { "Multiple", false },
+                            { "Accept" , "image/*"},
+                            { "FileManagerId", "#lgx94" }
+                        };
+                        @Html.Partial("Widgets/SelectImages", param)
+                    }
                 </div>
                 <hr />
                 <div class="form-group">

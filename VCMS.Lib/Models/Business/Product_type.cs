@@ -29,5 +29,7 @@ namespace VCMS.Lib.Models
         public virtual File Image { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
+
+        public virtual ICollection<Category> Categories { get; set; }
     }
 }

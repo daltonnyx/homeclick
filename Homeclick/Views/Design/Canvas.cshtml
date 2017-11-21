@@ -29,20 +29,25 @@
             </div>
             <div id="sidebar-container">
                 <ul class="uk-tab" data-uk-tab="{connect:'#furnitures'}">
-                    <li><a href="">Sản phẩm</a></li>
-                    <li><a href="">Ký hiệu</a></li>
-                    <li><a href="">Mong muốn</a></li>
-                    <li><a href="">Giỏ hàng</a></li>
+                    <li><a href="">Products</a></li>
+                    <li><a href="">Symbols</a></li>
+                    <li><a href="">Wishlist</a></li>
+                    <li><a href="">Addedlist</a></li>
                 </ul>
                 <ul class="uk-switcher svg-container" id="furnitures">
                     <li class="tab-list product-fur">
                         <div class="product-list">
                             <div class="product-select">
-                                @Html.DropDownList("CategoryTypeSelect", new SelectList(CategoryTypes, "Id", "name"), new { @id = "CategoryTypeSelect" })
-                                <select id="CategorySelect">
-                                    @{Html.RenderAction("_CategoryOptions",new { categoryTypeId = CategoryTypes.FirstOrDefault().Id });}
+                                
+                                <select id="CategoryTypeSelect">
+                                    <option value="">All</option>
+                                    @{Html.RenderAction("_CategoryOptions", new { categoryTypeId = 2 });}
                                 </select>
-                            </div>
+                                <select id="CategorySelect">
+                                    <option value="">All</option>
+                                    @{Html.RenderAction("_ProductTypes");}
+                                </select>
+</div>
 
                             <div id="Funiture-list">
                                 @Html.Action("CanvasList", "SanPham")
@@ -56,12 +61,12 @@
                     </li>
                     <li class="tab-list wishlist">
                       <div class="wishlist">
-
+                          @Html.Action("LoadWishlists", "User")
                       </div>
                     </li>
                     <li class="tab-list cart">
                       <div class="cart">
-                        
+
                       </div>
                     </li>
                 </ul>
@@ -69,57 +74,64 @@
         </div>
         <div class="uk-width-7-10 main-canvas">
             <div class="seperator-big"></div>
-            <div class="control-container main-menu">
-                <button class="uk-button" id="saveJSON"">save</button>
-                <button class="uk-button" id="new">Refresh</button>
-                <button class="uk-button" id="print">print</button>
-                @* <button class="uk-button" id="search">search</button> *@
-                <button class="uk-button" id="undo">undo</button>
+            <div class="taskbar">
+              <div class="control-container main-menu">
+                  <button class="uk-button" id="Layout">New</button>
+                  <button class="uk-button" id="saveJSON">save</button>
+                  <button class="uk-button" id="loadJSON">load</button>
+                  <button class="uk-button" id="print">Export</button>
+                  <button class="uk-button" id="new">Refresh</button>
+                  @* <button class="uk-button" id="search">search</button> *@
+                  <button class="uk-button" id="undo">undo</button>
+              </div>
+              <div class="control-container toolbar">
+                  <div class="pointer active">
+                      <span class="pointer"><i class="fa fa-mouse-pointer" aria-hidden="true"></i></span>
+                  </div>
+                  <div class="pans">
+                      <span class="pans"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></span>
+                  </div>
+                  <div class="ruler">
+                      <span class="ruler"><i class="fa fa-arrows-h" aria-hidden="true"></i></span>
+                  </div>
+
+                  <div class="camera">
+                      <span class="camera"><i class="fa fa-camera" aria-hidden="true"></i></span>
+                  </div>
+
+                  <div class="pen">
+                      <span class="pen"><i class="fa fa-pencil"></i></span>
+                  </div>
+                  <div class="zoom-in-pointer">
+                      <span class="zoom-pointer"><i class="fa fa-search-plus" aria-hidden="true"></i></span>
+                  </div>
+                  <div class="zoom-out-pointer">
+                      <span class="zoom-pointer"><i class="fa fa-search-minus" aria-hidden="true"></i></span>
+                  </div>
+                  <div class="fit-to-width">
+                      <span class="fit-to-width"><i class="fa fa-arrows-alt" aria-hidden="true"></i></span>
+                  </div>
+                  <div class="zoom uk-vertical-align">
+                      <span class="uk-vertical-align-middle">Zoom </span>
+                      <input type="range" min="10" max="500" step="10" class="zoom-slider uk-form-width-small uk-vertical-align-middle" value="100" autocomplete="off" name="zoom_slider" oninput="zoom_change(event)" />
+                      <input type="text" name="zoom_value" class="zoom-value uk-form-width-small uk-vertical-align-middle" onchange="zoom_change(event)" autocomplete="off" value="100" />
+                  </div>
+                  <!-- 	<div class="control-container">
+                          <a id="saveJSON" href="#">Save</a>
+                          <a id="loadJSON" href="#">Load</a>
+                      </div> -->
+
+                  <div class="control-container uk-hidden">
+                      <textarea id="loadArea" style="display:none;"></textarea>
+                      <div id="loadJSONdiv"></div>
+                  </div>
+                  <div class="control-container uk-hidden">
+                  </div>
+                  <div class="control-container uk-hidden">
+                  </div>
+              </div>
             </div>
-            <div class="control-container toolbar">
-                <div class="pointer active">
-                    <span class="pointer icon"></span>
-                </div>
-                <div class="pans">
-                    <span class="pans icon"></span>
-                </div>
-                <div class="ruler">
-                    <span class="ruler icon"></span>
-                </div>
-
-                <div class="camera">
-                    <span class="camera icon"></span>
-                </div>
-
-                <div class="pen">
-                    <span class="pen icon"><i class="fa fa-pencil"></i></span>
-                </div>
-                <div class="zoom-pointer">
-                    <span class="zoom-pointer icon"></span>
-                </div>
-                <div class="fit-to-width">
-                    <span class="fit-to-width icon"></span>
-                </div>
-                <div class="zoom uk-vertical-align">
-                    <span class="uk-vertical-align-middle">Zoom </span>
-                    <input type="range" min="10" max="500" step="10" class="zoom-slider uk-form-width-small uk-vertical-align-middle" value="100" name="zoom_slider" oninput="zoom_change(event)" />
-                    <input type="text" name="zoom_value" class="zoom-value uk-form-width-small uk-vertical-align-middle" value="100" />
-                </div>
-                <!-- 	<div class="control-container">
-                        <a id="saveJSON" href="#">Save</a>
-                        <a id="loadJSON" href="#">Load</a>
-                    </div> -->
-
-                <div class="control-container uk-hidden">
-                    <textarea id="loadArea" style="display:none;"></textarea>
-                    <div id="loadJSONdiv"></div>
-                </div>
-                <div class="control-container uk-hidden">
-                </div>
-                <div class="control-container uk-hidden">
-                </div>
-            </div>
-            <input type="hidden" value="@Model.CanvasData" id="canvas-data" />
+            <input type="hidden" value="@Url.GetImageUploadFolder()@Model.SvgFile.FullFileName" id="canvas-data" />
             <div class="canvas-holder" id="canvas-holder">
                 <canvas id="tutorial" width="914" height="600" draggable="true"></canvas>
                 <div class="delete-button object-button"></div>
@@ -154,37 +166,38 @@
                                     <li class="z"><span class="label">x </span><span class="value"></span></li>
                                 </ul>
                             </div>
+                            <div class="product-options"><select id="product-options"></select></div>
                             <div class="product-area"><span class="label">Diện tích: </span><span class="value"></span></div>
-                            <div class="product-price"><span class="label">Giá (VND): </span><span class="value"></span></div>
+                            @*<div class="product-price"><span class="label">Giá (VND): </span><span class="value"></span></div>*@
                         </div>
                         <div class="product-link uk-width-1-1">
                             <a href="" class="add-to-wishlist uk-button-small"><i class="fa fa-star"></i> Add to wishlist</a>
                             <a href="" class="view-detail uk-button-small"><i class="fa fa-list-alt "></i> View detail</a>
                         </div>
-                        <div class="control-button uk-width-1-1">
-                            <a href="#" id="button-clone"><i class="fa fa-clone"></i></a>
-                            <a href="#" id="button-remove"><i class="fa fa-trash-o"></i></a>
-                            <a href="#" id="button-group"><i class="fa fa-object-group"></i></a>
-                            <a href="#" id="button-rotate-right"><i class="fa fa-rotate-right"></i></a>
-                            <a href="#" id="button-rotate-left"><i class="fa fa-rotate-left"></i></a>
-                            <a href="#" id="button-bring-to-front"><i class="fa icon-bring-front"></i></a>
-                            <a href="#" id="button-send-to-back"><i class="fa icon-send-back"></i></a>
-                            <div class="uk-button button-color" id="button-color">
-                                <input type="color" id="object-color" name="object_color" value="#ffffff" />
-                            </div>
-                            <a href="#" id="button-lock"><i class="fa fa-lock"></i></a>
 
-                        </div>
 
 
                     </div>
-                    <div class="floor-controller uk-width-1-3">
+                    <div class="control-button uk-width-1-1">
+                        <a href="#" id="button-clone"><i class="fa fa-clone"></i></a>
+                        <a href="#" id="button-remove"><i class="fa fa-trash-o"></i></a>
+                        <a href="#" id="button-group"><i class="fa fa-object-group"></i></a>
+                        <a href="#" id="button-rotate-right"><i class="fa fa-rotate-right"></i></a>
+                        <a href="#" id="button-rotate-left"><i class="fa fa-rotate-left"></i></a>
+                        <a href="#" id="button-bring-to-front"><i class="fa icon-bring-front"></i></a>
+                        <a href="#" id="button-send-to-back"><i class="fa icon-send-back"></i></a>
+                        <div class="uk-button button-color" id="button-color">
+                            <input type="color" id="object-color" name="object_color" value="#ffffff" />
+                        </div>
+                        <a href="#" id="button-lock"><i class="fa fa-lock"></i></a>
+                    </div>
+                    @*<div class="floor-controller uk-width-1-3">
                         <div class="color" id="button-color">
                             <span data-color="FF0000" class="color-hex" style="background-color:#FF0000;"></span>
                             <span data-color="00A1FF" class="color-hex" style="background-color:#00A1FF;"></span>
                             <span data-color="E900FF" class="color-hex" style="background-color:#E900FF;"></span>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="close-button"><i class="fa fa-times"></i></div>
                 </div>
             </div>
@@ -225,16 +238,16 @@
                 <!-- log in form -->
                 <form class="cd-form">
                     <p class="fieldset">
-                        <label class="image-replace cd-username" for="signin-email">Username</label>
-                        <input class="full-width has-padding has-border" id="signin-email" name="UserName" type="text" placeholder="Username">
-                        <span class="cd-error-message">Error message here!</span>
+                        <label class="image-replace cd-username" for="signin-email">Email</label>
+                        <input class="full-width has-padding has-border" id="signin-email" name="Email" type="text" placeholder="Email">
+                        <span class="cd-error-message">Email or Password was wrong!</span>
                     </p>
 
                     <p class="fieldset">
                         <label class="image-replace cd-password" for="signin-password">Password</label>
                         <input class="full-width has-padding has-border" id="signin-password" name="Password" type="password" placeholder="Password">
                         <a href="#0" class="hide-password">Show</a>
-                        <span class="cd-error-message">Error message here!</span>
+                        <span class="cd-error-message">Email or Password was wrong!</span>
                     </p>
 
                     <p class="fieldset">
@@ -307,6 +320,61 @@
             <a href="#0" class="cd-close-form">Close</a>
         </div> <!-- cd-user-modal-container -->
     </div> <!-- cd-user-modal -->
+    <div class="load-modal">
+        <div class="load-modal-container">
+            <div class="load-table">
+                <h3>Mở thiết kế</h3>
+                <table class="open-table" id="canvas-load-table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tiêu đề</th>
+                            <th>Cập nhật cuối</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="save-modal">
+        <div class="save-modal-container">
+            <div id="form-save">
+                <form class="cd-form">
+                    <p class="fieldset">
+                        <input type="text" name="canva_name" id="save-name" class="full-width has-padding has-border" placeholder="Tên thiết kế" />
+                    </p>
+                    <p class="fieldset">
+                        <input class="full-width has-padding" type="submit" value="Lưu thiết kế">
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="export-modal" class="uk-modal">
+        <div class="uk-modal-dialog">
+            <a class="uk-modal-close uk-close"></a>
+            <select id="res-list" name="res_list">
+                <option value="">default</option>
+                <option value="1280">1280w</option>
+                <option value="1920">1920w</option>
+                <option value="2048">2048w</option>
+            </select>
+            <button class="uk-button uk-button-primary" id="save-export-img">Save as</button>
+            <img src="" id="export-img">
+        </div>
+    </div>
+
+    <div id="quickview-modal" class="uk-modal">
+        <div class="uk-modal-dialog">
+            <a class="uk-modal-close uk-close"></a>  
+            <div id="quickview-container" class="uk-fluid-container">
+
+            </div>      
+        </div>
+    </div>
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/Scripts/jquery-1.11.3.min.js")
     @Scripts.Render("~/Scripts/fabric.js")
@@ -353,23 +421,34 @@
                 });
             }
 
+            $(".svg-container").on("click", "a.product-link", function (e) {
+                e.preventDefault();
+                $product = $(e.target);
+                var productId = $product[0].dataset.pid;
+                var $quickviewModal = UIkit.modal("#quickview-modal");
+                GetHtmlView("/homeclick/sanPham/ajaxproductdetail?id=" + productId, 'quickview-container');
+                $quickviewModal.show();
+            });
+
             $('#CategoryTypeSelect').on('change', function (event) {
                 var v = this.options[this.selectedIndex].value;
-                GetHtmlView('/Design/_CategoryOptions?categoryTypeId=' + v, 'CategorySelect');
+                var c = $('#CategorySelect').val();
+                GetHtmlView('/homeclick/Sanpham/canvasList?room=' + v + '&type=' + c, 'Funiture-list');
             });
 
             $('#CategorySelect').on('change', function (event) {
-                var v = this.options[this.selectedIndex].value;
-                GetHtmlView('/Sanpham/canvasList?cat_id=' + v, 'Funiture-list');
+                var c = this.options[this.selectedIndex].value;
+                var v = $('CategoryTypeSelect').val();
+                GetHtmlView('/homeclick/Sanpham/canvasList?type=' + c + '&room=' + v, 'Funiture-list');
             });
 
-            $('#CategorySelect').bind("DOMSubtreeModified", function () {
-                var v = this.options;
-                if (v.selectedIndex != -1) {
-                    var v = this.options[this.selectedIndex].value;
-                    GetHtmlView('/Sanpham/canvasList?cat_id=' + v, 'Funiture-list');
-                }
-            });
+            //$('#CategorySelect').bind("DOMSubtreeModified", function () {
+            //    var v = this.options;
+            //    if (v.selectedIndex != -1) {
+            //        var v = this.options[this.selectedIndex].value;
+            //        GetHtmlView('/Sanpham/canvasList?cat_id=' + v, 'Funiture-list');
+            //    }
+            //});
 
             $('#saveJSON').click(function () {
 

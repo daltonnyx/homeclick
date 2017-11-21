@@ -1,19 +1,102 @@
-﻿@using Homeclick.Models
-@model Homeclick.Models.Product
+﻿@using VCMS.Lib.Models
+@model Product
 
 @{ 
-    Dictionary<string, object> productArr = Model.ToArray();
-    Dictionary<string, object> detail = productArr["Product_detail"] as Dictionary<string, object>;
+    var info = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");
+    var iUrl = Url.GetImageUploadFolder();
+    var details = Model.DetailsToDictionary();
+    var materials = Model.Materials;
 }
 
 <div class="row">
-    <div class="col-xs-4">
-        <img class="img-responsive" src="\admin\@detail["image"]" alt="@Model.name" />
-    </div>
-    <div class="col-xs-8">
-        <h3 class="product-title modal-title">@Model.name</h3>
-        <div class="modal-content product-content">
-            @Model.excerpt
+    <div class="image col-sm-5 col-md-4">
+        <div class="elevatezoom-wrapper">
+            <img src="@Url.GetImageUploadFolder()@Model.Image.FullFileName" alt="@Model.Name" />
         </div>
     </div>
-</div>
+
+    <div class="sumary col-sm-7 col-md-8">
+        <h3 class="single-product-title">@Model.Name</h3>
+        <div class="sg-prince">
+            <div class="number-prince" @Html.Raw(Model.CurrentSale != null ? "style='text-decoration: line-through'" : "")>@Convert.ToInt32(details[ProductDetailTypes.Price]).ToString("#,###", info.NumberFormat) vnđ</div>
+            @if (Model.CurrentSale != null)
+            {
+                var oldPrice = Convert.ToInt32(details[ProductDetailTypes.Price]);
+                var newPrice = oldPrice - ((oldPrice / 100) * Model.CurrentSale.Percent);
+                <div class="number-prince">@newPrice.ToString("#,###", info.NumberFormat) vnđ</div>
+            }
+        </div>
+
+        <div class="form-add-to-cart">
+            @using (Html.BeginForm("AddItemToCard", "Cart", new { returnUrl = Request.Url.ToString() }, FormMethod.Post, new { }))
+            {
+                <div class="form-horizontal col-lg-12">
+                    <div class="form-group">
+                        <label class="control-label">Chất liệu</label>
+                        <div class="controls">
+                            @Html.DropDownList("materials", materials.Select(o => new SelectListItem { Value = o.Id.ToString(), Text = o.Name }), new { style = "width:150px;" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Màu sắc</label>
+                        <div id="options">
+                            @foreach (var material in materials)
+                            {
+                                foreach (var option in material.Product_Options.Where(o => o.ProductId == Model.Id))
+                                {
+                                    <label class="radio-image image-preview option" data-material="@material.Id" style="display:none">
+                                        <input type="radio" name="option" value="@option.Id" />
+                                        <img src="@iUrl@option.PreviewImage.FullFileName" alt="@option.Name" />
+                                    </label>
+                                }
+                            }
+                        </div>
+                    </div>
+                    
+                </div>
+            }
+        </div>
+        <hr />
+
+        <div class="detail-product">
+            <h3 class="detail-product-title" hidden="hidden">Chi tiết</h3>
+            <div class="detail-product-content">
+                <h3>Chi tiết</h3>
+                @{var escaped = new HtmlString(Model.Content);}
+                <p>@escaped</p>
+                <p><span>Kích thước:</span>@details["width"] x @details["height"] x @details["length"]</p>
+                <p><span>Trọng lượng:</span>@details[ProductDetailTypes.Weight] kg</p>
+                <p><span>Bảo hành:</span>@details[ProductDetailTypes.Warranty] Tháng</p>
+                <p><span>Xuất xứ:</span>@details[ProductDetailTypes.MadeIn]</p>
+            </div>
+        </div>
+
+        <ul class="product-social clearfix">
+            <li>
+                <a href="#">
+                    <img src="~/Upload/Images/assets/icon_instr.png" height="20" width="20" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="~/Upload/Images/assets/icon_facebook.png" height="20" width="9" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="~/Upload/Images/assets/icon_pint.png" height="20" width="14" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="~/Upload/Images/assets/icon_google.png" height="20" width="20" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="~/Upload/Images/assets/icon_e.png" height="18" width="16" alt="">
+                </a>
+            </li>
+        </ul>
+    </div>
+

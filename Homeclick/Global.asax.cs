@@ -17,6 +17,18 @@ namespace Homeclick
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Areas.Manager.ManagerBundlesConfig.RegisterBundles(BundleTable.Bundles);
+            App_Start.ExtendAreaViewEngine engine = new App_Start.ExtendAreaViewEngine();
+            engine.AddViewLocationFormat("~/Areas/Manager/Views/{1}/{0}.cshtml");
+            engine.AddViewLocationFormat("~/Areas/Manager/Views/{1}/{0}.vbhtml");
+            engine.AddViewLocationFormat("~/Areas/Manager/Views/Shared/{1}/{0}.cshtml");
+            engine.AddViewLocationFormat("~/Areas/Manager/Views/Shared/{1}/{0}.vbhtml");
+
+            // Add a shared location too, as the lines above are controller specific
+            engine.AddPartialViewLocationFormat("~/Areas/Manager/Views/{0}.cshtml");
+            engine.AddPartialViewLocationFormat("~/Areas/Manager/Views/{0}.vbhtml");
+            engine.AddPartialViewLocationFormat("~/Areas/Manager/Views/Shared/{0}.cshtml");
+            engine.AddPartialViewLocationFormat("~/Areas/Manager/Views/Shared/{0}.vbhtml");
+            ViewEngines.Engines.Add(engine);
         }
         /*
         public MvcApplication() // constructor

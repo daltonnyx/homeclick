@@ -1,36 +1,36 @@
-fabric.GroupLiPolygon = fabric.util.createClass(fabric.Group, {
-    type: 'GroupLiPolygon',
-    childOptions: [],
-    initialize: function (pointArray, options, lineWidths) {
-        options = options || [];
-        this._objects = [];
-        for (var i = 0; i <= pointArray.length - 1; i++) {
-            var object = new fabric.LiPolygon(pointArray[i], options, lineWidths);
-            object.ProName = this.ProName;
-            object.floorPrice = 0;
-            this._objects.push(object);
-        };
-        //options['padding'] = 4294967295;
-        this.childOptions = options;
-        this.callSuper('initialize', this._objects, options);
-    },
-    toObject: function (propertiesToInclude) { // Keep fix this shit
-        propertiesToInclude.push('type');
-        propertiesToInclude.push('childOptions');
-        return fabric.util.object.extend(this.callSuper('toObject', propertiesToInclude), {
+fabric.GroupLiPolygon = fabric.util.createClass(fabric.Group,{
+	type: 'GroupLiPolygon',
+	childOptions: [],
+	initialize: function(pointArray, options, lineWidths) {
+		options = options || [];
+		this._objects = [];
+		for (var i = 0; i <= pointArray.length - 1; i++) {
+			var object = new fabric.LiPolygon(pointArray[i],options,lineWidths);
+			object.ProName = this.ProName;
+			object.floorPrice = 0;
+			this._objects.push(object);
+		};
+		options['padding'] = 4294967295;
+		this.childOptions = options;
+	    this.callSuper('initialize',this._objects, options);
+	},
+	toObject: function(propertiesToInclude){ // Keep fix this shit
+	    propertiesToInclude.push('type');
+	    propertiesToInclude.push('childOptions');
+    return fabric.util.object.extend(this.callSuper('toObject',propertiesToInclude), {
 
-        });
-    },
-    getActiveObject: function (f) {
-        f = this.toLocalPoint(f, 'center', 'center');
-        f = { x: f.x / this.scaleX, y: f.y / this.scaleY }; // Scale out the point to original axis
-        //console.log(f);
-        for (var i = this._objects.length - 2; i >= 0; i--) {
-            //  console.log(i + " " +this._objects[i].containsPoint(this._objects[i].toLocalPoint(f,'center','center')));
-            if (this._objects[i].type == 'liPolygon' && this._objects[i].containsPoint(this._objects[i].toLocalPoint(f, "center", "center")))
-                return this._objects[i];
-        };
-    },
+    });
+  },
+	getActiveObject: function(f){
+		f = this.toLocalPoint(f,'center','center');
+		f = {x: f.x / this.scaleX, y: f.y / this.scaleY}; // Scale out the point to original axis
+		//console.log(f);
+		for (var i = this._objects.length - 2; i >= 0; i--) {
+			  //  console.log(i + " " +this._objects[i].containsPoint(this._objects[i].toLocalPoint(f,'center','center')));
+			if(this._objects[i].type == 'liPolygon' && this._objects[i].containsPoint(this._objects[i].toLocalPoint(f,"center","center")))
+				return this._objects[i];
+		};
+	},
 
     getPoints: function () {
         var points = new Array();
@@ -276,48 +276,48 @@ fabric.GroupLiPolygon.fromURL = function (url, options, callback) {
         //parsing goes here
         var polyArr = [],
 		svgData = xhr.responseXML.documentElement;
-        svgData.removeAttribute('viewBox'); //Elliminate out scale of image
-        svgData.imageScale = 5;
-        document.body.appendChild(svgData);
-        var boundary = document.getElementById('JLVA-GRD'),
+		svgData.removeAttribute('viewBox'); //Elliminate out scale of image
+		svgData.imageScale = 5;
+		document.body.appendChild(svgData);
+		var boundary = document.getElementById('JLVA-GRD'),
 				matrixTrans = boundary.getAttribute('transform');
         //matrixArray = matrixTrans.
         var groupList = boundary.querySelectorAll('g'); // getElementByTagName doesnt work
         //Get boundary array
         for (var i = 0; i < groupList.length; i++) {
 
-            var polyline = groupList[i].querySelector('polyline');
+				var polyline = groupList[i].querySelector('polyline');
 
-            //If use polygon
-            if (polyline == null) {
-                polyline = groupList[i].querySelector('polygon');
-            }
+				//If use polygon
+				if(polyline == null) {
+			  	polyline = groupList[i].querySelector('polygon');
+				}
 
-            //If use rect
-            if (polyline == null) {
-                polyline = groupList[i].querySelector('rect');
-                if (polyline == null) continue;
-                var get_x = parseFloat(polyline.getAttribute('x')),
-                        get_y = parseFloat(polyline.getAttribute('y')),
-                        get_width = parseFloat(polyline.getAttribute('width')),
-                        get_height = parseFloat(polyline.getAttribute('height'));
-                polyArr.push([
-                    { x: get_x, y: get_y },
-                    { x: get_x + get_width, y: get_y },
-                    { x: get_x + get_width, y: get_y + get_height },
-                    { x: get_x, y: get_y + get_height },
-                    { x: get_x, y: get_y },
-                ]);
-                continue;
-            }
+				//If use rect
+				if(polyline == null) {
+					polyline = groupList[i].querySelector('rect');
+					if(polyline == null) continue;
+					var get_x = parseFloat(polyline.getAttribute('x')),
+							get_y = parseFloat(polyline.getAttribute('y')),
+							get_width = parseFloat(polyline.getAttribute('width')),
+							get_height = parseFloat(polyline.getAttribute('height'));
+					polyArr.push([
+						{x: get_x,             y: get_y},
+						{x: get_x + get_width, y: get_y},
+						{x: get_x + get_width, y: get_y + get_height},
+						{x: get_x,             y: get_y + get_height},
+						{x: get_x,             y: get_y},
+					]);
+					continue;
+				}
 
 
 
-            var pointStr = polyline.getAttribute('points');
+				var pointStr = polyline.getAttribute('points');
 
-            var pointArray = pointStr.split(/\s+/);
+				var pointArray = pointStr.split(/\s+/);
 
-            var pointObjArray = [];
+				var pointObjArray = [];
 
             pointArray.forEach(function (el, idx, arr) {
                 if (el.indexOf(',') != -1)
@@ -328,83 +328,83 @@ fabric.GroupLiPolygon.fromURL = function (url, options, callback) {
             });
             polyArr.push(pointObjArray);
 
-        }
-        //For right scale
-        //applyMatrixTransform(polyArr,[5.5840655,0,0,5.5840655,-1387.2827,-1681.9091]);
-        //Create a Group for boundaries
-        polWall = new fabric.GroupLiPolygon(polyArr, options, [0.00000001]);
-        polWall.childOptions = options;
+		}
+		//For right scale
+		//applyMatrixTransform(polyArr,[5.5840655,0,0,5.5840655,-1387.2827,-1681.9091]);
+		//Create a Group for boundaries
+		polWall = new fabric.GroupLiPolygon(polyArr, options, [0.00000001]);
+		polWall.childOptions = options;
 
 
 
-        //Use temporary canvas to render png images
-        var tempCanvas = document.createElement('CANVAS');
+		//Use temporary canvas to render png images
+		var tempCanvas = document.createElement('CANVAS');
 
-        //Get width/height from boundary Wall
+		//Get width/height from boundary Wall
 
-        var g_wall = document.getElementById('ID-WALL----EXST');
-        var wallRect = g_wall.getBoundingClientRect();
-        var boundaryRect = boundary.getBoundingClientRect();
-        //Add more 5px for get all border
-        tempCanvas.width = (wallRect.width + 5) * svgData.imageScale;
-        tempCanvas.height = (wallRect.height + 5) * svgData.imageScale;
+		var g_wall = document.getElementById('ID-WALL----EXST');
+		var wallRect = g_wall.getBoundingClientRect();
+		var boundaryRect = boundary.getBoundingClientRect();
+		//Add more 5px for get all border
+		tempCanvas.width = (wallRect.width + 5) * svgData.imageScale;
+		tempCanvas.height = (wallRect.height + 5) * svgData.imageScale;
 
-        //Calculate offset of image and boundary
-        var imgOffset = {
-            left: wallRect.left - boundaryRect.left,
-            top: wallRect.top - boundaryRect.top,
-        };
-        //Remove it from svg for create Wall image
-        svgData.removeChild(boundary);
+		//Calculate offset of image and boundary
+		var imgOffset = {
+			left: wallRect.left - boundaryRect.left,
+			top: wallRect.top - boundaryRect.top,
+		};
+		//Remove it from svg for create Wall image
+		svgData.removeChild(boundary);
 
-        //Remove temporary object
+		//Remove temporary object
 
-        drawInlineSVG(svgData, tempCanvas.getContext('2d'), function () {
-            document.body.removeChild(svgData);
-            fabric.Image.fromURL(tempCanvas.toDataURL(), function (img) {
-                //Add it to group
-                img.scale(1 / svgData.imageScale);
-                polWall.add(img);
-                polWall._objects[polWall._objects.length - 1].set({
-                    originX: "left",
-                    originY: "top",
-                    left: polWall.getWidth() / -2 + imgOffset.left,
-                    top: polWall.getHeight() / -2 + imgOffset.top
-                });
-                polWall.scale(2.05);
-                callback(polWall);
-            });
-        });
+		drawInlineSVG(svgData, tempCanvas.getContext('2d'), function(){
+			document.body.removeChild(svgData);
+			fabric.Image.fromURL(tempCanvas.toDataURL(), function(img) {
+				//Add it to group
+				img.scale(1/svgData.imageScale);
+				polWall.add(img);
+				polWall._objects[polWall._objects.length - 1].set({
+					originX: "left",
+					originY: "top",
+					left: polWall.getWidth() / -2 + imgOffset.left,
+					top: polWall.getHeight() / -2 + imgOffset.top
+				});
+				polWall.scale(2.05);
+				callback(polWall);
+			});
+		});
 
-    }
-    xhr.onerror = function (err) {
-        alert(err);
-    }
-    xhr.open('GET', url);
-    xhr.responseType = 'document';
-    xhr.send();
+	}
+	xhr.onerror = function (err) {
+	  alert(err);
+	}
+	xhr.open('GET',url);
+	xhr.responseType = 'document';
+	xhr.send();
 }
 
 
 //Convert to Image and drawing on a Canvas
-function drawInlineSVG(svgElement, ctx, callback) {
-    svgElement.style.transform = "scale(" + svgElement.imageScale + ")";
-    svgElement.style.transformOrigin = "0px 0px 0px";
-    svgElement.setAttribute("width", ctx.canvas.width);
-    svgElement.setAttribute("height", ctx.canvas.height);
-    //var svgURL = new XMLSerializer().serializeToString(svgElement);
-    var img = new Image();
-    img.onload = function () {
-        ctx.drawImage(this, 0, 0);
-        callback();
+function drawInlineSVG(svgElement, ctx, callback){
+	svgElement.style.transform =  "scale(" + svgElement.imageScale+ ")";
+	svgElement.style.transformOrigin = "0px 0px 0px";
+	svgElement.setAttribute("width", ctx.canvas.width);
+	svgElement.setAttribute("height", ctx.canvas.height);
+  //var svgURL = new XMLSerializer().serializeToString(svgElement);
+  var img  = new Image();
+  img.onload = function(){
+    ctx.drawImage(this, 0, 0);
+    callback();
     }
-    img.src = encodeOptimizedSVGDataUri(svgElement);
-}
+  img.src = encodeOptimizedSVGDataUri(svgElement);
+  }
 
 function encodeOptimizedSVGDataUri(svgElement) {
-    var svgString = new XMLSerializer().serializeToString(svgElement);
-    var txt = svgString
-        .replace('<svg', (~svgString.indexOf('xmlns') ? '<svg' : '<svg xmlns="http://www.w3.org/2000/svg"'))
+	var svgString = new XMLSerializer().serializeToString(svgElement);
+	var	txt = svgString
+        .replace('<svg',(~svgString.indexOf('xmlns')?'<svg':'<svg xmlns="http://www.w3.org/2000/svg"'))
         .replace(/"/g, '\'')
         .replace(/%/g, '%25')
         .replace(/#/g, '%23')
@@ -412,45 +412,37 @@ function encodeOptimizedSVGDataUri(svgElement) {
         .replace(/}/g, '%7D')
         .replace(/</g, '%3C')
         .replace(/>/g, '%3E')
-        .replace(/\s+/g, ' ');
+        .replace(/\s+/g,' ');
 
-    return "data:image/svg+xml;utf8," + txt;
+	return "data:image/svg+xml;utf8,"+txt;
 }
 
 fabric.GroupLiPolygon.fromObject = function (object, callback) {
-    var pointArr = [];
-    var bg;
-    object.objects.forEach(function (el) {
-        if (el.type == 'liPolygon')
-            pointArr.push(el.originalPoints);
-        else if (el.type == 'image') {
-            fabric.Image.fromObject(el, function (img) {
-                if (pl != undefined && pl.type == "GroupLiPolygon")
-                    pl._objects.push(img);
-                pl.scale(2.05);
-            });
-        }
-        else {
-            fabric.PathGroup.fromObject(el.origin, function (originBg) {
-                originBg.scale(1).cloneAsImage(function (clone) {
-                    clone.origin = originBg.toObject();
-                    clone.set({
-                        originX: "left",
-                        originY: "top",
-                        left: clone.getWidth() / 2 * -1 - 8,
-                        top: clone.getHeight() / 2 * -1 + 3
-                    });
-                    bg = clone;
-                    if (pl != undefined && pl.type == "GroupLiPolygon")
-                        pl._objects.push(bg);
-                });
-            });
-        }
-    });
-    var pl = new fabric.GroupLiPolygon(pointArr, object.childOptions, [1]);
-
-    pl.cart = object.cart;
-    return pl;
+		var pointArr = [];
+		var bg;
+		object.objects.forEach(function(el){
+			if(el.type == 'liPolygon')
+			    pointArr.push(el.originalPoints);
+			else {
+			    fabric.PathGroup.fromObject(el.origin, function (originBg) {
+			        originBg.scale(1).cloneAsImage(function (clone) {
+			            clone.origin = originBg.toObject();
+			            clone.set({
+			                originX: "left",
+			                originY: "top",
+			                left: clone.getWidth() / 2 * -1 - 8,
+			                top: clone.getHeight() / 2 * -1 + 3
+			            });
+			            bg = clone;
+			            if (pl != undefined && pl.type == "GroupLiPolygon")
+			                pl._objects.push(bg);
+			        });
+			    });
+			}
+		});
+		var pl = new fabric.GroupLiPolygon(pointArr, object.childOptions, [1]);
+		pl.cart = object.cart;
+		return pl;
 
 
 };

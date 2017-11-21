@@ -4,27 +4,52 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_SharedLayout_NoSidebar.cshtml";
 }
+<style>
+    .owl-controls {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        transform: translatey(-50%);
+        margin-top: 0!important;
+    }
+
+    .owl-prev {
+            float: left;
+    }
+
+    .owl-next{
+        float: right;
+    }
+
+    .layout-preview-image {
+        max-width: 250px;
+        display: none;
+        position: absolute;
+        width: 250px;
+        margin-top: 40px;
+        transform: translateX(-50%);
+        border: 3px solid white;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    }
+
+</style>
+
 <div class="page-title m-l-15 m-r-15">
     <h1>@Model.Name</h1>
 </div>
 
 <div class="col-md-3">
     <div class="clearfix">
-        <h4>Chi Tiết</h4>
-        <p><strong>Loại dự án: </strong>Chung cư</p>
-        <p><strong>Chủ đầu tư: </strong>Chung cư</p>
-        <p><strong>Vị trí: </strong>Chung cư</p>
-        <p><strong>Quy mô diện tích: </strong>Chung cư</p>
-        <p><strong>Tổng số căn hộ: </strong>Chung cư</p>
-        <p><strong>Năm khởi công: </strong>Chung cư</p>
-        <p><strong>Website: </strong>http://masterithaodien.masteri.com.vn/</p>
+        @Html.Raw(Model.HtmlContent)
         <div>
-            <img src="http://masterithaodien.masteri.com.vn/Data/Sites/1/Banner/banner-gioi-thieu.jpg" />
+            <img src="@Url.GetImageUploadFolder()@Model.PreviewImage.FullFileName" />
         </div>
     </div>
     <hr/>
     <h4>Mặt bằng</h4>
-@Html.DropDownList("departments", new SelectList(Model.Departments, "Id", "Name", null), new { })
+@Html.DropDownList("departments", new SelectList(Model.Departments, "Id", "Name", null), new { style = "width:100%; margin-bottom:7px;" })
 @{
     var floors = new List<Floor>();
     foreach (var department in Model.Departments)
@@ -42,7 +67,7 @@
         });
     }
 }
-@Html.CustomDropdownList("floors", floorSelectlistItems, null, null, new { })
+@Html.CustomDropdownList("floors", floorSelectlistItems, null, null, new { style = "width:100%; margin-bottom:15px;" })
 @{
     var rooms = new List<Room>();
     foreach (var floor in floors)
@@ -62,34 +87,37 @@
 }
 
 <div id="layoutContainer">
-    @foreach (var item in rooms.Where(o => o.FloorId == floors.FirstOrDefault().Id))
-    {
-        <div class="layout-item" data-title="@item.Name" data-id="@item.Id">
-            <div class="card card-shadow" data-content="@item.Id" data-name="@item.Name" data-image="@item.Image">
-                <div>
-                    <a>
-                        <img style="height:auto; width:100%" src="@Url.GetImageUploadFolder()@item.Image.FullFileName" alt="@item.Description" />
-                    </a>
-                </div>
-                <div class="card-title">
-                    <span>@item.Name</span>
-                </div>
-            </div>
-        </div>
-    }
+    @Html.Action("_RenderRooms", new { floor_id = floors.FirstOrDefault().Id})
 </div>
+
 </div>
 
 <div class="col-md-9">
-    <div class="layout-image" style="width: 100%;">
-        <img />
+    <div class="layout-image m-b-15" style="width: 100%;">
+        <img id="image"/>
     </div>
-    <div id="Collections">
+    <div class="clearfix col-sm-4" style="z-index:9999">
+        <div id="Collections">
 
+        </div>
     </div>
+
     <div id="CollectionDetails">
 
     </div>
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- The Close Button -->
+    <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+
+    <!-- Modal Content (The Image) -->
+    <img class="modal-content" id="img01">
+
+    <!-- Modal Caption (Image Text) -->
+    <div id="caption"></div>
 </div>
 
 @section breadcrumb {
@@ -102,19 +130,51 @@
 @section styles {
     @Styles.Render("~/content/lib/owl-carousel/css")
     <link rel="stylesheet" href="~/Scripts/Plugins/slick/slick-theme.css" />
+    <link href="~/Content/lib/taggd-master/dist/taggd.css" rel="stylesheet" />
+    <style>
+        .taggd__button {
+            width: 0;
+            height: 0;
+            background-color: transparent;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 30px solid blue;
+        }
+    </style>
 }
 
 @section scripts {
     @Scripts.Render("~/content/lib/owl-carousel/js")
     <script src="~/Scripts/Plugins/slick/slick.min.js"></script>
+    <script src="~/Content/lib/taggd-master/dist/taggd.js"></script>
+
     <script>
         var $departments = $('#departments'),
 		    $floors = $('#floors'),
             $floorsOptions = $floors.find('option'),
-            $rooms = $('#rooms'),
-            $roomsOptions = $rooms.find('option'),
-            $collections = $('#collections'),
-            $collectionsOptions = $collections.find('option');
+            $rooms = $('#layoutContainer'),
+            $collections = $('#Collections'),
+            $collectionsOptions = $collections.find('option'),
+            $collectionDetails = $('#CollectionDetails'),
+            $layerImg = $('.layout-image img');
+        ;
+
+        var pageLoaded = false;
+
+        function owlCarouselDestroyer(){
+            $collections.empty();
+            if (typeof $collections.data('owlCarousel') != 'undefined') {
+                $collections.data('owlCarousel').destroy();
+                $collections.removeClass('owl-carousel');
+            }
+        }
+
+        function clearDetails() {
+            $('.taggd .taggd__button').remove();
+            $layerImg.attr('src', '');
+            $collectionDetails.empty();
+            owlCarouselDestroyer();
+        }
 
         $departments.on('change', function () {
             $floors.empty();
@@ -123,61 +183,171 @@
             for (var i = filterResult.length - 1; i >= 0; i--) {
                 $(filterResult[i]).prependTo($floors);
             }
+            $floors.change();
         }).trigger('change');
 
         $floors.on('change', function () {
-            $rooms.empty();
-            var str = '[data-' + $(this).attr('id') + '="' + $(this).val() + '"]';
-            var filterResult = $roomsOptions.filter(str);
-            for (var i = filterResult.length - 1; i >= 0; i--) {
-                $(filterResult[i]).prependTo($rooms);
-            }
-            $rooms.trigger('change');
-        }).trigger('change');
-
-        $collections.on('change', function () {
-
-        }).trigger('change');
-
-        var collectionClick = function () {
-            $('#CollectionDetails').empty();
+            var param = { 'floor_id': $(this).val() };
             $.ajax({
-                url: '@Url.Action("Collection")',
-                data: { 'collection_id': $(this).data('id') },
+                url: '@Url.Action("_RenderRooms")',
+                data: param,
                 method: 'POST',
                 success: function (data) {
-                    $('#CollectionDetails').html(data);
-                    $(".owl-carousel").owlCarousel({
-                        slideSpeed: 300,
-                        paginationSpeed: 400,
-                        singleItem: true
-                    });
+                    $rooms.html(data);
+                    clearDetails();
+
+                    if (data == "")
+                        return;
+
+                    var $roomsChildren = $rooms.children();
+                    if ($roomsChildren.length > 0) {
+                        $roomsChildren.on('click', roomClick);
+                        $roomsChildren.first().click();
+                    }
+                }
+            });
+        });
+
+        function collectionClick(id) {
+            if (!id)
+                return;
+            $collectionDetails.empty();
+            $.ajax({
+                url: '@Url.Action("Collection")',
+                data: { 'collection_id': id },
+                method: 'POST',
+                success: function (data) {
+                    $collectionDetails.html(data);
+                }
+            });
+
+            $.ajax({
+                url: '@Url.Action("CollectionImages")',
+                data: { 'collection_id': id },
+                method: 'POST',
+                success: function (data) {
+                    $('.taggd .taggd__button').remove();;
+
+                    for (var i = 0; i < data.length; i++) {
+                        var str = data[i].replace(/'/g, '"');
+                        var json = $.parseJSON(str);
+                        addLabel(json['positionX'], json['positionY'], json['rotate'], json['image']);
+                    }
                 }
             });
         };
-        $('.layout-item').on('click', function (event) {
+
+        var roomClick = function (event) {
             var $div = $(this);
             var layoutImg = $div.find('img')
-            $('.layout-image img').attr('src', $div.find('img').attr('src'));
-            $('#Collections').empty();
+
+            $layerImg.attr('src', $div.find('img').attr('src'));
+
+            owlCarouselDestroyer();
+
+            $collectionDetails.empty();
+
             $.ajax({
                 url: '@Url.Action("GetCollections")',
                 data: { 'room_id': $div.data('id') },
                 method: 'POST',
                 success: function (data) {
-                    for (var i = 0; i < data.length; i++) {
-                        var collectionCard = '<div class="collection-card col-xs-6 col-sm-4 col-md-4 col-lg-4" data-id="' + data[i].id + '">' +
-                                                '<img style="height:auto; width:100%" src="@Url.GetImageUploadFolder()' + data[i].image +'"/>' +
-                                                '<span>' + data[i].name +'</span>' +
-                                            '</div>';
-                        $('#Collections').append(collectionCard);
+
+                    if (data.length == 0) {
+                        var $tags = $('.taggd .taggd__button').remove();
+                        return;
                     }
 
-                    $('.collection-card').on('click', collectionClick);
+                    for (var i = 0; i < data.length; i++) {
+                        var collectionCard = '<div class="collection-card" data-id="' + data[i].id + '">' +
+                                                '<img style="height:auto; width:100%" src="@Url.GetImageUploadFolder()' + data[i].image +'"/>' +
+                                            '</div>';
+                        $collections.append(collectionCard);
+                    }
+
+                    $collections.owlCarousel({
+                        navigation: true,
+                        pagination: false,
+                        slideSpeed: 300,
+                        paginationSpeed: 400,
+                        singleItem: true,
+                        afterMove: function (elem) {
+                            var current = this.currentItem;
+                            var id = elem.find(".owl-item").eq(current).find(".collection-card").data('id');
+                            collectionClick(id);
+                        }
+                    });
+                    collectionClick($('.collection-card').first().data('id'));
                 }
             });
-        })
+        }
 
+        //Add arrow to image layer
+        function addLabel(x, y, r, i) {
+            var $taggd = $('.taggd');
+            var $label = $('<label class="taggd__button"/>')
+                .css({
+                    "left": x + "%",
+                    "top": y + "%",
+                    "transform": "rotate(" + r + "deg)"
+                }).data("image", i + ".jpg");
+
+            var imagePath = '@Url.GetImageUploadFolder()' + $label.data('image');
+
+            $taggd.append($label);
+
+            var $div = $('<div class="layout-preview-image"/>')
+                .css("left", x + "%")
+                .css("top", y + "%")
+                .appendTo($taggd);
+            var $priewImage = $('<img/>').attr('src', imagePath).appendTo($div);
+
+
+            $label.mouseover(function () {
+                $div.show();
+            });
+
+            $label.mouseleave(function () {
+                $div.hide();
+            });
+
+            $label.on("click", function () {
+                $modal.css('display', 'block');
+                $modalImg.attr('src',imagePath);
+            });
+
+        }
+
+        $(document).ready(function () {
+            $('.layout-item').on('click', roomClick);
+
+            $('.layout-item').first().click();
+
+            var image = document.getElementById('image');
+            var settings = {
+                show: 'none',
+                hide: 'mouseleave',
+            };
+
+            //var taggd = $(image).taggd();
+            var taggd = new Taggd(image, settings);
+
+            if (pageLoaded) {
+                $floors.trigger('change');
+            }
+            pageLoaded = false;
+        });
+
+
+        //Popup image
+        var $modal = $('#myModal'),
+            $modalImg = $("#img01"),
+        // Get the <span> element that closes the modal
+            $span = $(".close").first();
+
+        // When the user clicks on <span> (x), close the modal
+        $span.on('click', function () {
+            $modal.css('display', 'none');
+        });
     </script>
-
 }

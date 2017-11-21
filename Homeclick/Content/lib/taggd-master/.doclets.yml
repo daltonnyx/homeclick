@@ -1,0 +1,7 @@
+articles:
+  - Overview: README.md
+  - Options: docs/options.md
+files:
+  - src/scripts/Taggd.js
+  - src/scripts/Tag.js
+packageJson: package.json

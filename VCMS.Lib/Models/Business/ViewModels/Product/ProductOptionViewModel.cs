@@ -33,4 +33,17 @@ namespace VCMS.Lib.Models
         public Dictionary<string, string> details { get; set; }
 
     }
+
+    public class SimpleProductOptionViewModel
+    {
+        public new int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public string PreviewImage { get; set; }
+
+        public bool Status { get; set; }
+    }
 }

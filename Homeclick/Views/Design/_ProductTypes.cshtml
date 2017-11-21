@@ -1,0 +1,8 @@
+﻿@using VCMS.Lib.Models
+@model List<Product_Type>
+
+
+@foreach (var item in Model)
+{
+    <option value="@item.Id">@item.Name</option>
+}

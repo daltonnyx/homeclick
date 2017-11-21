@@ -36,6 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>6</LangVersion>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -44,6 +45,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
@@ -198,6 +200,7 @@
       <CustomToolNamespace>Resource</CustomToolNamespace>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\ExtendAreaViewEngine.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Manager\Bundles.cs" />
@@ -216,6 +219,7 @@
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\SanPhamController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -475,6 +479,10 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\front-to-back.css" />
     <Content Include="Content\js\homeclick.js" />
+    <Content Include="Content\lib\bootstrap-slider-master\dist\bootstrap-slider.js" />
+    <Content Include="Content\lib\bootstrap-slider-master\dist\bootstrap-slider.min.js" />
+    <Content Include="Content\lib\bootstrap-slider-master\dist\css\bootstrap-slider.css" />
+    <Content Include="Content\lib\bootstrap-slider-master\dist\css\bootstrap-slider.min.css" />
     <Content Include="Content\lib\font-awesome\css\font-awesome.css" />
     <Content Include="Content\lib\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\lib\font-awesome\fonts\fontawesome-webfont.svg" />
@@ -681,6 +689,7 @@
     <Content Include="Areas\Manager\Views\Shared\Widgets\SelectFiles.cshtml" />
     <Content Include="Areas\Manager\Views\ProductOptions\Create.cshtml" />
     <Content Include="Areas\Manager\Views\Shared\Widgets\DeleteConfirmModal_.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -688,6 +697,9 @@
     <Content Include="Scripts\canvas.nocache.js" />
     <Content Include="Scripts\fabric.min.js" />
     <Content Include="Scripts\groupLiPolygon.js" />
+    <Content Include="Scripts\imgmap.js" />
+    <Content Include="Scripts\imgmap_interface.js" />
+    <Content Include="Scripts\imgmap_packed.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
@@ -705,6 +717,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\lang_en.js" />
     <Content Include="Scripts\lipolygon.class.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\masonry.pkgd.min.js" />
@@ -761,6 +774,8 @@
     <Content Include="Scripts\Plugins\Map\markerclustererplus\src\markerclusterer_packaged.js" />
     <Content Include="Scripts\Plugins\mixitup\jquery.mixitup.js" />
     <Content Include="Scripts\Plugins\mixitup\jquery.mixitup.pagination.min.js" />
+    <Content Include="Scripts\Plugins\mixitup\mixitup.min.js" />
+    <Content Include="Scripts\Plugins\mixitup\mock-api.js" />
     <Content Include="Scripts\Plugins\noUiSlider\nouislider.css" />
     <Content Include="Scripts\Plugins\noUiSlider\nouislider.js" />
     <Content Include="Scripts\Plugins\noUiSlider\nouislider.min.css" />
@@ -785,6 +800,27 @@
     <Content Include="Scripts\Plugins\slick\slick.css" />
     <Content Include="Scripts\Plugins\slick\slick.js" />
     <Content Include="Scripts\Plugins\slick\slick.min.js" />
+    <Content Include="Content\lib\taggd-master\dist\taggd.css" />
+    <Content Include="Content\lib\taggd-master\dist\taggd.js" />
+    <Content Include="Content\lib\taggd-master\dist\taggd.min.js" />
+    <Content Include="Content\lib\taggd-master\src\scripts\Tag.js" />
+    <Content Include="Content\lib\taggd-master\src\scripts\Taggd.js" />
+    <Content Include="Content\lib\taggd-master\src\scripts\util\event-emitter.js" />
+    <Content Include="Content\lib\taggd-master\src\scripts\util\object-is.js" />
+    <Content Include="Content\lib\taggd-master\src\scripts\util\type-error-message.js" />
+    <Content Include="Content\lib\taggd-master\src\styles\taggd.css" />
+    <Content Include="Content\lib\taggd-master\tests\assets\1024x512.jpg" />
+    <Content Include="Content\lib\taggd-master\tests\assets\512x256.jpg" />
+    <Content Include="Content\lib\taggd-master\tests\behavior\Tag.js" />
+    <Content Include="Content\lib\taggd-master\tests\behavior\Taggd.editor.js" />
+    <Content Include="Content\lib\taggd-master\tests\behavior\Taggd.js" />
+    <Content Include="Content\lib\taggd-master\tests\functions.js" />
+    <Content Include="Content\lib\taggd-master\tests\manual\assets\layout.css" />
+    <Content Include="Content\lib\taggd-master\tests\manual\basic.html" />
+    <Content Include="Content\lib\taggd-master\tests\manual\editor.html" />
+    <Content Include="Content\lib\taggd-master\tests\manual\themes\taggd-classic.css" />
+    <Content Include="Content\lib\taggd-master\tests\units\Tag.js" />
+    <Content Include="Content\lib\taggd-master\tests\units\Taggd.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -1098,9 +1134,17 @@
     <Content Include="Views\Collection\_productsTable.cshtml" />
     <Content Include="Views\Cart\_headerWidget.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Content\lib\taggd-master\dist\taggd.css.map" />
+    <Content Include="Content\lib\taggd-master\dist\taggd.min.js.map" />
+    <Content Include="Content\lib\taggd-master\docs\options.md" />
+    <Content Include="Views\User\LoadWishlists.cshtml" />
+    <Content Include="Views\Design\_ProductTypes.cshtml" />
+    <Content Include="Views\Design\Cities.cshtml" />
+    <Content Include="Views\Design\Projects.cshtml" />
+    <Content Include="Views\Design\Districts.cshtml" />
+    <Content Include="Views\Design\Rooms.cshtml" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\SanPham\CanvasList.cshtml" />
-    <Content Include="Views\SanPham\_CanvasList.cshtml" />
     <Content Include="Views\Project\Details.cshtml" />
     <Content Include="Views\SanPham\AjaxProductDetail.cshtml" />
     <Content Include="Views\SanPham\Category.cshtml" />
@@ -1113,6 +1157,9 @@
     <Content Include="Views\Project\Collection.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\_Sidebar.cshtml" />
+    <Content Include="Views\Project\Map.cshtml" />
+    <Content Include="Views\Project\_RenderRooms.cshtml" />
+    <Content Include="Views\Shared\Layout_html.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -60,15 +60,14 @@
                 <div class="form-group">
                     @{
                         <h3>Preview Image</h3>
-                        var paramPreviewImage = new Dictionary<string, object>
-                        {
-                            { "File", Model?.Image != null ? Model.Image.FullFileName : string.Empty },
-                            { ConstantKeys.FIELD_NAME, Html.NameFor(m => m.ImageId).ToString() },
-                            { "Multiple", false },
-                            { "Accept" , "image/*"},
-                            { "FileManagerId", "#lgx94" }
-                        };
-                        @Html.Partial("Widgets/SelectImages", paramPreviewImage)
+
+                        @Html.Partial("Widgets/SelectFiles", new
+                           {
+                               Value = Model?.Image?.FullFileName,
+                               FieldName = Html.NameFor(m => m.ImageId).ToString(),
+                               Accept = "image/*",
+                               FileManagerId = "#lgx94",
+                           });
                     }
                 </div>
                 <hr />

@@ -14,98 +14,108 @@
                 <div class="form-thietke-left">
                     <form id="canvas-picker" method="GET" action="@Url.Action("Floor", "Design")">
                         <label>Chọn địa điểm</label>
-                        <select class="department" name="department_city" id="department-city">
+                        <select class="cities" name="department_city" id="department-city">
                             <option value="">--Chọn Thành phố--</option>
-                            @Html.Action("getDepartments", "Design")
                         </select>
                         <label>Chọn quận</label>
-                        <select class="department" name="department_district" id="department-district">
+                        <select class="districts" autocomplete="off" name="department_district" id="department-district">
                             <option value="">--Chọn Quận--</option>
                         </select>
                         <label>Chọn công trình</label>
                         
-                        <select class="floor" name="department_tower" id="department-tower">
+                        <select class="project" autocomplete="off" name="department_project" id="department-project">
                             <option value="">--Chọn Công trình--</option>
                         </select>
+                        <label>Chọn Khu</label>
+
+                        <select class="department" autocomplete="off" name="department_department" id="department-department">
+                            <option value="">--Chọn Khu--</option>
+                        </select>
                         <label>Chọn tầng</label>
-                        <select class="floor-end" name="floor" id="floor">
+                        <select class="floor" autocomplete="off" name="department_floor" id="department-floor">
                             <option value="">--Chọn Tầng--</option>
                         </select>
-                        <input class="button-create left" type="submit" value="Mở mặt bằng này" />
+                        <label>Chọn căn hộ</label>
+                        <select class="room" autocomplete="off" name="department_room" id="department-room">
+                            <option value="">--Chọn căn hộ--</option>
+                        </select>
+                        <input class="button-create left" type="submit" value="Mở layout này" />
                     </form>
                 </div>
             </div>
             <script type="text/javascript">
+                const baseUrl = "@Url.GetBaseUrl()";
+                function loadDepartment(id, url, beforeCb, successCb) {
+                    
+                    jQuery.ajax({
+                        url: baseUrl + "/Design" + "/" + url + "/" + id || "",
+                        method: "GET",
+                        dataType: "text",
+                        success: function (response) {
+                            window.setTimeout(function () {
+                                jQuery('.loading.arc').remove();
+                                $("#canvas-picker select").removeAttr("disabled");
+                                
+                            }, 200);
+                            successCb(response);
+                        },
+                        beforeSend: function () {
+                            beforeCb();
+                        }
+                    });
+                }
                 jQuery(document).ready(function ($) {
                     var loadingDiv = '<div class="loading arc"></div>';
-                    $("select.department").mouseup(function (e) {
-                        var open = $(this).data("isopen");
-
-                        if (open) {
-                            var parent_id = $(this).val();
-                            if (parent_id == "")
-                                return;
-                            var Id = this.id;
-                            jQuery.ajax({
-                                url: "@Url.Action("getDepartments", "Design")" + "/" + parent_id,
-                                method: "GET",
-                                dataType: "text",
-                                success: function (response) {
-                                    window.setTimeout(function () {
-                                        jQuery('.loading.arc').remove();
-                                        $("#department-district").removeAttr("disabled");
-                                        $("#department-tower").removeAttr("disabled");
-                                    }, 200);
-                                    if (Id == "department-city") {
-                                        
-                                        $("#department-district").html('<option value="">--Chọn Quận--</option>' + response);
-                                    }
-                                    else if (Id == "department-district") {
-                                        
-                                        $("#department-tower").html('<option value="">--Chọn Công trình--</option>' + response);
-                                    }
-                                },
-                                beforeSend: function () {
-                                    if (Id == "department-city") {
-                                        $("#department-district").attr("disabled", "disabled");
-                                        $("#department-district").after(loadingDiv);
-                                    }
-                                    else if (Id == "department-district") {
-                                        $("#department-tower").attr("disabled", "disabled");
-                                        $("#department-tower").after(loadingDiv);
-                                    }
-                                }
-                            });
-                        }
-                        $(this).data("isopen", !open);
+                    loadDepartment(undefined, "getCities", function () { }, function (response) {
+                        $("#department-city").html('<option value="">--Chọn Thành phố--</option>' + response);
+                    });
+                    $("#department-city").on("change", function (e) {
+                        loadDepartment(this.value, "getDistricts", function () {
+                            $("#department-district").attr("disabled", "disabled");
+                            $("#department-district").after(loadingDiv);
+                        }, function (response) {
+                            $("#department-district").html('<option value="">--Chọn Quận--</option>' + response);
+                        });
                     });
 
-                    $("select.floor").mouseup(function (e) {
-                        var open = $(this).data("isopen");
+                    $("#department-district").on("change", function (e) {
+                        loadDepartment(this.value, "getProjects", function () {
+                            $("#department-project").attr("disabled", "disabled");
+                            $("#department-project").after(loadingDiv);
+                        }, function (response) {
+                            $("#department-project").html('<option value="">--Chọn Công trình--</option>' + response);
+                        });
+                    });
 
-                        if (open) {
-                            var Id = $(this).val();
-                            if (Id == "")
-                                return;
-                            jQuery.ajax({
-                                url: "@Url.Action("getFloors", "Design")" + "/" + Id,
-                                method: "GET",
-                                dataType: "text",
-                                success: function (response) {
-                                    window.setTimeout(function () {
-                                        jQuery('.loading.arc').remove();
-                                        $("#floor").removeAttr("disabled");
-                                    }, 200);
-                                    $("#floor").html('<option value="">--Chọn Tầng--</option>' + response);
-                                },
-                                beforeSend: function () {
-                                    $("#floor").after(loadingDiv);
-                                    $("#floor").attr("disabled", "disabled");
-                                }
-                            });
-                        }
+                    $("#department-project").on("change", function (e) {
+                        loadDepartment(this.value, "getDepartments", function () {
+                            $("#department-department").attr("disabled", "disabled");
+                            $("#department-department").after(loadingDiv);
+                        }, function (response) {
+                            $("#department-department").html('<option value="">--Chọn Khu--</option>' + response);
+                        });
+                    });
+                    $("#department-department").on("change", function (e) {
+                        loadDepartment(this.value, "getFloors", function () {
+                            $("#department-floor").attr("disabled", "disabled");
+                            $("#department-floor").after(loadingDiv);
+                        }, function (response) {
+                            $("#department-floor").html('<option value="">--Chọn Tầng--</option>' + response);
+                        });
+                    });
+                    $("#department-floor").on("change", function (e) {
+                        loadDepartment(this.value, "getRooms", function () {
+                            $("#department-room").attr("disabled", "disabled");
+                            $("#department-room").after(loadingDiv);
+                        }, function (response) {
+                            $("#department-room").html('<option value="">--Chọn căn hộ--</option>' + response);
+                        });
+                    });
 
-                        $(this).data("isopen", !open);
+
+                    $("#canvas-picker").on("submit", function (e) {
+                        e.preventDefault();
+                        window.open("@Url.GetBaseUrl()/Design/Canvas/" + $("#department-room").val(), "_blank");
                     });
 
                 });

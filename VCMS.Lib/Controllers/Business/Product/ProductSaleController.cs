@@ -98,7 +98,6 @@ namespace VCMS.Lib.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-
         public JsonResult DataHandler(DTParameters param, Dictionary<string, object> args)
         {
             try
