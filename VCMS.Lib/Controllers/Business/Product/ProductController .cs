@@ -227,12 +227,17 @@ namespace VCMS.Lib.Controllers
                     if(form.AllKeys.Contains(string.Format("Product_Details[{0}].FileId", indicator)))
                     {
                         detail.FileId = form[string.Format("Product_Details[{0}].FileId", indicator)];
+                        if (detail.FileId == string.Empty) //Prevent empty field
+                            continue;
                     }
                     if (form.AllKeys.Contains(string.Format("Product_Details[{0}].EnumId", indicator)))
                     {
                         detail.EnumId = Convert.ToInt32(form[string.Format("Product_Details[{0}].EnumId", indicator)]);
+                        if (detail.EnumId == 0) //Prevent empty field
+                            continue;
                     }
-                    details.Add(detail);
+                    
+                     details.Add(detail);
                 
                 }
             }
