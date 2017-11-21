@@ -231,7 +231,7 @@ namespace VCMS.Lib.Models
             {
                 draw = param.Draw,
                 data = data,
-                recordsFiltered = data.Count(),
+                recordsFiltered = dtsource.Count(),
                 recordsTotal = dtsource.Count()
             };
             return result;

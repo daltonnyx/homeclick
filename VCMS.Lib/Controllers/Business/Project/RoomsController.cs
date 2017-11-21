@@ -16,21 +16,21 @@ namespace VCMS.Lib.Controllers
 {
     public class RoomsController : BaseController
     {
-        public IEnumerable<Project> GetProjects()
+        private IEnumerable<Project> GetProjects()
         {
-            var result = db.Projects;
+            var result = db.Projects.ToList();
             return result;
         }
 
-        public IEnumerable<Department> GetDepartments()
+        private IEnumerable<Department> GetDepartments()
         {
-            var result = db.Departments;
+            var result = db.Departments.ToList();
             return result;
         }
 
-        public IEnumerable<Floor> GetFloors()
+        private IEnumerable<Floor> GetFloors()
         {
-            var result = db.Floors;
+            var result = db.Floors.ToList();
             return result;
         }
 
@@ -113,6 +113,18 @@ namespace VCMS.Lib.Controllers
             messageCollection.Add(new Message { MessageType = MessageTypes.Success, MessageContent = "Delete successfully!" });
             TempData[ConstantKeys.ACTION_RESULT_MESSAGES] = messageCollection;
             return RedirectToAction("List");
+        }
+
+        public JsonResult GetDepartmentAsync(int? id)
+        {
+            var result = db.Departments.Where(d => d.ProjectId == id).Select(d => new { Id = d.Id, Name = d.Name }).ToArray();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetFloorAsync(int? id)
+        {
+            var result = db.Floors.Where(d => d.DepartmentId == id).Select(d => new { Id = d.Id, Name = d.Name }).ToArray();
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         #region[Datatables]
