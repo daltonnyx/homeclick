@@ -27,6 +27,8 @@
                     @Html.ValidationMessageFor(m => m.Name)
                     @Html.TextBoxFor(m => m.Description, new { @class = "form-control", placeholder = "Description" })
                     @Html.ValidationMessageFor(m => m.Description)
+                    @Html.TextBoxFor(m => m.BoundaryWidth, new { @class = "form-control", type = "number", placeholder = "Boundary Width (cm)" })
+                    @Html.ValidationMessageFor(m => m.BoundaryWidth)
                 </div>
                 @if (Model != null)
                 {
