@@ -279,9 +279,7 @@ fabric.GroupLiPolygon.fromURL = function (url, options, callback) {
 		svgData.removeAttribute('viewBox'); //Elliminate out scale of image
 		svgData.imageScale = 5;
 		document.body.appendChild(svgData);
-		var boundary = document.getElementById('JLVA-GRD'),
-				matrixTrans = boundary.getAttribute('transform');
-        //matrixArray = matrixTrans.
+		var boundary = document.getElementById('JLVA-GRD');
         var groupList = boundary.querySelectorAll('g'); // getElementByTagName doesnt work
         //Get boundary array
         for (var i = 0; i < groupList.length; i++) {
@@ -371,7 +369,8 @@ fabric.GroupLiPolygon.fromURL = function (url, options, callback) {
 					left: polWall.getWidth() / -2 + imgOffset.left,
 					top: polWall.getHeight() / -2 + imgOffset.top
 				});
-				polWall.scale(2.05);
+				var boundaryWidth = document.getElementById("layout-width").value;
+				polWall.scale(boundaryWidth / polWall.getWidth());
 				callback(polWall);
 			});
 		});
