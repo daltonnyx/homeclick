@@ -276,6 +276,22 @@ namespace VCMS.Lib.Controllers
             return RedirectToAction("List");
         }
 
+        [HttpPost]
+        public ActionResult DeleteConfirmed(int[] ids)
+        {
+            var messageCollection = new List<Message>();
+            foreach (var id in ids)
+            {
+                var model = db.Products.Find(id);
+                db.Entry(model).State = System.Data.Entity.EntityState.Deleted;
+            }
+            db.SaveChanges();
+
+            messageCollection.Add(new Message { MessageType = MessageTypes.Success, MessageContent = "Delete successfully!" });
+            TempData[ConstantKeys.ACTION_RESULT_MESSAGES] = messageCollection;
+            return RedirectToAction("List");
+        }
+
         #region [Options]
         private IEnumerable<Category> GetVariantTypes()
         {
