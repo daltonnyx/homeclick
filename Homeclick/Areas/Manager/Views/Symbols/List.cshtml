@@ -1,0 +1,100 @@
+﻿@using VCMS.Lib.Resources
+@using VCMS.Lib.Common
+@using VCMS.Lib.Models
+@{
+    ViewBag.Title = "Symbol";
+}
+
+
+@foreach (var pair in ViewBag.Dic as Dictionary<string, Dictionary<string, int>> ?? new Dictionary<string, Dictionary<string, int>>())
+{
+    <p class="bg-white">
+        @Html.DropDownList(pair.Key, pair.Value.Select(o => new SelectListItem { Text = o.Key, Value = o.Value.ToString() }), "All - " + pair.Key, new { @class = "form-control chosen extra-search", data_key = pair.Key, tabindex = "-1", style = "display: none;" })
+    </p>
+}
+<div class="content">
+    <div class="clearfix btn-toolbar ">
+        <div class="btn-group pull-right">
+            <a class="btn btn-circle show-tooltip" title="" href="@Url.Action("Create")" data-original-title="Add new user"><i class="fa fa-plus"></i></a>
+            <a class="btn btn-circle show-tooltip" title="" href="#" data-original-title="Delete selected" data-toggle="modal" data-target="#deleteConfirmModal"><i class="fa fa-trash-o"></i></a>
+            <a class="btn btn-circle show-tooltip table-refresh-btn" title="" href="#" data-table-id="dataTable" data-original-title="Refresh"><i class="fa fa-repeat"></i></a>
+        </div>
+    </div>
+    <hr />
+    <table id="dataTable" class="table table-striped table-hover fill-head">
+        <thead>
+            <tr>
+                <th style="width:18px;">
+                    <input type="checkbox" />
+                </th>
+                <th>
+                    @Strings.Image
+                </th>
+                <th>
+                    @Strings.Name
+                </th>
+                <th>
+                    @Strings.Type
+                </th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@Html.Partial("Widgets/DeleteConfirmModal")
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Index","Dashboard")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.Title</li>
+}
+
+@section styles {
+    @Styles.Render("~/bundles/manager/datatables/css")
+    <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/manager/datatables")
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
+    <script>
+        var dataTable = $('#dataTable').DataTable({
+            autoWidth: false,
+            serverSide: true,
+            ajax: {
+                type: "POST",
+                url: '@Url.Action("DataHandler")',
+                contentType: 'application/json; charset=utf-8',
+                data: function (data) {
+                    var extraSearchs = $('.extra-search');
+                    if (extraSearchs.length > 0) {
+                        data.args = {};
+                        for (var i = 0; i < extraSearchs.length; i++) {
+                            var current = $(extraSearchs[i]);
+                            if (current.data('key') && current.val())
+                                data.args[current.data('key')] = current.val();
+                        }
+                    }
+                    return data = JSON.stringify(data);
+                }
+            },
+            responsive: false,
+            columns: [
+               { "data": "@ConstantKeys.ID", render: function (data, type, full, meta) { return '<input type="checkbox" class="select-item" value="' + data + '"/>' } },
+               { "data": "@ConstantKeys.PREVIEW_IMAGE", render: function (data, type, full, meta) { return '<div class="list-thumb "><img src="' + '@Url.GetImageUploadFolder()' + data + '" /></div>'; } },
+               { "data": "@ConstantKeys.NAME", render: function (data, type, full, meta) { return '<a href="@Url.Action("Edit")?symbol_id=' + full['@ConstantKeys.ID'] + '">' + data + '</a>'; } },
+               { "data": "@ConstantKeys.PRODUCT_TYPE" }
+            ],
+            order: [[1, 'asc']],
+            columnDefs: [
+                { "searchable": false, "orderable": false, "targets": 0, }]
+        });
+
+        $('.extra-search').bind('change', dataTable.ajax.reload())
+    </script>
+    @Html.RenderDelayed("deleteConfirmModal-script");
+}

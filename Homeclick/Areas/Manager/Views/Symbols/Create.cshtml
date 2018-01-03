@@ -1,0 +1,102 @@
+﻿@using VCMS.Lib.Common
+@using VCMS.Lib.Models
+@using VCMS.Lib.Resources
+@model Symbol
+
+@{
+    ViewBag.Title = "Create Symbol";
+    ViewBag.FormName = "Create new symbol";
+}
+
+<div class="content">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <fieldset class="col-md-9">
+                <div class="form-group">
+                    <div class="form-group-title">
+                        <h3>Data</h3>
+                    </div>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Name" })
+                    @Html.ValidationMessageFor(m => m.Name)
+                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control", placeholder = "Description" })
+                    @Html.ValidationMessageFor(m => m.Description)
+                </div>
+            </fieldset>
+
+            <fieldset class="col-md-3">
+                <div class="form-group">
+                    <div class="form-group-title">
+                        <h3>Product Type</h3>
+                    </div>
+                    @Html.DropDownListFor(m => m.ProductTypeId, (ViewData[ConstantKeys.PRODUCT_TYPES] as IEnumerable<Product_Type>).Select(o => new SelectListItem { Value = o.Id.ToString(), Text = o.Name }), new { @class = "form-control-custom chosen", style = "display:none;" })
+                </div>
+                <div class="form-group">
+                    <div class="form-group-title">
+                        <h3>Vector Image</h3>
+                    </div>
+                    @Html.Partial("Widgets/SelectFiles", new
+                    {
+                        Value = Model?.Svg?.FullFileName,
+                        FieldName = Html.NameFor(m => m.SvgId).ToString(),
+                        Accept = "image/*",
+                        FileManagerId = "#lgx94",
+                    });
+                </div>
+            </fieldset>
+        </div>
+        <hr />
+        <div class="clearfix">
+            <input type="submit" value="@Strings.SaveChanged" class="btn btn-primary pull-right" />
+        </div>
+    }
+</div>
+
+@{
+    var fileManagerParam = new Dictionary<string, object> {
+            { "ContainerId" , "lgx94"}
+    };
+    @Html.Partial("Widgets/FileManager", fileManagerParam)
+}
+
+
+
+
+@section breadcrumb {
+    <li>
+        <a href="@Url.Action("Dashboard","Pages")">
+            <i class="fa fa-home"></i> Home
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li>
+        <a href="@Url.Action("List")">
+            @ViewBag.Title
+        </a>
+        <span class="divider"><i class="fa fa-angle-right"></i></span>
+    </li>
+    <li class="active">@ViewBag.FormName</li>
+}
+
+
+@section Styles {
+    <link href="~/Areas/Manager/Content/lib/jquery-chosen/Chosen.min.css" rel="stylesheet" />
+    <link href="~/Areas/Manager/Content/css/loading.css" rel="stylesheet" />
+    @Html.RenderDelayed("jquery-uploads-style")
+    @Html.RenderDelayed("FileManager-style")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Areas/Manager/Content/lib/jquery-chosen/chosen.jquery.min.js"></script>
+    @Html.RenderDelayed("jquery-uploads-js")
+
+    @Html.RenderDelayed("SelectImages-function")
+    @Html.RenderDelayed("SelectImages-script")
+
+    @Html.RenderDelayed("FileManager-script")
+
+    @Html.RenderDelayed("deleteConfirmModal-script")
+}

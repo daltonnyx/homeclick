@@ -689,6 +689,9 @@
     <Content Include="Areas\Manager\Views\Shared\Widgets\SelectFiles.cshtml" />
     <Content Include="Areas\Manager\Views\ProductOptions\Create.cshtml" />
     <Content Include="Areas\Manager\Views\Shared\Widgets\DeleteConfirmModal_.cshtml" />
+    <Content Include="Areas\Manager\Views\Symbols\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\Symbols\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Symbols\List.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Homeclick.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

@@ -78,6 +78,9 @@
                         }
                     </ul>
                 </li>
+                <li class="@Html.Raw( controllerName == "Symbols" ? "active" : "")">
+                    <a href="@Url.Action("List", "Symbols")">Symbols</a>
+                </li>
                 <li class="@Html.Raw( controllerName == "Sale" ? "active" : "")"><a href="@Url.Action("List", "ProductSale")">Sale</a></li>
             </ul>
             <!-- END Submenu -->

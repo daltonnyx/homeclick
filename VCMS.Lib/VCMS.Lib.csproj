@@ -131,6 +131,7 @@
     <Compile Include="Common\Uploader.cs" />
     <Compile Include="Common\UrlHelper.cs" />
     <Compile Include="Controllers\Business\Category\CategoriesController.cs" />
+    <Compile Include="Controllers\Business\Product\SymbolsController.cs" />
     <Compile Include="Controllers\Business\Product\ProductController .cs" />
     <Compile Include="Controllers\Business\Project\CollectionsController.cs" />
     <Compile Include="Controllers\Business\Project\FloorsController.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="Models\Business\Entity_Detail.cs" />
     <Compile Include="Models\Business\Product_Type.cs" />
     <Compile Include="Models\Business\MenuItem.cs" />
+    <Compile Include="Models\Business\Symbol.cs" />
     <Compile Include="Models\Business\ViewModels\CategoryPCViewModel.cs" />
     <Compile Include="Models\Business\ViewModels\CategoryTypeViewModel.cs" />
     <Compile Include="Models\Business\ViewModels\Collections\PostProductOptionViewModel.cs" />

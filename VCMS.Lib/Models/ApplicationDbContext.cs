@@ -53,6 +53,7 @@ namespace VCMS.Lib.Models
         public virtual DbSet<Category_detail> Category_details { get; set; }
         public virtual DbSet<Category_Type> Category_types { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Symbol> Symbols { get; set; }
         public virtual DbSet<Product_Detail> Product_details { get; set; }
         public virtual DbSet<Product_Type> Product_Types { get; set; }
         public virtual DbSet<Wishlist> Wishlists { get; set; }
