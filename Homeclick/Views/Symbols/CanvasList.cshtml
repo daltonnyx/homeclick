@@ -1,0 +1,52 @@
+﻿
+@using VCMS.Lib.Models
+@using Newtonsoft.Json
+@model IEnumerable<Symbol>
+
+@foreach (Symbol symbol in Model)
+{
+    
+
+        <div class="product">
+            <div class="product-image">
+                <a href="#"
+                   class="product-link svg-item"
+                   data-name="@symbol.Name"
+                   data-pid="@symbol.Id"
+                   data-init="1"
+                   data-svg="@Url.GetImageUploadFolder()@symbol.Svg.FullFileName"
+                   data-image="@Url.GetImageUploadFolder()@symbol.Svg.FullFileName"
+                   data-variants="[]"
+                   data-price="0"
+                   data-can-scale="1">
+                    <img src="@Url.GetImageUploadFolder()@symbol.Svg.FullFileName"
+                         data-image="@Url.GetImageUploadFolder()@symbol.Svg.FullFileName"
+                         class="svg-item"
+                         data-name="@symbol.Name"
+                         data-pid="@symbol.Id"
+                         data-variants="[]"
+                         data-init="1"
+                         data-name="@symbol.Name"
+                         data-svg="@Url.GetImageUploadFolder()@symbol.Svg.FullFileName"
+                         data-can-scale="1"
+                         data-zData="0"
+                         data-price="0" />
+                </a>
+            </div>
+            <div class="product-title">
+                <a href="#"
+                   class="product-link svg-item"
+                   data-name="@symbol.Name"
+                   data-pid="@symbol.Id"
+                   data-init="1"
+                   data-svg="@Url.GetImageUploadFolder()@symbol.Svg.FullFileName"
+                   data-image="@Url.GetImageUploadFolder()@symbol.Svg.FullFileName"
+                   data-variants="[]"
+                   data-price="0"
+                   data-can-scale="1">
+                    @symbol.Name
+                </a>
+            </div>
+        </div>
+    
+}
