@@ -200,11 +200,15 @@ input {
   transform-origin: center center;
 }
 
-/*.object-control .button-ungroup {background:url('../ungroup.png') left top / 100% no-repeat transparent;padding:0 8px;}*/
+.wishlist h4 {
+    margin: 0;
+    padding: 1.5em 15px;
+}
 
+/*.object-control .button-ungroup {background:url('../ungroup.png') left top / 100% no-repeat transparent;padding:0 8px;}*/
 .product-dimession ul {
-  padding-left: 0px;
-  margin-bottom: 0;
+    padding-left: 0px;
+    margin-bottom: 0;
 }
 
 .product-dimession ul li {

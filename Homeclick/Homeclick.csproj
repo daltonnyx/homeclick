@@ -219,6 +219,7 @@
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\SanPhamController.cs" />
+    <Compile Include="Controllers\SymbolsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1163,6 +1164,7 @@
     <Content Include="Views\Project\Map.cshtml" />
     <Content Include="Views\Project\_RenderRooms.cshtml" />
     <Content Include="Views\Shared\Layout_html.cshtml" />
+    <Content Include="Views\Symbols\CanvasList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -145,7 +145,7 @@ namespace Homeclick.Controllers
             }
             else
             {
-                return Content("<p>Đăng nhập để xem Wishlist!</p>");
+                return Content("<h4><a href=\"#\" class=\"login-form\">Đăng nhập</a> để xem Wishlist!</h4>");
             }
         }
     }
