@@ -24,6 +24,8 @@ namespace VCMS.Lib.Models
 
         public string Coordinates { get; set; }
 
+        public double BoundaryWidth { get; set; }
+
         public string CanvasData { get; set; }
 
         [ForeignKey("Image")]

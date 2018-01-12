@@ -60,7 +60,7 @@
     </div>
 </div>
 
-@Html.Partial("Widgets/DeleteConfirmModal_", new { })
+@Html.Partial("Widgets/DeleteConfirmModal")
 
 @section breadcrumb {
     <li>
@@ -165,4 +165,5 @@
             window.location.href('@Url.Action("List")/category_id=' + $('#@ConstantKeys.CATEGORIES').val());
         });
     </script>
+    @Html.RenderDelayed("deleteConfirmModal-script");
 }

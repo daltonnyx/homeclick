@@ -227,12 +227,17 @@ namespace VCMS.Lib.Controllers
                     if(form.AllKeys.Contains(string.Format("Product_Details[{0}].FileId", indicator)))
                     {
                         detail.FileId = form[string.Format("Product_Details[{0}].FileId", indicator)];
+                        if (detail.FileId == string.Empty) //Prevent empty field
+                            continue;
                     }
                     if (form.AllKeys.Contains(string.Format("Product_Details[{0}].EnumId", indicator)))
                     {
                         detail.EnumId = Convert.ToInt32(form[string.Format("Product_Details[{0}].EnumId", indicator)]);
+                        if (detail.EnumId == 0) //Prevent empty field
+                            continue;
                     }
-                    details.Add(detail);
+                    
+                     details.Add(detail);
                 
                 }
             }
@@ -268,6 +273,22 @@ namespace VCMS.Lib.Controllers
             Product ProductToDelete = db.Products.Find(Id);
             db.Entry<Product>(ProductToDelete).State = System.Data.Entity.EntityState.Deleted;
             db.SaveChanges();
+            return RedirectToAction("List");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteConfirmed(int[] ids)
+        {
+            var messageCollection = new List<Message>();
+            foreach (var id in ids)
+            {
+                var model = db.Products.Find(id);
+                db.Entry(model).State = System.Data.Entity.EntityState.Deleted;
+            }
+            db.SaveChanges();
+
+            messageCollection.Add(new Message { MessageType = MessageTypes.Success, MessageContent = "Delete successfully!" });
+            TempData[ConstantKeys.ACTION_RESULT_MESSAGES] = messageCollection;
             return RedirectToAction("List");
         }
 

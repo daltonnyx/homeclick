@@ -406,37 +406,38 @@ jQuery(document).ready(function ($) {
         charCode = null;
     }
 
+    function loadLayoutData() {
+        //   //Setting wall
+        var svgLink = $("#canvas-data").val();
+        var polWall = {};
+        fabric.GroupLiPolygon.fromURL(svgLink, {
+            originX: "left",
+            originY: "top",
+            strokeWidth: 10,
+            stroke: "transparent",
+            strokeLineCap: "round",
+            fill: "#ddd",
+            hasControls: false,
+            hoverCursor: "normal",
+            hasBorders: false,
+            lockMovementX: true,
+            lockMovementY: true,
+            perPixelTargetFind: true,
+            //padding: 4294967295 // get the fuck out, border
+        }, function (pWall) {
+            polWall = pWall;
+            polWall.ProName = "Sàn";
+            polWall.floorPrice = 0;
+            canvas.add(polWall);
+            canvas.absolutePan({ x: polWall.getLeft(), y: polWall.getTop() });
+            //if(pushHistory != undefined)
+            pushHistory();
+            window.setTimeout(function () { canvas.renderAll(); fit_to_screen(); }, 200);
 
-    //   //Setting wall
-    var svgLink =  $("#canvas-data").val();
-    var polWall = {};
-    fabric.GroupLiPolygon.fromURL(svgLink, {
-        originX: "left",
-        originY: "top",
-        strokeWidth: 10,
-        stroke: "transparent",
-        strokeLineCap: "round",
-        fill: "#ddd",
-        hasControls: false,
-        hoverCursor: "normal",
-        hasBorders: false,
-        lockMovementX: true,
-        lockMovementY: true,
-        perPixelTargetFind: true,
-        //padding: 4294967295 // get the fuck out, border
-    }, function (pWall) {
-        polWall = pWall;
-        polWall.ProName = "Sàn";
-        polWall.floorPrice = 0;
-        canvas.add(polWall);
-        canvas.absolutePan({ x: polWall.getLeft(), y: polWall.getTop() });
-        //if(pushHistory != undefined)
-        pushHistory();
-        window.setTimeout(function () { canvas.renderAll();fit_to_screen(); }, 200);
-
-    });
-    //   var polWall = new fabric.GroupLiPolygon(wallPoints, ,[5,5,5,5]);
-
+        });
+        //   var polWall = new fabric.GroupLiPolygon(wallPoints, ,[5,5,5,5]);
+    };
+    loadLayoutData();
 
     //Pans and wall line interactive
     canvas.on("mouse:move", function (e) { // Use as less function as you can
@@ -840,19 +841,23 @@ jQuery(document).ready(function ($) {
         if (confirm(msg)) {
             //console.log(undoStack[0]);
             canvas = fabric.Canvas.getHistory(jQuery.extend(true, {}, undoStack[0].canvas), canvas);
+            canvas._objects.length = 0;
+            loadLayoutData();
             cart = Cart.clone(undoStack[0].cart);
             recreateCart();
             z = canvas.getZoom();
             canvas.renderAll();
             canvas.discardActiveObject();
-            undoStack.splice(0, undoStack.length - 1);
-            fit_to_screen();
+            undoStack.length = 0;
+            //fit_to_screen();
             jQuery("#undo").attr("disabled", "disabled");
             jQuery(".wall-control").css("display", "none");
             jQuery(".object-control").css("display", "none");
             jQuery(".dimession").css("display", "none");
             jQuery(".delete-button").css("display", "none");
-            jQuery(".rotate-button").css("display", "none");
+            jQuery(".rotate-button").css("display", "inline-block");
+            jQuery(".rotate-button").css("display", "inline-block");
+            jQuery("#button-lock").css("display", "none");
         }
     });
 
@@ -860,9 +865,10 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
         if (this.hasAttribute("disabled"))
             return;
-        canvas = fabric.Canvas.getHistory(jQuery.extend(true, {}, undoStack[undoStack.length - 1].canvas), canvas);
-        cart = Cart.clone(undoStack[undoStack.length - 1].cart);
-        undoStack.pop();
+        var history = undoStack.pop();
+        canvas = fabric.Canvas.getHistory(jQuery.extend(true, {}, history.canvas), canvas);
+        cart = Cart.clone(history.cart);
+        
         if (undoStack.length <= 1) {
             jQuery(this).attr("disabled", "disabled");
         }
@@ -1069,7 +1075,13 @@ jQuery(document).ready(function ($) {
             var JSONData = JSON.parse(jsonString.json_data);
             jQuery('#canvas-id').val(jsonString.id);
             $save_modal.find('#save-name').val(jsonString.name);
-            canvas.loadFromJSON(JSONData, canvas.renderAll.bind(canvas), function (o, object) { //o js json object, object is fabric object
+            canvas.loadFromJSON(JSONData, function () {
+                setTimeout(function () {
+                    $load_modal.removeClass('is-visible');
+                    canvas.renderAll();
+                }, 400); //Waiting everything done
+
+            }, function (o, object) { //o js json object, object is fabric object
                 if (object.type == 'GroupLiPolygon') {
                     polWall = object;
                     cart.deserialize(polWall.cart);

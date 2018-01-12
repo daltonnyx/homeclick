@@ -22,7 +22,7 @@
                     </div>
                     <div class="detail-item">
                         <h3 class="title-item"><a href="@Url.Action("Product_Detail","SanPham", new { Id = product.Id})">@product.Name</a></h3>
-                        <p>@Convert.ToInt32(details["gia"]).ToString("#,###", info.NumberFormat) vnđ</p>
+                        <p>@Convert.ToInt32((details["gia"] != "") ? details["gia"] : 0).ToString("#,###", info.NumberFormat) vnđ</p>
                     </div>
                 </div>
             }
