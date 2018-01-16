@@ -135,6 +135,34 @@ namespace Homeclick.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult RemoveWishList(int id)
+        {
+            Response.ContentType = "text/plaintext";
+            if (User.Identity.GetUserId() != null)
+            {
+                string userId = User.Identity.GetUserId();
+                var wishlist = db.Wishlists.Find(id);
+                if(wishlist != null)
+                {
+                    db.Wishlists.Remove(wishlist);
+                    db.SaveChanges();
+                    Response.StatusCode = 202;
+                    return Content("Đã xóa content");
+                }
+                else
+                {
+                    Response.StatusCode = 404;
+                    return Content("Wishlist không tồn tại");
+                }
+            }
+            else
+            {
+                Response.StatusCode = 403;
+                return Content(string.Empty);
+            }
+        }
+
         public ActionResult LoadWishlists()
         {
             if (User.Identity.GetUserId() != null)
@@ -145,7 +173,7 @@ namespace Homeclick.Controllers
             }
             else
             {
-                return Content("<h4><a href=\"#\" class=\"login-form\">Đăng nhập</a> để xem Wishlist!</h4>");
+                return Content("<h4><a href=\"#\" data-action=\"load-wishlist\" id=\"loadWishlist\" class=\"login-form\">Đăng nhập</a> để xem Wishlist!</h4>");
             }
         }
     }

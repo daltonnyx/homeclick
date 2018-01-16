@@ -193,7 +193,8 @@ jQuery(document).ready(function ($) {
                 obj.hexCode = "#ffffff";
                 obj.setControlsVisibility({ mtr: false, tr: false, bl: false });
                 canvas.add(obj);
-                addItemToCart(obj);
+                if (obj.price > 0)
+                    addItemToCart(obj);
 
             });
             isDragable = false;
@@ -884,12 +885,15 @@ jQuery(document).ready(function ($) {
 
     jQuery("#saveJSON").click(function (e) { //Save
         e.preventDefault();
+        action = $(this).data('action');
+        $('#cd-login input[type="submit"]').data('action', action);
         jQuery.get(getCurrentBaseUrl() + 'Account/CheckAuth', function (response, status, xhr) {
             $save_modal.addClass('is-visible');
 
         }).fail(function (data, status, xhr) {
             if (data.status == 403) {
                 $form_modal.addClass('is-visible');
+
                 login_selected();
             }
         });
@@ -964,10 +968,10 @@ jQuery(document).ready(function ($) {
               ]
             ));
         var canva_id = jQuery("#canvas-id").val();
-        jQuery.post('/homeclick/User/SaveCanvas/' + canva_id, { data: jsdaa, name: jQuery(this).find('#save-name').val() }, function (response, status, xhr) {
+        jQuery.post(getCurrentBaseUrl() + 'User/SaveCanvas/' + canva_id, { data: jsdaa, name: jQuery(this).find('#save-name').val() }, function (response, status, xhr) {
             if (status = 202) {
                 jQuery("#canvas-id").val(response);
-                UIkit.notify({
+                UIkit.notification({
                     message: '<i class="uk-icon-check"></i> Saved!',
                     status: 'success',
                     timeout: 2000,
@@ -975,7 +979,7 @@ jQuery(document).ready(function ($) {
                 });
             }
             else {
-                UIkit.notify({
+                UIkit.notification({
                     message: '<i class="uk-icon-check"></i> Oops! Something wrong;!',
                     status: 'error',
                     timeout: 2000,
@@ -983,7 +987,7 @@ jQuery(document).ready(function ($) {
                 });
             }
         }).fail(function () {
-            UIkit.notify({
+            UIkit.notification({
                 message: '<i class="uk-icon-check"></i> Oops! Something wrong;!',
                 status: 'error',
                 timeout: 2000,
@@ -997,7 +1001,6 @@ jQuery(document).ready(function ($) {
     var getExportImage = function(width) {
         var borderFit = 0 // For fit whole polWall;
         var oldWidth = canvas.getWidth(), oldHeight = canvas.getHeight();
-        fit_to_screen();
         canvas.setWidth(polWall.getWidth() + borderFit);
         canvas.setHeight(polWall.getHeight() + borderFit);
         fit_to_screen();
@@ -1090,17 +1093,16 @@ jQuery(document).ready(function ($) {
         delete link;
     });
 
-    jQuery("#loadJSON").click(function (e) {//Load
-        e.preventDefault();
+    var loadJSON = function () {
         jQuery.get(getCurrentBaseUrl() + 'User/LoadCanvas', function (data, status, xhr) {
             var canvas_list = JSON.parse(data);
             jQuery("#canvas-load-table tbody").html('');
             for (var i = 0; i < canvas_list.length; i++) {
                 jQuery("#canvas-load-table tbody").append('<tr><td><a href="#" class="canva-open">' + (i + 1) + '</a></td>'
-                                                        + '<td><a href="#" class="canva-open">' + canvas_list[i].name + '</a></td>'
-                                                        + '<td><a href="#" class="canva-open">' + canvas_list[i].UpdatedDate + '</a></td>'
-                                                        + '<td><input type="hidden" readonly value="' + canvas_list[i].id + '" name="canva_id" />'
-                                                        + '<a href="#" class="canva-delete"><i class="fa fa-times" aria-hidden="true"></i></a></td></tr>');
+                    + '<td><a href="#" class="canva-open">' + canvas_list[i].name + '</a></td>'
+                    + '<td><a href="#" class="canva-open">' + canvas_list[i].UpdatedDate + '</a></td>'
+                    + '<td><input type="hidden" readonly value="' + canvas_list[i].id + '" name="canva_id" />'
+                    + '<a href="#" class="canva-delete"><i class="fa fa-times" aria-hidden="true"></i></a></td></tr>');
             }
 
             $load_modal.addClass('is-visible');
@@ -1110,13 +1112,53 @@ jQuery(document).ready(function ($) {
                 login_selected();
             }
         });
+    }
 
+    var loadWishlist = function () {
+        jQuery.get(getCurrentBaseUrl() + 'User/LoadWishlists', function (data, status, xhr) {
+            $('.wishlist').html(data);
+        });
+    }
+
+    jQuery("#loadJSON").click(function (e) {//Load
+        e.preventDefault();
+        action = $(this).data('action');
+        $('#cd-login input[type="submit"]').data('action', action);
+        loadJSON();
     });
+
+    jQuery("#loadWishlist").click(function (e) {
+        e.preventDefault();
+        action = $(this).data('action');
+        $('#cd-login input[type="submit"]').data('action', action);
+        $form_modal.addClass('is-visible');
+        login_selected();
+    });
+
+    jQuery(".wishlist").on("click", ".wishlist-remove", function (e) {
+        e.preventDefault();
+        var $removebutton = jQuery(e.currentTarget);
+        var id = $removebutton.data('id');
+        jQuery.post(getCurrentBaseUrl() + 'User/RemoveWishList/' + id, function (data, textStatus, jqXHR) {
+            UIkit.notification({
+                message: '<i class="uk-icon-check"></i> Remove success!!!',
+                status: 'success',
+                timeout: 2000,
+                pos: 'top-center'
+            });
+            $removebutton.closest(".product").remove();
+        }).fail(function () {
+            if (data.status == 403) {
+                $form_modal.addClass('is-visible');
+                login_selected();
+            }
+        });
+    })
 
     jQuery('#canvas-load-table').on("click", ".canva-open", function (e) {
         e.preventDefault();
         var canva_id = jQuery(e.target).closest('tr').find('input[name="canva_id"]').val();
-        jQuery.get('/homeclick/User/LoadCanvas/' + canva_id, function (data, status, xhr) {
+        jQuery.get(getCurrentBaseUrl() + 'User/LoadCanvas/' + canva_id, function (data, status, xhr) {
             var jsonString = JSON.parse(data);
             var JSONData = JSON.parse(jsonString.json_data);
             jQuery('#canvas-id').val(jsonString.id);
@@ -2213,7 +2255,7 @@ jQuery(document).ready(function ($) {
         var targetId = "quickview-container";
         $(e.delegateTarget).hide(200);
         $.ajax({
-            url: "/homeclick/sanPham/ajaxproductdetail?id=" + productId,
+            url: getCurrentBaseUrl() + "sanPham/ajaxproductdetail?id=" + productId,
             type: 'GET',
             dataType: 'html',
             data: {},
@@ -2238,14 +2280,14 @@ jQuery(document).ready(function ($) {
         var pId = activeObj.pId;
         if (pId != undefined) {
             jQuery.ajax({
-                url: '/homeclick/homeclick/User/AddWishlist/',
+                url: getCurrentBaseUrl() + 'User/AddWishlist/',
                 type: 'post',
                 dataType: 'json',
                 data: { id: pId }
             })
         .done(function (response, status, xhr) {
             if (xhr.status == 202) {
-                UIkit.notify({
+                UIkit.notification({
                     message: '<i class="uk-icon-check"></i> Added to wishlist!',
                     status: 'success',
                     timeout: 2000,
@@ -2254,7 +2296,7 @@ jQuery(document).ready(function ($) {
                 addToWishListTab(activeObj);
             }
             else if (xhr.status == 204) {
-                UIkit.notify({
+                UIkit.notification({
                     message: '<i class="uk-icon-check"></i> Sản phẩm đã tồn tại trong Wishlist!',
                     status: 'warning',
                     timeout: 2000,
@@ -2268,7 +2310,7 @@ jQuery(document).ready(function ($) {
                 login_selected();
             }
             else {
-                UIkit.notify({
+                UIkit.notification({
                     message: '<i class="uk-icon-check"></i> Oops! Something wrong;!',
                     status: 'error',
                     timeout: 2000,
@@ -2333,12 +2375,7 @@ jQuery(document).ready(function ($) {
                  + '<div class="row">'
                  + '<div class="product-image col-md-4">'
                  + '<a href="#" '
-                 + 'class="product-link svg-item" '
-                 + 'data-name="{{productTitle}}" '
-                 + 'data-pid="{{productId}}" '
-                 + 'data-init="{{productInitScale}}" '
-                 + 'data-pid="{{productId}}" data-svg="{{productSvg}}" '
-                 + 'data-can-scale="{{productScale}}">'
+                 + 'class="product-link">'
                  + '<img '
                  + 'class="img-responsive svg-item" src="{{productImg}}" '
                  + 'data-image="{{productImg}}" '
@@ -2582,10 +2619,18 @@ jQuery(document).ready(function ($) {
     $form_login.find('input[type="submit"]').on('click', function (event) {
         event.preventDefault();
         //$form_login.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
-
+        var action = $(this).data('action');
         jQuery(this).addClass('loading');
-        jQuery.post('/homeclick/Account/ApiLogin', $form_login.find('form').serialize(), function (data, status, xhr) {
-            $save_modal.addClass('is-visible');
+        jQuery.post(getCurrentBaseUrl() + 'Account/ApiLogin', $form_login.find('form').serialize(), function (data, status, xhr) {
+            if (action == 'save-canvas') {
+                $save_modal.addClass('is-visible');
+            }
+            else if (action == 'load-canvas') {
+                loadJSON();
+            }
+            else if (action == 'load-wishlist') {
+                loadWishlist();
+            }
             $form_modal.removeClass('is-visible');
         }).fail(function () {
 
@@ -2602,10 +2647,10 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
         if (window.confirm("Bạn có muốn thêm những sản phẩm trên vào giỏ hàng không?")) {
             var cartData = cart.serialize();
-            jQuery.post("/homeclick/Cart/MassiveAddtoCart", { cart: cartData }, function (data, textStatus, jqXHR) {
+            jQuery.post(getCurrentBaseUrl() + "Cart/MassiveAddtoCart", { cart: cartData }, function (data, textStatus, jqXHR) {
                 if (data == "success") {
                     cart.clearProduct();
-                    UIkit.notify({
+                    UIkit.notification({
                         message: '<i class="uk-icon-check"></i> Đã thêm vào giỏ hàng!',
                         status: 'success',
                         timeout: 2000,
@@ -2614,7 +2659,7 @@ jQuery(document).ready(function ($) {
                     calculateSubTotal(cart);
                 }
                 else {
-                    UIkit.notify({
+                    UIkit.notification({
                         message: '<i class="uk-icon-check"></i> Có lỗi xảy ra khi thêm giỏ hàng!s',
                         status: 'error',
                         timeout: 2000,

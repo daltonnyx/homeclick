@@ -17,25 +17,17 @@
     <div class="product" id="cart-product-@wishlist.ProductId" data-pid="@wishlist.ProductId">
         <div class="row">
             <div class="product-image col-md-4">
-                <a href="#"
-                   class="product-link svg-item"
-                   data-name="@wishlist.Product.Name"
-                   data-pid="@wishlist.Product.Id"
-                   data-init="@if (detail.Keys.SingleOrDefault<string>(s => s == "width") != null) {@detail["width"]} else { <text>0.18</text> }"
-                   data-pid="@wishlist.Product.Id" data-svg="@Url.GetImageUploadFolder()@(detail["data"]).svg"
-                   data-can-scale="@if (detail.Keys.SingleOrDefault<string>(s => s == "scale") != null) {@detail["scale"]}">
-                    <img class="img-responsive"
-                         src="@Url.GetImageUploadFolder()@wishlist.Product.Image.FullFileName"
+                <a href="#" class="product-link">
+                    <img src="@Url.GetImageUploadFolder()@wishlist.Product.Image.FullFileName"
                          data-image="@Url.GetImageUploadFolder()@wishlist.Product.Image.FullFileName"
                          class="svg-item"
                          data-name="@wishlist.Product.Name"
                          data-pid="@wishlist.Product.Id"
                          data-init="@if (detail.Keys.SingleOrDefault<string>(s => s == "width") != null) {@detail["width"]} else { <text>0.18</text> }"
-                         data-name="@wishlist.Product.Name"
                          data-svg="@Url.GetImageUploadFolder()@(detail["data"]).svg"
                          data-can-scale="@if (detail.Keys.SingleOrDefault<string>(s => s == "scale") != null) {@detail["scale"]}"
                          data-zData="@if (detail.Keys.SingleOrDefault<string>(s => s == "height") != null) {@detail["height"]}"
-                         data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null) {@detail["gia"]}" />
+                         data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null && detail["gia"] != null) { @detail["gia"] } else { Html.Raw("0"); }" />
                 </a>
             </div>
             <div class="product-detail col-md-8">
@@ -44,13 +36,13 @@
                    data-name="@wishlist.Product.Name"
                    data-pid="@wishlist.Product.Id"
                    data-init="@if (detail.Keys.SingleOrDefault<string>(s => s == "width") != null) {@detail["width"]} else { <text>0.18</text> }"
-                   data-pid="@wishlist.Product.Id" data-svg="@Url.GetImageUploadFolder()@(detail["data"]).svg"
+                   data-svg="@Url.GetImageUploadFolder()@(detail["data"]).svg"
                    data-can-scale="@if (detail.Keys.SingleOrDefault<string>(s => s == "scale") != null) {@detail["scale"]}"
                    data-zData="@if (detail.Keys.SingleOrDefault<string>(s => s == "height") != null) {@detail["height"]}"
-                   data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null) {@detail["gia"]}">
-                    <h3 class="product-title" data-pid="@wishlist.Product.Id">@wishlist.Product.Name</h3>
+                   data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null && detail["gia"] != null) { @detail["gia"] } else { Html.Raw("0"); }">
+                    <h3 class="product-title">@wishlist.Product.Name</h3>
                 </a>
-                <a href="#" class="uk-button wishlist-remove">Xóa</a>
+                <a href="#" data-id="@wishlist.Id" class="uk-button uk-button-small uk-button-danger wishlist-remove">Xóa</a>
             </div>
         </div>
     </div>
