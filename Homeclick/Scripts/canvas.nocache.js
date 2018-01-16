@@ -2978,7 +2978,7 @@ var Base64 = { _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
 
 
 var getCurrentBaseUrl = function () {
-    pattern = /((http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}(\.[a-z]{2,6})*\b([-a-zA-Z0-9@:%_\+.~#?&//=]*))\/[Dd]esign\/[cC]anvas\/\d+/g;
+    pattern = /((http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}(\.[a-z]{2,6})*\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)\/)[Dd]esign\/[cC]anvas\/\d+/g;
     var matches = pattern.exec(window.location.href);
     return matches[1];
 
