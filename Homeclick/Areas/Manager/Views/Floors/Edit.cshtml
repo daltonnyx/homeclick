@@ -103,8 +103,20 @@
                     <div class="form-group-title">
                         <h3>Department</h3>
                     </div>
-                    @Html.DropDownList(ConstantKeys.PROJECTS, new SelectList(ViewData[ConstantKeys.PROJECTS] as IEnumerable<Project>, "Id", "Name", (Model?.Department?.Project != null) ? Model.Department.Project.Id : 0), new { @class = "form-control-custom chosen", data_placeholder="Select", data_child = "#" + Html.NameFor(m => m.DepartmentId), style="display:none" })
-                    @Html.CustomDropdownListFor(m => m.DepartmentId, (ViewData[ConstantKeys.DEPARTMENTS] as IEnumerable<Department>).Select(o => new CustomSelectItem { Value = o.Id.ToString(), Text = o.Name, HtmlAttributes = new { data_parent = o.ProjectId } }), null, new { @class= "form-control-custom chosen", data_placeholder = "Select", style = "display:none" })
+                   
+                    <select id="@ConstantKeys.PROJECTS" name="@ConstantKeys.PROJECTS" data-parentof="#@ConstantKeys.DEPARTMENTS" data-fetch="@Url.GetBaseUrl()/manager/rooms/getdepartmentasync/" class="form-control-custom chosen" style="display:none" data-placeholder="Select">
+                        @foreach (Project project in ViewData[ConstantKeys.PROJECTS] as IEnumerable<Project>)
+                        {
+                            <option value="@project.Id" @if (project.Id == Model.Department?.ProjectId) { @Html.Raw("selected")  }>@project.Name</option>
+                        }
+                    </select>
+                   
+                    <select id="@ConstantKeys.DEPARTMENTS" name="@Html.NameFor(m => m.DepartmentId)" class="form-control-custom chosen" style="display:none" data-placeholder="Select">
+                        @foreach (Department department in (ViewData[ConstantKeys.DEPARTMENTS] as IEnumerable<Department>).Where(d => d.ProjectId == Model.Department?.ProjectId))
+                        {
+                            <option value="@department.Id" @if (department.Id == Model.DepartmentId) { @Html.Raw("selected")  }>@department.Name</option>
+                        }
+                    </select>
                     @Html.ValidationMessageFor(m => m.DepartmentId)
                 </div>
             </fieldset>
@@ -164,7 +176,27 @@
         (function ($) {
             $srcImg = $('input[name="structureId"]').parent().find("img");
             gui_loadImage($srcImg.attr("src"));
-            
+            $("select[data-parentof]").on("change", function (event, params) {
+                var url = $(this).data("fetch"), childElm = $(this).data("parentof");
+                $.ajax({
+                    url: url + this.value,
+                    method: "GET",
+                    contentType: "application/json",
+                    beforeSend: function () {
+                        $(childElm).children().remove();
+                        $(childElm).val(0).trigger("change");
+                    }
+                }).done(function (data, status, xhr) {
+                    if (typeof data == "object" && data.length > 0) {
+                        $(childElm).append('<option value="0">Select</option>');
+                        for (var i = 0; i < data.length; i++) {
+                            $(childElm).append('<option value="' + data[i].Id + '">' + data[i].Name + '</option>');
+                        }
+                    }
+                }).always(function () {
+                    $(childElm).trigger("chosen:updated");
+                });
+            });
         })(jQuery);
 
         
