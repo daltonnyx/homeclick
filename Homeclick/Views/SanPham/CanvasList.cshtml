@@ -25,8 +25,8 @@
                    { <text>0.18</text> }"
                    data-pid="@product.Id" data-svg="@Url.GetImageUploadFolder()@(detail["data"]).svg"
                    data-variants="@variants"
-                   data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null)
-                   {@detail["gia"]}"
+                   data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null && detail["gia"] != null)
+                   {@detail["gia"]} else { @Html.Raw("0") } "
                    data-can-scale="@if (detail.Keys.SingleOrDefault<string>(s => s == "scale") != null)
                    {@detail["scale"]}">
                     <img src="@Url.GetImageUploadFolder()@product.Image.FullFileName"
@@ -45,8 +45,8 @@
                          {@detail["scale"]}"
                          data-zData="@if (detail.Keys.SingleOrDefault<string>(s => s == "height") != null)
                          {@detail["height"]}"
-                         data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null)
-                         {@detail["gia"]}" />
+                         data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null && detail["gia"] != null)
+                         {@detail["gia"]} else { @Html.Raw("0"); }" />
                 </a>
             </div>
             <div class="product-title">
@@ -65,8 +65,8 @@
                    {@detail["scale"]}"
                    data-zData="@if (detail.Keys.SingleOrDefault<string>(s => s == "height") != null)
                    {@detail["height"]}"
-                   data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null)
-                   {@detail["gia"]}">
+                   data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null && detail["gia"] != null)
+                   {@detail["gia"]} else { @Html.Raw("0"); }">
                     @product.Name
                 </a>
             </div>
@@ -81,7 +81,7 @@
                     data-pid="@product.Id"
                     data-pattern="@Url.GetImageUploadFolder()@(detail["pattern"]).jpg"
                     data-name="@product.Name"
-                    data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null) {@detail["gia"]}"
+                    data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null && detail["gia"] != null) {@detail["gia"]}  else { Html.Raw("0"); }"
                     src="@Url.GetImageUploadFolder()@product.Image.FullFileName" />
                 </a>
 
@@ -92,9 +92,11 @@
                     data-pid="@product.Id"
                     data-pattern="@Url.GetImageUploadFolder()@(detail["pattern"]).jpg"
                     data-name="@product.Name"
-                    data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null) {@detail["gia"]}">@product.Name</h5>
-                </a>
-            </div>
-        </div>
+                    data-price="@if (detail.Keys.SingleOrDefault<string>(s => s == "gia") != null && detail["gia"] != null) {@detail["gia"]} else { Html.Raw("0"); }">@product.Name</h5>
+</a>
+
+</div>
+
+</div>
     }
 }

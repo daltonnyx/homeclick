@@ -22,7 +22,7 @@
     @* @Html.Partial("_Header") *@
 
     <main class="uk-grid main-page">
-        <div id="productbar" class="uk-width-3-10">
+        <div id="productbar" class="uk-width-1-5">
             <div class="logo uk-width-1-1">
               <a href="@Url.Action("Index","Home")"><img src="~/Upload/Images/assets/logo.png" alt="" /></a>
               <p>Online furniture store project</p>
@@ -81,7 +81,7 @@
                 </ul>
             </div>
         </div>
-        <div class="uk-width-7-10 main-canvas">
+        <div class="uk-width-4-5 main-canvas">
             <div class="seperator-big"></div>
             <div class="taskbar">
               <div class="control-container main-menu">
@@ -366,14 +366,41 @@
     <div id="export-modal" class="uk-modal">
         <div class="uk-modal-dialog">
             <a class="uk-modal-close uk-close"></a>
-            <select id="res-list" name="res_list">
-                <option value="">default</option>
-                <option value="1280">1280w</option>
-                <option value="1920">1920w</option>
-                <option value="2048">2048w</option>
-            </select>
-            <button class="uk-button uk-button-primary" id="save-export-img">Save as</button>
-            <img src="" id="export-img">
+            <div class="uk-grid">
+                <div class="" style="width: 330px;">
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="layout-name">Name</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input uk-width-1-1" type="text" name="layout_name" id="layout-name" />
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="created-by">Created by</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input uk-width-1-1" type="text" name="created_by" id="created-by" />
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="created-by">Created for</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input uk-width-1-1" type="text" name="created_for" id="created-for" />
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="comment">Comment</label>
+                        <div class="uk-form-controls">
+                            <textarea class="uk-textarea uk-width-1-1" id="comment" name="comment"></textarea>
+                        </div>
+                    </div>
+                    <button class="uk-button uk-button-primary" id="save-export-img">Print</button>
+                    <button class="uk-button uk-button-default" id="print-preview">Preview</button>
+                </div>
+                <div style="width: calc(100% - 330px);position:relative;">
+                    <iframe id="export-page" style="width:100%;height:768px;"></iframe>
+                    <div class="iframe-loading-overlay"></div>
+                </div>
+            </div>
+            
         </div>
     </div>
 
@@ -436,20 +463,20 @@
                 $product = $(e.target);
                 var productId = $product[0].dataset.pid;
                 var $quickviewModal = UIkit.modal("#quickview-modal");
-                GetHtmlView("/homeclick/sanPham/ajaxproductdetail?id=" + productId, 'quickview-container');
+                GetHtmlView(getCurrentBaseUrl() + "sanPham/ajaxproductdetail?id=" + productId, 'quickview-container');
                 $quickviewModal.show();
             });
 
             $('#CategoryTypeSelect').on('change', function (event) {
                 var v = this.options[this.selectedIndex].value;
                 var c = $('#CategorySelect').val();
-                GetHtmlView('/homeclick/Sanpham/canvasList?room=' + v + '&type=' + c, 'Funiture-list');
+                GetHtmlView(getCurrentBaseUrl() + 'Sanpham/canvasList?room=' + v + '&type=' + c, 'Funiture-list');
             });
 
             $('#CategorySelect').on('change', function (event) {
                 var c = this.options[this.selectedIndex].value;
                 var v = $('CategoryTypeSelect').val();
-                GetHtmlView('/homeclick/Sanpham/canvasList?type=' + c + '&room=' + v, 'Funiture-list');
+                GetHtmlView(getCurrentBaseUrl() + 'Sanpham/canvasList?type=' + c + '&room=' + v, 'Funiture-list');
             });
 
             //$('#CategorySelect').bind("DOMSubtreeModified", function () {

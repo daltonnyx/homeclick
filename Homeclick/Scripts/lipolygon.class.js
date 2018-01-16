@@ -171,6 +171,7 @@ fabric.LiPolygon = fabric.util.createClass(fabric.Polygon,{ //Need to assign cla
       this.callSuper('_setStrokeStyles',ctx);
   },
   toObject: function(propertiesToInclude){ // Keep fix this shit
+      propertiesToInclude.push('fill');
       return fabric.util.object.extend(this.callSuper('toObject', propertiesToInclude), {
         originalPoints: this.get('originalPoints'),
         lineWidths: this.get('lineWidths')
@@ -184,7 +185,7 @@ fabric.LiPolygon = fabric.util.createClass(fabric.Polygon,{ //Need to assign cla
       area += vertices[i].x * vertices[j].y;
       area -= vertices[i].y * vertices[j].x;
     }
-    return Math.abs(area * 2.05);
+    return Math.abs(area * this.group.originalScale);
   },
   retangleArea: function(a,b,c){
     var s;

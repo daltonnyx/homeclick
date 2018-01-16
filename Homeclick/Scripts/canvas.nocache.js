@@ -884,7 +884,7 @@ jQuery(document).ready(function ($) {
 
     jQuery("#saveJSON").click(function (e) { //Save
         e.preventDefault();
-        jQuery.get('/homeclick/Account/CheckAuth', function (response, status, xhr) {
+        jQuery.get(getCurrentBaseUrl() + 'Account/CheckAuth', function (response, status, xhr) {
             $save_modal.addClass('is-visible');
 
         }).fail(function (data, status, xhr) {
@@ -998,30 +998,76 @@ jQuery(document).ready(function ($) {
         var borderFit = 0 // For fit whole polWall;
         var oldWidth = canvas.getWidth(), oldHeight = canvas.getHeight();
         fit_to_screen();
-        canvas.setWidth(polWall.width + borderFit);
-        canvas.setHeight(polWall.height + borderFit);
+        canvas.setWidth(polWall.getWidth() + borderFit);
+        canvas.setHeight(polWall.getHeight() + borderFit);
+        fit_to_screen();
         var multiple = width == undefined ? 1 : width / canvas.getWidth();
         var dataURL = canvas.toDataURL({
             format: 'jpeg',
             multiplier: multiple,
             quality: 1,
-            width: polWall.width + borderFit,
-            height: polWall.height + borderFit,
+            width: polWall.getWidth() + borderFit,
+            height: polWall.getHeight() + borderFit,
         });
         canvas.setWidth(oldWidth);
         canvas.setHeight(oldHeight);
         return dataURL;
     };
 
+    var preparePrintPage = function (layoutIframeId) {
+        var dataURL = getExportImage(),
+            name = document.getElementById('layout-name').value,
+            created_by = document.getElementById('created-by').value,
+            created_for = document.getElementById('created-for').value,
+            comment = document.getElementById('comment').value,
+            products = JSON.stringify(cart.cartData);
+        var obj_to_send = {
+            'image': dataURL,
+            'name': name,
+            'created_by': created_by,
+            'created_for': created_for,
+            'comment': comment,
+            'product_list': products,
+        }
+
+        $.ajax({
+            url: getCurrentBaseUrl() + 'Design/Print/',
+            method: 'POST',
+            data: obj_to_send,
+            //contentType: 'application/json',
+            beforeSend: function () {
+                $('.iframe-loading-overlay').addClass('show');
+            }
+
+        }).done(function (data) {
+            var doc = document.getElementById(layoutIframeId).contentWindow.document;
+            doc.open();
+            doc.write(data);
+            doc.close();
+        }).always(function () {
+            $('.iframe-loading-overlay').removeClass('show');
+        });
+    }
+
     jQuery("#print").on("click", function (e) {
         e.preventDefault();
-        var dataURL = getExportImage();
-        var $exportImg = $("#export-img");
+        //var $exportImg = $("#export-img");
         var $exportModal = UIkit.modal("#export-modal");
-        $exportImg.attr("src", dataURL);
+        preparePrintPage('export-page');
+        
         $exportModal.show();
 
     });
+
+    jQuery("#print-preview").on("click", function (e) {
+        e.preventDefault();
+        preparePrintPage('export-page');
+    });
+
+    jQuery("#save-export-img").on("click", function (e) {
+        e.preventDefault();
+        window.frames['export-page'].contentWindow.print();
+    })
 
     jQuery("#res-list").on("change", function (e) {
         e.preventDefault();
@@ -1046,7 +1092,7 @@ jQuery(document).ready(function ($) {
 
     jQuery("#loadJSON").click(function (e) {//Load
         e.preventDefault();
-        jQuery.get('/homeclick/User/LoadCanvas', function (data, status, xhr) {
+        jQuery.get(getCurrentBaseUrl() + 'User/LoadCanvas', function (data, status, xhr) {
             var canvas_list = JSON.parse(data);
             jQuery("#canvas-load-table tbody").html('');
             for (var i = 0; i < canvas_list.length; i++) {
@@ -2885,6 +2931,13 @@ var Product = function (data) {
 //Base64
 var Base64 = { _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", encode: function (e) { var t = ""; var n, r, i, s, o, u, a; var f = 0; e = Base64._utf8_encode(e); while (f < e.length) { n = e.charCodeAt(f++); r = e.charCodeAt(f++); i = e.charCodeAt(f++); s = n >> 2; o = (n & 3) << 4 | r >> 4; u = (r & 15) << 2 | i >> 6; a = i & 63; if (isNaN(r)) { u = a = 64 } else if (isNaN(i)) { a = 64 } t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a) } return t }, decode: function (e) { var t = ""; var n, r, i; var s, o, u, a; var f = 0; e = e.replace(/[^A-Za-z0-9+/=]/g, ""); while (f < e.length) { s = this._keyStr.indexOf(e.charAt(f++)); o = this._keyStr.indexOf(e.charAt(f++)); u = this._keyStr.indexOf(e.charAt(f++)); a = this._keyStr.indexOf(e.charAt(f++)); n = s << 2 | o >> 4; r = (o & 15) << 4 | u >> 2; i = (u & 3) << 6 | a; t = t + String.fromCharCode(n); if (u != 64) { t = t + String.fromCharCode(r) } if (a != 64) { t = t + String.fromCharCode(i) } } t = Base64._utf8_decode(t); return t }, _utf8_encode: function (e) { e = e.replace(/rn/g, "n"); var t = ""; for (var n = 0; n < e.length; n++) { var r = e.charCodeAt(n); if (r < 128) { t += String.fromCharCode(r) } else if (r > 127 && r < 2048) { t += String.fromCharCode(r >> 6 | 192); t += String.fromCharCode(r & 63 | 128) } else { t += String.fromCharCode(r >> 12 | 224); t += String.fromCharCode(r >> 6 & 63 | 128); t += String.fromCharCode(r & 63 | 128) } } return t }, _utf8_decode: function (e) { var t = ""; var n = 0; var r = c1 = c2 = 0; while (n < e.length) { r = e.charCodeAt(n); if (r < 128) { t += String.fromCharCode(r); n++ } else if (r > 191 && r < 224) { c2 = e.charCodeAt(n + 1); t += String.fromCharCode((r & 31) << 6 | c2 & 63); n += 2 } else { c2 = e.charCodeAt(n + 1); c3 = e.charCodeAt(n + 2); t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63); n += 3 } } return t } }
 
+
+var getCurrentBaseUrl = function () {
+    pattern = /((http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}(\.[a-z]{2,6})*\b([-a-zA-Z0-9@:%_\+.~#?&//=]*))\/[Dd]esign\/[cC]anvas\/\d+/g;
+    var matches = pattern.exec(window.location.href);
+    return matches[1];
+
+}
 
 jQuery(document).ready(function ($) {
 

@@ -1,0 +1,143 @@
+﻿@using System.Web.Script.Serialization;
+@using VCMS.Lib.Models;
+
+@{ 
+    JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
+    ProductPrintViewModel[] products = jsonSerializer.Deserialize<ProductPrintViewModel[]>(ViewData["product_list"].ToString());
+    int i = 1;
+    int page = 3;
+}
+<html>
+<head>
+    @Styles.Render("~/Content/uikit.min.css")
+    @Styles.Render("~/Content/theme.css")
+    <style type="text/css">
+        html {
+            overflow: auto;
+        }
+        html, body {
+            width: 210mm;
+            height: 297mm;
+        }
+        .page {
+            width: 297mm;
+            min-height: calc(210mm - 60px);
+            padding: 15px;
+            margin: 15px;
+            border: 1px solid #ccc;
+        }
+        .page-content {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 1.5rem;
+        }
+        .page img {
+            height: auto;
+            width: auto;
+            max-width: 100%;
+            max-height: 400px;
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
+    <title>@ViewData["name"]</title>
+</head>
+<body>
+    <div class="page page-1">
+        <div class="page-content">
+            <img src="@ViewData["image"]" class="img-layout" />
+        </div>
+        <div class="page-footer">
+            <h3 class="plan-name">@ViewData["name"]</h3>
+            <p><strong>Create for: </strong>@ViewData["created_for"]</p>
+            <p><strong>Create by: </strong>@ViewData["created_by"]</p>
+            <hr />
+            <p><i>@ViewData["comment"]</i></p>
+        </div>
+    </div>
+    <div class="page page-2">
+        <div class="page-content">
+            
+            <table class="uk-table uk-table-divider">
+                <thead>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                </thead>
+                <tbody>
+                    @foreach (ProductPrintViewModel product in products)
+                    {
+                        <tr>
+                            <td>
+                                @i
+                                @{ ++i; }
+                            </td>
+                            <td>
+                                @product.Name
+                            </td>
+                            <td>
+                                <img class="product-thumbnail" style="width:116px;" alt="@product.Name" src="@product.ImgUrl" />
+                            </td>
+                            <td>
+                                @product.getPrice()
+                            </td>
+                            <td>
+                                @product.Quantity
+                            </td>
+                            <td>
+                                @product.getAmount()
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="page-footer">
+            <h3 class="plan-name">@ViewData["name"]</h3>
+            <p><strong>Create for: </strong>@ViewData["created_for"]</p>
+            <p><strong>Create by: </strong>@ViewData["created_by"]</p>
+            <hr />
+            <p><i>@ViewData["comment"]</i></p>
+        </div>
+    </div>
+    @foreach (ProductPrintViewModel product in products)
+    {
+        Product raw = product.getRaw();
+        var details = raw.DetailsToDictionary();
+        <div class="page page-@page">
+            <div class="page-content">
+                <h4>@product.Name</h4>
+                <div class="uk-grid">
+                    <div class="uk-width-1-3">
+                        <img src="@product.ImgUrl" />
+                    </div>
+                    <div class="uk-width-2-3">
+                       
+                        <h3 class="detail-product-title" hidden="hidden">Chi tiết</h3>
+                        <div class="detail-product-content">
+                            
+                            @{var escaped = new HtmlString(raw.Content);}
+                            <p>@escaped</p>
+                            <p><span>Kích thước:</span>@details["width"] x @details["height"] x @details["length"]</p>
+                            <p><span>Trọng lượng:</span>@details[ProductDetailTypes.Weight] kg</p>
+                            <p><span>Bảo hành:</span>@details[ProductDetailTypes.Warranty] Tháng</p>
+                            <p><span>Xuất xứ:</span>@details[ProductDetailTypes.MadeIn]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-footer">
+                <h3 class="plan-name">@ViewData["name"]</h3>
+                <p><strong>Create for: </strong>@ViewData["created_for"]</p>
+                <p><strong>Create by: </strong>@ViewData["created_by"]</p>
+                <hr />
+                <p><i>@ViewData["comment"]</i></p>
+            </div>
+        </div>
+        ++page;
+    }
+</body>
+</html>

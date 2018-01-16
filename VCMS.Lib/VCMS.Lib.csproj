@@ -34,6 +34,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.Data.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpo.v16.2, Version=16.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -180,6 +182,7 @@
     <Compile Include="Models\Business\ViewModels\Datatables\dt_collection.cs" />
     <Compile Include="Models\Business\ViewModels\Product\ColorViewModel.cs" />
     <Compile Include="Models\Business\ViewModels\Datatables\dt_category.cs" />
+    <Compile Include="Models\Business\ViewModels\Product\ProductPrintViewModel.cs" />
     <Compile Include="Models\Business\ViewModels\Product\ProductViewModel.cs" />
     <Compile Include="Models\Business\ViewModels\Datatables\dt_product.cs" />
     <Compile Include="Models\Business\ViewModels\Product\FeatureProductViewModel.cs" />

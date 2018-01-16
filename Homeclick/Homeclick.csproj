@@ -1145,6 +1145,7 @@
     <Content Include="Views\Design\Projects.cshtml" />
     <Content Include="Views\Design\Districts.cshtml" />
     <Content Include="Views\Design\Rooms.cshtml" />
+    <Content Include="Views\Design\Print.cshtml" />
     <None Include="Views\Post\Sidebar.cshtml" />
     <Content Include="Views\SanPham\CanvasList.cshtml" />
     <Content Include="Views\Project\Details.cshtml" />

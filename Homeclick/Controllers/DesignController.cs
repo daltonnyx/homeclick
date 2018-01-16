@@ -91,6 +91,17 @@ namespace Homeclick.Controllers
             return PartialView(model);
         }
 
+        [HttpPost]
+        public ActionResult Print()
+        {
+            var formData = this.Request.Form;
+            foreach(string key in formData.AllKeys)
+            {
+                ViewData[key] = formData[key];
+            }
+            return PartialView();
+        }
+
         public ActionResult _CategoryOptions(int? CategoryTypeId)
         {
             var categories = db.Categories.Where(o => o.CategoryTypeId == CategoryTypeId).ToList();
