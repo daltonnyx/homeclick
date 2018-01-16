@@ -87,8 +87,10 @@ namespace Homeclick.Controllers
             ViewBag.CategoryTypes = categoryTypes;
 
             var model = db.Rooms.Find(id);
-
-            return PartialView(model);
+            if(model != null)
+                return PartialView(model);
+            else
+                throw new HttpException(404, "This room doesn't exist!");
         }
 
         [HttpPost]
