@@ -22,7 +22,7 @@
     @* @Html.Partial("_Header") *@
 
     <main class="uk-grid main-page">
-        <div id="productbar" class="uk-width-1-5">
+        <div id="productbar" class="uk-width-1-5" style="width:360px;">
             <div class="logo uk-width-1-1">
               <a href="@Url.Action("Index","Home")"><img src="~/Upload/Images/assets/logo.png" alt="" /></a>
               <p>Online furniture store project</p>
@@ -81,13 +81,13 @@
                 </ul>
             </div>
         </div>
-        <div class="uk-width-4-5 main-canvas">
+        <div class="uk-width-4-5 main-canvas" style="width:calc( 100% - 360px );">
             <div class="seperator-big"></div>
             <div class="taskbar">
               <div class="control-container main-menu">
                   <button class="uk-button" id="Layout">New</button>
-                  <button class="uk-button" id="saveJSON">save</button>
-                  <button class="uk-button" id="loadJSON">load</button>
+                  <button class="uk-button" id="saveJSON" data-action="save-canvas">save</button>
+                  <button class="uk-button" id="loadJSON" data-action="load-canvas">load</button>
                   <button class="uk-button" id="print">Export</button>
                   <button class="uk-button" id="new">Refresh</button>
                   @* <button class="uk-button" id="search">search</button> *@
@@ -396,7 +396,7 @@
                     <button class="uk-button uk-button-default" id="print-preview">Preview</button>
                 </div>
                 <div style="width: calc(100% - 330px);position:relative;">
-                    <iframe id="export-page" style="width:100%;height:768px;"></iframe>
+                    <iframe id="export-page" style=""></iframe>
                     <div class="iframe-loading-overlay"></div>
                 </div>
             </div>
@@ -497,25 +497,7 @@
                 allowEmpty: true,
             });
 
-            $("a.login-form").click(function (e) {
-                e.preventDefault();
-                var $form_modal = jQuery('.cd-user-modal'),
-                    $form_login = $form_modal.find('#cd-login'),
-                    $form_signup = $form_modal.find('#cd-signup'),
-                    $form_forgot_password = $form_modal.find('#cd-reset-password'),
-                    $form_modal_tab = $('.cd-switcher'),
-                    $tab_login = $form_modal_tab.children('li').eq(0).children('a'),
-                    $tab_signup = $form_modal_tab.children('li').eq(1).children('a'),
-                    $forgot_password_link = $form_login.find('.cd-form-bottom-message a'),
-                    $back_to_login_link = $form_forgot_password.find('.cd-form-bottom-message a'),
-                    $main_nav = jQuery('.main-nav');
-                $form_modal.addClass('is-visible');
-                $form_login.addClass('is-selected');
-                $form_signup.removeClass('is-selected');
-                $form_forgot_password.removeClass('is-selected');
-                $tab_login.addClass('selected');
-                $tab_signup.removeClass('selected');
-            })
+            
         });
     </script>
 </body>
