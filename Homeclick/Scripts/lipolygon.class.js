@@ -178,14 +178,14 @@ fabric.LiPolygon = fabric.util.createClass(fabric.Polygon,{ //Need to assign cla
     });
   },
   calcArea: function() {
-    var vertices = this.points;
-    var area = 0.0;
-    for(var i = 0; i < vertices.length;i++) {
-      var j = (i + 1) % vertices.length;
-      area += vertices[i].x * vertices[j].y;
-      area -= vertices[i].y * vertices[j].x;
-    }
-    return Math.abs(area * this.group.originalScale);
+      var vertices = this.points;
+      var area = 0.0;
+      for (var i = 0; i < vertices.length - 1; i++) {
+          var j = (i + 1) % vertices.length;
+          area += vertices[i].x * vertices[j].y;
+          area -= vertices[i].y * vertices[j].x;
+      }
+      return Math.abs(area) / 2 * Math.pow(this.group.originalScale, 2);
   },
   retangleArea: function(a,b,c){
     var s;

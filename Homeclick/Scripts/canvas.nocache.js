@@ -278,7 +278,7 @@ jQuery(document).ready(function ($) {
         //else {
             //var m = { x: e.pageX, y: e.pageY }, //Load floor control
         var control = jQuery(".object-control"),
-            area = (pWall.calcArea() * Math.pow(srcMultiple, 2) / 10000).toFixed(2);
+            area = (pWall.calcArea() * Math.pow(srcMultiple, 2) / 10000).toFixed(0);
         control.css({
 
             "position": "absolute",
