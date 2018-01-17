@@ -2287,6 +2287,7 @@ jQuery(document).ready(function ($) {
             })
         .done(function (response, status, xhr) {
             if (xhr.status == 202) {
+                var wishlistId = response;
                 UIkit.notification({
                     message: '<i class="uk-icon-check"></i> Added to wishlist!',
                     status: 'success',
@@ -2398,7 +2399,7 @@ jQuery(document).ready(function ($) {
                  + '<h3 class="product-title">'
                  + '{{productTitle}}'
                  + '</h3></a>'
-                 + '<a href="#" class="uk-button wishlist-remove">Xóa</a>'
+                 + '<a href="#" data-id="{{wishlistId}}" class="uk-button uk-button-small uk-button-danger wishlist-remove">Xóa</a>'
                  + '</div>'
                  + '</div>'
                  + '</div>';
@@ -2429,6 +2430,7 @@ jQuery(document).ready(function ($) {
 
     var addToWishListTab = function (obj) {
         var insertDiv = wishlistDiv.replace(/{{productId}}/g, obj.pId)
+                                      .replace(/{{wishlistId}}/, wishlistId)
                                       .replace(/{{productImg}}/g, obj.realImage)
                                       .replace(/{{productTitle}}/g, obj.ProName)
                                       .replace(/{{productInitScale}}/g, obj.initScale)
