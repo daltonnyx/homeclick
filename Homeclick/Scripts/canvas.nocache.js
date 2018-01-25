@@ -1861,7 +1861,7 @@ jQuery(document).ready(function ($) {
         if (pattern) {
             var src = pattern;
             fabric.Image.fromURL(src, function (img) {
-                img.scaleToWidth(64);
+                img.scaleToWidth(128 / pWall.group.originalScale);
                 pWall.fillPattern(img);
                 canvas.renderAll();
             });
