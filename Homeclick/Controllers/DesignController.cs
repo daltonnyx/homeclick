@@ -7,6 +7,15 @@ using System.Web.Mvc;
 
 namespace Homeclick.Controllers
 {
+
+    public class DepartmentComparer : IComparer<Department>
+    {
+        public int Compare(Department x, Department y)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class DesignController : Controller
     {
 
@@ -31,6 +40,7 @@ namespace Homeclick.Controllers
         public ActionResult getDepartments(int? id = null)
         {
             var model = db.Departments.Where(d => d.ProjectId == id).ToList();
+            model.Sort(new DepartmentComparer());
             return PartialView("Departments", model);
         }
 
