@@ -946,6 +946,7 @@ jQuery(document).ready(function ($) {
                   'perPixelTargetFind',
                   'padding',
                   'originalPoints',
+                  'originalScale',
                   'origin',
                   'hoverCursor',
                   'lockUniScaling',
@@ -1166,12 +1167,14 @@ jQuery(document).ready(function ($) {
             canvas.loadFromJSON(JSONData, function () {
                 setTimeout(function () {
                     $load_modal.removeClass('is-visible');
+                    polWall.scale(polWall.originalScale);
                     canvas.renderAll();
                 }, 400); //Waiting everything done
 
             }, function (o, object) { //o js json object, object is fabric object
                 if (object.type == 'GroupLiPolygon') {
                     polWall = object;
+                    polWall.originalScale = o.originalScale;
                     cart.deserialize(polWall.cart);
                     recreateCart();
                 }

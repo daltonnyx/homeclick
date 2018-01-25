@@ -433,7 +433,7 @@ fabric.GroupLiPolygon.fromObject = function (object, callback) {
 		var pointArr = [];
 		var bg;
 
-		object._objects.forEach(function(el){
+		object.objects.forEach(function(el){
 			if(el.type == 'liPolygon')
 			    pointArr.push(el.originalPoints);
 			else if(el.type == 'image') {
@@ -462,7 +462,10 @@ fabric.GroupLiPolygon.fromObject = function (object, callback) {
 		});
 		var pl = new fabric.GroupLiPolygon(pointArr, object.childOptions, [1]);
 		pl.cart = object.cart;
-		callback(pl);
+		if (callback != undefined)
+		    callback(pl);
+		else
+		    return pl;
 };
 
 fabric.Canvas.getHistory = function(savedCanvas, canvas) {
