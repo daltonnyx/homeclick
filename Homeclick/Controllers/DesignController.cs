@@ -7,15 +7,6 @@ using System.Web.Mvc;
 
 namespace Homeclick.Controllers
 {
-
-    public class DepartmentComparer : IComparer<Department>
-    {
-        public int Compare(Department x, Department y)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class DesignController : Controller
     {
 
@@ -39,43 +30,42 @@ namespace Homeclick.Controllers
         [HttpGet]
         public ActionResult getDepartments(int? id = null)
         {
-            var model = db.Departments.Where(d => d.ProjectId == id).ToList();
-            model.Sort(new DepartmentComparer());
+            var model = db.Departments.Where(d => d.ProjectId == id).OrderBy(d => d.Name).ToList();
             return PartialView("Departments", model);
         }
 
         [HttpGet]
         public ActionResult getProjects(int? id = null)
         {
-            var model = db.Projects.Where(d => d.DistrictId == id).ToList();
+            var model = db.Projects.Where(d => d.DistrictId == id).OrderBy(p => p.Name).ToList();
             return PartialView("Projects", model);
         }
 
         [HttpGet]
         public ActionResult getDistricts(int? id = null)
         {
-            var model = db.Districts.Where(d => d.CityId == id).ToList();
+            var model = db.Districts.Where(d => d.CityId == id).OrderBy(d => d.Name).ToList();
             return PartialView("Districts", model);
         }
 
         [HttpGet]
         public ActionResult getCities()
         {
-            var model = db.Cities.ToList<City>();
+            var model = db.Cities.OrderBy(c => c.Name).ToList<City>();
             return PartialView("Cities", model);
         }
 
         [HttpGet]
         public ActionResult getFloors(int? id)
         {
-            var model = db.Floors.Where<Floor>(f => f.Department.Id == id).ToList<Floor>();
+            var model = db.Floors.Where<Floor>(f => f.Department.Id == id).OrderBy(f => f.Name).ToList<Floor>();
             return PartialView("Floors", model);
         }
 
         [HttpGet]
         public ActionResult getRooms(int? id)
         {
-            var model = db.Rooms.Where<Room>(f => f.FloorId == id).ToList<Room>();
+            var model = db.Rooms.Where<Room>(f => f.FloorId == id).OrderBy(r => r.Name).ToList<Room>();
             return PartialView("Rooms", model);
         }
 
