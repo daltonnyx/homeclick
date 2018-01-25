@@ -60,6 +60,7 @@ namespace Homeclick.Controllers
         public ActionResult LoadCanvas(int? id)
         {
             JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
+            jsonSerializer.MaxJsonLength = int.MaxValue;
             if (id == null) { 
             if (User.Identity.GetUserId() != null)
                 {
