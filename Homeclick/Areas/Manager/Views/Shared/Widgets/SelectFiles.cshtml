@@ -228,7 +228,7 @@
                     $container.find('.file-remove-btn').hide();
             }
             else {
-                var $input = $('#@ContainerId').find('.file-uploaded-single input');
+                var $input =  $container.find('.file-uploaded-single input');
                 $input.parent().remove();
                 $container.find('.file-upload-empty').fadeIn('fast');
                 $container.find('.file-remove-btn').hide();
